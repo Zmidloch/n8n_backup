@@ -1,0 +1,451 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Create or update a contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "IfText",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "IfText",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IfText": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Extract text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract text": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-09T22:56:42.186Z",
+  "id": "gXjYUN1bofBmsFAR",
+  "isArchived": false,
+  "meta": null,
+  "name": "Day 4 - Planning Workflows",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## CV Input\nReceives files that contain CVs, either as image or text file",
+        "height": 224,
+        "width": 368,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1248,
+        240
+      ],
+      "id": "22d80911-6efa-410d-a6eb-98e30d1092b1",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Upload to CRM\nPut CV information into CRM",
+        "height": 224,
+        "width": 336,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3408,
+        240
+      ],
+      "typeVersion": 1,
+      "id": "ff4b4989-46b6-454f-8841-c62c019aa201",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "##  Which format?\nPDF or image",
+        "height": 224,
+        "width": 368,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1696,
+        240
+      ],
+      "id": "b14e17c3-2a15-4334-a161-048153c74271",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "## Standardize data\n",
+        "height": 224,
+        "width": 336,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2976,
+        240
+      ],
+      "typeVersion": 1,
+      "id": "87bbf45e-2e10-4cee-bd9f-ab28952871a0",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "## Turn into text\n",
+        "height": 224,
+        "width": 336,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2160,
+        496
+      ],
+      "typeVersion": 1,
+      "id": "a3a2284c-343e-49a5-8cfc-340d860e036e",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "additionalFields": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2.1,
+      "position": [
+        3520,
+        320
+      ],
+      "id": "75eb552a-86f2-453f-9925-122206d80d63",
+      "name": "Create or update a contact"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3dd54e68-320e-437b-a472-bff103b10736",
+              "name": "name",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "2ce05dd3-f526-4c14-9820-20d7cc0b11fa",
+              "name": "email",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "fc5798f6-f4c8-479f-b3b5-ddfda034ae21",
+              "name": "city",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3104,
+        304
+      ],
+      "id": "921a11c3-2d0b-42cf-a463-584c714a5d61",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        1392,
+        320
+      ],
+      "id": "644b5ff3-c70b-443c-8f1d-e9ef8df2637a",
+      "name": "On form submission",
+      "webhookId": "6aa7dd79-adbb-4202-965f-c4e6eae7a1d7"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFile",
+        "fileToWatch": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        1392,
+        480
+      ],
+      "id": "ce512d6b-fc1c-4c72-bbb9-9c0f8fa7f2d1",
+      "name": "Google Drive Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1600,
+        480
+      ],
+      "id": "0b4f3808-91fb-4f63-b912-bbbe2177b259",
+      "name": "Download file"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "e4c5abfd-5938-4967-bb9e-6ec2ea9585ab",
+              "leftValue": "",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1808,
+        320
+      ],
+      "id": "9012dce4-e51f-44e2-b34f-ba8242abd0fa",
+      "name": "IfText"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        2272,
+        304
+      ],
+      "id": "88682a37-3750-435a-8082-4ea93a20e0f7",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        2576,
+        320
+      ],
+      "id": "3996d386-bfce-4a82-b981-363b3243dbcb",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "content": "## Get info\nE.g. name, city, email",
+        "height": 224,
+        "width": 336,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2544,
+        240
+      ],
+      "typeVersion": 1,
+      "id": "736d2445-8521-46b6-bd98-7c8574317f66",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "content": "## Text file\nE.g. PDF",
+        "height": 224,
+        "width": 336,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2160,
+        240
+      ],
+      "typeVersion": 1,
+      "id": "90bdb98c-bf56-4c0f-bbb4-cad856800608",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mistralAi",
+      "typeVersion": 1,
+      "position": [
+        2272,
+        560
+      ],
+      "id": "bcf20749-ecf9-468d-add3-4f1798580b5f",
+      "name": "Extract text"
+    },
+    {
+      "parameters": {
+        "content": "![](https://i.ibb.co/qYs9dWMc/Screenshot-1176.png)\n![](https://i.ibb.co/xSG3Vf0q/Screenshot-1175.png)\n![](https://i.ibb.co/fVYYkHRX/Screenshot-1174.png)\n![](https://i.ibb.co/hJjctGSy/Screenshot-1172.png)",
+        "height": 1488,
+        "width": 1216,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "7da07ff3-4a46-482a-a75e-09223b30d72d",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "- Start with the end goal: What problem are you solving?\n- Breaking down complex processes into simple steps\n- Identifying triggers, data sources & destinations\n- Creating workflow diagrams before building",
+        "height": 128,
+        "width": 624,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1232,
+        0
+      ],
+      "id": "93174fa0-b543-479b-9002-181b4bec0ed5",
+      "name": "Sticky Note10"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-09T22:56:42.186Z",
+      "createdAt": "2025-12-09T22:56:42.186Z",
+      "role": "workflow:owner",
+      "workflowId": "gXjYUN1bofBmsFAR",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-12-09T22:56:42.186Z",
+  "versionId": "d6336403-161d-43d9-9532-3adc5c7f82e3"
+}
