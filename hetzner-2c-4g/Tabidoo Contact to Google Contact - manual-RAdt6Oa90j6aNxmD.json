@@ -1,0 +1,395 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Get many contacts",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Get many contacts": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Create a contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-25T21:51:26.859Z",
+  "id": "RAdt6Oa90j6aNxmD",
+  "isArchived": true,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Tabidoo Contact to Google Contact - manual",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "Get data from Tabidoo",
+        "height": 288,
+        "width": 192
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -208,
+        -64
+      ],
+      "typeVersion": 1,
+      "id": "89fcb94f-6136-4a0c-90cf-48db80dfbb67",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "Upload data to Google Contacts",
+        "height": 288,
+        "width": 160
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1008,
+        -64
+      ],
+      "typeVersion": 1,
+      "id": "d6cbda9f-dfad-46f9-9267-4ca3c8f08a23",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "Transform data",
+        "height": 288,
+        "width": 352
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        16,
+        -64
+      ],
+      "typeVersion": 1,
+      "id": "15dabcb8-6875-4f1f-899e-904441952109",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -432,
+        32
+      ],
+      "id": "331d45b8-a701-4b87-aaf6-14cd9cc288ae",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "familyName": "={{ $('Edit Fields').item.json['Příjmení'] }}",
+        "givenName": "={{ $('Edit Fields').item.json['Jméno'] }}",
+        "additionalFields": {
+          "companyUi": {
+            "companyValues": [
+              {
+                "name": "={{ $json.Firma }}"
+              }
+            ]
+          },
+          "emailsUi": {
+            "emailsValues": [
+              {
+                "type": "work",
+                "value": "={{ $json['E-mail'] }}"
+              }
+            ]
+          },
+          "group": [
+            "contactGroups/3e5124ca0d24388a"
+          ],
+          "phoneUi": {
+            "phoneValues": [
+              {
+                "type": "mobile",
+                "value": "={{ $json.Telefon }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleContacts",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        16
+      ],
+      "id": "841345b4-a64f-4e81-a9af-d1d97d7682f5",
+      "name": "Create a contact",
+      "credentials": {
+        "googleContactsOAuth2Api": {
+          "id": "n93pRLb54ZN7XPNO",
+          "name": "Google Contacts zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://app.tabidoo.cloud/api/v2/apps/obchod-1b4y/tables/kontakty/data",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -160,
+        32
+      ],
+      "id": "8825e84e-ee6a-4d8d-bf9e-2826b24ef17d",
+      "name": "HTTP Request",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "wFGIMCQoDGlh0Gtd",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7d914171-33e6-4490-925a-dd83c215e207",
+              "name": "Jméno",
+              "value": "={{ $json.fields.name }}",
+              "type": "string"
+            },
+            {
+              "id": "189bebab-a895-4cc9-857f-ed7475ba018f",
+              "name": "Příjmení",
+              "value": "={{ $json.fields.x82amtoz3m }}",
+              "type": "string"
+            },
+            {
+              "id": "be9c3263-c750-4e58-82b2-e9a48a0ed064",
+              "name": "Firma",
+              "value": "={{ $json.fields.company.fields.nazev }}",
+              "type": "string"
+            },
+            {
+              "id": "e6d3a711-d098-4925-bd98-0664f5da3e16",
+              "name": "E-mail",
+              "value": "={{ $json.fields.email.href }}",
+              "type": "string"
+            },
+            {
+              "id": "c6517087-4901-4515-a221-97a87fa0f40d",
+              "name": "Telefon",
+              "value": "={{ $json.fields.phoneNumber }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        32
+      ],
+      "id": "85a87b0d-273a-4429-a3e8-d24d205e5bcb",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        48,
+        32
+      ],
+      "id": "c25a7c2c-445b-4f53-9a7f-059f47092cf6",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "limit": 1,
+        "fields": [
+          "metadata",
+          "names",
+          "phoneNumbers",
+          "emailAddresses"
+        ],
+        "useQuery": "={{ $json['E-mail'] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleContacts",
+      "typeVersion": 1,
+      "position": [
+        464,
+        -32
+      ],
+      "id": "75ca4506-014e-48fc-a203-c6778c3c92c5",
+      "name": "Get many contacts",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleContactsOAuth2Api": {
+          "id": "n93pRLb54ZN7XPNO",
+          "name": "Google Contacts zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "Check data",
+        "height": 288,
+        "width": 576
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        384,
+        -64
+      ],
+      "typeVersion": 1,
+      "id": "6620552d-556f-467e-ab9b-19f0fa9e5cad",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "8c32cb83-88fd-4f87-a185-a1ad5b3714e1",
+              "leftValue": "={{ $json.resourceName }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        800,
+        48
+      ],
+      "id": "8690669b-d3bd-43fc-9352-79ad15fcaa20",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        640,
+        112
+      ],
+      "id": "d5748a5a-79d8-427a-a680-af61670a6411",
+      "name": "Merge"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-11-25T21:51:26.859Z",
+      "createdAt": "2025-11-25T21:51:26.859Z",
+      "role": "workflow:owner",
+      "workflowId": "RAdt6Oa90j6aNxmD",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-12-03T22:22:53.142Z",
+  "versionId": "5c6c5d13-a982-4327-8529-46ecc15c70ed"
+}
