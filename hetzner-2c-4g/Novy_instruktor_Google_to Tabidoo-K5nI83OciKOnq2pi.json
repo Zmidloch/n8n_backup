@@ -1,0 +1,658 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Tabidoo Mapping",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Thank You and Good Bye",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tabidoo Mapping": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request - POST data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-04T20:28:52.260Z",
+  "id": "K5nI83OciKOnq2pi",
+  "isArchived": true,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Novy_instruktor_Google_to Tabidoo",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Tabidoo Form\n**E-mail address* filled up in Tabidoo. ",
+        "height": 368,
+        "width": 256
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -640,
+        -48
+      ],
+      "typeVersion": 1,
+      "id": "e1444d13-b10a-46c0-98a1-540ff861d29e",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## New Contact in Tabidoo\n",
+        "height": 80,
+        "width": 336,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1152,
+        -32
+      ],
+      "typeVersion": 1,
+      "id": "826a9f19-6d71-4b61-93d3-37b32dfec22f",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Delivery of Google Form\n**Form, Google Form, Gmail** ",
+        "height": 368,
+        "width": 304
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -352,
+        -48
+      ],
+      "typeVersion": 1,
+      "id": "171f35b4-0a7a-4519-8d15-eb8de4ae5b49",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Insert New Data\n\n3. Transform data (dates)\n4. Move data to Tabidoo",
+        "height": 368,
+        "width": 576
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        560,
+        -192
+      ],
+      "typeVersion": 1,
+      "id": "0789bb5a-f599-44b8-9814-eb298da0d013",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.email }}",
+        "subject": "Dotazník nového INSTRUKTORA Z-AGENCY",
+        "message": "=<!DOCTYPE html>\n<html>\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Další krok k instruktorské pozici v Z-AGENCY</title>\n</head>\n<body style=\"font-family: Arial, sans-serif; font-size: 16px; color: #333333; line-height: 1.6;\">\n\n    <div style=\"max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eeeeee; border-radius: 8px;\">\n\n        <p style=\"font-size: 18px; font-weight: bold; color: #0073b1;\">Další krok k instruktorské pozici v Z-AGENCY</p>\n        \n        <p>Dobrý den,</p>\n\n        <p>Děkujeme Ti za Tvoji dosavadní komunikaci a za čas, který jsi věnoval/a našemu setkání ohledně pozice instruktora. Bylo to příjemné a inspirativní!</p>\n\n        <p>Abychom mohli Tvé zařazení do našeho týmu dokončit a připravit vše potřebné pro Tvoji práci s námi, potřebujeme od Tebe získat několik <strong style=\"font-weight: bold;\">základních osobních a kontaktních informací</strong>.</p>\n\n        <p>Tyto údaje jsou pro nás klíčové ze dvou hlavních důvodů:</p>\n        <ul style=\"padding-left: 20px;\">\n            <li><strong style=\"font-weight: bold;\">Vytvoření smlouvy:</strong> Jsou nezbytné pro formální vyřízení pracovního vztahu (zejména pro Dohodu o provedení práce – DPP).</li>\n            <li><strong style=\"font-weight: bold;\">Obsazování a odměny:</strong> Poskytnou nám podrobné informace nutné pro Tvé efektivní obsazování na naše akce a zajištění včasného vyplacení odměny za Tvoji práci.</li>\n        </ul>\n\n        <p>Prosíme Tě o vyplnění níže uvedeného dotazníku v Google Forms:</p>\n\n        <div style=\"text-align: center; margin: 30px 0;\">\n            <a href=\"https://docs.google.com/forms/d/e/1FAIpQLSdrw9HL3IAiKT099bc8cOabdapJGWbyJ_RetbshdUVAI8JilQ/viewform?usp=dialog\" \n                style=\"background-color: #0073b1; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 16px; display: inline-block;\">\n                Přejít na dotazník\n            </a>\n        </div>\n        <p style=\"text-align: center; font-size: 14px;\">Odkaz: <a href=\"https://docs.google.com/forms/d/e/1FAIpQLSdrw9HL3IAiKT099bc8cOabdapJGWbyJ_RetbshdUVAI8JilQ/viewform?usp=dialog\" style=\"color: #0073b1;\">https://docs.google.com/forms/d/e/1FAIpQLSdrw9HL3IAiKT099bc8cOabdapJGWbyJ_RetbshdUVAI8JilQ/...</a></p>\n\n        <p>Předem Ti děkujeme za rychlé vyplnění!</p>\n\n        <hr style=\"border: none; border-top: 1px solid #dddddd; margin: 30px 0;\">\n\n        <p style=\"font-family: Verdana, sans-serif; font-size: 14px; color: #333;\">S pozdravem,</p>\n        <table role=\"presentation\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" style=\"font-family: Verdana, sans-serif; font-size: 14px; color: #333;\">\n            <tr>\n                <td style=\"padding-right: 15px; vertical-align: middle;\">\n                    <img src=\"https://www.terrahunt.cz/TerraHunt/media/static-media/fecf446d-5e97-4754-8a8e-55b43bdc62aa@w600.webp\" alt=\"Logo Z-AGENCY\" width=\"80\" height=\"80\" style=\"border-radius: 50%; display: block; object-fit: cover;\">\n                </td>\n                <td style=\"vertical-align: middle;\">\n                    <strong style=\"font-size: 16px; color: #0073b1;\">Tým Z-AGENCY</strong><br>\n                    <span style=\"display: block; margin-top: 3px;\">Z-AGENCY s.r.o.</span>\n                    <span style=\"display: block;\">Karlova 38, 61400 Brno</span>\n                    <span style=\"display: block;\">☎️ +420 542 211 935</span>\n                    <span style=\"display: block;\">✉️ <a href=\"mailto:info@z-agency.cz\" style=\"color: #0073b1; text-decoration: none;\">info@z-agency.cz</a></span>\n                    <span style=\"display: block;\">🌐 <a href=\"https://www.z-agency.cz\" style=\"color: #0073b1; text-decoration: none;\">z-agency.cz</a> |\n                    <a href=\"https://www.terrahunt.cz\" style=\"color: #0073b1; text-decoration: none;\">terrahunt.cz</a></span>\n                </td>\n            </tr>\n        </table>\n    </div>\n\n</body>\n</html>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -176,
+        96
+      ],
+      "id": "ec14ee59-658c-4811-bbe6-525f08db1ca4",
+      "name": "Send a message",
+      "webhookId": "1c7ef2ae-9e2f-4889-a32f-69ef9313f9ee",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "cUMqdo7XCF6noXLb",
+          "name": "Gmail-info@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1Ai5IfHEfgh8sV411ufVDJ1TEo7UbPmJl_v0ocFMzwhs",
+          "mode": "list",
+          "cachedResultName": "Dotazník pro nové instruktory (Odpovědi)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Ai5IfHEfgh8sV411ufVDJ1TEo7UbPmJl_v0ocFMzwhs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 624346638,
+          "mode": "list",
+          "cachedResultName": "Odpovědi formuláře 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Ai5IfHEfgh8sV411ufVDJ1TEo7UbPmJl_v0ocFMzwhs/edit#gid=624346638"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        48,
+        96
+      ],
+      "id": "93a3cb80-3797-4494-acb3-c1cf2c032e74",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "PONFxr0FZ1WvjNKm",
+          "name": "Google Sheets zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "00cacb1b-7485-431d-8a33-8c64ef3e6c0d",
+              "leftValue": "={{ $json['Chceš s námi nadále spolupracovat?'] }}",
+              "rightValue": "Ano",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        240,
+        96
+      ],
+      "id": "bdd4a23d-c23e-48d7-9490-5d1e54633f8e",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "content": "## Google Sheet Information Added\n**1. Employe fills data\n2. Google Sheet updated\n3. New row added** ",
+        "height": 368,
+        "width": 496
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        -48
+      ],
+      "typeVersion": 1,
+      "id": "1a716b0f-7a68-4e6a-a9b1-9351a213813c",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "## Does  NOT Want To Cooperate Anymore\n**Thank you e-mail* ",
+        "height": 368,
+        "width": 576
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        560,
+        208
+      ],
+      "typeVersion": 1,
+      "id": "d18d7bd5-bf78-4813-8b57-61aae42aed64",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "formTitle": "Dotazník pro nové instruktory",
+        "formDescription": "Do pole zadej e-maily nových instruktorů oddělené čárkou.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "E-mail list",
+              "requiredField": true
+            }
+          ]
+        },
+        "responseMode": "lastNode",
+        "options": {
+          "appendAttribution": false,
+          "buttonLabel": "Odeslat",
+          "customCss": ":root {\n\t--font-family: 'Open Sans', sans-serif;\n\t--font-weight-normal: 400;\n\t--font-weight-bold: 600;\n\t--font-size-body: 12px;\n\t--font-size-label: 14px;\n\t--font-size-test-notice: 12px;\n\t--font-size-input: 14px;\n\t--font-size-header: 20px;\n\t--font-size-paragraph: 14px;\n\t--font-size-link: 12px;\n\t--font-size-error: 12px;\n\t--font-size-html-h1: 28px;\n\t--font-size-html-h2: 20px;\n\t--font-size-html-h3: 16px;\n\t--font-size-html-h4: 14px;\n\t--font-size-html-h5: 12px;\n\t--font-size-html-h6: 10px;\n\t--font-size-subheader: 14px;\n\n\t/* Colors */\n\t--color-background: #fbfcfe;\n\t--color-test-notice-text: #e6a23d;\n\t--color-test-notice-bg: #fefaf6;\n\t--color-test-notice-border: #f6dcb7;\n\t--color-card-bg: #ffffff;\n\t--color-card-border: #dbdfe7;\n\t--color-card-shadow: rgba(99, 77, 255, 0.06);\n\t--color-link: #7e8186;\n\t--color-header: #525356;\n\t--color-label: #555555;\n\t--color-input-border: #dbdfe7;\n\t--color-input-text: #71747A;\n\t--color-focus-border: rgb(90, 76, 194);\n\t--color-submit-btn-bg: #ff6d5a;\n\t--color-submit-btn-text: #ffffff;\n\t--color-error: #ea1f30;\n\t--color-required: #ff6d5a;\n\t--color-clear-button-bg: #7e8186;\n\t--color-html-text: #555;\n\t--color-html-link: #ff6d5a;\n\t--color-header-subtext: #7e8186;\n\n\t/* Border Radii */\n\t--border-radius-card: 8px;\n\t--border-radius-input: 6px;\n\t--border-radius-clear-btn: 50%;\n\t--card-border-radius: 8px;\n\n\t/* Spacing */\n\t--padding-container-top: 24px;\n\t--padding-card: 24px;\n\t--padding-test-notice-vertical: 12px;\n\t--padding-test-notice-horizontal: 24px;\n\t--margin-bottom-card: 16px;\n\t--padding-form-input: 12px;\n\t--card-padding: 24px;\n\t--card-margin-bottom: 16px;\n\n\t/* Dimensions */\n\t--container-width: 448px;\n\t--submit-btn-height: 48px;\n\t--checkbox-size: 18px;\n\n\t/* Others */\n\t--box-shadow-card: 0px 4px 16px 0px var(--color-card-shadow);\n\t--opacity-placeholder: 0.5;\n}"
+        }
+      },
+      "id": "f83a2cb9-24ac-4d1c-8416-5c8575c1cd02",
+      "name": "On form submission",
+      "type": "n8n-nodes-base.formTrigger",
+      "position": [
+        -592,
+        96
+      ],
+      "webhookId": "a1179051-6765-4f8b-87ff-20f39522457e",
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = [];\n\n// 1. Získání a zabezpečení vstupu. \n// Odkazujeme se na klíč 'E-mail list' z předchozího uzlu Form Trigger\nconst allEmails = $json['E-mail list'] || \"\"; \n\n// 2. Rozdělení řetězce na pole (array)\nconst emailArray = allEmails.split(',')\n  .map(email => email.trim()) // Odstraní mezery kolem čárek\n  .filter(email => email.length > 0); // Odstraní prázdné položky\n\n// 3. Vytvoření nových položek\n// Vytvoří se jedna položka pro každý email\nfor (const email of emailArray) {\n  // Každá položka musí mít klíč 'json', jehož hodnota je OBJEKT { ... }\n  items.push({\n    json: {\n      email: email // Každá nová položka má nyní klíč 'email'\n    }\n  });\n}\n\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -320,
+        96
+      ],
+      "id": "1c8fb28f-faac-486f-ba83-4de98d73dfc3",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://app.tabidoo.cloud/api/v2/apps/dev-personalistika-u226/tables/instruktorsky_tym/data",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"fields\": {{ JSON.stringify($('Tabidoo Mapping').item.json) }}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        848,
+        -32
+      ],
+      "id": "9ec872c6-062c-4dda-8056-90d83888e19d",
+      "name": "HTTP Request - POST data",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "CUDchy7BKzXokol4",
+          "name": "Header Auth Personalistika"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json['E-mailová adresa'] }}",
+        "subject": "Z-AGENCY: Děkujeme za Tvé upřímné rozhodnutí",
+        "message": "=<!DOCTYPE html>\n<html>\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Z-AGENCY: Děkujeme za Tvé upřímné rozhodnutí</title>\n</head>\n<body style=\"font-family: Arial, sans-serif; font-size: 16px; color: #333333; line-height: 1.6;\">\n\n    <div style=\"max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eeeeee; border-radius: 8px;\">\n\n        <p style=\"font-size: 18px; font-weight: bold; color: #0073b1;\">Děkujeme za Tvoji zpětnou vazbu</p>\n        \n        <p>Ahoj,</p>\n\n        <p>Děkujeme Ti za rychlé vyplnění dotazníku a především za <strong style=\"font-weight: bold;\">naprostou upřímnost</strong> ohledně Tvé situace.</p>\n\n        <p>Tvé rozhodnutí plně <strong style=\"font-weight: bold;\">respektujeme</strong> a ceníme si Tvé otevřenosti. Je důležité, aby každý dělal to, co mu dává smysl a kde se cítí nejlépe.</p>\n\n        <p>Chtěli bychom Ti říct, že u nás máš do budoucna <strong style=\"font-weight: bold;\">dveře vždy otevřené</strong>. <strong style=\"font-weight: bold;\">Pokud se Tvé rozhodnutí změní</strong> a Tvé okolnosti se vyvinou jinak, neváhej se nám kdykoli ozvat!</p>\n\n        <p>Přejeme Ti mnoho osobních i pracovních úspěchů do budoucna!</p>\n\n        <hr style=\"border: none; border-top: 1px solid #dddddd; margin: 30px 0;\">\n\n        <p style=\"font-family: Verdana, sans-serif; font-size: 14px; color: #333;\">S pozdravem,</p>\n        <table role=\"presentation\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" style=\"font-family: Verdana, sans-serif; font-size: 14px; color: #333;\">\n            <tr>\n                <td style=\"padding-right: 15px; vertical-align: middle;\">\n                    <img src=\"https://www.terrahunt.cz/TerraHunt/media/static-media/fecf446d-5e97-4754-8a8e-55b43bdc62aa@w600.webp\" alt=\"Logo Z-AGENCY\" width=\"80\" height=\"80\" style=\"border-radius: 50%; display: block; object-fit: cover;\">\n                </td>\n                <td style=\"vertical-align: middle;\">\n                    <strong style=\"font-size: 16px; color: #0073b1;\">Tým Z-AGENCY</strong><br>\n                    <span style=\"display: block; margin-top: 3px;\">Z-AGENCY s.r.o.</span>\n                    <span style=\"display: block;\">Karlova 38, 61400 Brno</span>\n                    <span style=\"display: block;\">☎️ +420 542 211 935</span>\n                    <span style=\"display: block;\">✉️ <a href=\"mailto:info@z-agency.cz\" style=\"color: #0073b1; text-decoration: none;\">info@z-agency.cz</a></span>\n                    <span style=\"display: block;\">🌐 <a href=\"https://www.z-agency.cz\" style=\"color: #0073b1; text-decoration: none;\">z-agency.cz</a> |\n                    <a href=\"https://www.terrahunt.cz\" style=\"color: #0073b1; text-decoration: none;\">terrahunt.cz</a></span>\n                </td>\n            </tr>\n        </table>\n        </div>\n\n</body>\n</html>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        768,
+        400
+      ],
+      "id": "8c3fa4ff-8fe5-478a-9825-8859150e209a",
+      "name": "Thank You and Good Bye",
+      "webhookId": "1c7ef2ae-9e2f-4889-a32f-69ef9313f9ee",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "cUMqdo7XCF6noXLb",
+          "name": "Gmail-info@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9c72fdd1-c851-435e-b452-2c1de68510bb",
+              "name": "jmeno_prijmeni",
+              "value": "={{ $json['Jméno a příjmení'] }}",
+              "type": "string"
+            },
+            {
+              "id": "7cff9997-0db6-45d6-848c-00aea2265f9e",
+              "name": "email",
+              "value": "={{ $json['E-mailová adresa'] }}",
+              "type": "string"
+            },
+            {
+              "id": "4a495586-2c53-40e4-98bc-d01f7aab67d5",
+              "name": "forma_spoluprace",
+              "value": "={{ $json['Forma spolupráce'] }}",
+              "type": "string"
+            },
+            {
+              "id": "d921ca03-5b56-4977-8125-659b17d49743",
+              "name": "status_instruktora",
+              "value": "={{ $json['Vidím se v následujícím týmu instruktorů:'] }}",
+              "type": "string"
+            },
+            {
+              "id": "900da024-7079-4e04-8da5-9a058902ebbe",
+              "name": "trvale_bydliste",
+              "value": "={{ $json['Adresa trvalého bydliště (co máš v občance)'] }}",
+              "type": "string"
+            },
+            {
+              "id": "892038af-13bd-4162-8ddf-125f26058484",
+              "name": "misto_pobytu",
+              "value": "={{ $json['Adresa místa, kde aktuálně žiješ'] }}",
+              "type": "string"
+            },
+            {
+              "id": "ae93a8d0-50b9-4b95-889c-c67762e2a655",
+              "name": "telefon",
+              "value": "={{ $json['Telefonní číslo, které aktivně používáš'] }}",
+              "type": "string"
+            },
+            {
+              "id": "43df036b-e651-4351-b317-58a110d438b0",
+              "name": "cislo_uctu",
+              "value": "={{ $json['Číslo účtu, na který ti budeme posílat peníze'] }}",
+              "type": "string"
+            },
+            {
+              "id": "d42fc4a0-4da0-432e-b0a7-760a88396feb",
+              "name": "rodne_jmeno",
+              "value": "={{ $json['Rodné příjmení (pokud máš teď jiné)'] }}",
+              "type": "string"
+            },
+            {
+              "id": "29a49084-4280-401f-8842-10567e334787",
+              "name": "misto_narozeni",
+              "value": "={{ $json['Místo narození (město nebo obec)'] }}",
+              "type": "string"
+            },
+            {
+              "id": "5eecc033-4fd4-4035-be76-9bc9685eae17",
+              "name": "datum_narozeni",
+              "value": "={{ $json['Datum narození'] }}",
+              "type": "string"
+            },
+            {
+              "id": "5c917466-9f5a-4ad4-a962-7a09bb55447c",
+              "name": "rodne_cislo",
+              "value": "={{ $json['Rodné číslo'] }}",
+              "type": "string"
+            },
+            {
+              "id": "546c340c-ad6e-411a-ba80-a10626257054",
+              "name": "zdravotni_pojistovna",
+              "value": "={{ $json['Zdravotní pojišťovna (napiš název, číslo a jestli je česká nebo z jiné země)'] }}",
+              "type": "string"
+            },
+            {
+              "id": "3088e75a-392b-4c93-801f-10542c25a8f7",
+              "name": "cislo_dokladu",
+              "value": "={{ $json['Číslo pasu nebo občanský průkaz (pokud nemáš českou národnost)'] }}",
+              "type": "string"
+            },
+            {
+              "id": "d7353c2b-9fa3-48c5-b4e0-6a0b3b2bc0fd",
+              "name": "sleva_dane",
+              "value": "={{ $json['Budeš chtít u nás podepsat růžový formulář (sleva na dani - poplatník, student..)?'] }}",
+              "type": "string"
+            },
+            {
+              "id": "99f25967-7f30-4f9a-b6bd-083ab274f074",
+              "name": "ico",
+              "value": "={{ $json['IČO '] }}",
+              "type": "string"
+            },
+            {
+              "id": "d8ef0264-0810-4dfd-a914-402da0667130",
+              "name": "dic",
+              "value": "={{ $json['DIČ '] }}",
+              "type": "string"
+            },
+            {
+              "id": "6bbc91c1-a18e-4d1b-a5c3-0c4ef6712919",
+              "name": "obchodni_nazev",
+              "value": "={{ $json['Název firmy nebo jméno živnostníka'] }}",
+              "type": "string"
+            },
+            {
+              "id": "a9f1651b-69b6-4ae1-bc49-6ea3e264675e",
+              "name": "sidlo_podnikani",
+              "value": "={{ $json['Sídlo firmy/živnostníka'] }}",
+              "type": "string"
+            },
+            {
+              "id": "8796d08d-e9c0-4b21-bbc3-80a5b092c317",
+              "name": "dalsi_specializace",
+              "value": "={{ $json['Jaké máš další dovednosti a kvalifikace? (zaškrtni, co platí)'] }}",
+              "type": "string"
+            },
+            {
+              "id": "af8e27af-39a4-4d4a-be38-e3f1ba3c4c8d",
+              "name": "vlastni_automobil",
+              "value": "={{ $json['Máš vlastní auto, které můžeš vzít na akci?'] }}",
+              "type": "string"
+            },
+            {
+              "id": "acf7856d-a995-46ed-ba42-c363971566da",
+              "name": "ridic",
+              "value": "={{ $json['Máš řidičák a pravidelně řídíš?'] }}",
+              "type": "string"
+            },
+            {
+              "id": "9df217e3-53d6-4440-8658-7bb75c160ac8",
+              "name": "=informace_1",
+              "value": "={{ $json['Je něco co bychom měli vědět, nebo čím se chceš pochlubit? (vlastnosti, dovednosti, úspěchy)'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        256,
+        592
+      ],
+      "id": "57d24311-8b8a-4d2a-b6f1-9aaa198fd459",
+      "name": "Tabidoo Maping1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9c72fdd1-c851-435e-b452-2c1de68510bb",
+              "name": "jmeno_prijmeni",
+              "value": "={{ $json['Jméno a příjmení'] }}",
+              "type": "string"
+            },
+            {
+              "id": "7cff9997-0db6-45d6-848c-00aea2265f9e",
+              "name": "email",
+              "value": "={{ $json['E-mailová adresa'] }}",
+              "type": "string"
+            },
+            {
+              "id": "900da024-7079-4e04-8da5-9a058902ebbe",
+              "name": "trvale_bydliste",
+              "value": "={{ $json['Adresa trvalého bydliště (co máš v občance)'] }}",
+              "type": "string"
+            },
+            {
+              "id": "892038af-13bd-4162-8ddf-125f26058484",
+              "name": "misto_pobytu",
+              "value": "={{ $json['Adresa místa, kde aktuálně žiješ'] }}",
+              "type": "string"
+            },
+            {
+              "id": "ae93a8d0-50b9-4b95-889c-c67762e2a655",
+              "name": "telefon",
+              "value": "={{ $json['Telefonní číslo, které aktivně používáš'] }}",
+              "type": "string"
+            },
+            {
+              "id": "43df036b-e651-4351-b317-58a110d438b0",
+              "name": "cislo_uctu",
+              "value": "={{ $json['Číslo účtu, na který ti budeme posílat peníze'] }}",
+              "type": "string"
+            },
+            {
+              "id": "d42fc4a0-4da0-432e-b0a7-760a88396feb",
+              "name": "rodne_jmeno",
+              "value": "={{ $json['Rodné příjmení (pokud máš teď jiné)'] }}",
+              "type": "string"
+            },
+            {
+              "id": "29a49084-4280-401f-8842-10567e334787",
+              "name": "misto_narozeni",
+              "value": "={{ $json['Místo narození (město nebo obec)'] }}",
+              "type": "string"
+            },
+            {
+              "id": "5eecc033-4fd4-4035-be76-9bc9685eae17",
+              "name": "datum_narozeni",
+              "value": "={{ $json['Datum narození'] ? $json['Datum narození'].split('.').reverse().map((part, index) => index === 0 ? part : part.padStart(2, '0')).join('-') : null }}",
+              "type": "string"
+            },
+            {
+              "id": "5c917466-9f5a-4ad4-a962-7a09bb55447c",
+              "name": "rodne_cislo",
+              "value": "={{ $json['Rodné číslo'] }}",
+              "type": "string"
+            },
+            {
+              "id": "546c340c-ad6e-411a-ba80-a10626257054",
+              "name": "zdravotni_pojistovna",
+              "value": "={{ $json['Zdravotní pojišťovna (napiš název, číslo a jestli je česká nebo z jiné země)'] }}",
+              "type": "string"
+            },
+            {
+              "id": "3088e75a-392b-4c93-801f-10542c25a8f7",
+              "name": "cislo_dokladu",
+              "value": "={{ $json['Číslo pasu nebo občanský průkaz (pokud nemáš českou národnost)'] }}",
+              "type": "string"
+            },
+            {
+              "id": "99f25967-7f30-4f9a-b6bd-083ab274f074",
+              "name": "ico",
+              "value": "={{ $json['IČO '] }}",
+              "type": "string"
+            },
+            {
+              "id": "d8ef0264-0810-4dfd-a914-402da0667130",
+              "name": "dic",
+              "value": "={{ $json['DIČ '] }}",
+              "type": "string"
+            },
+            {
+              "id": "6bbc91c1-a18e-4d1b-a5c3-0c4ef6712919",
+              "name": "obchodni_nazev",
+              "value": "={{ $json['Název firmy nebo jméno živnostníka'] }}",
+              "type": "string"
+            },
+            {
+              "id": "a9f1651b-69b6-4ae1-bc49-6ea3e264675e",
+              "name": "sidlo_podnikani",
+              "value": "={{ $json['Sídlo firmy/živnostníka'] }}",
+              "type": "string"
+            },
+            {
+              "id": "9df217e3-53d6-4440-8658-7bb75c160ac8",
+              "name": "=informace_1",
+              "value": "={{ $json['Je něco co bychom měli vědět, nebo čím se chceš pochlubit? (vlastnosti, dovednosti, úspěchy)'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        624,
+        -32
+      ],
+      "id": "316e79be-233f-4d17-ae66-a661c054faad",
+      "name": "Tabidoo Mapping"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-04T20:28:52.260Z",
+      "createdAt": "2025-12-04T20:28:52.260Z",
+      "role": "workflow:owner",
+      "workflowId": "K5nI83OciKOnq2pi",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": {
+    "node:Google Sheets Trigger": {
+      "documentId": "1Ai5IfHEfgh8sV411ufVDJ1TEo7UbPmJl_v0ocFMzwhs",
+      "sheetId": 624346638,
+      "lastIndexChecked": 1
+    }
+  },
+  "tags": [],
+  "triggerCount": 2,
+  "updatedAt": "2025-12-08T21:02:23.286Z",
+  "versionId": "3328c872-ea35-4e16-9f7a-b005cda57edf"
+}
