@@ -1,0 +1,776 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "1. The Kitchen (GET /menu)": {
+      "main": [
+        [
+          {
+            "node": "Respond with Menu",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2. The Kitchen (GET /order)": {
+      "main": [
+        [
+          {
+            "node": "IF extra cheese",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3. The Kitchen (POST /review)": {
+      "main": [
+        [
+          {
+            "node": "Respond to Review",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4. The Kitchen (GET /secret-dish)": {
+      "main": [
+        [
+          {
+            "node": "IF Authorized",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "5. The Kitchen (GET /slow-service)": {
+      "main": [
+        [
+          {
+            "node": "Wait 3 seconds",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 3 seconds": {
+      "main": [
+        [
+          {
+            "node": "Respond Slowly",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Base URL": {
+      "main": [
+        [
+          {
+            "node": "1. The Customer (GET Menu Item)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "2. The Customer (GET with Query Params)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "3. The Customer (POST with Body)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "4. The Customer (GET with Headers/Auth)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "5. The Customer (Request with Timeout)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Authorized": {
+      "main": [
+        [
+          {
+            "node": "Respond with Secret",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond with Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF extra cheese": {
+      "main": [
+        [
+          {
+            "node": "Respond with Cheese",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond with Plain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Base URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-29T18:56:48.975Z",
+  "id": "Acr4tmUN3HdJKXWL",
+  "isArchived": false,
+  "meta": null,
+  "name": "HTTP / API - Deep-Dive",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "a0e2d9aa-48ad-4d09-8b79-5e0698dfe81d",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "9432597c-afb4-4153-a3e2-f0dee4197eeb",
+      "name": "1. The Kitchen (GET /menu)",
+      "type": "n8n-nodes-base.webhook",
+      "position": [
+        1312,
+        512
+      ],
+      "webhookId": "a0e2d9aa-48ad-4d09-8b79-5e0698dfe81d",
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "item",
+              "type": "string",
+              "value": "Pizza"
+            },
+            {
+              "id": "67890",
+              "name": "price",
+              "type": "number",
+              "value": 12
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "10ad1991-e240-457b-83c5-b85b8ae35b5d",
+      "name": "Respond with Menu",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1520,
+        512
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Base URL').last().json.your_n8n_base_url }}/menu",
+        "options": {}
+      },
+      "id": "af9194af-e1b9-4144-9c38-0710382547f2",
+      "name": "1. The Customer (GET Menu Item)",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1008,
+        512
+      ],
+      "typeVersion": 4.1
+    },
+    {
+      "parameters": {
+        "content": "### Tutorial - WTF is an API?\n\nWelcome! This workflow will teach you the basics of APIs (Application Programming Interfaces).\n\n**What is an API?**\nThink of it like ordering food at a restaurant.\n- **You** are the \"Client\" (the **HTTP Request** node). You want something.\n- The **Kitchen** is the \"Server\" (the **Webhook** node). It has the data/service you want.\n- The **API** is the **Waiter and the Menu**. It's the set of rules and options you have for making a request and getting a response.\n\n\n**How to use this tutorial:**\n1.  Click **\"Execute Workflow\"**. The workflow will run from top to bottom.\n2.  Explore each \"Lesson\" by clicking on the **HTTP Request** node (the Customer) and its corresponding **Webhook** node (the Kitchen).\n3.  Read the sticky note for each lesson to understand the concept being demonstrated.",
+        "height": 560,
+        "width": 880
+      },
+      "id": "0263d1cc-d5cf-4667-b4ee-ccdbc85669fc",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        128
+      ],
+      "typeVersion": 1,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "#### Lesson 1: The Basics (Method & URL)\n\nThis is the simplest possible request.\n\n- **URL (Uniform Resource Locator):** This is the **address of the restaurant's kitchen**. The HTTP Request node needs to know exactly where to send the order. We use a special n8n expression to get the Webhook's test address automatically.\n\n- **Method: `GET`**: This is **what you want to do**. `GET` means you simply want to **retrieve** or **get** information. It's like asking the waiter, \"What's on the menu today?\"\n\n\n**➡️ Look at the output of the HTTP Request node. It received exactly what the Webhook is configured to listen to!**",
+        "height": 480,
+        "width": 880,
+        "color": 7
+      },
+      "id": "3a32f60c-0deb-4d58-a900-41700e04ad76",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        928,
+        208
+      ],
+      "typeVersion": 1,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Base URL').last().json.your_n8n_base_url }}/order",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "extra_cheese",
+              "value": "false"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "db121762-c0d1-4306-a5e7-84f077dd2a62",
+      "name": "2. The Customer (GET with Query Params)",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1008,
+        1088
+      ],
+      "typeVersion": 4.1
+    },
+    {
+      "parameters": {
+        "path": "7e9067e0-5eb5-48fe-bb10-940c6ac0772a",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "6deb501c-ddd9-41f3-82cf-07947cd67181",
+      "name": "2. The Kitchen (GET /order)",
+      "type": "n8n-nodes-base.webhook",
+      "position": [
+        1312,
+        1088
+      ],
+      "webhookId": "7e9067e0-5eb5-48fe-bb10-940c6ac0772a",
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "order",
+              "type": "string",
+              "value": "Pizza with extra cheese"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "87ca2526-b1c2-4dea-907d-a8d3808be48b",
+      "name": "Respond with Cheese",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1744,
+        992
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "order",
+              "type": "string",
+              "value": "Plain Pizza"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d73e7e82-bc02-489e-93c9-034ce0ae8977",
+      "name": "Respond with Plain",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1744,
+        1184
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "#### Lesson 2: Customizing a Request (Query Parameters)\n\nWhat if you want to customize your order? That's what Query Parameters are for.\n\n**Query Parameters:** These are simple options added to the end of the URL after a `?`. They are key-value pairs used to filter, sort, or specify what you want.\n\nIt's like telling the waiter, \"I'll have the pizza... **and can you add extra cheese?**\"\n\n`?extra_cheese=true` is the query parameter.\n\n**➡️ The Webhook node uses an IF node to check for this parameter and changes its response accordingly.\nTry setting the value to `false` in the HTTP Request node and run it again!**",
+        "height": 640,
+        "width": 1120,
+        "color": 7
+      },
+      "id": "1c614cff-c3fc-45ce-a0a6-584f4cb756b8",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        928,
+        720
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Base URL').last().json.your_n8n_base_url }}/review",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "comment",
+              "value": "I'm so happy !!"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "581209ae-b520-45da-8ab4-807438d02bff",
+      "name": "3. The Customer (POST with Body)",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1008,
+        1680
+      ],
+      "typeVersion": 4.1
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "89870903-958c-4403-8bd0-531f716f0226",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "a564f493-c8d3-4986-93a8-bf0ce8427715",
+      "name": "3. The Kitchen (POST /review)",
+      "type": "n8n-nodes-base.webhook",
+      "position": [
+        1312,
+        1680
+      ],
+      "webhookId": "89870903-958c-4403-8bd0-531f716f0226",
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "status",
+              "type": "string",
+              "value": "200 review_received"
+            },
+            {
+              "id": "67890",
+              "name": "your_comment",
+              "type": "string",
+              "value": "={{ $json.body.comment }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "56f1e13b-c9a5-4c90-91a4-e4ec532bbd17",
+      "name": "Respond to Review",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1520,
+        1680
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "#### Lesson 3: Sending Data (POST & Body)\n\nSometimes, you don't want to *get* data, you want to *send* it.\n\n- **Method: `POST`**: This method is used to **send new data** to the server. It's like handing the waiter a completed customer feedback card.\n\n- **Body:** This is the **actual data you are sending**. Since you're sending more complex information than a simple query parameter, it goes in a separate \"package\" called the body.\n\n\n**➡️ The HTTP Request sends a JSON object in its body. The Webhook receives it and includes your comment in its response.**",
+        "height": 460,
+        "width": 880,
+        "color": 7
+      },
+      "id": "224b7af6-cd3a-410b-9ca6-230ae52be7b2",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        928,
+        1408
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Base URL').last().json.your_n8n_base_url }}/secret-dish",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "api-key-wrong"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "bd2bee1f-5058-4271-8c4b-a6fc7fde2a00",
+      "name": "4. The Customer (GET with Headers/Auth)",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1008,
+        2240
+      ],
+      "typeVersion": 4.1
+    },
+    {
+      "parameters": {
+        "path": "ab2e2db5-79b6-43b1-a6a2-a31cd3edf606",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "6e3864cc-08e9-443f-b75a-9d25cb698b87",
+      "name": "4. The Kitchen (GET /secret-dish)",
+      "type": "n8n-nodes-base.webhook",
+      "position": [
+        1312,
+        2240
+      ],
+      "webhookId": "ab2e2db5-79b6-43b1-a6a2-a31cd3edf606",
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "dish",
+              "type": "string",
+              "value": "The Chef's Special Truffle Pasta"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0021fc2f-c074-4373-ab03-187c4b19d8ba",
+      "name": "Respond with Secret",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1744,
+        2144
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "error",
+              "type": "string",
+              "value": "You are not authorized"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "63376b9a-d9c2-4b9c-814e-d691a68013d9",
+      "name": "Respond with Error",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1744,
+        2352
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "#### Lesson 4: Identification (Headers & Auth)\n\nHeaders contain meta-information *about* your request. They're not part of the data itself, but they provide important context. Authentication is a common use case.\n\n- **Headers:** Think of this as **showing your VIP membership card** or whispering a secret password to the waiter. It's information that proves who you are or what your request's properties are.\n\n- **Authentication (Auth):** This is the process of proving your identity. Here, we use a custom header (`x-auth-token`) as a \"secret key\".\n\n\n**➡️ The Webhook checks for the correct secret key in the headers. If it's wrong or missing, it denies the request!**",
+        "height": 620,
+        "width": 1120,
+        "color": 7
+      },
+      "id": "b5609f93-7ee5-4dd5-ba11-f7f0bba99f9c",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        928,
+        1904
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Base URL').last().json.your_n8n_base_url }}/slow-service",
+        "options": {
+          "timeout": 2000
+        }
+      },
+      "id": "f97986d9-7aee-4da5-a21b-8eff22ee11eb",
+      "name": "5. The Customer (Request with Timeout)",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1008,
+        2880
+      ],
+      "typeVersion": 4.1,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "path": "f2a59646-2c68-4867-af3c-fbe13b924339",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "a4638314-ff3a-4494-9b60-907696634ec8",
+      "name": "5. The Kitchen (GET /slow-service)",
+      "type": "n8n-nodes-base.webhook",
+      "position": [
+        1312,
+        2880
+      ],
+      "webhookId": "f2a59646-2c68-4867-af3c-fbe13b924339",
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "status",
+              "type": "string",
+              "value": "Finally, your food is here!"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4928ea3c-7563-428a-9a81-58e8dac3202b",
+      "name": "Respond Slowly",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1744,
+        2880
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "#### Lesson 5: Being Patient (Timeout)\n\nAn API request isn't instant. What if the kitchen is really busy?\n\n- **Timeout:** This is the **maximum amount of time (in milliseconds) you are willing to wait** for a response before you give up and walk away.\n\n\nIn this example:\n- The **Kitchen (Webhook)** has a 3-second delay.\n- The **Customer (HTTP Request)** is only willing to wait for 2 seconds (2000 ms).\n\n**➡️ This request is designed to FAIL! The customer gives up before the kitchen can finish the order. This is crucial for preventing your workflows from getting stuck forever waiting for a slow service.**",
+        "height": 500,
+        "width": 1120,
+        "color": 7
+      },
+      "id": "33a8a2e7-e7ed-4913-a25a-46038cb08e84",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        928,
+        2560
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "amount": 1.5
+      },
+      "id": "6e464ffc-5995-4663-8cf0-2468f4096886",
+      "name": "Wait 3 seconds",
+      "type": "n8n-nodes-base.wait",
+      "position": [
+        1520,
+        2880
+      ],
+      "webhookId": "b8b7c13f-aa3b-4dd9-8bed-240ee971b31c",
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7edededc-2f40-4b8e-b8db-ab4816f1a28e",
+              "name": "your_n8n_base_url",
+              "type": "string",
+              "value": "=your_webhook_production_url_here/tutorial/api"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8554c279-6ad6-43fb-ab18-1325b1e77cf1",
+      "name": "Base URL",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        512,
+        512
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "ca861c2d-78d9-403b-8bab-28d8e7dcf39c",
+              "operator": {
+                "name": "filter.operator.equals",
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.headers['x-api-key'] }}",
+              "rightValue": "your-api-key-for-example"
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "98cb7770-253e-4797-b2c0-8d78a415ab5b",
+      "name": "IF Authorized",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        1520,
+        2240
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "loose"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "ca861c2d-78d9-403b-8bab-28d8e7dcf39c",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json.query.extra_cheese }}",
+              "rightValue": "your-api-key-for-example"
+            }
+          ]
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "a27097cd-802c-47bc-8ab8-1ae2d98be403",
+      "name": "IF extra cheese",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        1520,
+        1088
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "content": "## Was this helpful? Let me know!\n\nI really hope this tutorial helped you understand APIs better. Your feedback is incredibly valuable and helps me create better resources for the n8n community.\n\n### **Share Your Thoughts & Ideas**\n\nWhether you have a suggestion, found a typo, or just want to say thanks, I'd love to hear from you!\nHere's a simple n8n form built for this purpose:\n\n#### ➡️ **[Click here to give feedback](https://api.ia2s.app/form/templates/feedback?template=API%20Tutorial)**\n\n### **Ready to Build Something Great?**\n\nIf you're looking to take your n8n skills or business automation to the next level, I can help.\n\n**🎓 n8n Coaching:** Want to become an n8n pro? I offer one-on-one coaching sessions to help you master workflows, tackle specific problems, and build with confidence.\n#### ➡️ **[Book a Coaching Session](https://api.ia2s.app/form/templates/coaching?template=API%20Tutorial)**\n\n**💼 n8n Consulting:** Have a complex project, an integration challenge, or need a custom workflow built for your business? Let's work together to create a powerful automation solution.\n#### ➡️ **[Inquire About Consulting Services](https://api.ia2s.app/form/templates/consulting?template=API%20Tutorial)**\n\n---\n\nHappy Automating!\nLucas Peyrin",
+        "height": 800,
+        "width": 540,
+        "color": 4
+      },
+      "id": "3ff3e24e-8046-47b9-a205-b57fc6a16305",
+      "name": "Sticky Note12",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2080,
+        2272
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Credit\nThank you [Lucas Peyrin](https://n8n.io/creators/lucaspeyrin/) for your awesome [101 template](https://n8n.io/workflows/5171-learn-api-fundamentals-with-an-interactive-hands-on-tutorial-workflow/)!",
+        "height": 100,
+        "width": 420,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "ac1f8f32-76e8-4a3a-8884-247a48f9c525",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        320,
+        512
+      ],
+      "id": "a0b96b39-2d38-4dfe-915c-e1f2d196ec42",
+      "name": "When clicking ‘Execute workflow’"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-11-29T18:56:48.975Z",
+      "createdAt": "2025-11-29T18:56:48.975Z",
+      "role": "workflow:owner",
+      "workflowId": "Acr4tmUN3HdJKXWL",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-12-09T21:14:41.478Z",
+  "versionId": "09e0621d-353a-4708-9d34-589c3ac4d966"
+}
