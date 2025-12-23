@@ -1,0 +1,2107 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Publish on TikTok": {
+      "main": [
+        [
+          {
+            "node": "Update a database page2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload to Blotato": {
+      "main": [
+        [
+          {
+            "node": "Set Your IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Linkedin": {
+      "main": [
+        [
+          {
+            "node": "Update a database page7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Instagram": {
+      "main": [
+        [
+          {
+            "node": "Update a database page4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Facebook": {
+      "main": [
+        [
+          {
+            "node": "Update a database page5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get All Posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Update a database page",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Controller AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Linkedin",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Facebook",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Instagram",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Publish on Youtube",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Pinterest",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Twitter",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Publish on TikTok",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Publish on Youtube": {
+      "main": [
+        [
+          {
+            "node": "Update a database page3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a database page": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Twitter": {
+      "main": [
+        [
+          {
+            "node": "Update a database page1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinterest": {
+      "main": [
+        [
+          {
+            "node": "Update a database page6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Your IDs": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Controller AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Controller AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file3": {
+      "main": [
+        [
+          {
+            "node": "Get Image URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file2": {
+      "main": [
+        [
+          {
+            "node": "Get Video URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Video URL": {
+      "main": [
+        [
+          {
+            "node": "Upload to Blotato",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Image URL": {
+      "main": [
+        [
+          {
+            "node": "Upload to Blotato",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get All Posts": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Video/Image": {
+      "main": [
+        [
+          {
+            "node": "Download file3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Download file2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Controller AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Video/Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload to Blotato1": {
+      "main": [
+        [
+          {
+            "node": "Set Your IDs1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Get All Posts1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Update a database page8",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Download file1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file1": {
+      "main": [
+        [
+          {
+            "node": "Controller AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Publish on Youtube1": {
+      "main": [
+        [
+          {
+            "node": "Update a database page11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a database page8": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Your IDs1": {
+      "main": [
+        [
+          {
+            "node": "Linkedin1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Instagram1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Publish on Youtube1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Twitter1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Controller AI Agent1",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Controller AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file4": {
+      "main": [
+        [
+          {
+            "node": "Get Video URL1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file5": {
+      "main": [
+        [
+          {
+            "node": "Get Image URL1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Video URL1": {
+      "main": [
+        [
+          {
+            "node": "Upload to Blotato1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Image URL1": {
+      "main": [
+        [
+          {
+            "node": "Upload to Blotato1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get All Posts1": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Video/Image1": {
+      "main": [
+        [
+          {
+            "node": "Download file5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Download file4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Controller AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Video/Image1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-23T14:33:09.519Z",
+  "id": "pCYMJkF0tKJOX3bq",
+  "isArchived": false,
+  "meta": null,
+  "name": "Social Media Autoposting",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://backend.blotato.com/v2/posts",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"post\": {\n    \"target\": {\n      \"targetType\": \"tiktok\",\n      \"isYourBrand\": false,\n      \"disabledDuet\": false,\n      \"privacyLevel\": \"PUBLIC_TO_EVERYONE\",\n      \"isAiGenerated\": true,\n      \"disabledStitch\": false,\n      \"disabledComments\": false,\n      \"isBrandedContent\": false,\n      \"autoAddMusic\": true\n    },\n  \"content\": {\n    \"text\": \"{{ $('Get All Posts').item.json.properties['Post Content'].rich_text[0].text.content }}\",\n    \"platform\": \"tiktok\",\n    \"mediaUrls\": [\"{{ $('Upload to Blotato').item.json.url }}\"]\n    },\n    \"accountId\": \"{{ $json.tiktok }}\"\n  }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3904,
+        2464
+      ],
+      "id": "53404d9e-b3aa-4e44-936f-0d1bcbdea918",
+      "name": "Publish on TikTok"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://backend.blotato.com/v2/media",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "={{ $json.url }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3168,
+        1984
+      ],
+      "id": "36c8800a-88f4-4eda-a088-420e370ae217",
+      "name": "Upload to Blotato"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://backend.blotato.com/v2/posts",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"post\": {\n    \"target\": {\n      \"targetType\": \"linkedin\"\n    },\n    \"content\": {\n      \"text\": \"{{ $('Get All Posts').item.json.properties['Post Title'].title[0].text.content }}\",\n      \"platform\": \"linkedin\",\n      \"mediaUrls\": [\"{{ $('Upload to Blotato').item.json.url }}\"]\n    },\n    \"accountId\": \"{{ $json.linkedin }}\"\n  }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3904,
+        1504
+      ],
+      "id": "02c074e7-89e4-4c6c-9f97-6e3b93c2d6f7",
+      "name": "Linkedin"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://backend.blotato.com/v2/posts",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"post\": {\n    \"target\": {\n      \"targetType\": \"instagram\"\n    },\n    \"content\": {\n      \"text\": \"{{ $('Get All Posts').item.json.properties['Post Content'].rich_text[0].text.content }}\",\n      \"platform\": \"instagram\",\n      \"mediaUrls\": [\"{{ $('Upload to Blotato').item.json.url }}\"]\n    },\n    \"accountId\": \"{{ $json.instagram }}\"\n  }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3904,
+        1824
+      ],
+      "id": "5388df0d-e491-4e86-ae05-0060362e8d5d",
+      "name": "Instagram"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://backend.blotato.com/v2/posts",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"post\": {\n    \"accountId\": \"{{ $json.facebook }}\",\n    \"target\": {\n      \"targetType\": \"facebook\",\n      \"pageId\": \"{{ $json.facebook_page_id }}\"\n    },\n    \"content\": {\n      \"text\": \"{{ $('Get All Posts').item.json.properties['Post Title'].title[0].text.content }}. {{ $('Get All Posts').item.json.properties['Post Content'].rich_text[0].text.content }}\",\n      \"mediaUrls\": [\"{{ $('Upload to Blotato').item.json.url }}\"],\n      \"platform\": \"facebook\"\n    }\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3904,
+        1664
+      ],
+      "id": "44cdfdc6-ad91-4440-b4ab-ade112372ad5",
+      "name": "Facebook"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        688,
+        1984
+      ],
+      "id": "f977d712-8c0f-4ee4-a038-35b4e128b898",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "e40bd60d-9beb-4a55-88cd-7ad167d5e94b",
+              "leftValue": "={{ $json.triggerDate }}",
+              "rightValue": "={{ $json.notionDate }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "915b7913-c9c1-49aa-bb82-9eba67b0a259",
+              "leftValue": "={{ $('Get All Posts').item.json.properties.Status.select.name }}",
+              "rightValue": "Waiting",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1280,
+        1984
+      ],
+      "id": "af31339f-b1a7-40ef-856f-fdc8a44fccd6",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "jsCode": "const output = [];\n\nfor (const item of $input.all()) {\n  const notionDateTimeRaw = item.json.properties?.[\"Publish Date\"]?.date?.start;\n\n  let notionDateOnly = null;\n  let notionTimeOnly = null;\n\n  if (notionDateTimeRaw) {\n    // Extract date and time from ISO string manually to keep UTC+2\n    const [datePart, timePartWithZone] = notionDateTimeRaw.split(\"T\");\n    const timePart = timePartWithZone.split(\"+\")[0].split(\".\")[0]; // clean from +02:00 and milliseconds\n    notionDateOnly = datePart;\n    notionTimeOnly = timePart;\n  }\n\n  const triggerTimestamp = item.json[\"Schedule Trigger\"]?.timestamp || new Date().toISOString();\n  const triggerDate = new Date(triggerTimestamp);\n  const triggerDateOnly = triggerDate.toISOString().split(\"T\")[0];\n  const triggerTimeOnly = triggerDate.toTimeString().split(\" \")[0];\n\n  output.push({\n    notionDate: notionDateOnly,\n    notionTime: notionTimeOnly,\n    triggerDate: triggerDateOnly,\n    triggerTime: triggerTimeOnly\n  });\n}\n\nreturn output;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1088,
+        1984
+      ],
+      "id": "290c8ac0-0faf-4064-b948-db61d41d04f2",
+      "name": "Code"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1568,
+        2224
+      ],
+      "id": "99eaccd5-402b-48b9-a2da-e5a824388a4b",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "resume": "specificTime",
+        "dateTime": "={{ $('Code').item.json.notionTime }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1760,
+        1984
+      ],
+      "id": "a31eeaf2-d35a-4d17-82fa-77bf7063b094",
+      "name": "Wait",
+      "webhookId": "2643cc9e-090d-44f0-909d-6efa3e356e50",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('Get All Posts').item.json.properties['Media URL'].url }}",
+          "mode": "url"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1968,
+        1984
+      ],
+      "id": "394d5e6b-8adc-453a-89ca-e220e374ccb8",
+      "name": "Download file"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "84ec2be6-ad6b-4ad4-8f8b-d31fafbfad20",
+                    "leftValue": "={{ $('Get All Posts').item.json.properties.Platform.select.name }}",
+                    "rightValue": "Linkedin",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Linkedin"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "9b600943-3604-4851-b84d-4da0948da2ef",
+                    "leftValue": "={{ $('Get All Posts').item.json.properties.Platform.select.name }}",
+                    "rightValue": "Facebook",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Facebook"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "d7f28656-aeab-4b2f-bd32-6111cb56ecc1",
+                    "leftValue": "={{ $('Get All Posts').item.json.properties.Platform.select.name }}",
+                    "rightValue": "Instagram",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Instagram"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "c14ca3c0-ef10-45b5-8acb-f0d0c1339624",
+                    "leftValue": "={{ $('Get All Posts').item.json.properties.Platform.select.name }}",
+                    "rightValue": "Youtube",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Youtube"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Get All Posts').item.json.properties.Platform.select.name }}",
+                    "rightValue": "Pinterest",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "2673ebe3-59ce-4105-9fe9-e4beeb8f3148"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Pinterest"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "f0f6a9a2-fff0-4e7b-aed5-49887cb511eb",
+                    "leftValue": "={{ $('Get All Posts').item.json.properties.Platform.select.name }}",
+                    "rightValue": "Twitter",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "X (Twitter)"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "617af759-fada-4a67-bc06-be2b0b40989b",
+                    "leftValue": "={{ $('Get All Posts').item.json.properties.Platform.select.name }}",
+                    "rightValue": "Tiktok",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Tiktok"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        3568,
+        1904
+      ],
+      "id": "1a3e3c8e-b6cf-44cc-9b88-777df423ba09",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://backend.blotato.com/v2/posts",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"post\": {\n    \"target\": {\n      \"targetType\": \"pinterest\",\n      \"boardId\": \"696861811032050496\"\n    },\n    \"content\": {\n      \"text\": \"{{ $('Get All Posts').item.json.properties['Post Content'].rich_text[0].text.content }}\",\n      \"platform\": \"pinterest\",\n      \"mediaUrls\": [\"{{ $('Upload to Blotato').item.json.url }}\"]\n    },\n    \"accountId\": \"{{ $json.pinterest }}\"\n  }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3904,
+        2144
+      ],
+      "id": "c02b582b-879c-486b-bbf7-5ccdd0b45c79",
+      "name": "Pinterest"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://backend.blotato.com/v2/posts",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"post\": {\n    \"target\": {\n      \"targetType\": \"twitter\"\n    },\n    \"content\": {\n      \"text\": \"{{ $('Get All Posts').item.json.properties['Post Content'].rich_text[0].text.content }}\",\n      \"platform\": \"twitter\",\n      \"mediaUrls\": [\"{{ $('Upload to Blotato').item.json.url }}\"]\n    },\n    \"accountId\": \"{{ $json.twitter }}\"\n  }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3904,
+        2304
+      ],
+      "id": "fdcb1795-1a22-48de-a6ea-6c29e53998b5",
+      "name": "Twitter"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://backend.blotato.com/v2/posts",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"post\": {\n    \"target\": {\n      \"targetType\": \"youtube\",\n      \"title\": \"{{ $('Get All Posts').item.json.properties['Post Title'].title[0].text.content }}\",\n      \"privacyStatus\": \"public\",\n      \"shouldNotifySubscribers\": false\n    },\n    \"content\": {\n      \"text\": \"{{ $('Get All Posts').item.json.properties['Post Content'].rich_text[0].text.content }}\",\n      \"platform\": \"youtube\",\n      \"mediaUrls\": [\"{{ $('Upload to Blotato').item.json.url }}\"]\n    },\n    \"accountId\": \"{{ $json.youtube }}\"\n  }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3904,
+        1984
+      ],
+      "id": "c366cfd5-8adc-4765-a57b-92b341886d6c",
+      "name": "Publish on Youtube"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('Get All Posts').item.json.id }}",
+          "mode": "id"
+        },
+        "simple": false,
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Status|select",
+              "selectValue": "Planned"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        1568,
+        1984
+      ],
+      "id": "cfcc7217-718c-4b8a-a79d-19b566baf73d",
+      "name": "Update a database page"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('Get All Posts').item.json.id }}",
+          "mode": "id"
+        },
+        "simple": false,
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Status|select",
+              "selectValue": "Published"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        4128,
+        2304
+      ],
+      "id": "c9042f0d-0af6-4114-9932-f858171411f9",
+      "name": "Update a database page1"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('Get All Posts').item.json.id }}",
+          "mode": "id"
+        },
+        "simple": false,
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Status|select",
+              "selectValue": "Published"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        4128,
+        2464
+      ],
+      "id": "3ef6dbc4-be95-49c6-8c0c-54c35282199a",
+      "name": "Update a database page2"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('Get All Posts').item.json.id }}",
+          "mode": "id"
+        },
+        "simple": false,
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Status|select",
+              "selectValue": "Published"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        4128,
+        1984
+      ],
+      "id": "0147da14-9512-48cb-b464-664be626c841",
+      "name": "Update a database page3"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('Get All Posts').item.json.id }}",
+          "mode": "id"
+        },
+        "simple": false,
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Status|select",
+              "selectValue": "Published"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        4128,
+        1824
+      ],
+      "id": "1b19e68d-1dcc-46e2-976a-b6364a376c7a",
+      "name": "Update a database page4"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('Get All Posts').item.json.id }}",
+          "mode": "id"
+        },
+        "simple": false,
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Status|select",
+              "selectValue": "Published"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        4128,
+        1664
+      ],
+      "id": "8854c59d-3f98-4e1c-a3cb-537f0f1bca64",
+      "name": "Update a database page5"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('Get All Posts').item.json.id }}",
+          "mode": "id"
+        },
+        "simple": false,
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Status|select",
+              "selectValue": "Published"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        4128,
+        2144
+      ],
+      "id": "2de29e68-02ae-4c7c-941a-73272fe69d45",
+      "name": "Update a database page6"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('Get All Posts').item.json.id }}",
+          "mode": "id"
+        },
+        "simple": false,
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Status|select",
+              "selectValue": "Published"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        4128,
+        1504
+      ],
+      "id": "cbf09054-7852-4c5d-9b6d-214263df4c54",
+      "name": "Update a database page7"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"facebook\": \"3991\",\n  \"facebook_page_id\": \"692981360555594\",\n  \"youtube\": \"4416\",\n  \"tiktok\": \"5757\",\n  \"instagram\": \"7807\",\n  \"linkedin\": \"3159\",\n  \"pinterest\": \"977\",\n  \"twitter\": \"3909\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3344,
+        1984
+      ],
+      "id": "6d6b727e-05ea-4d59-8173-539a0a27c979",
+      "name": "Set Your IDs"
+    },
+    {
+      "parameters": {
+        "content": "# Publish to One Social Media",
+        "height": 1360,
+        "width": 3860
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        560,
+        1360
+      ],
+      "id": "6b567668-6e94-4540-ad05-403b930a8bbd",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\"content_type\": \"\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        2352,
+        2160
+      ],
+      "id": "dd7b0984-0d65-4791-896d-82181cd54bf7",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        2144,
+        2160
+      ],
+      "id": "21723021-3bc1-468b-a0ce-3c56226200a5",
+      "name": "OpenAI Chat Model"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('Get All Posts').item.json.properties['Media URL'].url }}",
+          "mode": "url"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2752,
+        2144
+      ],
+      "id": "e8369654-74fd-4758-8edd-f955e0854089",
+      "name": "Download file2"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('Get All Posts').item.json.properties['Media URL'].url }}",
+          "mode": "url"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2752,
+        1824
+      ],
+      "id": "28f06fff-db19-40c1-b421-64eacf1ea9c2",
+      "name": "Download file3"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": " https://api.cloudinary.com/v1_1/dfidczp14/video/upload",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            },
+            {
+              "name": "upload_preset",
+              "value": "n8n-yuotube"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2928,
+        2144
+      ],
+      "id": "e1b68694-9eb2-4140-9247-36e348e291c0",
+      "name": "Get Video URL"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": " https://api.cloudinary.com/v1_1/dfidczp14/image/upload",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            },
+            {
+              "name": "upload_preset",
+              "value": "n8n-yuotube"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2928,
+        1824
+      ],
+      "id": "b92e52e9-cf44-4268-a4d8-2dcfc7f20fcb",
+      "name": "Get Image URL"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "getAll",
+        "databaseId": {
+          "__rl": true,
+          "value": "22cccdb2-3d99-805b-a42b-c17fab0cff3b",
+          "mode": "list",
+          "cachedResultName": "Content to Post",
+          "cachedResultUrl": "https://www.notion.so/22cccdb23d99805ba42bc17fab0cff3b"
+        },
+        "simple": false,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        880,
+        1984
+      ],
+      "id": "69396076-0def-4ff1-bdeb-31ec7747d73e",
+      "name": "Get All Posts"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.output.content_type }}",
+                    "rightValue": "image",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "f5c8a058-f5f1-45f5-a8b8-b690ed82ebd6"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "a39f267c-d27c-48aa-b6d8-be47b716e757",
+                    "leftValue": "={{ $json.output.content_type }}",
+                    "rightValue": "video",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        2528,
+        1984
+      ],
+      "id": "5c59334d-ec04-42fe-a673-69d76147b2ae",
+      "name": "Video/Image"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Decide if the file provided is an image or a video. If it's an image return \"image\", if the video return \"video\", not any other elements or parts\n\nFile Name: {{$binary.data.fileName}}\n\n\n",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        2160,
+        1984
+      ],
+      "id": "8fad48a3-7614-436a-b528-051bda96506a",
+      "name": "Controller AI Agent"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://backend.blotato.com/v2/media",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "={{ $json.url }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3168,
+        3392
+      ],
+      "id": "0e0b9296-2aa2-46ee-9400-5b29b70fd3e8",
+      "name": "Upload to Blotato1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://backend.blotato.com/v2/posts",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"post\": {\n    \"target\": {\n      \"targetType\": \"linkedin\"\n    },\n    \"content\": {\n      \"text\": \"{{ $('Get All Posts1').item.json.properties['Post Title'].title[0].text.content }}\",\n      \"platform\": \"linkedin\",\n      \"mediaUrls\": [\"{{ $('Upload to Blotato1').item.json.url }}\"]\n    },\n    \"accountId\": \"{{ $json.linkedin }}\"\n  }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3888,
+        3088
+      ],
+      "id": "2ec21d38-d40a-440f-900b-710039e43b53",
+      "name": "Linkedin1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://backend.blotato.com/v2/posts",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"post\": {\n    \"target\": {\n      \"targetType\": \"instagram\"\n    },\n    \"content\": {\n      \"text\": \"{{ $('Get All Posts1').item.json.properties['Post Content'].rich_text[0].text.content }}\",\n      \"platform\": \"instagram\",\n      \"mediaUrls\": [\"{{ $('Upload to Blotato1').item.json.url }}\"]\n    },\n    \"accountId\": \"{{ $json.instagram }}\"\n  }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3888,
+        3280
+      ],
+      "id": "7deca16a-f1e3-4b25-8d2b-b57a7b636381",
+      "name": "Instagram1"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        688,
+        3392
+      ],
+      "id": "8f93841a-3f76-4ab7-83cc-282703a73479",
+      "name": "Schedule Trigger1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "e40bd60d-9beb-4a55-88cd-7ad167d5e94b",
+              "leftValue": "={{ $json.triggerDate }}",
+              "rightValue": "={{ $json.notionDate }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "915b7913-c9c1-49aa-bb82-9eba67b0a259",
+              "leftValue": "={{ $('Get All Posts1').item.json.properties.Status.select.name }}",
+              "rightValue": "Waiting",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1280,
+        3392
+      ],
+      "id": "6329fbf4-6f82-4b29-8d17-b1903083bf74",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const output = [];\n\nfor (const item of $input.all()) {\n  const notionDateTimeRaw = item.json.properties?.[\"Publish Date\"]?.date?.start;\n\n  let notionDateOnly = null;\n  let notionTimeOnly = null;\n\n  if (notionDateTimeRaw) {\n    // Extract date and time from ISO string manually to keep UTC+2\n    const [datePart, timePartWithZone] = notionDateTimeRaw.split(\"T\");\n    const timePart = timePartWithZone.split(\"+\")[0].split(\".\")[0]; // clean from +02:00 and milliseconds\n    notionDateOnly = datePart;\n    notionTimeOnly = timePart;\n  }\n\n  const triggerTimestamp = item.json[\"Schedule Trigger\"]?.timestamp || new Date().toISOString();\n  const triggerDate = new Date(triggerTimestamp);\n  const triggerDateOnly = triggerDate.toISOString().split(\"T\")[0];\n  const triggerTimeOnly = triggerDate.toTimeString().split(\" \")[0];\n\n  output.push({\n    notionDate: notionDateOnly,\n    notionTime: notionTimeOnly,\n    triggerDate: triggerDateOnly,\n    triggerTime: triggerTimeOnly\n  });\n}\n\nreturn output;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1088,
+        3392
+      ],
+      "id": "0a5bf472-c211-4a0c-97b9-932f3b690217",
+      "name": "Code1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1568,
+        3632
+      ],
+      "id": "b83cb885-7fe5-45da-926f-1471dbd50e47",
+      "name": "No Operation, do nothing1"
+    },
+    {
+      "parameters": {
+        "resume": "specificTime",
+        "dateTime": "={{ $('Code1').item.json.notionTime }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1760,
+        3392
+      ],
+      "id": "d7792cf4-f4d0-4c54-9cf2-ee282e87a966",
+      "name": "Wait1",
+      "webhookId": "2643cc9e-090d-44f0-909d-6efa3e356e50",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('Get All Posts1').item.json.properties['Media URL'].url }}",
+          "mode": "url"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1968,
+        3392
+      ],
+      "id": "e9de6044-f16b-4cfa-b78c-d6e73d60c129",
+      "name": "Download file1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://backend.blotato.com/v2/posts",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"post\": {\n    \"target\": {\n      \"targetType\": \"twitter\"\n    },\n    \"content\": {\n      \"text\": \"{{ $('Get All Posts1').first().json.properties['Post Content'].rich_text[0].text.content }}\",\n      \"platform\": \"twitter\",\n      \"mediaUrls\": [\"{{ $('Upload to Blotato1').item.json.url }}\"]\n    },\n    \"accountId\": \"{{ $json.twitter }}\"\n  }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3888,
+        3680
+      ],
+      "id": "01af8134-c588-4b28-b7b3-aa39535c59f7",
+      "name": "Twitter1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://backend.blotato.com/v2/posts",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"post\": {\n    \"target\": {\n      \"targetType\": \"youtube\",\n      \"title\": \"{{ $('Get All Posts1').item.json.properties['Post Title'].title[0].text.content }}\",\n      \"privacyStatus\": \"public\",\n      \"shouldNotifySubscribers\": false\n    },\n    \"content\": {\n      \"text\": \"{{ $('Get All Posts1').item.json.properties['Post Content'].rich_text[0].text.content }}\",\n      \"platform\": \"youtube\",\n      \"mediaUrls\": [\"{{ $('Upload to Blotato1').item.json.url }}\"]\n    },\n    \"accountId\": \"{{ $json.youtube }}\"\n  }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3888,
+        3488
+      ],
+      "id": "8d19d940-4863-40f3-84ee-4a4364dd2a91",
+      "name": "Publish on Youtube1"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('Get All Posts1').item.json.id }}",
+          "mode": "id"
+        },
+        "simple": false,
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Status|select",
+              "selectValue": "Planned"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        1568,
+        3392
+      ],
+      "id": "26ac3176-fc97-4431-b0c0-f597636ad4af",
+      "name": "Update a database page8"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('Get All Posts1').item.json.id }}",
+          "mode": "id"
+        },
+        "simple": false,
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Status|select",
+              "selectValue": "Published"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        4128,
+        3488
+      ],
+      "id": "b6954f0e-463c-4ff1-b864-7dc2edda83d1",
+      "name": "Update a database page11"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"facebook\": \"3991\",\n  \"facebook_page_id\": \"692981360555594\",\n  \"youtube\": \"4416\",\n  \"tiktok\": \"5757\",\n  \"instagram\": \"7807\",\n  \"linkedin\": \"3159\",\n  \"pinterest\": \"1326\",\n  \"twitter\": \"3909\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3344,
+        3392
+      ],
+      "id": "3df2021f-d0ae-4ec3-b122-8acfd2f8257a",
+      "name": "Set Your IDs1"
+    },
+    {
+      "parameters": {
+        "content": "# Publish to ALL Social Media",
+        "height": 1360,
+        "width": 3860,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        560,
+        2768
+      ],
+      "id": "64340e0d-1140-4280-87e5-c9d978b0b61b",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\"content_type\": \"\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        2352,
+        3568
+      ],
+      "id": "74eac250-d7e5-4d3d-b6ef-e5bfdf8f1b27",
+      "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        2144,
+        3568
+      ],
+      "id": "40f904a6-45d8-4994-9304-c5571d361331",
+      "name": "OpenAI Chat Model1"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('Get All Posts1').item.json.properties['Media URL'].url }}",
+          "mode": "url"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2752,
+        3552
+      ],
+      "id": "e6f63180-994b-4376-8a70-1cce9b86c72d",
+      "name": "Download file4"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('Get All Posts1').item.json.properties['Media URL'].url }}",
+          "mode": "url"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2752,
+        3232
+      ],
+      "id": "aa6941fd-be9c-4acd-b7d4-605651cfd58f",
+      "name": "Download file5"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": " https://api.cloudinary.com/v1_1/dfidczp14/video/upload",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            },
+            {
+              "name": "upload_preset",
+              "value": "n8n-yuotube"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2928,
+        3552
+      ],
+      "id": "8ea83dd3-dd92-4ce4-b74e-a91f00a82b6e",
+      "name": "Get Video URL1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": " https://api.cloudinary.com/v1_1/dfidczp14/image/upload",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            },
+            {
+              "name": "upload_preset",
+              "value": "n8n-yuotube"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2928,
+        3232
+      ],
+      "id": "de760ee7-841d-442a-bea2-e6725e134362",
+      "name": "Get Image URL1"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "getAll",
+        "databaseId": {
+          "__rl": true,
+          "value": "22cccdb2-3d99-805b-a42b-c17fab0cff3b",
+          "mode": "list",
+          "cachedResultName": "Content to Post",
+          "cachedResultUrl": "https://www.notion.so/22cccdb23d99805ba42bc17fab0cff3b"
+        },
+        "simple": false,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        880,
+        3392
+      ],
+      "id": "47c5e7d6-6cad-4ad2-8e33-9a8195100248",
+      "name": "Get All Posts1"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.output.content_type }}",
+                    "rightValue": "image",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "f5c8a058-f5f1-45f5-a8b8-b690ed82ebd6"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "a39f267c-d27c-48aa-b6d8-be47b716e757",
+                    "leftValue": "={{ $json.output.content_type }}",
+                    "rightValue": "video",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        2528,
+        3392
+      ],
+      "id": "bffc51be-824d-4573-8ed5-af4648a0bf26",
+      "name": "Video/Image1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Decide if the file provided is an image or a video. If it's an image return \"image\", if the video return \"video\", not any other elements or parts\n\nFile Name: {{$binary.data.fileName}}\n\n\n",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        2160,
+        3392
+      ],
+      "id": "585fd316-4afe-4498-8a6f-631e505dd706",
+      "name": "Controller AI Agent1"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-23T14:33:09.519Z",
+      "createdAt": "2025-12-23T14:33:09.519Z",
+      "role": "workflow:owner",
+      "workflowId": "pCYMJkF0tKJOX3bq",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-12-23T14:33:09.519Z",
+  "versionId": "15198449-4a16-4d8e-acb5-1358f299d871"
+}
