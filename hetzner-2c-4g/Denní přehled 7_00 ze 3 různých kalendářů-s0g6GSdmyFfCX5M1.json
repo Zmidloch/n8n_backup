@@ -1,0 +1,935 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-16T14:41:18.918Z",
+    "createdAt": "2025-12-16T14:41:18.918Z",
+    "versionId": "4c02572a-52bf-4271-b04f-c53d715e6b20",
+    "workflowId": "s0g6GSdmyFfCX5M1",
+    "nodes": [
+      {
+        "parameters": {
+          "content": "## Trigger daily\n",
+          "height": 220,
+          "width": 260,
+          "color": 7
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          0,
+          0
+        ],
+        "id": "64ee3e01-c94a-4df0-9897-3e2e4e1a3666",
+        "name": "Sticky Note2"
+      },
+      {
+        "parameters": {
+          "content": "## Get Daily Company",
+          "height": 220,
+          "width": 260,
+          "color": 7
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          304,
+          0
+        ],
+        "id": "5d308263-b4d4-4ec9-9430-d1d666adc007",
+        "name": "Sticky Note6"
+      },
+      {
+        "parameters": {
+          "content": "## Send email\n",
+          "height": 220,
+          "width": 260,
+          "color": 7
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          1344,
+          0
+        ],
+        "id": "d2fc682f-cce4-4972-8107-1aeb0d98d543",
+        "name": "Sticky Note7"
+      },
+      {
+        "parameters": {
+          "content": "## Combine meetings\n",
+          "height": 220,
+          "width": 400,
+          "color": 7
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          624,
+          0
+        ],
+        "id": "5f743886-7f57-426b-8155-9137dfe1084d",
+        "name": "Sticky Note8"
+      },
+      {
+        "parameters": {
+          "content": "## Format them\n",
+          "height": 220,
+          "color": 7
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          1520,
+          816
+        ],
+        "id": "322d2cf6-3755-451f-ad72-e98233db59cd",
+        "name": "Sticky Note9"
+      },
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "triggerAtHour": 7
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          64,
+          80
+        ],
+        "id": "8ed09753-871e-46f2-91b0-a704e3345772",
+        "name": "Schedule Trigger"
+      },
+      {
+        "parameters": {
+          "sendTo": "zmidloch@z-agency.cz",
+          "subject": "=Přehled událostí: {{ $now.setLocale('cs').toFormat('EEEE dd.MM.yyyy') }}",
+          "message": "={{ $json.html_message }}",
+          "options": {
+            "appendAttribution": false
+          }
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.1,
+        "position": [
+          1408,
+          80
+        ],
+        "id": "6af9f0c3-4c61-4011-ae08-13217d52a24c",
+        "name": "Send a message",
+        "webhookId": "496ebca2-a115-4744-9c9f-621194132f8f",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "cUMqdo7XCF6noXLb",
+            "name": "Gmail-info@z-agency.cz"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "ba452296-3b5c-4f58-87af-3913e844a686",
+                "name": "Přehled provozních událostí",
+                "value": "={{ $json.start.dateTime ? DateTime.fromISO($json.start.dateTime).toFormat('dd.MM.yyyy - HH:mm') : DateTime.fromISO($json.start.date).toFormat('dd.MM.yyyy') }} - {{ $json.summary }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          640,
+          80
+        ],
+        "id": "2bf3b143-ef1f-48d6-8898-5467ac835746",
+        "name": "Edit Fields1"
+      },
+      {
+        "parameters": {
+          "aggregate": "aggregateAllItemData",
+          "include": "=allFields",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.aggregate",
+        "typeVersion": 1,
+        "position": [
+          1376,
+          928
+        ],
+        "id": "c7540de7-87a6-4ffc-8151-a7a67489586c",
+        "name": "Aggregate1"
+      },
+      {
+        "parameters": {
+          "jsCode": "const items = $input.all();\nconst akce = [];\nconst provoz = [];\nconst osobni = [];\n\n// Třídění položek\nfor (const item of items) {\n  const json = item.json;\n  if (json[\"Přehled akcí\"]) akce.push(json[\"Přehled akcí\"]);\n  if (json[\"Přehled provozních událostí\"]) provoz.push(json[\"Přehled provozních událostí\"]);\n  if (json[\"Přehled osobních událostí\"]) osobni.push(json[\"Přehled osobních událostí\"]);\n}\n\n// Funkce pro hezké HTML formátování\nfunction formatHtmlSection(emoji, title, list, color) {\n  if (!list || list.length === 0) return \"\";\n  \n  // Vytvoříme HTML seznam\n  const listItems = list.map(item => `<li style=\"margin-bottom: 5px;\">${item}</li>`).join(\"\");\n  \n  // Vrátíme sekci s nadpisem a seznamem\n  return `\n    <div style=\"margin-bottom: 20px;\">\n      <h3 style=\"color: ${color}; margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 5px;\">\n        ${emoji} ${title}\n      </h3>\n      <ul style=\"padding-left: 20px;\">\n        ${listItems}\n      </ul>\n    </div>\n  `;\n}\n\nlet htmlContent = \"\";\n\n// Barvy sekcí\nhtmlContent += formatHtmlSection(\"📅\", \"Přehled akcí\", akce, \"#2980b9\");\nhtmlContent += formatHtmlSection(\"🛠️\", \"Provozní události\", provoz, \"#d35400\");\nhtmlContent += formatHtmlSection(\"🏠\", \"Osobní události\", osobni, \"#27ae60\");\n\nif (htmlContent === \"\") {\n    htmlContent = \"<p><i>Žádné nové události.</i></p>\";\n}\n\n// Obalíme to do základní struktury emailu (BEZ patičky)\nconst finalHtml = `\n<div style=\"font-family: Arial, sans-serif; color: #333; line-height: 1.6;\">\n  <h2>Souhrn událostí</h2>\n  ${htmlContent}\n</div>\n`;\n\nreturn {\n  json: {\n    html_message: finalHtml,\n    stats: {\n      akce: akce.length,\n      provoz: provoz.length,\n      osobni: osobni.length\n    }\n  }\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1120,
+          96
+        ],
+        "id": "38ac06ea-b0f8-4061-9621-2a06ef99609c",
+        "name": "Code1"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "ba452296-3b5c-4f58-87af-3913e844a686",
+                "name": "Přehled akcí",
+                "value": "={{ $json.start.dateTime ? DateTime.fromISO($json.start.dateTime).toFormat('dd.MM.yyyy - HH:mm') : DateTime.fromISO($json.start.date).toFormat('dd.MM.yyyy') }} - {{ $json.summary }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          640,
+          288
+        ],
+        "id": "0318df9f-7cbd-4bf7-8ec0-351e791e49c8",
+        "name": "Edit Fields"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "ba452296-3b5c-4f58-87af-3913e844a686",
+                "name": "Přehled osobních událostí",
+                "value": "={{ $json.start.dateTime ? DateTime.fromISO($json.start.dateTime).toFormat('dd.MM.yyyy - HH:mm') : DateTime.fromISO($json.start.date).toFormat('dd.MM.yyyy') }} - {{ $json.summary }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          640,
+          512
+        ],
+        "id": "1e1b6d73-ef1f-4880-953a-d6d27af0f8ee",
+        "name": "Edit Fields2"
+      },
+      {
+        "parameters": {
+          "operation": "getAll",
+          "calendar": {
+            "__rl": true,
+            "value": "zmidloch@z-agency.cz",
+            "mode": "list",
+            "cachedResultName": "Z-AGENCY - provozní kalendář"
+          },
+          "timeMax": "={{ $now.plus({ hours: 15 }) }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleCalendar",
+        "typeVersion": 1.3,
+        "position": [
+          368,
+          80
+        ],
+        "id": "ec3c601a-8c7c-4c30-a7be-0e8c68325cfc",
+        "name": "Get Many Events Company",
+        "credentials": {
+          "googleCalendarOAuth2Api": {
+            "id": "di76UVJp04drlP3F",
+            "name": "Google Calendar zmidloch@z-agency.cz"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "getAll",
+          "calendar": {
+            "__rl": true,
+            "value": "info@z-agency.cz",
+            "mode": "list",
+            "cachedResultName": "AKCE - info@z-agency.cz"
+          },
+          "timeMax": "={{ $now.plus({ hours: 15 }) }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleCalendar",
+        "typeVersion": 1.3,
+        "position": [
+          368,
+          288
+        ],
+        "id": "d568227d-ae0a-4100-9c39-d57b07f06179",
+        "name": "Get Many Events Personal",
+        "credentials": {
+          "googleCalendarOAuth2Api": {
+            "id": "di76UVJp04drlP3F",
+            "name": "Google Calendar zmidloch@z-agency.cz"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "getAll",
+          "calendar": {
+            "__rl": true,
+            "value": "j.zmidloch@gmail.com",
+            "mode": "list",
+            "cachedResultName": "OSOBNÍ - j.zmidloch@gmail.com"
+          },
+          "timeMax": "={{ $now.plus({ hours: 15 }) }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleCalendar",
+        "typeVersion": 1.3,
+        "position": [
+          368,
+          512
+        ],
+        "id": "0ca680e9-b89a-4831-b012-16854c3b00cf",
+        "name": "Get Many Events Akce",
+        "credentials": {
+          "googleCalendarOAuth2Api": {
+            "id": "di76UVJp04drlP3F",
+            "name": "Google Calendar zmidloch@z-agency.cz"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "numberInputs": 3
+        },
+        "type": "n8n-nodes-base.merge",
+        "typeVersion": 3.2,
+        "position": [
+          864,
+          96
+        ],
+        "id": "43c8dc5c-3c5f-41e1-abe0-7a87d2bfdc36",
+        "name": "Merge"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "n8n-nodes-base.sort",
+        "typeVersion": 1,
+        "position": [
+          1152,
+          816
+        ],
+        "id": "5356ed22-5c5f-4644-b94a-fefa7e46a866",
+        "name": "Sort"
+      }
+    ],
+    "connections": {
+      "Schedule Trigger": {
+        "main": [
+          [
+            {
+              "node": "Get Many Events Company",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Get Many Events Personal",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Get Many Events Akce",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields1": {
+        "main": [
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Aggregate1": {
+        "main": [
+          []
+        ]
+      },
+      "Code1": {
+        "main": [
+          [
+            {
+              "node": "Send a message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Many Events Company": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Many Events Personal": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Many Events Akce": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields": {
+        "main": [
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Edit Fields2": {
+        "main": [
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 2
+            }
+          ]
+        ]
+      },
+      "Merge": {
+        "main": [
+          [
+            {
+              "node": "Code1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jiri Zmidloch",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "4c02572a-52bf-4271-b04f-c53d715e6b20",
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Many Events Company",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get Many Events Personal",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get Many Events Akce",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate1": {
+      "main": [
+        []
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Many Events Company": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Many Events Personal": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Many Events Akce": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-15T07:46:59.416Z",
+  "id": "s0g6GSdmyFfCX5M1",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Denní přehled 7:00 ze 3 různých kalendářů",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Trigger daily\n",
+        "height": 220,
+        "width": 260,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "64ee3e01-c94a-4df0-9897-3e2e4e1a3666",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Get Daily Company",
+        "height": 220,
+        "width": 260,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        304,
+        0
+      ],
+      "id": "5d308263-b4d4-4ec9-9430-d1d666adc007",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "## Send email\n",
+        "height": 220,
+        "width": 260,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1344,
+        0
+      ],
+      "id": "d2fc682f-cce4-4972-8107-1aeb0d98d543",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "## Combine meetings\n",
+        "height": 220,
+        "width": 400,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        624,
+        0
+      ],
+      "id": "5f743886-7f57-426b-8155-9137dfe1084d",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "content": "## Format them\n",
+        "height": 220,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        816
+      ],
+      "id": "322d2cf6-3755-451f-ad72-e98233db59cd",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 7
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        64,
+        80
+      ],
+      "id": "8ed09753-871e-46f2-91b0-a704e3345772",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "sendTo": "zmidloch@z-agency.cz",
+        "subject": "=Přehled událostí: {{ $now.setLocale('cs').toFormat('EEEE dd.MM.yyyy') }}",
+        "message": "={{ $json.html_message }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1408,
+        80
+      ],
+      "id": "6af9f0c3-4c61-4011-ae08-13217d52a24c",
+      "name": "Send a message",
+      "webhookId": "496ebca2-a115-4744-9c9f-621194132f8f",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "cUMqdo7XCF6noXLb",
+          "name": "Gmail-info@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ba452296-3b5c-4f58-87af-3913e844a686",
+              "name": "Přehled provozních událostí",
+              "value": "={{ $json.start.dateTime ? DateTime.fromISO($json.start.dateTime).toFormat('dd.MM.yyyy - HH:mm') : DateTime.fromISO($json.start.date).toFormat('dd.MM.yyyy') }} - {{ $json.summary }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        640,
+        80
+      ],
+      "id": "2bf3b143-ef1f-48d6-8898-5467ac835746",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "include": "=allFields",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1376,
+        928
+      ],
+      "id": "c7540de7-87a6-4ffc-8151-a7a67489586c",
+      "name": "Aggregate1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst akce = [];\nconst provoz = [];\nconst osobni = [];\n\n// Třídění položek\nfor (const item of items) {\n  const json = item.json;\n  if (json[\"Přehled akcí\"]) akce.push(json[\"Přehled akcí\"]);\n  if (json[\"Přehled provozních událostí\"]) provoz.push(json[\"Přehled provozních událostí\"]);\n  if (json[\"Přehled osobních událostí\"]) osobni.push(json[\"Přehled osobních událostí\"]);\n}\n\n// Funkce pro hezké HTML formátování\nfunction formatHtmlSection(emoji, title, list, color) {\n  if (!list || list.length === 0) return \"\";\n  \n  // Vytvoříme HTML seznam\n  const listItems = list.map(item => `<li style=\"margin-bottom: 5px;\">${item}</li>`).join(\"\");\n  \n  // Vrátíme sekci s nadpisem a seznamem\n  return `\n    <div style=\"margin-bottom: 20px;\">\n      <h3 style=\"color: ${color}; margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 5px;\">\n        ${emoji} ${title}\n      </h3>\n      <ul style=\"padding-left: 20px;\">\n        ${listItems}\n      </ul>\n    </div>\n  `;\n}\n\nlet htmlContent = \"\";\n\n// Barvy sekcí\nhtmlContent += formatHtmlSection(\"📅\", \"Přehled akcí\", akce, \"#2980b9\");\nhtmlContent += formatHtmlSection(\"🛠️\", \"Provozní události\", provoz, \"#d35400\");\nhtmlContent += formatHtmlSection(\"🏠\", \"Osobní události\", osobni, \"#27ae60\");\n\nif (htmlContent === \"\") {\n    htmlContent = \"<p><i>Žádné nové události.</i></p>\";\n}\n\n// Obalíme to do základní struktury emailu (BEZ patičky)\nconst finalHtml = `\n<div style=\"font-family: Arial, sans-serif; color: #333; line-height: 1.6;\">\n  <h2>Souhrn událostí</h2>\n  ${htmlContent}\n</div>\n`;\n\nreturn {\n  json: {\n    html_message: finalHtml,\n    stats: {\n      akce: akce.length,\n      provoz: provoz.length,\n      osobni: osobni.length\n    }\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        96
+      ],
+      "id": "38ac06ea-b0f8-4061-9621-2a06ef99609c",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ba452296-3b5c-4f58-87af-3913e844a686",
+              "name": "Přehled akcí",
+              "value": "={{ $json.start.dateTime ? DateTime.fromISO($json.start.dateTime).toFormat('dd.MM.yyyy - HH:mm') : DateTime.fromISO($json.start.date).toFormat('dd.MM.yyyy') }} - {{ $json.summary }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        640,
+        288
+      ],
+      "id": "0318df9f-7cbd-4bf7-8ec0-351e791e49c8",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ba452296-3b5c-4f58-87af-3913e844a686",
+              "name": "Přehled osobních událostí",
+              "value": "={{ $json.start.dateTime ? DateTime.fromISO($json.start.dateTime).toFormat('dd.MM.yyyy - HH:mm') : DateTime.fromISO($json.start.date).toFormat('dd.MM.yyyy') }} - {{ $json.summary }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        640,
+        512
+      ],
+      "id": "1e1b6d73-ef1f-4880-953a-d6d27af0f8ee",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "zmidloch@z-agency.cz",
+          "mode": "list",
+          "cachedResultName": "Z-AGENCY - provozní kalendář"
+        },
+        "timeMax": "={{ $now.plus({ hours: 15 }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        368,
+        80
+      ],
+      "id": "ec3c601a-8c7c-4c30-a7be-0e8c68325cfc",
+      "name": "Get Many Events Company",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "di76UVJp04drlP3F",
+          "name": "Google Calendar zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "info@z-agency.cz",
+          "mode": "list",
+          "cachedResultName": "AKCE - info@z-agency.cz"
+        },
+        "timeMax": "={{ $now.plus({ hours: 15 }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        368,
+        288
+      ],
+      "id": "d568227d-ae0a-4100-9c39-d57b07f06179",
+      "name": "Get Many Events Personal",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "di76UVJp04drlP3F",
+          "name": "Google Calendar zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "j.zmidloch@gmail.com",
+          "mode": "list",
+          "cachedResultName": "OSOBNÍ - j.zmidloch@gmail.com"
+        },
+        "timeMax": "={{ $now.plus({ hours: 15 }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        368,
+        512
+      ],
+      "id": "0ca680e9-b89a-4831-b012-16854c3b00cf",
+      "name": "Get Many Events Akce",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "di76UVJp04drlP3F",
+          "name": "Google Calendar zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        864,
+        96
+      ],
+      "id": "43c8dc5c-3c5f-41e1-abe0-7a87d2bfdc36",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.sort",
+      "typeVersion": 1,
+      "position": [
+        1152,
+        816
+      ],
+      "id": "5356ed22-5c5f-4644-b94a-fefa7e46a866",
+      "name": "Sort"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Prague",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "zVAjJgKV17IWzFP7"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-15T07:46:59.416Z",
+      "createdAt": "2025-12-15T07:46:59.416Z",
+      "role": "workflow:owner",
+      "workflowId": "s0g6GSdmyFfCX5M1",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-12-16T14:41:18.913Z",
+  "versionId": "4c02572a-52bf-4271-b04f-c53d715e6b20"
+}
