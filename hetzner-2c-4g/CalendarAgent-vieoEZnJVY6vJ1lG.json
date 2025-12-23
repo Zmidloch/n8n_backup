@@ -1,0 +1,1367 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-21T01:03:11.096Z",
+    "createdAt": "2025-12-21T01:03:11.096Z",
+    "versionId": "63179558-9819-4812-977b-7b992aa43b7a",
+    "workflowId": "vieoEZnJVY6vJ1lG",
+    "nodes": [
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          -576,
+          48
+        ],
+        "id": "31604c80-ad4f-4895-a1fb-5faf9334a803",
+        "name": "Chat_Trigger",
+        "webhookId": "6768e855-7eb2-4de0-a761-8dcde32e7aea",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "content": "## 1. Triggers\n",
+          "height": 804,
+          "width": 608,
+          "color": 7
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          -864,
+          -208
+        ],
+        "id": "b6fbd640-1da0-40da-a452-3a5eedb49d56",
+        "name": "Sticky Note2"
+      },
+      {
+        "parameters": {
+          "content": "## 2. Calendar Execution\nSchedules and updates calendar invites",
+          "height": 360,
+          "width": 800,
+          "color": 7
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          0,
+          0
+        ],
+        "id": "1ee2dcda-e7f6-4535-9260-8fec8d4b346f",
+        "name": "Sticky Note3"
+      },
+      {
+        "parameters": {
+          "operation": "delete",
+          "calendar": {
+            "__rl": true,
+            "value": "zmidloch@z-agency.cz",
+            "mode": "list",
+            "cachedResultName": "Z-AGENCY - provozní kalendář"
+          },
+          "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleCalendarTool",
+        "typeVersion": 1.3,
+        "position": [
+          400,
+          512
+        ],
+        "id": "438a022d-b9a1-4cf9-b496-e7152d510cbf",
+        "name": "DeleteEvent",
+        "credentials": {
+          "googleCalendarOAuth2Api": {
+            "id": "di76UVJp04drlP3F",
+            "name": "Google Calendar account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "calendar": {
+            "__rl": true,
+            "value": "zmidloch@z-agency.cz",
+            "mode": "list",
+            "cachedResultName": "Z-AGENCY - provozní kalendář"
+          },
+          "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+          "updateFields": {
+            "attendeesUi": {
+              "values": {
+                "attendees": [
+                  "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Attendees', ``, 'string') }}"
+                ]
+              }
+            },
+            "description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', `the description of the event if it needs updating`, 'string') }}",
+            "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+            "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}"
+          }
+        },
+        "type": "n8n-nodes-base.googleCalendarTool",
+        "typeVersion": 1.3,
+        "position": [
+          544,
+          512
+        ],
+        "id": "13d22c4e-b7de-4b23-8868-e409b667eddc",
+        "name": "UpdateEvent",
+        "credentials": {
+          "googleCalendarOAuth2Api": {
+            "id": "di76UVJp04drlP3F",
+            "name": "Google Calendar account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "getAll",
+          "calendar": {
+            "__rl": true,
+            "value": "zmidloch@z-agency.cz",
+            "mode": "list",
+            "cachedResultName": "Z-AGENCY - provozní kalendář"
+          },
+          "limit": 10,
+          "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('After', ``, 'string') }}",
+          "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Before', ``, 'string') }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleCalendarTool",
+        "typeVersion": 1.3,
+        "position": [
+          688,
+          512
+        ],
+        "id": "68074f67-52d8-4abe-99f7-6d96f105ca43",
+        "name": "GetEvent",
+        "credentials": {
+          "googleCalendarOAuth2Api": {
+            "id": "di76UVJp04drlP3F",
+            "name": "Google Calendar account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "descriptionType": "manual",
+          "toolDescription": "use this to create events - CreateEvent",
+          "calendar": {
+            "__rl": true,
+            "value": "zmidloch@z-agency.cz",
+            "mode": "list",
+            "cachedResultName": "Z-AGENCY - provozní kalendář"
+          },
+          "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', `the start time of the meeting`, 'string') }}",
+          "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', `the end time of the meeting`, 'string') }}",
+          "additionalFields": {
+            "attendees": [
+              "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('attendees0_Attendees', `emails of any other people mentioned if they exist`, 'string') }}"
+            ],
+            "description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', ``, 'string') }}",
+            "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}"
+          }
+        },
+        "type": "n8n-nodes-base.googleCalendarTool",
+        "typeVersion": 1.3,
+        "position": [
+          288,
+          512
+        ],
+        "id": "8e1c0062-418d-4122-b68c-f8a8693594ab",
+        "name": "CreateEvent",
+        "credentials": {
+          "googleCalendarOAuth2Api": {
+            "id": "di76UVJp04drlP3F",
+            "name": "Google Calendar account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "d5a0d042-ba31-4706-b789-681999936339",
+                "name": "query",
+                "value": "={{ $json.chatInput }}",
+                "type": "string"
+              },
+              {
+                "id": "b2673cda-8f15-47f2-9614-53c57c7832d1",
+                "name": "sessionId",
+                "value": "",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -416,
+          64
+        ],
+        "id": "1d437b15-be0b-4d7a-b765-1e979866f06d",
+        "name": "SetQuery",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "sessionIdType": "customKey",
+          "sessionKey": "={{ $('TelegramTrigger').item.json.message.message_id }}",
+          "contextWindowLength": 10
+        },
+        "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+        "typeVersion": 1.3,
+        "position": [
+          144,
+          224
+        ],
+        "id": "e409fa66-2b44-4675-972e-1d78b6d318de",
+        "name": "BufferMemory"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "a17f706b-6292-4c9b-b2de-1fb7a1205eaf",
+                "name": "response",
+                "value": "={{ $('CalendarBooking').item.json.output }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          432,
+          144
+        ],
+        "id": "70d9a891-cecb-43b5-953b-592e2de42ea4",
+        "name": "SetResponse"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=<Role>\nYou are a Google Calendar Agent responsible for managing calendar events on behalf of users. Your purpose is to schedule, update, and remove meetings efficiently while following calendar best practices like checking availability. You are connected to Simon's calendar, simon@scrapes.ai who is asking you to schedule meetings. You are connected to 5 tools listed, each one should be used where appropriate. Communicate with ser in Czech language\n</role>\n\n<constraints>\n*Never modify or delete events without explicit confirmation\n*When deleting or updating events, you must always check with the GetEvent tool for the correct eventId. Never make it up.\n*Respect working hours set in Google Calendar\n*Always verify date and time formats before creating events\n*Today's date is {{ $now.toLocal() }}\n*Always use Europe/Prague timezone\n*If a user specifies a day e.g. \"on Thursday\", assume it's the next Thursday from today's date\n*If a user asks to check availability at a specific time, assume a before time of 1 hour before that and an after time of 1 hour after the specified time\n*For vague user queries, clarify details before continuing an action\n*If an end time is not specified, assume the meeting is 30 minutes long\n*Give each event a summary (title) and description, even if not provided\n</constraints>\n\n<tools>\n1. CreateEvent - Creates new calendar events with parameters:\n    *startTime \n    *endTime\n    *summary - title of meeting\n    *description - description of meeting\n    *attendees - list of attendee emails\n2. DeleteEvent - Removes calendar events with parameters:\n    *eventId (required) - obtained from using GetEvent tool\n3. GetEvent - Retrieves calendar events with parameters (useful for getting eventId):\n    *before (required, format: YYYY-MM-DDTHH:MM:SS) - before this time\n    *after (required, format: YYYY-MM-DDTHH:MM:SS) - after this time\n4. UpdateEvent - Updates calendar events with parameters:\n    *eventId (required)\n    *summary (optional)\n    *attendee\n    *description (optional)\n    *startTime (new - required, format: YYYY-MM-DDTHH:MM:SS)\n    *endTime (new - required, format: YYYY-MM-DDTHH:MM:SS)\n5. CheckAvailability - Retrieves 'busy' slots between that time period i.e. not free\n    *before (required, format: YYYY-MM-DDTHH:MM:SS) - before this time\n    *after (required, format: YYYY-MM-DDTHH:MM:SS) - after this time\n</tools>\n\n<instructions (Workflow Sequence)>\nFor creating meetings:\n    1. Collect event details (title, time, date, attendees) from user input\n    2. Check for conflicts using CheckAvailability\n    3. Create event with CreateEvent\n    4. Confirm successful creation\nFor updating meetings:\n    1. Identify the event to update using GetEvent (eventId will return)\n    2. Retrieve current event details\n    3. Apply requested changes using UpdateEvent\n    4. Confirm changes before submission\nFor deleting meetings:\n    1. Determine the event date and time from the user query\n    2. Run the GetEvent tool ALWAYS first to get the appropriate eventId to pass into DeleteEvent\n    3. Confirm deletion intent with user\n    4. Execute DeleteEvent, pass the eventId from GetEvent\n    5. Verify successful removal\nFor getting meeting info:\n    1. Collect event details (time, date, attendees) from user input\n    2. Use GetEvent to return events between those times\n    3. Return to the user the event information\nFor checking availability info:\n    1. Collect event details (time, date, attendees) from user input\n    2. Use CheckAvailability to return events between those times\n    3. Let the user know about events at the specified time\n</instructions>\n\n<inputs (expected)>\n*Natural language requests for calendar actions\n*Event details could include (optional):\n    *Meeting title/summary \n    *Start and end times \n    *Date\n    *Timezone\n    *Attendees (emails)\n    *Description/agenda\n</inputs>\n\n<conclusions (outputs expected)>\n*Confirmation messages for successful actions\n*Clear error messages for failed operations\n*Event links when events are created\n*Summaries of upcoming events when requested\n*Conflict notifications when scheduling issues arise\n</conclusions>\n\n<solutions (error handling)>\n*If event creation fails, retry with adjusted parameters\n*If time slot is unavailable, suggest alternative times by using GetEvent to retrieve times within close proximity to the one suggested (e.g. same day)\n*If required parameters are missing, prompt user for specific information\n*If authentication fails, guide user through reconnection steps\n*If natural language parsing fails, request clarification on specific details\n</solutions>\n\n<user query>\n{{ $json.text }}\n</user query>\n",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 1.7,
+        "position": [
+          32,
+          80
+        ],
+        "id": "259bb7a1-7bba-4cc0-95b6-28e0154de5e3",
+        "name": "CalendarBooking"
+      },
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "value": "gpt-5.2",
+            "mode": "list",
+            "cachedResultName": "gpt-5.2"
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1.2,
+        "position": [
+          32,
+          224
+        ],
+        "id": "2ae58f97-f5ed-49f5-b9fc-af82987a9096",
+        "name": "Openrouter",
+        "credentials": {
+          "openAiApi": {
+            "id": "OyAnM4ykrgDRQ4Jq",
+            "name": "OpenAI_API_Zetko"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "inputSource": "passthrough"
+        },
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          -576,
+          -128
+        ],
+        "id": "d78aff28-b81b-43aa-bc38-327160a90e1c",
+        "name": "Executed_Trigger"
+      },
+      {
+        "parameters": {
+          "content": "## 3. Execution\nUse appropriate tools to execute request",
+          "height": 280,
+          "width": 560,
+          "color": 7
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          240,
+          384
+        ],
+        "id": "7f177596-24af-4629-8f76-28ab581b815c",
+        "name": "Sticky Note"
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $json.message.voice.file_id }}",
+                      "rightValue": "",
+                      "operator": {
+                        "type": "string",
+                        "operation": "exists",
+                        "singleValue": true
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "Voice"
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "8c844924-b2ed-48b0-935c-c66a8fd0c778",
+                      "leftValue": "={{ $json.message.text }}",
+                      "rightValue": "",
+                      "operator": {
+                        "type": "string",
+                        "operation": "exists",
+                        "singleValue": true
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                },
+                "renameOutput": true,
+                "outputKey": "Text"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "d28bd461-3ad6-463a-b353-9a55145a0f4d",
+        "name": "Swich",
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.2,
+        "position": [
+          -592,
+          288
+        ]
+      },
+      {
+        "parameters": {
+          "resource": "file",
+          "fileId": "={{ $json.message.voice.file_id }}",
+          "additionalFields": {}
+        },
+        "id": "dfe7fea5-0c33-4293-84c5-778c9c489809",
+        "name": "getMessage",
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          -416,
+          240
+        ],
+        "webhookId": "83bb7385-33f6-4105-8294-1a91c0ebbee5",
+        "credentials": {
+          "telegramApi": {
+            "id": "UrrMYed7rpj32cus",
+            "name": "TelegramSef"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "fe7ecc99-e1e8-4a5e-bdd6-6fce9757b234",
+                "name": "text",
+                "value": "={{ $json.message.text }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "7cdcd1e3-8709-4d54-88db-77eadd1187f1",
+        "name": "setText",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -448,
+          480
+        ]
+      },
+      {
+        "parameters": {
+          "chatId": "={{ $('TelegramTrigger').item.json.message.chat.id }}",
+          "text": "={{ $json.output }}",
+          "additionalFields": {
+            "appendAttribution": false
+          }
+        },
+        "id": "2f60f744-ff0d-4af7-9bf7-05aa69fc1a49",
+        "name": "TelegramAnswer",
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          432,
+          -16
+        ],
+        "webhookId": "5dced4b9-5066-4036-a4d4-14fc07edd53c",
+        "credentials": {
+          "telegramApi": {
+            "id": "UrrMYed7rpj32cus",
+            "name": "TelegramSef"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "updates": [
+            "message"
+          ],
+          "additionalFields": {}
+        },
+        "id": "3d90bb91-8906-4f45-b564-2dd84ce1c2fa",
+        "name": "TelegramTrigger",
+        "type": "n8n-nodes-base.telegramTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          -736,
+          288
+        ],
+        "webhookId": "99eab1a0-569d-4f0f-a49e-578a02abfe63",
+        "credentials": {
+          "telegramApi": {
+            "id": "UrrMYed7rpj32cus",
+            "name": "TelegramSef"
+          }
+        },
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "resource": "audio",
+          "operation": "transcribe",
+          "options": {}
+        },
+        "id": "3ec84d43-af0a-42d4-bd48-65355fe0bdf6",
+        "name": "transcribeMessage",
+        "type": "@n8n/n8n-nodes-langchain.openAi",
+        "typeVersion": 1.6,
+        "position": [
+          -208,
+          256
+        ],
+        "credentials": {
+          "openAiApi": {
+            "id": "OyAnM4ykrgDRQ4Jq",
+            "name": "OpenAI_API_Zetko"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Chat_Trigger": {
+        "main": [
+          [
+            {
+              "node": "SetQuery",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "DeleteEvent": {
+        "ai_tool": [
+          [
+            {
+              "node": "CalendarBooking",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "UpdateEvent": {
+        "ai_tool": [
+          [
+            {
+              "node": "CalendarBooking",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "GetEvent": {
+        "ai_tool": [
+          [
+            {
+              "node": "CalendarBooking",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "CreateEvent": {
+        "ai_tool": [
+          [
+            {
+              "node": "CalendarBooking",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "SetQuery": {
+        "main": [
+          [
+            {
+              "node": "CalendarBooking",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "BufferMemory": {
+        "ai_memory": [
+          [
+            {
+              "node": "CalendarBooking",
+              "type": "ai_memory",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "CalendarBooking": {
+        "main": [
+          [
+            {
+              "node": "SetResponse",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "TelegramAnswer",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Openrouter": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "CalendarBooking",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Executed_Trigger": {
+        "main": [
+          [
+            {
+              "node": "CalendarBooking",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Swich": {
+        "main": [
+          [
+            {
+              "node": "getMessage",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "setText",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "getMessage": {
+        "main": [
+          [
+            {
+              "node": "transcribeMessage",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "TelegramTrigger": {
+        "main": [
+          [
+            {
+              "node": "Swich",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "transcribeMessage": {
+        "main": [
+          [
+            {
+              "node": "CalendarBooking",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "63179558-9819-4812-977b-7b992aa43b7a",
+  "connections": {
+    "Chat_Trigger": {
+      "main": [
+        [
+          {
+            "node": "SetQuery",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DeleteEvent": {
+      "ai_tool": [
+        [
+          {
+            "node": "CalendarBooking",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "UpdateEvent": {
+      "ai_tool": [
+        [
+          {
+            "node": "CalendarBooking",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetEvent": {
+      "ai_tool": [
+        [
+          {
+            "node": "CalendarBooking",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CreateEvent": {
+      "ai_tool": [
+        [
+          {
+            "node": "CalendarBooking",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SetQuery": {
+      "main": [
+        [
+          {
+            "node": "CalendarBooking",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BufferMemory": {
+      "ai_memory": [
+        [
+          {
+            "node": "CalendarBooking",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CalendarBooking": {
+      "main": [
+        [
+          {
+            "node": "SetResponse",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "TelegramAnswer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Openrouter": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "CalendarBooking",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Executed_Trigger": {
+      "main": [
+        [
+          {
+            "node": "CalendarBooking",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Swich": {
+      "main": [
+        [
+          {
+            "node": "getMessage",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "setText",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "getMessage": {
+      "main": [
+        [
+          {
+            "node": "transcribeMessage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TelegramTrigger": {
+      "main": [
+        [
+          {
+            "node": "Swich",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "transcribeMessage": {
+      "main": [
+        [
+          {
+            "node": "CalendarBooking",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-11T21:28:15.910Z",
+  "id": "vieoEZnJVY6vJ1lG",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "CalendarAgent",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -576,
+        48
+      ],
+      "id": "31604c80-ad4f-4895-a1fb-5faf9334a803",
+      "name": "Chat_Trigger",
+      "webhookId": "6768e855-7eb2-4de0-a761-8dcde32e7aea",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## 1. Triggers\n",
+        "height": 804,
+        "width": 608,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -864,
+        -208
+      ],
+      "id": "b6fbd640-1da0-40da-a452-3a5eedb49d56",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## 2. Calendar Execution\nSchedules and updates calendar invites",
+        "height": 360,
+        "width": 800,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "1ee2dcda-e7f6-4535-9260-8fec8d4b346f",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "calendar": {
+          "__rl": true,
+          "value": "zmidloch@z-agency.cz",
+          "mode": "list",
+          "cachedResultName": "Z-AGENCY - provozní kalendář"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        400,
+        512
+      ],
+      "id": "438a022d-b9a1-4cf9-b496-e7152d510cbf",
+      "name": "DeleteEvent",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "di76UVJp04drlP3F",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "calendar": {
+          "__rl": true,
+          "value": "zmidloch@z-agency.cz",
+          "mode": "list",
+          "cachedResultName": "Z-AGENCY - provozní kalendář"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+        "updateFields": {
+          "attendeesUi": {
+            "values": {
+              "attendees": [
+                "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Attendees', ``, 'string') }}"
+              ]
+            }
+          },
+          "description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', `the description of the event if it needs updating`, 'string') }}",
+          "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+          "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        544,
+        512
+      ],
+      "id": "13d22c4e-b7de-4b23-8868-e409b667eddc",
+      "name": "UpdateEvent",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "di76UVJp04drlP3F",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "zmidloch@z-agency.cz",
+          "mode": "list",
+          "cachedResultName": "Z-AGENCY - provozní kalendář"
+        },
+        "limit": 10,
+        "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('After', ``, 'string') }}",
+        "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Before', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        688,
+        512
+      ],
+      "id": "68074f67-52d8-4abe-99f7-6d96f105ca43",
+      "name": "GetEvent",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "di76UVJp04drlP3F",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "use this to create events - CreateEvent",
+        "calendar": {
+          "__rl": true,
+          "value": "zmidloch@z-agency.cz",
+          "mode": "list",
+          "cachedResultName": "Z-AGENCY - provozní kalendář"
+        },
+        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', `the start time of the meeting`, 'string') }}",
+        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', `the end time of the meeting`, 'string') }}",
+        "additionalFields": {
+          "attendees": [
+            "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('attendees0_Attendees', `emails of any other people mentioned if they exist`, 'string') }}"
+          ],
+          "description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', ``, 'string') }}",
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        288,
+        512
+      ],
+      "id": "8e1c0062-418d-4122-b68c-f8a8693594ab",
+      "name": "CreateEvent",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "di76UVJp04drlP3F",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d5a0d042-ba31-4706-b789-681999936339",
+              "name": "query",
+              "value": "={{ $json.chatInput }}",
+              "type": "string"
+            },
+            {
+              "id": "b2673cda-8f15-47f2-9614-53c57c7832d1",
+              "name": "sessionId",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -416,
+        64
+      ],
+      "id": "1d437b15-be0b-4d7a-b765-1e979866f06d",
+      "name": "SetQuery",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('TelegramTrigger').item.json.message.message_id }}",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        144,
+        224
+      ],
+      "id": "e409fa66-2b44-4675-972e-1d78b6d318de",
+      "name": "BufferMemory"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a17f706b-6292-4c9b-b2de-1fb7a1205eaf",
+              "name": "response",
+              "value": "={{ $('CalendarBooking').item.json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        432,
+        144
+      ],
+      "id": "70d9a891-cecb-43b5-953b-592e2de42ea4",
+      "name": "SetResponse"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=<Role>\nYou are a Google Calendar Agent responsible for managing calendar events on behalf of users. Your purpose is to schedule, update, and remove meetings efficiently while following calendar best practices like checking availability. You are connected to Simon's calendar, simon@scrapes.ai who is asking you to schedule meetings. You are connected to 5 tools listed, each one should be used where appropriate. Communicate with ser in Czech language\n</role>\n\n<constraints>\n*Never modify or delete events without explicit confirmation\n*When deleting or updating events, you must always check with the GetEvent tool for the correct eventId. Never make it up.\n*Respect working hours set in Google Calendar\n*Always verify date and time formats before creating events\n*Today's date is {{ $now.toLocal() }}\n*Always use Europe/Prague timezone\n*If a user specifies a day e.g. \"on Thursday\", assume it's the next Thursday from today's date\n*If a user asks to check availability at a specific time, assume a before time of 1 hour before that and an after time of 1 hour after the specified time\n*For vague user queries, clarify details before continuing an action\n*If an end time is not specified, assume the meeting is 30 minutes long\n*Give each event a summary (title) and description, even if not provided\n</constraints>\n\n<tools>\n1. CreateEvent - Creates new calendar events with parameters:\n    *startTime \n    *endTime\n    *summary - title of meeting\n    *description - description of meeting\n    *attendees - list of attendee emails\n2. DeleteEvent - Removes calendar events with parameters:\n    *eventId (required) - obtained from using GetEvent tool\n3. GetEvent - Retrieves calendar events with parameters (useful for getting eventId):\n    *before (required, format: YYYY-MM-DDTHH:MM:SS) - before this time\n    *after (required, format: YYYY-MM-DDTHH:MM:SS) - after this time\n4. UpdateEvent - Updates calendar events with parameters:\n    *eventId (required)\n    *summary (optional)\n    *attendee\n    *description (optional)\n    *startTime (new - required, format: YYYY-MM-DDTHH:MM:SS)\n    *endTime (new - required, format: YYYY-MM-DDTHH:MM:SS)\n5. CheckAvailability - Retrieves 'busy' slots between that time period i.e. not free\n    *before (required, format: YYYY-MM-DDTHH:MM:SS) - before this time\n    *after (required, format: YYYY-MM-DDTHH:MM:SS) - after this time\n</tools>\n\n<instructions (Workflow Sequence)>\nFor creating meetings:\n    1. Collect event details (title, time, date, attendees) from user input\n    2. Check for conflicts using CheckAvailability\n    3. Create event with CreateEvent\n    4. Confirm successful creation\nFor updating meetings:\n    1. Identify the event to update using GetEvent (eventId will return)\n    2. Retrieve current event details\n    3. Apply requested changes using UpdateEvent\n    4. Confirm changes before submission\nFor deleting meetings:\n    1. Determine the event date and time from the user query\n    2. Run the GetEvent tool ALWAYS first to get the appropriate eventId to pass into DeleteEvent\n    3. Confirm deletion intent with user\n    4. Execute DeleteEvent, pass the eventId from GetEvent\n    5. Verify successful removal\nFor getting meeting info:\n    1. Collect event details (time, date, attendees) from user input\n    2. Use GetEvent to return events between those times\n    3. Return to the user the event information\nFor checking availability info:\n    1. Collect event details (time, date, attendees) from user input\n    2. Use CheckAvailability to return events between those times\n    3. Let the user know about events at the specified time\n</instructions>\n\n<inputs (expected)>\n*Natural language requests for calendar actions\n*Event details could include (optional):\n    *Meeting title/summary \n    *Start and end times \n    *Date\n    *Timezone\n    *Attendees (emails)\n    *Description/agenda\n</inputs>\n\n<conclusions (outputs expected)>\n*Confirmation messages for successful actions\n*Clear error messages for failed operations\n*Event links when events are created\n*Summaries of upcoming events when requested\n*Conflict notifications when scheduling issues arise\n</conclusions>\n\n<solutions (error handling)>\n*If event creation fails, retry with adjusted parameters\n*If time slot is unavailable, suggest alternative times by using GetEvent to retrieve times within close proximity to the one suggested (e.g. same day)\n*If required parameters are missing, prompt user for specific information\n*If authentication fails, guide user through reconnection steps\n*If natural language parsing fails, request clarification on specific details\n</solutions>\n\n<user query>\n{{ $json.text }}\n</user query>\n",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        32,
+        80
+      ],
+      "id": "259bb7a1-7bba-4cc0-95b6-28e0154de5e3",
+      "name": "CalendarBooking"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5.2",
+          "mode": "list",
+          "cachedResultName": "gpt-5.2"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        32,
+        224
+      ],
+      "id": "2ae58f97-f5ed-49f5-b9fc-af82987a9096",
+      "name": "Openrouter",
+      "credentials": {
+        "openAiApi": {
+          "id": "OyAnM4ykrgDRQ4Jq",
+          "name": "OpenAI_API_Zetko"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -576,
+        -128
+      ],
+      "id": "d78aff28-b81b-43aa-bc38-327160a90e1c",
+      "name": "Executed_Trigger"
+    },
+    {
+      "parameters": {
+        "content": "## 3. Execution\nUse appropriate tools to execute request",
+        "height": 280,
+        "width": 560,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        240,
+        384
+      ],
+      "id": "7f177596-24af-4629-8f76-28ab581b815c",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message.voice.file_id }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Voice"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "8c844924-b2ed-48b0-935c-c66a8fd0c778",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Text"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d28bd461-3ad6-463a-b353-9a55145a0f4d",
+      "name": "Swich",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -592,
+        288
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.message.voice.file_id }}",
+        "additionalFields": {}
+      },
+      "id": "dfe7fea5-0c33-4293-84c5-778c9c489809",
+      "name": "getMessage",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -416,
+        240
+      ],
+      "webhookId": "83bb7385-33f6-4105-8294-1a91c0ebbee5",
+      "credentials": {
+        "telegramApi": {
+          "id": "UrrMYed7rpj32cus",
+          "name": "TelegramSef"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fe7ecc99-e1e8-4a5e-bdd6-6fce9757b234",
+              "name": "text",
+              "value": "={{ $json.message.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7cdcd1e3-8709-4d54-88db-77eadd1187f1",
+      "name": "setText",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -448,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('TelegramTrigger').item.json.message.chat.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "id": "2f60f744-ff0d-4af7-9bf7-05aa69fc1a49",
+      "name": "TelegramAnswer",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        432,
+        -16
+      ],
+      "webhookId": "5dced4b9-5066-4036-a4d4-14fc07edd53c",
+      "credentials": {
+        "telegramApi": {
+          "id": "UrrMYed7rpj32cus",
+          "name": "TelegramSef"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "id": "3d90bb91-8906-4f45-b564-2dd84ce1c2fa",
+      "name": "TelegramTrigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -736,
+        288
+      ],
+      "webhookId": "99eab1a0-569d-4f0f-a49e-578a02abfe63",
+      "credentials": {
+        "telegramApi": {
+          "id": "UrrMYed7rpj32cus",
+          "name": "TelegramSef"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "id": "3ec84d43-af0a-42d4-bd48-65355fe0bdf6",
+      "name": "transcribeMessage",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        -208,
+        256
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "OyAnM4ykrgDRQ4Jq",
+          "name": "OpenAI_API_Zetko"
+        }
+      }
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Prague",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "zVAjJgKV17IWzFP7"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-11T21:28:15.910Z",
+      "createdAt": "2025-12-11T21:28:15.910Z",
+      "role": "workflow:owner",
+      "workflowId": "vieoEZnJVY6vJ1lG",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-12-16T15:22:11.905Z",
+  "versionId": "63179558-9819-4812-977b-7b992aa43b7a"
+}
