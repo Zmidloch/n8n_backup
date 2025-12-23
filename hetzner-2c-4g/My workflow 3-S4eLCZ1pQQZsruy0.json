@@ -1,0 +1,71 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-23T23:15:01.786Z",
+    "createdAt": "2025-12-23T23:14:58.103Z",
+    "versionId": "099490c2-2be4-4736-9d0e-e026675168dd",
+    "workflowId": "S4eLCZ1pQQZsruy0",
+    "nodes": [
+      {
+        "parameters": {
+          "path": "90125a1a-c2b3-4b0b-8f4e-3a7d7e789f40",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          0,
+          0
+        ],
+        "id": "4926b2a2-4340-4230-8cf4-fbc119e14051",
+        "name": "Webhook",
+        "webhookId": "90125a1a-c2b3-4b0b-8f4e-3a7d7e789f40"
+      }
+    ],
+    "connections": {},
+    "authors": "Jiri Zmidloch",
+    "name": "Version 099490c2",
+    "description": ""
+  },
+  "activeVersionId": "099490c2-2be4-4736-9d0e-e026675168dd",
+  "connections": {},
+  "createdAt": "2025-12-23T23:14:58.103Z",
+  "id": "S4eLCZ1pQQZsruy0",
+  "isArchived": false,
+  "meta": null,
+  "name": "My workflow 3",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "90125a1a-c2b3-4b0b-8f4e-3a7d7e789f40",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "4926b2a2-4340-4230-8cf4-fbc119e14051",
+      "name": "Webhook",
+      "webhookId": "90125a1a-c2b3-4b0b-8f4e-3a7d7e789f40"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-23T23:14:58.103Z",
+      "createdAt": "2025-12-23T23:14:58.103Z",
+      "role": "workflow:owner",
+      "workflowId": "S4eLCZ1pQQZsruy0",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-12-23T23:14:58.103Z",
+  "versionId": "099490c2-2be4-4736-9d0e-e026675168dd"
+}
