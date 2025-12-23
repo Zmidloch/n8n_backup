@@ -608,7 +608,17 @@
     },
     "authors": "Jiri Zmidloch",
     "name": null,
-    "description": null
+    "description": null,
+    "workflowPublishHistory": [
+      {
+        "createdAt": "2025-12-21T15:00:21.958Z",
+        "id": 35,
+        "workflowId": "TtdJ1lqmwJG7qNzy",
+        "versionId": "dc03847a-f1a4-4e6f-905d-56692aad6949",
+        "event": "activated",
+        "userId": "3e6bd2a1-cb85-4098-9460-1568d24c70f2"
+      }
+    ]
   },
   "activeVersionId": "dc03847a-f1a4-4e6f-905d-56692aad6949",
   "connections": {
@@ -780,6 +790,7 @@
     }
   },
   "createdAt": "2025-12-09T22:25:26.711Z",
+  "description": null,
   "id": "TtdJ1lqmwJG7qNzy",
   "isArchived": false,
   "meta": null,
@@ -1217,6 +1228,7 @@
       "name": "Sticky Note7"
     }
   ],
+  "pinData": {},
   "settings": {
     "executionOrder": "v1",
     "errorWorkflow": "zVAjJgKV17IWzFP7",
@@ -1229,7 +1241,55 @@
       "createdAt": "2025-12-09T22:25:26.711Z",
       "role": "workflow:owner",
       "workflowId": "TtdJ1lqmwJG7qNzy",
-      "projectId": "XqkS7oX8lMj4YbIK"
+      "projectId": "XqkS7oX8lMj4YbIK",
+      "project": {
+        "updatedAt": "2025-11-25T08:54:16.920Z",
+        "createdAt": "2025-11-25T08:47:58.481Z",
+        "id": "XqkS7oX8lMj4YbIK",
+        "name": "Jiri Zmidloch <zmidloch@z-agency.cz>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "projectRelations": [
+          {
+            "updatedAt": "2025-11-25T08:47:58.481Z",
+            "createdAt": "2025-11-25T08:47:58.481Z",
+            "userId": "3e6bd2a1-cb85-4098-9460-1568d24c70f2",
+            "projectId": "XqkS7oX8lMj4YbIK",
+            "user": {
+              "updatedAt": "2025-12-23T23:15:36.028Z",
+              "createdAt": "2025-11-25T08:47:57.034Z",
+              "id": "3e6bd2a1-cb85-4098-9460-1568d24c70f2",
+              "email": "zmidloch@z-agency.cz",
+              "firstName": "Jiri",
+              "lastName": "Zmidloch",
+              "personalizationAnswers": {
+                "version": "v4",
+                "personalization_survey_submitted_at": "2025-11-25T08:50:28.520Z",
+                "personalization_survey_n8n_version": "1.120.4",
+                "companySize": "<20",
+                "companyType": "digital-agency",
+                "role": "business-owner",
+                "reportedSource": "youtube"
+              },
+              "settings": {
+                "userActivated": true,
+                "easyAIWorkflowOnboarded": true,
+                "firstSuccessfulWorkflowId": "S4eLCZ1pQQZsruy0",
+                "userActivatedAt": 1766531735990,
+                "npsSurvey": {
+                  "responded": true,
+                  "lastShownAt": 1764796188287
+                }
+              },
+              "disabled": false,
+              "mfaEnabled": false,
+              "lastActiveAt": "2025-12-23",
+              "isPending": false
+            }
+          }
+        ]
+      }
     }
   ],
   "staticData": null,
@@ -1243,5 +1303,6 @@
   ],
   "triggerCount": 0,
   "updatedAt": "2025-12-21T15:00:20.430Z",
+  "versionCounter": 9,
   "versionId": "dc03847a-f1a4-4e6f-905d-56692aad6949"
 }
