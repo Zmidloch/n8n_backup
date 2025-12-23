@@ -1,0 +1,376 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Copy file": {
+      "main": [
+        [
+          {
+            "node": "Move file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Move file": {
+      "main": [
+        [
+          {
+            "node": "Update file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update file": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Update a document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Copy file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-09T23:54:26.393Z",
+  "id": "JijilQesiEcWWxff",
+  "isArchived": true,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Tabidoo-Google Disk -vytvoření DPP copy",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Tabidoo Webhook\n**Create a new DPP** \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+        "height": 560,
+        "width": 272
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1968,
+        -352
+      ],
+      "typeVersion": 1,
+      "id": "ebaeea28-fa5e-4473-9e6b-b2419e3bbfa4",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## New DPP for current instructor\n**Located in Google Drive Folder** ",
+        "height": 320,
+        "width": 352
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -432,
+        -256
+      ],
+      "typeVersion": 1,
+      "id": "7ff96ddc-dc6a-4470-8cae-1914502c1794",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Google Disc Template File Manipulation\n**Duplication of template, moving template to directory** \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTemplate:\nhttps://docs.google.com/document/d/1KJjTAamjMbJhVzACRB3aybjLExqAOVvBgt8MPbpYJ8Y/edit?usp=sharing",
+        "height": 560,
+        "width": 480
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1632,
+        -352
+      ],
+      "typeVersion": 1,
+      "id": "3d15910a-e5c5-4d67-bdc7-e864c0431452",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Take Data from Tabidoo and Fill Up the Template\n**Duplication of template, moving template to directory** ",
+        "height": 560,
+        "width": 272
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -768,
+        -352
+      ],
+      "typeVersion": 1,
+      "id": "b572adb0-8a45-4436-8e75-2f6c25c56a43",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "operation": "copy",
+        "fileId": {
+          "__rl": true,
+          "value": "1KJjTAamjMbJhVzACRB3aybjLExqAOVvBgt8MPbpYJ8Y",
+          "mode": "list",
+          "cachedResultName": "Sablona-DPP-Z-AGENCY-vzor-2026",
+          "cachedResultUrl": "https://docs.google.com/document/d/1KJjTAamjMbJhVzACRB3aybjLExqAOVvBgt8MPbpYJ8Y/edit?usp=drivesdk"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -1600,
+        -144
+      ],
+      "id": "711b83d0-bb04-46db-9af8-e1a3064487d7",
+      "name": "Copy file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "0y8WKhAVB7SLUFcI",
+          "name": "Google Drive zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "move",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "driveId": {
+          "__rl": true,
+          "value": "0AKek_nYyIsRNUk9PVA",
+          "mode": "list",
+          "cachedResultName": "4 - INSTRUKTOŘI",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/0AKek_nYyIsRNUk9PVA"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1RKVy9_kKe2ubMpTx-RADM__V-Z54QsV2",
+          "mode": "list",
+          "cachedResultName": "2026-Integrace",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1RKVy9_kKe2ubMpTx-RADM__V-Z54QsV2"
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -1424,
+        -144
+      ],
+      "id": "8917b5dd-b7bd-418a-b81e-91c84c1929d3",
+      "name": "Move file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "0y8WKhAVB7SLUFcI",
+          "name": "Google Drive zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "newUpdatedFileName": "={{  $('Webhook').item.json.body.data.fields.x93noirpyk + ' DPP ' + new Date().getDate() + '.' + (new Date().getMonth() + 1) + '.' + new Date().getFullYear() }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -1264,
+        -144
+      ],
+      "id": "82b3b7ea-64c3-4712-8910-719e896c5bcd",
+      "name": "Update file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "0y8WKhAVB7SLUFcI",
+          "name": "Google Drive zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $json.id }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "replaceAll",
+              "text": "{{JMENO}}",
+              "replaceText": "={{ $('Webhook').item.json.body.data.fields.x93noirpyk }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{RODNE_CISLO}}",
+              "replaceText": "={{ $('Webhook').item.json.body.data.fields.rodneCislo }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{BYDLISTE}}",
+              "replaceText": "={{ $('Webhook').item.json.body.data.fields.x5i8298y0i }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{DATUM_NAROZENI}}",
+              "replaceText": "={{ $json.datum_narozeni_formatovano }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{MISTO_NAROZENI}}",
+              "replaceText": "={{ $('Webhook').item.json.body.data.fields.mistoNarozeni }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{ZDRAVOTNI_POJISTOVNA}}",
+              "replaceText": "={{ $('Webhook').item.json.body.data.fields.zdravotniPojistovnaDPP }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{CISLO_UCTU}}",
+              "replaceText": "={{ $('Webhook').item.json.body.data.fields.xa6oo58yz8 }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{DOKLAD_SK}}",
+              "replaceText": "={{ $('Webhook').item.json.body.data.fields.cisloObcankyNeboPasuCizinec }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{TELEFON}}",
+              "replaceText": "={{ $('Webhook').item.json.body.data.fields.xjl46mi3w7 }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{EMAIL}}",
+              "replaceText": "={{ $('Webhook').item.json.body.data.fields.xw2q4t2jsw.href }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{DATUM}}",
+              "replaceText": "={{ $json.datum_vytvoreni_smlouvy }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{RODNE_JMENO}}",
+              "replaceText": "={{ $('Webhook').item.json.body.data.fields.rodneJmenoZenyADPP }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{PLATNOST_OD}} ",
+              "replaceText": "={{ $json.datum_vytvoreni_smlouvy }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        -720,
+        -144
+      ],
+      "id": "7df798c0-34cc-4421-9cc9-d21f0a25973d",
+      "name": "Update a document",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "z7r7DjjMY49jRh08",
+          "name": "Google Docs zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "for (const item of items) {\n    // Získání celého bloku 'fields' z Webhooku (pro Datum narození)\n    const fields = $('Webhook').first().json.body.data.fields;\n    \n    // ==========================================================\n    // 1. Datum narození (xy323g1jp9) - Beze Změny\n    // ==========================================================\n    const isoDateString1 = fields.xy323g1jp9;\n    \n    if (isoDateString1) {\n        const dateObj1 = new Date(isoDateString1);\n        const day1 = dateObj1.getUTCDate();\n        const month1 = dateObj1.getUTCMonth() + 1; \n        const year1 = dateObj1.getUTCFullYear();\n        item.json.datum_narozeni_formatovano = `${day1}.${month1}.${year1}`;\n    } else {\n        item.json.datum_narozeni_formatovano = 'CHYBA: Datum narození nebylo nalezeno!';\n    }\n    \n    // ==========================================================\n    // 2. Datum vytvoření smlouvy (AKTUÁLNÍ DATUM)\n    // ==========================================================\n    const dateObj2 = new Date(); // Vytvoří objekt aktuálního data a času\n    \n    // Použijeme UTC metody, abychom z datového objektu získali čisté DD.MM.RRRR\n    const day2 = dateObj2.getUTCDate();\n    const month2 = dateObj2.getUTCMonth() + 1; \n    const year2 = dateObj2.getUTCFullYear();\n    \n    // Uložení aktuálního data do nového pole\n    item.json.datum_vytvoreni_smlouvy = `${day2}.${month2}.${year2}`;\n}\n\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1024,
+        -144
+      ],
+      "id": "c0c5b58e-8b51-4230-a1a2-0a1789453b53",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "content": "## Data Format\n**Formate date to dd.mm.yyyy** ",
+        "height": 560,
+        "width": 304
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1120,
+        -352
+      ],
+      "typeVersion": 1,
+      "id": "33aba406-0cd2-43ba-be0e-7a7a2ff14efb",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ab2f5a6a-40fe-4aca-b168-2f51813d4719",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1872,
+        -144
+      ],
+      "id": "e89bfb00-4890-4152-98fb-5dec812ccbf1",
+      "name": "Webhook",
+      "webhookId": "ab2f5a6a-40fe-4aca-b168-2f51813d4719"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "zVAjJgKV17IWzFP7",
+    "timezone": "America/New_York"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-09T23:54:26.393Z",
+      "createdAt": "2025-12-09T23:54:26.393Z",
+      "role": "workflow:owner",
+      "workflowId": "JijilQesiEcWWxff",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-12-16T14:14:53.437Z",
+  "versionId": "60e99e87-35ce-436c-9703-26916497acf7"
+}
