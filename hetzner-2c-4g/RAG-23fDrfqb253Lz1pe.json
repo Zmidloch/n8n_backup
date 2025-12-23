@@ -1,0 +1,1737 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "DownloadFile": {
+      "main": [
+        [
+          {
+            "node": "Supabase Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Supabase Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "DownloadFile3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector Store1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DownloadFile1": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI2": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase VectorStore",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader1": {
+      "ai_document": [
+        [
+          {
+            "node": "Supabase VectorStore",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AddContext": {
+      "main": [
+        [
+          {
+            "node": "Summarize",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader1",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "ExtractFromPDF",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ExtractFromCSV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "DownloadFile1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarize": {
+      "main": [
+        [
+          {
+            "node": "Supabase VectorStore",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TemporaryLimitNode": {
+      "main": [
+        [
+          {
+            "node": "AddContext",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SplitChunks": {
+      "main": [
+        [
+          {
+            "node": "TemporaryLimitNode",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RecursiveSplitter": {
+      "main": [
+        [
+          {
+            "node": "SplitChunks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DocumentData": {
+      "main": [
+        [
+          {
+            "node": "RecursiveSplitter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ExtractFromCSV": {
+      "main": [
+        [
+          {
+            "node": "DocumentData",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ExtractFromPDF": {
+      "main": [
+        [
+          {
+            "node": "DocumentData",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AddContext",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DownloadFile2": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI3": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase VectorStore1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader2": {
+      "ai_document": [
+        [
+          {
+            "node": "Supabase VectorStore1",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "ExtractFromPDF1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ExtractFromCSV1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ExtractFromDocx",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DocumentData1": {
+      "main": [
+        [
+          {
+            "node": "Supabase VectorStore1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ExtractFromCSV1": {
+      "main": [
+        [
+          {
+            "node": "DocumentData1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ExtractFromPDF1": {
+      "main": [
+        [
+          {
+            "node": "DocumentData1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ExtractFromDocx": {
+      "main": [
+        [
+          {
+            "node": "DocumentData1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter1": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader2",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "SetFileId",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase VectorStore1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive Trigger2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DeleteRows": {
+      "main": [
+        [
+          {
+            "node": "DownloadFile2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SetFileId": {
+      "main": [
+        [
+          {
+            "node": "DeleteRows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DownloadFile3": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "AnthropicCAG",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-11T23:10:48.175Z",
+  "id": "23fDrfqb253Lz1pe",
+  "isArchived": false,
+  "meta": null,
+  "name": "RAG",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "![](https://i.ibb.co/Z6VnpYnT/Screenshot-767.png)",
+        "height": 500,
+        "width": 740,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1344,
+        64
+      ],
+      "id": "78ddbf37-ed35-4cdb-b6c0-fce97e680885",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "https://drive.google.com/file/d/1iEzQH4KyRglAOgQN1S_nz-ERQk3cfT4P/view?usp=sharing",
+          "mode": "url"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        48,
+        80
+      ],
+      "id": "d3d7ae58-e337-4b6a-9e22-f92e2fae31f9",
+      "name": "DownloadFile"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.1,
+      "position": [
+        272,
+        80
+      ],
+      "id": "47f7464e-cac2-4736-9a56-a65869c629ce",
+      "name": "Supabase Vector Store"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        272,
+        288
+      ],
+      "id": "f66ebc15-5110-459b-ac5d-b26c01b3475d",
+      "name": "Embeddings OpenAI"
+    },
+    {
+      "parameters": {
+        "content": "![](https://i.ibb.co/JjRJdxZQ/Screenshot-769.png)",
+        "height": 340,
+        "width": 820,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1344,
+        592
+      ],
+      "id": "84bf9e16-4780-4da1-b795-f450baca6688",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "dataType": "binary",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        384,
+        224
+      ],
+      "id": "c050934b-b775-4dbf-b702-a1372abeac3d",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "chunkSize": 500,
+        "chunkOverlap": 50,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        464,
+        320
+      ],
+      "id": "2a995b72-4717-40b7-a2de-9946877b36cc",
+      "name": "Recursive Character Text Splitter"
+    },
+    {
+      "parameters": {
+        "content": "## Ingestion - Basic Example\n",
+        "height": 480,
+        "width": 740,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "caf7ef8d-f3df-464f-8320-fa5c88bba2d1",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Retrieval\n",
+        "height": 480,
+        "width": 840,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        800,
+        0
+      ],
+      "id": "bc460d4f-7807-42ba-b67d-a4ff40608e2b",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## Prompt for Vector DB Agent\n\nYou’re a Netflix 2024 fiancial document assistant. Your job is to answer questions using the Netflix 2024 files in the Vector Database. Here’s how to do it:\n\nCheck Vector Database First\n- Search for similar text chunks using RAG.\n- If you find matches, use them to answer the question.\n- Always say which chunks (e.g., Chunk 5, Chunk 12) you used.\n\nNo Answer Found?\n- Clearly say: “I couldn’t find this in the Netflix 2024 documents.”\n- Never guess or invent answers.\n\nExample Response:\n“Netflix grew revenue in Streaming services by 25% in 2024 [Chunk 3, Chunk 7].",
+        "height": 400,
+        "width": 820,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1344,
+        944
+      ],
+      "id": "78f0edf0-a9c3-4329-8350-a21177953395",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -336,
+        1872
+      ],
+      "id": "903c1156-0616-4788-8451-a9a0390ddc77",
+      "name": "When chat message received",
+      "webhookId": "8b68f7a2-b3d5-4172-b424-a823b1828cfc"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=You’re a document assistant. Your job is to answer questions using the files in the Vector Database. Here’s how to do it:\n\nCheck connected Vector Database documents First\n- Search for similar text chunks using RAG.\n- If you find matches, use them to answer the question.\n\nNo Answer Found?\n- Clearly say: “I couldn’t find this in the documents.”\n- Never guess or invent answers.\n\nExample Response:\n“Netflix grew revenue in Streaming services by 25% in 2024\""
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        1104,
+        112
+      ],
+      "id": "fc6acb1b-d730-4dc1-b0a7-5ca1e25ff629",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1024,
+        272
+      ],
+      "id": "d677d921-9693-4762-be6c-86113424217f",
+      "name": "OpenAI Chat Model"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 15
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        1184,
+        272
+      ],
+      "id": "2320d911-9f8f-4250-80e8-9ccff761fb59",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolName": "documents",
+        "toolDescription": "Work with your data in Supabase Vector Store",
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "topK": 20,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.1,
+      "position": [
+        1344,
+        240
+      ],
+      "id": "97041997-847d-4e04-b3c0-43a540aba98c",
+      "name": "Supabase Vector Store1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1360,
+        368
+      ],
+      "id": "a30afcf8-4818-4775-943b-acf3d32b39e5",
+      "name": "Embeddings OpenAI1"
+    },
+    {
+      "parameters": {
+        "fieldsToSummarize": {
+          "values": [
+            {
+              "aggregation": "concatenate",
+              "field": "text",
+              "separateBy": "other",
+              "customSeparator": " ###SPLIT### "
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.summarize",
+      "typeVersion": 1.1,
+      "position": [
+        1808,
+        720
+      ],
+      "id": "4450091f-e780-4d29-b77c-c1ee9444a537",
+      "name": "Summarize"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        64,
+        720
+      ],
+      "id": "94bfdc3e-ba81-44f6-852e-227c230503fb",
+      "name": "DownloadFile1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        2032,
+        928
+      ],
+      "id": "d64f8bc3-5be7-42fb-af51-0463b31a7abc",
+      "name": "Embeddings OpenAI2"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        2128,
+        864
+      ],
+      "id": "1a658c13-5701-4a7e-9d35-95c414c10966",
+      "name": "Default Data Loader1"
+    },
+    {
+      "parameters": {
+        "content": "## Ingestion - Add Context to Chunks\nhttps://www.anthropic.com/news/contextual-retrieval ",
+        "height": 340,
+        "width": 420,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        592
+      ],
+      "id": "9ac5d5e4-4530-484a-8a15-51a8a5085dc1",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=<document> \n{{ $('DocumentData').item.json.data }}\n</document> \n\nHere is the chunk we want to situate within the overall document:\n\n<chunk> \n{{$json.chunk}} \n</chunk> \n\nPlease:\n- Provide a short and succinct **context** to situate this chunk within the document for improved search retrieval.\n- Return the **original chunk** exactly as provided unless a correction is necessary.\n- If the chunk contains an **incomplete number, percentage, or entity**, correct it using the full document.\n- If part of a **sentence is cut off**, reconstruct the missing words only if necessary for clarity.\n- If the chunk is part of a table, include the complete table entry to maintain data integrity\n- Do not add any additional explanations or formatting beyond the required output.\n\nFill in the following format:\n[succinct context] : [original chunk or corrected version if necessary]\n\nYour response should contain only the text that replaces these placeholders, without including the placeholder labels themselves."
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        1440,
+        720
+      ],
+      "id": "45dfdaab-1245-40b3-81d8-3d466ceceb6b",
+      "name": "AddContext"
+    },
+    {
+      "parameters": {
+        "separator": " ###SPLIT### "
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        2192,
+        992
+      ],
+      "id": "bc26ac81-c698-4823-930c-80790c013028",
+      "name": "Character Text Splitter"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $binary.data.mimeType }}",
+                    "rightValue": "application/pdf",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "803a048c-477f-48f9-81a1-c4e39e2d3107"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "PDF"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "40c099c4-6d6a-456b-a0d1-0c1f02f756be",
+                    "leftValue": "={{ $binary.data.mimeType }}",
+                    "rightValue": "application/vnd.google-apps.spreadsheet",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "CSV"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        240,
+        720
+      ],
+      "id": "7215d416-ae99-4412-8748-47f7f2f20c5c",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "https://drive.google.com/drive/u/0/folders/1IWk-WmIRQ7gbvGwM49v4iCTCmtnnqsFc",
+          "mode": "url"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        -128,
+        720
+      ],
+      "id": "017a8bec-8bb3-4210-b7e7-8b0abd7037ec",
+      "name": "Google Drive Trigger",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## File Types Switch",
+        "height": 340,
+        "width": 380,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        448,
+        592
+      ],
+      "id": "609f4cd9-6c05-409b-af65-a8267f67bd5f",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "## Split recursively into chunks",
+        "height": 340,
+        "width": 540,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        848,
+        592
+      ],
+      "id": "eb8fa646-c4ed-4d51-9593-338a7497eead",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "maxItems": 50
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        1232,
+        720
+      ],
+      "id": "2c3c3de6-1f9f-4b37-9075-67c7d1ab661f",
+      "name": "TemporaryLimitNode"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "chunks",
+        "options": {
+          "destinationFieldName": "chunk"
+        }
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        720
+      ],
+      "id": "4107a6e1-0709-4f7a-99c8-de5fb8078214",
+      "name": "SplitChunks"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const chunkSize = 1000;\nconst chunkOverlap = 0;\nconst text = $input.item.json.data.replace(/\\n/, '');\n\nconst chunks = [];\nlet remainingText = text;\n\nwhile (remainingText.length > 0) {\n    let splitPoint;\n\n    // Try splitting at paragraph level first\n    splitPoint = remainingText.lastIndexOf(\"\\n\\n\", chunkSize);\n    \n    // If no paragraph split, try splitting at sentence level\n    if (splitPoint === -1) {\n        splitPoint = remainingText.lastIndexOf(\". \", chunkSize);\n    }\n\n    // If no sentence split, try splitting at word level\n    if (splitPoint === -1) {\n        splitPoint = remainingText.lastIndexOf(\" \", chunkSize);\n    }\n\n    // If still no split point, force cut at chunkSize\n    if (splitPoint === -1 || splitPoint < chunkSize * 0.5) {  \n        splitPoint = chunkSize; // Hard split if no good split point\n    }\n\n    // Extract chunk and adjust remaining text with overlap\n    let chunk = remainingText.substring(0, splitPoint).trim();\n    chunks.push(chunk);\n\n    // Move the pointer forward while keeping the overlap\n    remainingText = remainingText.substring(Math.max(0, splitPoint - chunkOverlap)).trim();\n\n    // Break if remaining text is too small to form another chunk\n    if (remainingText.length < chunkSize * 0.2) {\n        chunks.push(remainingText);\n        break;\n    }\n}\n\nreturn { chunks };"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        720
+      ],
+      "id": "58e58934-62fd-44d5-98ab-6d75fa7238b2",
+      "name": "RecursiveSplitter"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"data\": {{ JSON.stringify($json.data) }}\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        688,
+        720
+      ],
+      "id": "a4897a96-e5d2-4794-bad4-d2b8506c735e",
+      "name": "DocumentData"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        480,
+        912
+      ],
+      "id": "5c71251c-b9a3-469f-bafa-3bcd984b873b",
+      "name": "ExtractFromCSV"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        480,
+        720
+      ],
+      "id": "9e3f12f0-d9fe-4e4d-867f-15e2c82d9a9f",
+      "name": "ExtractFromPDF"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.1,
+      "position": [
+        2032,
+        720
+      ],
+      "id": "bc62d824-b6d5-4f22-80c7-0c54f1ac9f9b",
+      "name": "Supabase VectorStore"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1472,
+        880
+      ],
+      "id": "d709bc43-68c9-4dd9-a1b4-d825b52cb637",
+      "name": "Gemini"
+    },
+    {
+      "parameters": {
+        "content": "## Add context to each chunk",
+        "height": 340,
+        "width": 540,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1408,
+        592
+      ],
+      "id": "5992e5c0-db0a-453f-9448-d29eab3b1e8c",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "content": "## Add to Vector DB",
+        "height": 340,
+        "width": 540,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1968,
+        592
+      ],
+      "id": "e80f50b2-3acf-4259-8173-3b7950666b51",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "content": "## SQL Query to set up Supabase tables\n\n-- Enable the pgvector extension to work with embedding vectors\ncreate extension vector;\n\n-- Create a table to store your documents\ncreate table documents (\n  id bigserial primary key,\n  content text, -- corresponds to Document.pageContent\n  metadata jsonb, -- corresponds to Document.metadata\n  embedding vector(1536) -- 1536 works for OpenAI embeddings, change if needed\n);\n\n-- Create a function to search for documents\ncreate function match_documents (\n  query_embedding vector(1536),\n  match_count int default null,\n  filter jsonb DEFAULT '{}'\n) returns table (\n  id bigint,\n  content text,\n  metadata jsonb,\n  similarity float\n)\nlanguage plpgsql\nas $$\n#variable_conflict use_column\nbegin\n  return query\n  select\n    id,\n    content,\n    metadata,\n    1 - (documents.embedding <=> query_embedding) as similarity\n  from documents\n  where metadata @> filter\n  order by documents.embedding <=> query_embedding\n  limit match_count;\nend;\n$$;",
+        "height": 760,
+        "width": 820,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1344,
+        1360
+      ],
+      "id": "3f542d3c-d61b-41ed-a188-a5c1cd0a62db",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('SetFileId').item.json.file_id }}",
+          "mode": "id"
+        },
+        "options": {
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "text/plain"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        560,
+        1328
+      ],
+      "id": "e7e42e4f-dbd3-482f-b459-e7e7845c827a",
+      "name": "DownloadFile2"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1424,
+        1520
+      ],
+      "id": "18553184-cc0f-4ecd-8028-4d5a851f7a18",
+      "name": "Embeddings OpenAI3"
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "={{ $json.data }}",
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "file_id",
+                "value": "={{ $('SetFileId').item.json.file_id }}"
+              },
+              {
+                "name": "createdTime",
+                "value": "={{ $('SetFileId').item.json.created_time }}"
+              },
+              {
+                "name": "file_name",
+                "value": "={{ $('SetFileId').item.json.name }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        1472
+      ],
+      "id": "a77f0d4d-517f-4b2b-bb53-a846c2a1d3a5",
+      "name": "Default Data Loader2"
+    },
+    {
+      "parameters": {
+        "content": "## Ingestion - Updating files\n",
+        "height": 340,
+        "width": 920,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        1184
+      ],
+      "id": "34d08bd9-c0b6-4fc0-b9b8-bb1fb7202612",
+      "name": "Sticky Note11"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $binary.data.mimeType }}",
+                    "rightValue": "application/pdf",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "803a048c-477f-48f9-81a1-c4e39e2d3107"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "PDF"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "40c099c4-6d6a-456b-a0d1-0c1f02f756be",
+                    "leftValue": "={{ $binary.data.mimeType }}",
+                    "rightValue": "application/vnd.google-apps.spreadsheet",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "CSV"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "ebb9b3dd-5aa3-42b6-a2f7-9c779aba95bc",
+                    "leftValue": "={{ $binary.data.mimeType }}",
+                    "rightValue": "text/plain",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "TXT"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        752,
+        1328
+      ],
+      "id": "f2f43272-6bd7-4bc7-b6fb-17ee9c3e434d",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "https://drive.google.com/drive/u/0/folders/1IWk-WmIRQ7gbvGwM49v4iCTCmtnnqsFc",
+          "mode": "url"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        -208,
+        1328
+      ],
+      "id": "24707e82-ba9f-40fc-ada1-fac28b3bef0a",
+      "name": "Google Drive Trigger1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## File Types Switch",
+        "height": 340,
+        "width": 380,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        944,
+        1184
+      ],
+      "id": "c9d7b7fb-a2d2-44e2-8a49-3b33dd573da2",
+      "name": "Sticky Note12"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"data\": {{ JSON.stringify($json.data) }}\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1184,
+        1328
+      ],
+      "id": "de119c70-23e2-4f5f-8304-fbb26ac353c4",
+      "name": "DocumentData1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        992,
+        1504
+      ],
+      "id": "14915e44-ddd6-4997-9cea-417ef7d552d8",
+      "name": "ExtractFromCSV1"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        992,
+        1328
+      ],
+      "id": "9b3f94c7-5287-4f6e-a0a9-ce3216a7d772",
+      "name": "ExtractFromPDF1"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.1,
+      "position": [
+        1424,
+        1328
+      ],
+      "id": "50da0f07-5179-40d1-911e-36c3753bc30d",
+      "name": "Supabase VectorStore1"
+    },
+    {
+      "parameters": {
+        "content": "## Add to Vector DB",
+        "height": 340,
+        "width": 540,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        1184
+      ],
+      "id": "3ea5b886-cae6-4779-b4ee-08508b8ffd57",
+      "name": "Sticky Note15"
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        992,
+        1680
+      ],
+      "id": "0e04e38d-a68f-4b4a-8f92-8638028dd1ea",
+      "name": "ExtractFromDocx"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        1600
+      ],
+      "id": "5911d041-8c61-4a34-8fbe-691c12a1eaee",
+      "name": "Recursive Character Text Splitter1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        64,
+        1328
+      ],
+      "id": "a0aa4de7-6428-4e49-be7b-46d53fa19706",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "https://drive.google.com/drive/u/0/folders/1IWk-WmIRQ7gbvGwM49v4iCTCmtnnqsFc",
+          "mode": "url"
+        },
+        "event": "fileUpdated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        -208,
+        1520
+      ],
+      "id": "fff6523c-e325-4017-a6dc-65df79fe861a",
+      "name": "Google Drive Trigger2",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "tableId": "documents",
+        "filterType": "string",
+        "filterString": "=metadata->>file_id=like.*{{ $json.file_id }}*"
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        400,
+        1328
+      ],
+      "id": "1b814a92-c874-4bb1-8709-ce2b474845e0",
+      "name": "DeleteRows",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b0501328-5e74-435f-afc3-a5796612c52d",
+              "name": "file_id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "6989f772-441d-4284-84a1-dbb37dd1541d",
+              "name": "createdTime",
+              "value": "={{ $json.createdTime }}",
+              "type": "string"
+            },
+            {
+              "id": "150cfee5-e9a7-40af-ba0f-114bd1485681",
+              "name": "name",
+              "value": "={{ $json.name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        272,
+        1328
+      ],
+      "id": "3093da55-16e9-4d9c-a6d6-fcdde9bb38c9",
+      "name": "SetFileId"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Use the below documents to determine a relevant answer. Do not make information up.\n\n## Document\n{{ $('Extract from File').item.json.text }}\n\n## Query\n{{ $('When chat message received').item.json.chatInput }}"
+            }
+          ]
+        },
+        "simplify": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        272,
+        1792
+      ],
+      "id": "88454859-971a-442e-81cf-f219f945cdef",
+      "name": "OpenAI"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "",
+          "mode": "url"
+        },
+        "options": {
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "application/pdf"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -176,
+        1872
+      ],
+      "id": "c296769d-efa6-4f7d-b1c8-3fd7d5be38ff",
+      "name": "DownloadFile3"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        0,
+        1872
+      ],
+      "id": "1796e275-6c78-466f-bcda-9444ed2616f0",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "anthropicApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"model\": \"claude-3-7-sonnet-20250219\",\n    \"max_tokens\": 1024,\n    \"system\": [\n      {\n        \"type\": \"text\",\n        \"text\": \"You are an AI assistant tasked with analyzing literary works. Your goal is to provide insightful commentary on themes, characters, and writing style.\\n\"\n      },\n      {\n        \"type\": \"text\",\n        \"text\": {{JSON.stringify($('Extract from File').item.json.text)}},\n        \"cache_control\": {\"type\": \"ephemeral\"}\n      }\n    ],\n    \"messages\": [\n      {\n        \"role\": \"user\",\n        \"content\": \"{{ $('When chat message received').item.json.chatInput }}\"\n      }\n    ]\n  }",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 200
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        288,
+        2032
+      ],
+      "id": "3429b960-5fa5-4bc6-927e-c02e9efb6b13",
+      "name": "AnthropicCAG"
+    },
+    {
+      "parameters": {
+        "content": "## Ingestion - CAG\n",
+        "height": 340,
+        "width": 380,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -224,
+        1760
+      ],
+      "id": "ecc75b8c-5e2a-4890-abda-7ee14636843e",
+      "name": "Sticky Note13"
+    },
+    {
+      "parameters": {
+        "content": "## OpenAI\n",
+        "height": 220,
+        "width": 380,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        192,
+        1712
+      ],
+      "id": "7947ac2a-c439-4a83-aaae-e85b97c61719",
+      "name": "Sticky Note14"
+    },
+    {
+      "parameters": {
+        "content": "## Anthropic\n",
+        "height": 240,
+        "width": 380,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        192,
+        1952
+      ],
+      "id": "df2c858d-219c-4c97-b253-7954efc098b9",
+      "name": "Sticky Note16"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-11T23:10:48.175Z",
+      "createdAt": "2025-12-11T23:10:48.175Z",
+      "role": "workflow:owner",
+      "workflowId": "23fDrfqb253Lz1pe",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-12-16T14:41:30.636Z",
+  "versionId": "becc497b-5455-4df2-9ab1-53950c969f9c"
+}
