@@ -1,0 +1,818 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Tabidoo Mapping",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Thank You and Good Bye",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tabidoo Mapping": {
+      "main": [
+        [
+          {
+            "node": "Multichoice and Dropdown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Multichoice and Dropdown": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request - POST data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request - POST data": {
+      "main": [
+        [
+          {
+            "node": "If - Is There Any Error?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "If - Is There Any Error?": {
+      "main": [
+        [
+          {
+            "node": "Send Error Message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "createdAt": "2025-12-12T23:11:03.763Z",
+  "id": "6Z0FV3VDvVbEGzmG",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Update_Instructor_2026",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Tabidoo Webhook\n**Send one or many emails",
+        "height": 368,
+        "width": 256
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -896,
+        -48
+      ],
+      "typeVersion": 1,
+      "id": "0f072eb6-8f7a-4dcc-a98c-dc0cd0a25b34",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## New Contact in Tabidoo\n",
+        "height": 80,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        944,
+        -144
+      ],
+      "typeVersion": 1,
+      "id": "5d2a7509-fd5b-4a0c-a26a-2aa8e9ab9534",
+      "name": "Sticky Note1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## Delivery of Google Form\n**Form, Google Form, Gmail** ",
+        "height": 368,
+        "width": 304
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -352,
+        -48
+      ],
+      "typeVersion": 1,
+      "id": "0892650c-e161-46e3-b9f5-2f68fd2a588a",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Insert New Data\n\n3. Transform data (dates)\n4. Move data to Tabidoo",
+        "height": 368,
+        "width": 688
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        560,
+        -192
+      ],
+      "typeVersion": 1,
+      "id": "34e79486-3c0d-4e17-bc8c-c89b0e99a7bd",
+      "name": "Sticky Note3",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.email }}",
+        "subject": "UPDATE informací INSTRUKTORA Z-AGENCY",
+        "message": "=<!DOCTYPE html>\n<html>\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Těšíme se na další spolupráci – Aktualizace údajů</title>\n</head>\n<body style=\"font-family: Arial, sans-serif; font-size: 16px; color: #333333; line-height: 1.6;\">\n    <div style=\"max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eeeeee; border-radius: 8px;\">\n        <p style=\"font-size: 18px; font-weight: bold; color: #0073b1;\">Těšíme se na další spolupráci!</p>\n        \n        <p>Dobrý den,</p>\n        <p>děkujeme za dosavadní komunikaci. Velmi nás těší, že máme možnost spolupracovat, a už se nemůžeme dočkat společných akcí v nadcházející sezóně!</p>\n        <p>Aby vše probíhalo hladce a mohli jsme naši spolupráci formálně nastavit (nebo prodloužit), potřebujeme od Tebe <strong>aktualizovat a potvrdit některé údaje</strong>.</p>\n        <p>Mít aktuální data je pro nás klíčové z těchto důvodů:</p>\n        <ul style=\"padding-left: 20px;\">\n            <li><strong style=\"font-weight: bold;\">Smlouvy a administrativa:</strong> Údaje jsou nezbytné pro přípravu či aktualizaci Dohody o provedení práce (DPP).</li>\n            <li><strong style=\"font-weight: bold;\">Rychlé vyplácení odměn:</strong> Správné kontaktní a bankovní údaje nám umožní posílat odměny včas a bez komplikací.</li>\n        </ul>\n        <p>Prosíme Tě proto o vyplnění tohoto aktualizačního dotazníku (Tvé ID jsme již předvyplnili):</p>\n        \n        <div style=\"text-align: center; margin: 30px 0;\">\n            <a href=\"https://docs.google.com/forms/d/e/1FAIpQLScscbLcrRe_LkHlgvixRi9pZXSgOry9ph9t_p4iNQCEH6JRTw/viewform?usp=pp_url&entry.1819167789={{ $json.id }}\" \n               style=\"background-color: #0073b1; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 16px; display: inline-block;\">\n                Aktualizovat své údaje\n            </a>\n        </div>\n        \n        <p style=\"text-align: center; font-size: 14px;\">Odkaz: <a href=\"https://docs.google.com/forms/d/e/1FAIpQLScscbLcrRe_LkHlgvixRi9pZXSgOry9ph9t_p4iNQCEH6JRTw/viewform?usp=pp_url&entry.1819167789={{ $json.id }}\" style=\"color: #0073b1;\">https://docs.google.com/forms/d/e/1FAIpQLScscb...</a></p>\n        \n        <p>Děkujeme za Tvůj čas a rychlé vyplnění.</p>\n        \n        <hr style=\"border: none; border-top: 1px solid #dddddd; margin: 30px 0;\">\n        \n        <p style=\"font-family: Verdana, sans-serif; font-size: 14px; color: #333;\">S pozdravem,</p>\n        <table role=\"presentation\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" style=\"font-family: Verdana, sans-serif; font-size: 14px; color: #333;\">\n            <tr>\n                <td style=\"padding-right: 15px; vertical-align: middle;\">\n                    <img src=\"https://www.terrahunt.cz/TerraHunt/media/static-media/fecf446d-5e97-4754-8a8e-55b43bdc62aa@w600.webp\" alt=\"Logo Z-AGENCY\" width=\"80\" height=\"80\" style=\"border-radius: 50%; display: block; object-fit: cover;\">\n                </td>\n                <td style=\"vertical-align: middle;\">\n                    <strong style=\"font-size: 16px; color: #0073b1;\">Tým Z-AGENCY</strong><br>\n                    <span style=\"display: block; margin-top: 3px;\">Z-AGENCY s.r.o.</span>\n                    <span style=\"display: block;\">Karlova 38, 61400 Brno</span>\n                    <span style=\"display: block;\">☎️ +420 542 211 935</span>\n                    <span style=\"display: block;\">✉️ <a href=\"mailto:info@z-agency.cz\" style=\"color: #0073b1; text-decoration: none;\">info@z-agency.cz</a></span>\n                    <span style=\"display: block;\">🌐 <a href=\"https://www.z-agency.cz\" style=\"color: #0073b1; text-decoration: none;\">z-agency.cz</a> |\n                    <a href=\"https://www.terrahunt.cz\" style=\"color: #0073b1; text-decoration: none;\">terrahunt.cz</a></span>\n                </td>\n            </tr>\n        </table>\n    </div>\n</body>\n</html>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -288,
+        96
+      ],
+      "id": "108dfc84-5c65-4b1b-aaa1-1d9e1f9e3594",
+      "name": "Send a message",
+      "webhookId": "642488c6-0a9f-438b-ae62-a8b4871c9078",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "cUMqdo7XCF6noXLb",
+          "name": "Gmail-info@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1JZKOFm4DtY9Hnvb-kB5FD3rOB3dYxR4S-NtfvsPYPe4",
+          "mode": "list",
+          "cachedResultName": "Update Instruktoři 2026 (Odpovědi)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1JZKOFm4DtY9Hnvb-kB5FD3rOB3dYxR4S-NtfvsPYPe4/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 72752942,
+          "mode": "list",
+          "cachedResultName": "Odpovědi formuláře 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1JZKOFm4DtY9Hnvb-kB5FD3rOB3dYxR4S-NtfvsPYPe4/edit#gid=72752942"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        48,
+        96
+      ],
+      "id": "ac138440-74cc-4893-aedd-f5f0143d3306",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "PONFxr0FZ1WvjNKm",
+          "name": "Google Sheets zmidloch@z-agency.cz"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "00cacb1b-7485-431d-8a33-8c64ef3e6c0d",
+              "leftValue": "={{ $json['Chceš s námi nadále spolupracovat?'] }}",
+              "rightValue": "Ano",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        240,
+        96
+      ],
+      "id": "8c78ce4c-f65c-4799-b8af-e360739d2bb1",
+      "name": "If",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## Google Sheet Information Added\n**1. Employe fills data\n2. Google Sheet updated\n3. New row added** ",
+        "height": 368,
+        "width": 496
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        -48
+      ],
+      "typeVersion": 1,
+      "id": "d982242e-89a4-457c-a322-f0ff0d5ebde3",
+      "name": "Sticky Note4",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## Does  NOT Want To Cooperate Anymore\n**Thank you e-mail* ",
+        "height": 368,
+        "width": 672
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        576,
+        256
+      ],
+      "typeVersion": 1,
+      "id": "ade30627-6130-4d59-ad8f-9189437f55c4",
+      "name": "Sticky Note5",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1. Získání dat z webhooku (upravte cestu, pokud je jiná, ale toto odpovídá vašemu popisu)\n// Používáme try-catch pro případ, že by cesta neexistovala\nlet rawEmails = \"\";\ntry {\n    rawEmails = $input.first().json.body.data.fields.email.href;\n} catch (e) {\n    // Pokud data nenajdeme, vrátíme prázdné pole (nic se nepošle)\n    return [];\n}\n\n// 2. Čištění a příprava\n// .toString() - jistota, že je to text\n// .replace() - odstraní \"mailto:\" (globálně, i kdyby jich bylo víc)\n// .split(',') - rozdělí na kousky podle čárky\nconst emailList = rawEmails.toString().replace(/mailto:/g, '').split(',');\n\n// 3. Vytvoření položek pro n8n\n// .map() projde každý e-mail, ořízne mezery (.trim()) a vytvoří novou položku\n// .filter() odstraní prázdné položky (např. prázdné řádky)\nreturn emailList\n    .map(email => email.trim())\n    .filter(email => email.length > 0)\n    .map(email => {\n        return {\n            json: {\n                email: email // Tento klíč 'email' pak použijete v Gmail uzlu\n            }\n        };\n    });"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -560,
+        96
+      ],
+      "id": "9fffdc02-b6d8-4daf-ad75-c5dba7062f9d",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://app.tabidoo.cloud/api/v2/apps/dev-personalistika-u226/tables/instruktorsky_tym/data",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"fields\": {{ JSON.stringify($('Multichoice and Dropdown').item.json) }}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1008,
+        -32
+      ],
+      "id": "6981089a-e8b9-468c-8db9-3b0ae681bb1d",
+      "name": "HTTP Request - POST data",
+      "retryOnFail": true,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "6qa25aRW9QbkqmAa",
+          "name": "Header Auth- Tabidoo-Personalistika-Photo"
+        }
+      },
+      "disabled": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json['E-mailová adresa'] }}",
+        "subject": "Z-AGENCY: Děkujeme za Tvé upřímné rozhodnutí",
+        "message": "=<!DOCTYPE html>\n<html>\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Z-AGENCY: Děkujeme za Tvé upřímné rozhodnutí</title>\n</head>\n<body style=\"font-family: Arial, sans-serif; font-size: 16px; color: #333333; line-height: 1.6;\">\n\n    <div style=\"max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eeeeee; border-radius: 8px;\">\n\n        <p style=\"font-size: 18px; font-weight: bold; color: #0073b1;\">Děkujeme za Tvoji zpětnou vazbu</p>\n        \n        <p>Ahoj,</p>\n\n        <p>Děkujeme Ti za rychlé vyplnění dotazníku a především za <strong style=\"font-weight: bold;\">naprostou upřímnost</strong> ohledně Tvé situace.</p>\n\n        <p>Tvé rozhodnutí plně <strong style=\"font-weight: bold;\">respektujeme</strong> a ceníme si Tvé otevřenosti. Je důležité, aby každý dělal to, co mu dává smysl a kde se cítí nejlépe.</p>\n\n        <p>Chtěli bychom Ti říct, že u nás máš do budoucna <strong style=\"font-weight: bold;\">dveře vždy otevřené</strong>. <strong style=\"font-weight: bold;\">Pokud se Tvé rozhodnutí změní</strong> a Tvé okolnosti se vyvinou jinak, neváhej se nám kdykoli ozvat!</p>\n\n        <p>Přejeme Ti mnoho osobních i pracovních úspěchů do budoucna!</p>\n\n        <hr style=\"border: none; border-top: 1px solid #dddddd; margin: 30px 0;\">\n\n        <p style=\"font-family: Verdana, sans-serif; font-size: 14px; color: #333;\">S pozdravem,</p>\n        <table role=\"presentation\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" style=\"font-family: Verdana, sans-serif; font-size: 14px; color: #333;\">\n            <tr>\n                <td style=\"padding-right: 15px; vertical-align: middle;\">\n                    <img src=\"https://www.terrahunt.cz/TerraHunt/media/static-media/fecf446d-5e97-4754-8a8e-55b43bdc62aa@w600.webp\" alt=\"Logo Z-AGENCY\" width=\"80\" height=\"80\" style=\"border-radius: 50%; display: block; object-fit: cover;\">\n                </td>\n                <td style=\"vertical-align: middle;\">\n                    <strong style=\"font-size: 16px; color: #0073b1;\">Tým Z-AGENCY</strong><br>\n                    <span style=\"display: block; margin-top: 3px;\">Z-AGENCY s.r.o.</span>\n                    <span style=\"display: block;\">Karlova 38, 61400 Brno</span>\n                    <span style=\"display: block;\">☎️ +420 542 211 935</span>\n                    <span style=\"display: block;\">✉️ <a href=\"mailto:info@z-agency.cz\" style=\"color: #0073b1; text-decoration: none;\">info@z-agency.cz</a></span>\n                    <span style=\"display: block;\">🌐 <a href=\"https://www.z-agency.cz\" style=\"color: #0073b1; text-decoration: none;\">z-agency.cz</a> |\n                    <a href=\"https://www.terrahunt.cz\" style=\"color: #0073b1; text-decoration: none;\">terrahunt.cz</a></span>\n                </td>\n            </tr>\n        </table>\n        </div>\n\n</body>\n</html>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        768,
+        400
+      ],
+      "id": "8567e2df-1d65-4b7e-af56-66cc3d44f594",
+      "name": "Thank You and Good Bye",
+      "webhookId": "d51548ad-d2ed-4658-ba76-2f67f89948ca",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "cUMqdo7XCF6noXLb",
+          "name": "Gmail-info@z-agency.cz"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9c72fdd1-c851-435e-b452-2c1de68510bb",
+              "name": "jmeno_prijmeni",
+              "value": "={{ $json['Jméno a příjmení'] }}",
+              "type": "string"
+            },
+            {
+              "id": "7cff9997-0db6-45d6-848c-00aea2265f9e",
+              "name": "email",
+              "value": "={{ $json['E-mailová adresa'] }}",
+              "type": "string"
+            },
+            {
+              "id": "900da024-7079-4e04-8da5-9a058902ebbe",
+              "name": "trvale_bydliste",
+              "value": "={{ $json['Adresa trvalého bydliště (co máš v občance)'] }}",
+              "type": "string"
+            },
+            {
+              "id": "892038af-13bd-4162-8ddf-125f26058484",
+              "name": "misto_pobytu",
+              "value": "={{ $json['Adresa místa, kde aktuálně žiješ'] }}",
+              "type": "string"
+            },
+            {
+              "id": "ae93a8d0-50b9-4b95-889c-c67762e2a655",
+              "name": "telefon",
+              "value": "={{ $json['Telefonní číslo, které aktivně používáš'] }}",
+              "type": "string"
+            },
+            {
+              "id": "43df036b-e651-4351-b317-58a110d438b0",
+              "name": "cislo_uctu",
+              "value": "={{ $json['Číslo účtu, na který ti budeme posílat peníze'] }}",
+              "type": "string"
+            },
+            {
+              "id": "d42fc4a0-4da0-432e-b0a7-760a88396feb",
+              "name": "rodne_jmeno",
+              "value": "={{ $json['Rodné příjmení (pokud máš teď jiné)'] }}",
+              "type": "string"
+            },
+            {
+              "id": "29a49084-4280-401f-8842-10567e334787",
+              "name": "misto_narozeni",
+              "value": "={{ $json['Místo narození (město nebo obec)'] }}",
+              "type": "string"
+            },
+            {
+              "id": "5eecc033-4fd4-4035-be76-9bc9685eae17",
+              "name": "datum_narozeni",
+              "value": "={{ $json['Datum narození'] }}",
+              "type": "string"
+            },
+            {
+              "id": "5c917466-9f5a-4ad4-a962-7a09bb55447c",
+              "name": "rodne_cislo",
+              "value": "={{ $json['Rodné číslo'] }}",
+              "type": "string"
+            },
+            {
+              "id": "546c340c-ad6e-411a-ba80-a10626257054",
+              "name": "zdravotni_pojistovna",
+              "value": "={{ $json['Zdravotní pojišťovna (napiš název, číslo a jestli je česká nebo z jiné země)'] }}",
+              "type": "string"
+            },
+            {
+              "id": "3088e75a-392b-4c93-801f-10542c25a8f7",
+              "name": "cislo_dokladu",
+              "value": "={{ $json['Číslo pasu nebo občanský průkaz (pokud nemáš českou národnost)'] }}",
+              "type": "string"
+            },
+            {
+              "id": "99f25967-7f30-4f9a-b6bd-083ab274f074",
+              "name": "ico",
+              "value": "={{ $json['IČO '] }}",
+              "type": "string"
+            },
+            {
+              "id": "d8ef0264-0810-4dfd-a914-402da0667130",
+              "name": "dic",
+              "value": "={{ $json['DIČ '] }}",
+              "type": "string"
+            },
+            {
+              "id": "6bbc91c1-a18e-4d1b-a5c3-0c4ef6712919",
+              "name": "obchodni_nazev",
+              "value": "={{ $json['Název firmy nebo jméno živnostníka'] }}",
+              "type": "string"
+            },
+            {
+              "id": "a9f1651b-69b6-4ae1-bc49-6ea3e264675e",
+              "name": "sidlo_podnikani",
+              "value": "={{ $json['Sídlo firmy/živnostníka'] }}",
+              "type": "string"
+            },
+            {
+              "id": "9df217e3-53d6-4440-8658-7bb75c160ac8",
+              "name": "=informace_1",
+              "value": "={{ $json['Je něco co bychom měli vědět, nebo čím se chceš pochlubit? (vlastnosti, dovednosti, úspěchy)'] }}",
+              "type": "string"
+            },
+            {
+              "id": "479720b0-6964-4e1d-8c9d-ee6fbea85fed",
+              "name": "forma_spoluprace",
+              "value": "={{ $json['Forma spolupráce'] ? [$json['Forma spolupráce']] : [] }}",
+              "type": "string"
+            },
+            {
+              "id": "1f5bc5c7-a47f-4484-86f2-dfcee48b47ce",
+              "name": "sleva_dane",
+              "value": "={{ $json['Budeš chtít u nás podepsat růžový formulář (sleva na dani - poplatník, student..)?'] }}",
+              "type": "string"
+            },
+            {
+              "id": "0c551e5d-3738-4fd5-9c7b-cd2d4929fef5",
+              "name": "status_instruktora",
+              "value": "={{ $json['Vidím se v následujícím týmu instruktorů:'] }}",
+              "type": "string"
+            },
+            {
+              "id": "49bb4782-4e94-4f94-bb3e-717ed77ab052",
+              "name": "dalsi_specializace",
+              "value": "={{ $json['Jaké máš další dovednosti a kvalifikace? (zaškrtni, co platí)'] }}",
+              "type": "string"
+            },
+            {
+              "id": "7d97d7f8-20f4-4186-82fc-22f51836062b",
+              "name": "ridic",
+              "value": "={{ $('Google Sheets Trigger').item.json['Máš řidičák a pravidelně řídíš?'] }}",
+              "type": "string"
+            },
+            {
+              "id": "dbe1b009-575a-47bd-8720-0d9b23a061ae",
+              "name": "vlastni_automobil",
+              "value": "={{ $('Google Sheets Trigger').item.json['Máš vlastní auto, které můžeš vzít na akci?'] }}",
+              "type": "string"
+            },
+            {
+              "id": "e0a32ca2-1913-4e89-8a72-fc11b4463a10",
+              "name": "jazykova_vybava",
+              "value": "={{ $json[\"Jakými jazyky mluvíš?\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "c55ea6fc-bca1-4352-babb-732ec3e21fd8",
+              "name": "level_english",
+              "value": "={{ $json[\"Jak jsi dobrý v angličtině?\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "fb051023-2716-4c26-9965-d19ea0dd3925",
+              "name": "poznamky_kvalifikace",
+              "value": "={{ $json['Jaké máš zkušenosti s vedením reflexí?'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        624,
+        -32
+      ],
+      "id": "477bd0cd-93a7-41a4-a209-44ec303e93e1",
+      "name": "Tabidoo Mapping",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const smartSplit = (text) => {\n  if (!text) return [];\n  if (typeof text !== 'string') return [text];\n  const result = [];\n  let current = \"\";\n  let depth = 0;\n  for (let i = 0; i < text.length; i++) {\n    const char = text[i];\n    if (char === '(') depth++;\n    if (char === ')') depth--;\n    if (char === ',' && depth === 0) {\n      result.push(current.trim());\n      current = \"\";\n    } else {\n      current += char;\n    }\n  }\n  if (current) result.push(current.trim());\n  return result.filter(r => r !== \"\");\n};\n\nconst mapJazyk = (value) => {\n  if (typeof value !== 'string') return value;\n  const lower = value.toLowerCase();\n  if (lower.includes(\"anglick\")) return \"EN\";\n  if (lower.includes(\"německ\")) return \"DE\";\n  if (lower.includes(\"slovensk\")) return \"SK\";\n  return value;\n};\n\nconst mapRidic = (value) => {\n  if (typeof value !== 'string') return value;\n  const lower = value.toLowerCase();\n  if (lower.includes(\"osobní automobil\")) return \"Osobák\";\n  if (lower.includes(\"malou dodávku\")) return \"Malá dodávka\";\n  if (lower.includes(\"velkou naloženou\") || lower.includes(\"velkou dodávku\")) return \"Velká dodávka\";\n  return value;\n};\n\nconst mapAuto = (value) => {\n  if (typeof value !== 'string') return value;\n  const lower = value.toLowerCase();\n  if (lower.includes(\"malá dodávka\") || lower.includes(\"mala dodavka\")) return \"Dodávka typu VW\";\n  if (lower.includes(\"velká dodávka\") || lower.includes(\"velka dodavka\")) return \"Dodávka typu Transit\";\n  if (lower.includes(\"osobní automobil velký\") || lower.includes(\"combi\") || lower.includes(\"galaxy\")) return \"Osobní velké typu combi\";\n  if (lower.includes(\"osobní automobil malý\") || lower.includes(\"fabia\") || lower.includes(\"hatchback\")) return \"Osobní malé\";\n  return value;\n};\n\nconst toArray = (value, mapFunction) => {\n  if (value === undefined || value === null || value === '') return [];\n  let val = value;\n  if (Array.isArray(val)) {\n    return mapFunction ? val.map(mapFunction) : val;\n  }\n  if (typeof val === 'string' && val.startsWith('[')) {\n    try { val = JSON.parse(val); } catch(e) {}\n  }\n  if (typeof val === 'string') {\n    val = smartSplit(val);\n  }\n  if (!Array.isArray(val)) val = [val];\n  if (mapFunction) {\n    val = val.map(mapFunction);\n  }\n  return val.filter(item => item !== null && item !== undefined && item !== '');\n};\n\nreturn $input.all().map(item => {\n  const newItem = { ...item.json };\n\n  if (newItem.forma_spoluprace !== undefined) {\n    newItem.forma_spoluprace = toArray(newItem.forma_spoluprace);\n  }\n\n  if (newItem.sleva_dane) {\n    let value = newItem.sleva_dane;\n    if (typeof value === 'string' && value.startsWith('[')) {\n      try { value = JSON.parse(value); } \n      catch (e) { value = value.replace(/[\\[\\]\"]/g, '').trim(); }\n    }\n    if (Array.isArray(value)) value = value.length > 0 ? value[0] : null;\n    newItem.sleva_dane = (value !== null && value !== undefined) ? String(value).trim() : null;\n  }\n\n  if (newItem.status_instruktora) {\n    let value = newItem.status_instruktora;\n    if (typeof value === 'string' && value.startsWith('[')) {\n      try { value = JSON.parse(value); } \n      catch (e) { value = value.replace(/[\\[\\]\"]/g, '').trim(); }\n    }\n    if (Array.isArray(value)) value = value.length > 0 ? value[0] : \"\";\n    let stringValue = (value !== null && value !== undefined) ? String(value).trim() : \"\";\n    const upperVal = stringValue.toUpperCase();\n    if (upperVal.includes('CORE')) newItem.status_instruktora = 'CORE';\n    else if (upperVal.includes('SUPPORT')) newItem.status_instruktora = 'SUPPORT';\n    else if (upperVal.includes('ZÁLOHA') || upperVal.includes('ZALOHA')) newItem.status_instruktora = 'ZÁLOHA';\n    else if (upperVal.includes('NEAKTIVNÍ') || upperVal.includes('NEAKTIVNI')) newItem.status_instruktora = 'NEAKTIVNÍ';\n    else newItem.status_instruktora = null;\n  }\n\n  if (newItem.dalsi_specializace !== undefined) {\n    newItem.dalsi_specializace = toArray(newItem.dalsi_specializace);\n  }\n\n  if (newItem.ridic !== undefined) {\n    newItem.ridic = toArray(newItem.ridic, mapRidic);\n  }\n\n  if (newItem.vlastni_automobil !== undefined) {\n    newItem.vlastni_automobil = toArray(newItem.vlastni_automobil, mapAuto);\n  }\n\n  if (newItem.jazykova_vybava !== undefined) {\n    newItem.jazykova_vybava = toArray(newItem.jazykova_vybava, mapJazyk);\n  }\n\n  if (newItem.level_english !== undefined) {\n    newItem.level_english = toArray(newItem.level_english);\n  }\n\n  // --- DATUM NAROZENÍ (konverze z Excel serial nebo českého formátu) ---\n  if (newItem.datum_narozeni) {\n    let dateVal = newItem.datum_narozeni;\n    \n    // Pokud je to číslo (Excel serial date)\n    if (!isNaN(dateVal) && Number(dateVal) > 0) {\n      const excelSerial = Number(dateVal);\n      const date = new Date((excelSerial - 25569) * 86400 * 1000);\n      const year = date.getUTCFullYear();\n      const month = String(date.getUTCMonth() + 1).padStart(2, '0');\n      const day = String(date.getUTCDate()).padStart(2, '0');\n      newItem.datum_narozeni = year + '-' + month + '-' + day;\n    }\n    // Pokud je to český formát (dd.mm.yyyy)\n    else if (typeof dateVal === 'string' && dateVal.includes('.')) {\n      const parts = dateVal.split('.');\n      if (parts.length === 3) {\n        const day = parts[0].trim().padStart(2, '0');\n        const month = parts[1].trim().padStart(2, '0');\n        const year = parts[2].trim();\n        newItem.datum_narozeni = year + '-' + month + '-' + day;\n      }\n    }\n    // Pokud už je ve správném formátu, nech ho\n  }\n\n  // Pole informace_1 a poznamky_kvalifikace zůstanou oddělená\n\n  return {\n    json: newItem,\n    pairedItem: item.pairedItem\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        816,
+        -32
+      ],
+      "id": "558f65ac-0104-4e04-a592-f63e3661a6af",
+      "name": "Multichoice and Dropdown",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## SENSITIVE!!!\n**CODE NODE necessery to update with every new dropdown or multichoice",
+        "height": 128,
+        "width": 688,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        560,
+        -352
+      ],
+      "typeVersion": 1,
+      "id": "e5d109a4-be50-4ef4-ba55-7f6407bbe61f",
+      "name": "Sticky Note6",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## Error - Check Manually",
+        "height": 304,
+        "width": 304
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1712,
+        -112
+      ],
+      "typeVersion": 1,
+      "id": "76d3d592-e347-4c7c-90c5-862355224426",
+      "name": "Sticky Note7",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "sendTo": "info@z-agency.cz",
+        "subject": "=CHYBA při vkládání instruktora {{ $('HTTP Request - POST data').item.json.data.fields.jmeno_prijmeni }} do Tabidoo",
+        "message": "=Automatizace pro instruktora {{ $('HTTP Request - POST data').item.json.data.fields.jmeno_prijmeni }} neproběhla z důvodu chby, uprav údaje ručně.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1776,
+        -48
+      ],
+      "id": "9f8a13d8-ccad-4d5c-b0a5-d637ddde02b4",
+      "name": "Send Error Message",
+      "webhookId": "953c014c-306e-473f-80fa-1b7842f8e078",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "cUMqdo7XCF6noXLb",
+          "name": "Gmail-info@z-agency.cz"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "891bca1a-0ca8-418d-b52d-4fb102bff417",
+              "leftValue": "={{ $json.error }}",
+              "rightValue": "={{ $json.error }}",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1376,
+        -32
+      ],
+      "id": "d10c4992-8ca6-4fde-9f2c-d0f7bf748cb0",
+      "name": "If - Is There Any Error?",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "sendTo": "info@zetkaci.cz",
+        "subject": "=Úspešné vložení instruktora {{ $json.data.fields.jmeno_prijmeni }} do Tabidoo",
+        "message": "={{ $json.data.fields.jmeno_prijmeni  }} byl vložen do tabulky nových instruktorů v Tabidoo.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1808,
+        448
+      ],
+      "id": "75348e22-d606-4388-ac63-5f7070e78fd0",
+      "name": "Send a message1",
+      "webhookId": "00238f3b-b320-43e3-adfa-78e2fb104fd2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "cUMqdo7XCF6noXLb",
+          "name": "Gmail-info@z-agency.cz"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## OK - Confirmation",
+        "height": 304,
+        "width": 304
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1712,
+        352
+      ],
+      "typeVersion": 1,
+      "id": "0157e460-2c97-4de2-8222-0030d3b6010c",
+      "name": "Sticky Note8",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "52ce6815-2b81-4fd8-b254-8e0c9f60621c",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -848,
+        96
+      ],
+      "id": "ef6eb1d4-bec9-4da9-8784-48bf585d71fc",
+      "name": "Webhook",
+      "webhookId": "52ce6815-2b81-4fd8-b254-8e0c9f60621c"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2064c159-530d-44ca-97b4-1f4831dd59b8",
+              "name": "body.data.fields.iDKontaktu",
+              "value": "={{ $json.body.data.fields.iDKontaktu }}",
+              "type": "string"
+            },
+            {
+              "id": "12391656-974a-4dae-893b-a10a8ea04528",
+              "name": "body.data.fields.jmeno_prijmeni",
+              "value": "={{ $json.body.data.fields.jmeno_prijmeni }}",
+              "type": "string"
+            },
+            {
+              "id": "a77d5f3e-f567-4abe-b7bc-261c57006c94",
+              "name": "emailArray",
+              "value": "={{ $json.body.data.fields.email.href.toString().replace(/mailto:/g, '').split(',').map(e => e.trim()).filter(e => e) }}",
+              "type": "string"
+            },
+            {
+              "id": "08dfa052-e081-4141-8377-bb3f83c12383",
+              "name": "body.data.fields.telefon",
+              "value": "={{ $json.body.data.fields.telefon }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -336,
+        400
+      ],
+      "id": "d0978148-925c-4d1d-b92a-f2a396a2b8b6",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "={{ $json.emailArray }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -192,
+        400
+      ],
+      "id": "b3601691-d61a-490b-8dbe-6b6e34f563d4",
+      "name": "Split Out"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "errorWorkflow": "zVAjJgKV17IWzFP7",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "timezone": "Europe/Prague"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-12T23:11:03.763Z",
+      "createdAt": "2025-12-12T23:11:03.763Z",
+      "role": "workflow:owner",
+      "workflowId": "6Z0FV3VDvVbEGzmG",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": {
+    "node:Google Sheets Trigger": {
+      "documentId": "15LqLq43bCdy01h5VaTV2OMxq2Lcl69PG73DwbP0CdI4",
+      "sheetId": 1005795739,
+      "lastIndexChecked": 16,
+      "lastRevision": 23,
+      "lastRevisionLink": "https://docs.google.com/spreadsheets/export?id=15LqLq43bCdy01h5VaTV2OMxq2Lcl69PG73DwbP0CdI4&revision=23&exportFormat=xlsx"
+    }
+  },
+  "tags": [],
+  "triggerCount": 2,
+  "updatedAt": "2025-12-13T00:15:56.821Z",
+  "versionId": "0ca8246b-bfd4-4827-861c-9f8dc88eac4a"
+}
