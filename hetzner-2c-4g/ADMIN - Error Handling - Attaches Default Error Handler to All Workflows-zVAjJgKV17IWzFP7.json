@@ -1,0 +1,810 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-09T21:11:44.544Z",
+    "createdAt": "2025-12-09T21:11:44.544Z",
+    "versionId": "de3eada0-2e8b-43a9-9614-6107516953f2",
+    "workflowId": "zVAjJgKV17IWzFP7",
+    "nodes": [
+      {
+        "parameters": {},
+        "id": "eb05a41b-a8be-49cf-ba89-dffc4e869fad",
+        "name": "Error Trigger",
+        "type": "n8n-nodes-base.errorTrigger",
+        "position": [
+          -160,
+          464
+        ],
+        "typeVersion": 1
+      },
+      {
+        "parameters": {
+          "content": "## Sends GMail with error log\nActivated each time a workflow has an error in a run",
+          "height": 292,
+          "width": 683,
+          "color": 7
+        },
+        "id": "e8f14a13-8d48-4869-abed-f4b5398233cb",
+        "name": "Sticky Note",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          -224,
+          368
+        ],
+        "typeVersion": 1
+      },
+      {
+        "parameters": {
+          "content": "## Grab id of this workflow to add as default error handling\nRequired to attach this error workflow as the default error workflow to each active workflow where one isn't already defined",
+          "height": 311.6820338738364,
+          "width": 437.383945920471,
+          "color": 7
+        },
+        "id": "6ce07efb-e321-4cf6-9f00-c5c11d477f7f",
+        "name": "Sticky Note1",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          0,
+          0
+        ],
+        "typeVersion": 1
+      },
+      {
+        "parameters": {
+          "content": "## Daily at 4pm",
+          "height": 285.0572024222704,
+          "width": 214.6984582852457,
+          "color": 7
+        },
+        "id": "5e9536b2-39a9-4427-af96-dac35f8e842d",
+        "name": "Sticky Note2",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          -224,
+          32
+        ],
+        "typeVersion": 1
+      },
+      {
+        "parameters": {
+          "sendTo": "=zmidloch@z-agency.cz",
+          "subject": "=n8n Error: {{ $('Error Trigger').item.json.workflow.name }}",
+          "message": "=N8N FLOW ERROR:\n\nWORKFLOW -- {{ $json.workflow.name }}\n\nNODE FAILED -- {{ $json.execution.lastNodeExecuted }}\n\nERROR -- \n{{ $json.execution.error.message }}{{ \n$json.trigger.error.cause.body.error_description }}\n\n{{ $json.trigger.error.message }}\n\nLink: {{ $json.execution.url.replace('https://n8n-automakeio-u28170.vm.elestio.app', 'https://n8n.automake.io')}}",
+          "options": {}
+        },
+        "id": "9c67821d-fb7c-47da-95f9-c2a255ae3e72",
+        "name": "Send GMail with Error Log",
+        "type": "n8n-nodes-base.gmail",
+        "position": [
+          32,
+          672
+        ],
+        "typeVersion": 2.1,
+        "webhookId": "140520a4-e9ac-42f8-a432-e3d25eefb746",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "qNSaYVEcaWOf5U3k",
+            "name": "Gmail zmidloch@z-agency.cz"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "workflowId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "={{ $workflow.id }}"
+          },
+          "requestOptions": {}
+        },
+        "id": "29b5c4b3-c88e-4346-8236-6aed50e07d22",
+        "name": "Get Error Handler Workflow ID",
+        "type": "n8n-nodes-base.n8n",
+        "position": [
+          64,
+          144
+        ],
+        "typeVersion": 1,
+        "notesInFlow": true,
+        "credentials": {
+          "n8nApi": {
+            "id": "Ig7f5BT2PKf0yVbH",
+            "name": "n8n account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "content": "## Only Relevant Workflows\nOnly workflows that are `active` and have no specific error logging",
+          "height": 311.71733643714464,
+          "width": 218.07667557838022,
+          "color": 7
+        },
+        "id": "68068799-4374-4334-9ea3-0daf41c67f97",
+        "name": "Sticky Note3",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          464,
+          0
+        ],
+        "typeVersion": 1
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 1
+            },
+            "conditions": [
+              {
+                "id": "290fd302-4e2d-44d6-8a8a-14a0b8f2c360",
+                "operator": {
+                  "type": "string",
+                  "operation": "notExists",
+                  "singleValue": true
+                },
+                "leftValue": "={{ $json.settings.errorWorkflow }}",
+                "rightValue": "=Default Error Handler"
+              },
+              {
+                "id": "2a5799e9-2030-4281-bf11-e7f9777906c5",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEquals"
+                },
+                "leftValue": "={{ $json.id }}",
+                "rightValue": "={{ $('Get Error Handler Workflow ID').item.json.id }}"
+              },
+              {
+                "id": "8bc4c2a0-e094-4426-8ae6-71b6e4fa9842",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                },
+                "leftValue": "={{ $json.active }}",
+                "rightValue": ""
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "id": "95e09c15-1ca3-49ae-859e-2b02babfcf21",
+        "name": "Active & No Error Handler Set",
+        "type": "n8n-nodes-base.if",
+        "position": [
+          512,
+          144
+        ],
+        "typeVersion": 2
+      },
+      {
+        "parameters": {
+          "mode": "runOnceForEachItem",
+          "jsCode": "const data = $json\n\ndata.settings.errorWorkflow = $('Get Error Handler Workflow ID').item.json.id ;\ndelete data.settings.callerPolicy;\n\nreturn {\n  id: data.id,\n  name: data.name,\n  nodes: data.nodes,\n  connections: data.connections,\n  settings: data.settings\n}"
+        },
+        "id": "19b1748e-3bd6-40c9-83c3-94f44412e2ee",
+        "name": "Set Error Logging Fields",
+        "type": "n8n-nodes-base.code",
+        "position": [
+          768,
+          160
+        ],
+        "typeVersion": 2
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "workflowId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "={{ $json.id }}"
+          },
+          "workflowObject": "={{ JSON.stringify($json) }}",
+          "requestOptions": {}
+        },
+        "id": "c7a8e1b4-06bf-411e-b3df-932cb06044c5",
+        "name": "Update Workflows with Error Handling",
+        "type": "n8n-nodes-base.n8n",
+        "position": [
+          960,
+          160
+        ],
+        "typeVersion": 1,
+        "notesInFlow": true,
+        "credentials": {
+          "n8nApi": {
+            "id": "Ig7f5BT2PKf0yVbH",
+            "name": "n8n account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "content": "## Set Error Handling\nOnly workflows that are `active` and have no specific error logging",
+          "height": 284.5719625210984,
+          "width": 430.76760477802804,
+          "color": 7
+        },
+        "id": "52ec91dc-8616-4c83-b57e-91cb4eff1d31",
+        "name": "Sticky Note4",
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          704,
+          32
+        ],
+        "typeVersion": 1
+      },
+      {
+        "parameters": {
+          "chatId": "8150275535",
+          "text": "=N8N FLOW ERROR:\n\nWORKFLOW -- {{ $json.workflow.name }}\n\nNODE FAILED -- {{ $json.execution.lastNodeExecuted }}\n\nERROR -- \n{{ $json.execution.error.message }}{{ \n$json.trigger.error.cause.body.error_description }}\n\n{{ $json.trigger.error.message }}\n\nLink: {{ $json.execution.url.replace('https://n8n-automakeio-u28170.vm.elestio.app', 'https://n8n.automake.io')}}",
+          "additionalFields": {
+            "appendAttribution": false
+          }
+        },
+        "id": "f4779f4d-756b-4f79-af1c-65adb8429ed8",
+        "name": "Send Telegram Message",
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          32,
+          464
+        ],
+        "retryOnFail": true,
+        "webhookId": "6b8e19ea-4db3-4409-bea7-7756c89324dd",
+        "credentials": {
+          "telegramApi": {
+            "id": "31ztraIQpX6jL9wr",
+            "name": "Telegram z_n8n_error_bot"
+          }
+        },
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "triggerAtHour": 16
+              }
+            ]
+          }
+        },
+        "id": "e8d7e745-dfdc-44dd-a45a-fe9c831c29c0",
+        "name": "4pm",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "position": [
+          -160,
+          144
+        ],
+        "typeVersion": 1.2
+      },
+      {
+        "parameters": {
+          "filters": {},
+          "requestOptions": {}
+        },
+        "type": "n8n-nodes-base.n8n",
+        "typeVersion": 1,
+        "position": [
+          288,
+          144
+        ],
+        "id": "9c138e01-cd16-4fa3-b118-1d58c11ebd70",
+        "name": "GetWorkflows",
+        "retryOnFail": true,
+        "waitBetweenTries": 5000,
+        "credentials": {
+          "n8nApi": {
+            "id": "Ig7f5BT2PKf0yVbH",
+            "name": "n8n account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Error Trigger": {
+        "main": [
+          [
+            {
+              "node": "Send Telegram Message",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Send GMail with Error Log",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Error Handler Workflow ID": {
+        "main": [
+          [
+            {
+              "node": "GetWorkflows",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Active & No Error Handler Set": {
+        "main": [
+          [
+            {
+              "node": "Set Error Logging Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set Error Logging Fields": {
+        "main": [
+          [
+            {
+              "node": "Update Workflows with Error Handling",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "4pm": {
+        "main": [
+          [
+            {
+              "node": "Get Error Handler Workflow ID",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "GetWorkflows": {
+        "main": [
+          [
+            {
+              "node": "Active & No Error Handler Set",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jiri Zmidloch",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "de3eada0-2e8b-43a9-9614-6107516953f2",
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send Telegram Message",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send GMail with Error Log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Error Handler Workflow ID": {
+      "main": [
+        [
+          {
+            "node": "GetWorkflows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Active & No Error Handler Set": {
+      "main": [
+        [
+          {
+            "node": "Set Error Logging Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Error Logging Fields": {
+      "main": [
+        [
+          {
+            "node": "Update Workflows with Error Handling",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4pm": {
+      "main": [
+        [
+          {
+            "node": "Get Error Handler Workflow ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetWorkflows": {
+      "main": [
+        [
+          {
+            "node": "Active & No Error Handler Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-09T20:46:43.342Z",
+  "id": "zVAjJgKV17IWzFP7",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "ADMIN - Error Handling - Attaches Default Error Handler to All Workflows",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "eb05a41b-a8be-49cf-ba89-dffc4e869fad",
+      "name": "Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "position": [
+        -160,
+        464
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Sends GMail with error log\nActivated each time a workflow has an error in a run",
+        "height": 292,
+        "width": 683,
+        "color": 7
+      },
+      "id": "e8f14a13-8d48-4869-abed-f4b5398233cb",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -224,
+        368
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Grab id of this workflow to add as default error handling\nRequired to attach this error workflow as the default error workflow to each active workflow where one isn't already defined",
+        "height": 311.6820338738364,
+        "width": 437.383945920471,
+        "color": 7
+      },
+      "id": "6ce07efb-e321-4cf6-9f00-c5c11d477f7f",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Daily at 4pm",
+        "height": 285.0572024222704,
+        "width": 214.6984582852457,
+        "color": 7
+      },
+      "id": "5e9536b2-39a9-4427-af96-dac35f8e842d",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -224,
+        32
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "sendTo": "=zmidloch@z-agency.cz",
+        "subject": "=n8n Error: {{ $('Error Trigger').item.json.workflow.name }}",
+        "message": "=N8N FLOW ERROR:\n\nWORKFLOW -- {{ $json.workflow.name }}\n\nNODE FAILED -- {{ $json.execution.lastNodeExecuted }}\n\nERROR -- \n{{ $json.execution.error.message }}{{ \n$json.trigger.error.cause.body.error_description }}\n\n{{ $json.trigger.error.message }}\n\nLink: {{ $json.execution.url.replace('https://n8n-automakeio-u28170.vm.elestio.app', 'https://n8n.automake.io')}}",
+        "options": {}
+      },
+      "id": "9c67821d-fb7c-47da-95f9-c2a255ae3e72",
+      "name": "Send GMail with Error Log",
+      "type": "n8n-nodes-base.gmail",
+      "position": [
+        32,
+        672
+      ],
+      "typeVersion": 2.1,
+      "webhookId": "140520a4-e9ac-42f8-a432-e3d25eefb746",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "qNSaYVEcaWOf5U3k",
+          "name": "Gmail zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $workflow.id }}"
+        },
+        "requestOptions": {}
+      },
+      "id": "29b5c4b3-c88e-4346-8236-6aed50e07d22",
+      "name": "Get Error Handler Workflow ID",
+      "type": "n8n-nodes-base.n8n",
+      "position": [
+        64,
+        144
+      ],
+      "typeVersion": 1,
+      "notesInFlow": true,
+      "credentials": {
+        "n8nApi": {
+          "id": "Ig7f5BT2PKf0yVbH",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Only Relevant Workflows\nOnly workflows that are `active` and have no specific error logging",
+        "height": 311.71733643714464,
+        "width": 218.07667557838022,
+        "color": 7
+      },
+      "id": "68068799-4374-4334-9ea3-0daf41c67f97",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        464,
+        0
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "290fd302-4e2d-44d6-8a8a-14a0b8f2c360",
+              "operator": {
+                "type": "string",
+                "operation": "notExists",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json.settings.errorWorkflow }}",
+              "rightValue": "=Default Error Handler"
+            },
+            {
+              "id": "2a5799e9-2030-4281-bf11-e7f9777906c5",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              },
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "={{ $('Get Error Handler Workflow ID').item.json.id }}"
+            },
+            {
+              "id": "8bc4c2a0-e094-4426-8ae6-71b6e4fa9842",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json.active }}",
+              "rightValue": ""
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "95e09c15-1ca3-49ae-859e-2b02babfcf21",
+      "name": "Active & No Error Handler Set",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        512,
+        144
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const data = $json\n\ndata.settings.errorWorkflow = $('Get Error Handler Workflow ID').item.json.id ;\ndelete data.settings.callerPolicy;\n\nreturn {\n  id: data.id,\n  name: data.name,\n  nodes: data.nodes,\n  connections: data.connections,\n  settings: data.settings\n}"
+      },
+      "id": "19b1748e-3bd6-40c9-83c3-94f44412e2ee",
+      "name": "Set Error Logging Fields",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        768,
+        160
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $json.id }}"
+        },
+        "workflowObject": "={{ JSON.stringify($json) }}",
+        "requestOptions": {}
+      },
+      "id": "c7a8e1b4-06bf-411e-b3df-932cb06044c5",
+      "name": "Update Workflows with Error Handling",
+      "type": "n8n-nodes-base.n8n",
+      "position": [
+        960,
+        160
+      ],
+      "typeVersion": 1,
+      "notesInFlow": true,
+      "credentials": {
+        "n8nApi": {
+          "id": "Ig7f5BT2PKf0yVbH",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Set Error Handling\nOnly workflows that are `active` and have no specific error logging",
+        "height": 284.5719625210984,
+        "width": 430.76760477802804,
+        "color": 7
+      },
+      "id": "52ec91dc-8616-4c83-b57e-91cb4eff1d31",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        704,
+        32
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "chatId": "8150275535",
+        "text": "=N8N FLOW ERROR:\n\nWORKFLOW -- {{ $json.workflow.name }}\n\nNODE FAILED -- {{ $json.execution.lastNodeExecuted }}\n\nERROR -- \n{{ $json.execution.error.message }}{{ \n$json.trigger.error.cause.body.error_description }}\n\n{{ $json.trigger.error.message }}\n\nLink: {{ $json.execution.url.replace('https://n8n-automakeio-u28170.vm.elestio.app', 'https://n8n.automake.io')}}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "id": "f4779f4d-756b-4f79-af1c-65adb8429ed8",
+      "name": "Send Telegram Message",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        32,
+        464
+      ],
+      "retryOnFail": true,
+      "webhookId": "6b8e19ea-4db3-4409-bea7-7756c89324dd",
+      "credentials": {
+        "telegramApi": {
+          "id": "31ztraIQpX6jL9wr",
+          "name": "Telegram z_n8n_error_bot"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 16
+            }
+          ]
+        }
+      },
+      "id": "e8d7e745-dfdc-44dd-a45a-fe9c831c29c0",
+      "name": "4pm",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        -160,
+        144
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "filters": {},
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        288,
+        144
+      ],
+      "id": "9c138e01-cd16-4fa3-b118-1d58c11ebd70",
+      "name": "GetWorkflows",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "n8nApi": {
+          "id": "Ig7f5BT2PKf0yVbH",
+          "name": "n8n account"
+        }
+      }
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "zVAjJgKV17IWzFP7",
+    "timezone": "Europe/Prague"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-09T20:46:43.342Z",
+      "createdAt": "2025-12-09T20:46:43.342Z",
+      "role": "workflow:owner",
+      "workflowId": "zVAjJgKV17IWzFP7",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": {
+    "node:4pm": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [
+    {
+      "updatedAt": "2025-12-09T20:46:02.437Z",
+      "createdAt": "2025-12-09T20:46:02.437Z",
+      "id": "pXuIvGAWF9AeB4Hc",
+      "name": "Error Handling"
+    },
+    {
+      "updatedAt": "2025-12-08T22:27:29.780Z",
+      "createdAt": "2025-12-08T22:27:29.780Z",
+      "id": "uBF9657DFDtoNWGs",
+      "name": "Security"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-12-09T21:11:44.564Z",
+  "versionId": "de3eada0-2e8b-43a9-9614-6107516953f2"
+}
