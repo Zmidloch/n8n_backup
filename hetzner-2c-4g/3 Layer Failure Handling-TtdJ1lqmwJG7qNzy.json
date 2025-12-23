@@ -1,0 +1,1247 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-09T22:25:26.711Z",
+    "createdAt": "2025-12-09T22:25:26.711Z",
+    "versionId": "dc03847a-f1a4-4e6f-905d-56692aad6949",
+    "workflowId": "TtdJ1lqmwJG7qNzy",
+    "nodes": [
+      {
+        "parameters": {
+          "content": "## 1. Triggers\n",
+          "height": 220,
+          "color": 7
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          -2416,
+          672
+        ],
+        "id": "3dc960d1-7f48-4906-8e9e-644cf5a19293",
+        "name": "Sticky Note2"
+      },
+      {
+        "parameters": {
+          "content": "## 2. Operations Agent\n- Schedules and updates calendar invites\n- Response to emails",
+          "height": 400,
+          "width": 800,
+          "color": 7
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          -1296,
+          592
+        ],
+        "id": "1c2b2e78-1149-4450-8b82-721a2998828e",
+        "name": "Sticky Note3"
+      },
+      {
+        "parameters": {
+          "inputSource": "jsonExample",
+          "jsonExample": "{\n  \"query\": \"string\",\n  \"context\": \"string\"\n}"
+        },
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          -2368,
+          720
+        ],
+        "id": "1bbf6e96-8f45-4d74-a19c-8fe7fdbdf798",
+        "name": "Executed_Trigger"
+      },
+      {
+        "parameters": {
+          "contextWindowLength": 10
+        },
+        "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+        "typeVersion": 1.3,
+        "position": [
+          -1248,
+          1120
+        ],
+        "id": "1fd51e5a-0ca8-4bd0-a8ac-71ab60e63651",
+        "name": "BufferMemory"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "a17f706b-6292-4c9b-b2de-1fb7a1205eaf",
+                "name": "response",
+                "value": "={{ $('OpsAgent').item.json.output }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -768,
+          704
+        ],
+        "id": "deae0f33-5e9a-4963-b942-7265e71350d1",
+        "name": "SetResponse"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=<Role>\nYou are an operations (ops) agent flow expert, designed to facilitate and streamline operational tasks. Your primary function is to manage scheduling and email operations by utilizing the calendar and email flows efficiently.\n</Role>\n\n<Constraints>\n*Today's date is {{ $now }}\n* Ensure that the ops agent can handle scheduling and email management effectively using respective actions within the calendar and email flows.\n</Constraints>\n\n<Inputs>\n* Natural language request from users regarding scheduling or email tasks.\n* Examples include: “Schedule a meeting for tomorrow at 3 PM,” or “Send an email to the finance team regarding the budget report.\"\n</Inputs>\n\n<Tools>\n*CalendarFlow  \nPurpose: Manage scheduling tasks.\nActions:    \n   - Create event   \n   - Update event    \n   - Delete event  \nParameters for Actions:    \n   - eventTitle (string)    \n   - eventTime (string)    \n   - participants (array of strings)\n\n*EmailFlow  \nPurpose: Manage email tasks.\nActions:    \n   - Send email\n   - Draft email\n   - Label email    \n   - Archive email  \nParameters for Actions:\n   - recipientEmail (string)\n   - emailSubject (string)\n   - emailBody (string)\n</Tools>\n\n<Instructions>\n1. **Analyze and Clarify User Requests**:\n   - Utilize natural language understanding to discern the specific task required by the user.   \n   - If the request is ambiguous, prompt the user for clarification using direct but courteous questions.\n\n2. **Execute Calendar Management Tasks**:   \n   - Determine if the task involves scheduling and select the appropriate action from the CalendarFlow.   \n   - Collect necessary details such as event time, title, and participant list.   \n   - Execute the scheduling task using parameters specified.\n\n3. **Execute Email Management Tasks**: \n   - If the task involves email management, select the appropriate action from the EmailFlow.\n   - Gather required information such as recipient email, subject, and body content.\n   - Perform the email task using provided parameters.\n\n4. **Confirmation and Follow-Up**:   \n   - After performing any task, confirm completion to the user and provide any relevant follow-up actions or information.\n5. **Example Use Cases**:   \n   - Calendar: “Set up a meeting with John Doe and Jane Smith for next Wednesday at 10 AM.”\n   - Email: “Send an email to hr@example.com with the subject ‘New Policy Updates’.”\n</Instructions>\n\n<Conclusions> \nThe ops agent effectively handles scheduling and email tasks with precise execution.\\n* Tasks are seamlessly integrated into the user’s operational workflow.\n* Users receive timely confirmations and notifications regarding task status updates.\n</Conclusions>\n\n<Solutions>\n* If user requests lack clarity, ask for specific details related to the task such as time or participant list for scheduling, and recipient or subject for emails.\n* Notify users when a particular calendar or email action cannot be completed and provide alternative suggestions.\n* In case the calendar or email tools are temporarily unavailable, inform the user and retry the action automatically when the tools are accessible.\n</Solutions>\n\n<user query>\n{{ $json.query }}\n{{ $json.context }}\n</user query>",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 1.7,
+        "position": [
+          -1216,
+          704
+        ],
+        "id": "456faea7-a8b3-45a4-95f1-cf422dd6ba73",
+        "name": "OpsAgent",
+        "retryOnFail": true,
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+        "typeVersion": 1.2,
+        "position": [
+          -928,
+          1248
+        ],
+        "id": "a9e27e1e-acb4-4526-84cc-1700fa26ddd5",
+        "name": "Embeddings OpenAI"
+      },
+      {
+        "parameters": {
+          "mode": "retrieve-as-tool",
+          "toolName": "company_knowledge_base",
+          "toolDescription": "Work with your data in Supabase Vector Store",
+          "tableName": {
+            "__rl": true,
+            "value": "=Test",
+            "mode": "id"
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+        "typeVersion": 1,
+        "position": [
+          -944,
+          1120
+        ],
+        "id": "07244a37-c219-4918-aec5-808b3c9a4bbe",
+        "name": "CompanyData_Tool"
+      },
+      {
+        "parameters": {
+          "content": "## 4. Execution Routing\nPass query to relevant execution tool",
+          "height": 300,
+          "width": 320,
+          "color": 7
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          -576,
+          1008
+        ],
+        "id": "b2d10be3-9d82-4ec3-bf53-d60b525a97fa",
+        "name": "Sticky Note6"
+      },
+      {
+        "parameters": {
+          "toolDescription": "Use this tool to search the internet",
+          "method": "POST",
+          "url": "https://api.tavily.com/search",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "{\n    \"api_key\": \"your-api-key\",\n    \"query\": \"{searchTerm}\",\n    \"search_depth\": \"basic\",\n    \"include_answer\": true,\n    \"topic\": \"news\",\n    \"include_raw_content\": true,\n    \"max_results\": 3\n} ",
+          "placeholderDefinitions": {
+            "values": [
+              {
+                "name": "searchTerm",
+                "description": "What the user has requested to search the internet for",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+        "typeVersion": 1.1,
+        "position": [
+          -1104,
+          1120
+        ],
+        "id": "c6c51a08-1757-447d-b703-ccd77c138166",
+        "name": "WebSearch_Tool",
+        "notesInFlow": true
+      },
+      {
+        "parameters": {
+          "content": "## 3. Pre-processing\nRefine + supplement query where appropriate",
+          "height": 300,
+          "width": 680,
+          "color": 7
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          -1296,
+          1008
+        ],
+        "id": "3d11be2e-a7e4-42ef-acab-c161cccc625f",
+        "name": "Sticky Note"
+      },
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "value": "openai/gpt-4o",
+            "mode": "list",
+            "cachedResultName": "openai/gpt-4o"
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1.2,
+        "position": [
+          -1216,
+          864
+        ],
+        "id": "30628147-ae6f-4a05-b8bf-25422393c236",
+        "name": "Openrouter"
+      },
+      {
+        "parameters": {
+          "name": "CalendarTool",
+          "description": "Call this tool to create events, update events, delete events or get information on availability",
+          "workflowId": {
+            "__rl": true,
+            "value": "l5OvAo5WlF9OxwYA",
+            "mode": "list",
+            "cachedResultName": "🤖 Agent - Tool 🛠️ Calendar"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('query', ``, 'string') }}",
+              "context": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('context', ``, 'string') }}"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "query",
+                "displayName": "query",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string"
+              },
+              {
+                "id": "context",
+                "displayName": "context",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string"
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+        "typeVersion": 2,
+        "position": [
+          -544,
+          1120
+        ],
+        "id": "e5a0ccbd-0696-4396-b9d6-079f5beeea1e",
+        "name": "Calendar_Tool"
+      },
+      {
+        "parameters": {
+          "name": "CustomerTeam",
+          "workflowId": {
+            "__rl": true,
+            "value": "7osgHxnOLhIko4ud",
+            "mode": "list",
+            "cachedResultName": "⭐ TEMPLATE: I Built +30 AI Agents with N8N, here’s what I learned…"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {},
+            "matchingColumns": [],
+            "schema": [],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+        "typeVersion": 2,
+        "position": [
+          -400,
+          1120
+        ],
+        "id": "af1dbf71-89e5-4284-8489-70448b0f0082",
+        "name": "Email_Tool"
+      },
+      {
+        "parameters": {
+          "content": "## Layer 1: Preventative Measures\n\nStop errors before they happen by validating and cleaning input data.\n\n### Key Implementation Techniques:\n* Input validation on trigger nodes\n* Data type checking (strings, numbers, objects)\n* Format validation for emails, dates, phone numbers\n* Null/empty value detection\n* Character limit enforcement\n\n### Business Value:\n* Prevents 60-70% of common workflow failures\n* Reduces debugging time by catching issues early\n* Creates cleaner data throughout your entire system\n",
+          "height": 540,
+          "width": 1000
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          -2848,
+          448
+        ],
+        "id": "6d5448dd-ac09-4363-a7f3-fcf94daae284",
+        "name": "Sticky Note1"
+      },
+      {
+        "parameters": {
+          "errorMessage": "Data validation failed"
+        },
+        "type": "n8n-nodes-base.stopAndError",
+        "typeVersion": 1,
+        "position": [
+          -1984,
+          848
+        ],
+        "id": "39c3ea00-3438-4cd3-9718-90a3792c51d0",
+        "name": "Stop and Error"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "cf3c1ee1-99f4-4bba-9632-a90946c23014",
+                "leftValue": "",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          -2144,
+          720
+        ],
+        "id": "05e3b378-55a9-457d-9239-d99d7120539c",
+        "name": "IfCondition"
+      },
+      {
+        "parameters": {
+          "content": "## Layer 2: Corrective Measures\n\nAutomatic recovery systems that handle temporary failures.\n\n### Key Implementation Techniques:\n* Retry mechanisms (typically 3 attempts)\n* Delay between retries (1000ms standard)\n* Exponential backoff for sophisticated recovery\n* Error logging without workflow interruption\n* Alternate route selection based on error types\n* N8N Settings\n\n### Business Value:\n* Handles temporary API outages automatically\n* Prevents workflows from failing during brief service disruptions\n* Reduces manual intervention needs by 80%\n",
+          "height": 560,
+          "width": 1060
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          -1520,
+          160
+        ],
+        "id": "bce02165-23d1-4399-b945-3d208f3bdcd8",
+        "name": "Sticky Note4"
+      },
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "mode": "list",
+            "value": "claude-3-7-sonnet-20250219",
+            "cachedResultName": "Claude 3.7 Sonnet"
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+        "typeVersion": 1.3,
+        "position": [
+          -928,
+          432
+        ],
+        "id": "80add184-250c-459d-b37a-c44395b1b0c6",
+        "name": "Anthropic Chat Model"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=<Role>\nYou are an operations (ops) agent flow expert, designed to facilitate and streamline operational tasks. Your primary function is to manage scheduling and email operations by utilizing the calendar and email flows efficiently.\n</Role>\n\n<Constraints>\n*Today's date is {{ $now }}\n* Ensure that the ops agent can handle scheduling and email management effectively using respective actions within the calendar and email flows.\n</Constraints>\n\n<Inputs>\n* Natural language request from users regarding scheduling or email tasks.\n* Examples include: “Schedule a meeting for tomorrow at 3 PM,” or “Send an email to the finance team regarding the budget report.\"\n</Inputs>\n\n<Tools>\n*CalendarFlow  \nPurpose: Manage scheduling tasks.\nActions:    \n   - Create event   \n   - Update event    \n   - Delete event  \nParameters for Actions:    \n   - eventTitle (string)    \n   - eventTime (string)    \n   - participants (array of strings)\n\n*EmailFlow  \nPurpose: Manage email tasks.\nActions:    \n   - Send email\n   - Draft email\n   - Label email    \n   - Archive email  \nParameters for Actions:\n   - recipientEmail (string)\n   - emailSubject (string)\n   - emailBody (string)\n</Tools>\n\n<Instructions>\n1. **Analyze and Clarify User Requests**:\n   - Utilize natural language understanding to discern the specific task required by the user.   \n   - If the request is ambiguous, prompt the user for clarification using direct but courteous questions.\n\n2. **Execute Calendar Management Tasks**:   \n   - Determine if the task involves scheduling and select the appropriate action from the CalendarFlow.   \n   - Collect necessary details such as event time, title, and participant list.   \n   - Execute the scheduling task using parameters specified.\n\n3. **Execute Email Management Tasks**: \n   - If the task involves email management, select the appropriate action from the EmailFlow.\n   - Gather required information such as recipient email, subject, and body content.\n   - Perform the email task using provided parameters.\n\n4. **Confirmation and Follow-Up**:   \n   - After performing any task, confirm completion to the user and provide any relevant follow-up actions or information.\n5. **Example Use Cases**:   \n   - Calendar: “Set up a meeting with John Doe and Jane Smith for next Wednesday at 10 AM.”\n   - Email: “Send an email to hr@example.com with the subject ‘New Policy Updates’.”\n</Instructions>\n\n<Conclusions> \nThe ops agent effectively handles scheduling and email tasks with precise execution.\\n* Tasks are seamlessly integrated into the user’s operational workflow.\n* Users receive timely confirmations and notifications regarding task status updates.\n</Conclusions>\n\n<Solutions>\n* If user requests lack clarity, ask for specific details related to the task such as time or participant list for scheduling, and recipient or subject for emails.\n* Notify users when a particular calendar or email action cannot be completed and provide alternative suggestions.\n* In case the calendar or email tools are temporarily unavailable, inform the user and retry the action automatically when the tools are accessible.\n</Solutions>\n\n<user query>\n{{ $json.query }}\n{{ $json.context }}\n</user query>",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 1.7,
+        "position": [
+          -928,
+          272
+        ],
+        "id": "48aeda3d-0ca6-4bbf-8e3f-a232a07f442d",
+        "name": "FallbackAgent",
+        "retryOnFail": true,
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "content": "## Layer 3: Fallback Mechanisms\n\nComplete alternative pathways when primary systems fail.\n\n\n### Dependencies\n1. Prompt issues\n2. Underlying provider (OpenAI, Anthropic, Openrouter)\n3. N8N instance (for mission critical)\n\n### Key Implementation Techniques:\n* Provider-agnostic prompts and structures\n* Multi-provider implementation (Openrouter -> OpenAI → Anthropic)\n* Database redundancy options\n* Service-specific fallback options:\n  - AI completions: Switch models/providers\n  - Data storage: Alternative databases\n  - External APIs: Backup services or cached responses\n\n### Business Value:\n* Provides business continuity during major service outages\n* Creates true 24/7 reliability for critical systems\n* Becomes your strongest selling point with enterprise clients\n",
+          "height": 580,
+          "width": 1060
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          0,
+          0
+        ],
+        "id": "b923b919-bda2-45e5-8507-7ab5683dcfd1",
+        "name": "Sticky Note5"
+      },
+      {
+        "parameters": {
+          "content": "## Layer 4: Fixes & Error notifications\nIf all else fails, make sure you're there to pick up the pieces ASAP\n\nhttps://n8n.automake.io/workflow/LSwvoNHos0M7zeqs\n",
+          "height": 580,
+          "width": 1060
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          720,
+          1088
+        ],
+        "id": "76bb4653-cc0d-414d-898e-4ddc0eda1d7c",
+        "name": "Sticky Note7"
+      }
+    ],
+    "connections": {
+      "Executed_Trigger": {
+        "main": [
+          [
+            {
+              "node": "IfCondition",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "BufferMemory": {
+        "ai_memory": [
+          [
+            {
+              "node": "OpsAgent",
+              "type": "ai_memory",
+              "index": 0
+            },
+            {
+              "node": "FallbackAgent",
+              "type": "ai_memory",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OpsAgent": {
+        "main": [
+          [
+            {
+              "node": "SetResponse",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "FallbackAgent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Embeddings OpenAI": {
+        "ai_embedding": [
+          [
+            {
+              "node": "CompanyData_Tool",
+              "type": "ai_embedding",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Openrouter": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "OpsAgent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "WebSearch_Tool": {
+        "ai_tool": [
+          [
+            {
+              "node": "OpsAgent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "CompanyData_Tool": {
+        "ai_tool": [
+          [
+            {
+              "node": "OpsAgent",
+              "type": "ai_tool",
+              "index": 0
+            },
+            {
+              "node": "FallbackAgent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Calendar_Tool": {
+        "ai_tool": [
+          [
+            {
+              "node": "OpsAgent",
+              "type": "ai_tool",
+              "index": 0
+            },
+            {
+              "node": "FallbackAgent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Email_Tool": {
+        "ai_tool": [
+          [
+            {
+              "node": "OpsAgent",
+              "type": "ai_tool",
+              "index": 0
+            },
+            {
+              "node": "FallbackAgent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "IfCondition": {
+        "main": [
+          [
+            {
+              "node": "OpsAgent",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Stop and Error",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Anthropic Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "FallbackAgent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "FallbackAgent": {
+        "main": [
+          [
+            {
+              "node": "SetResponse",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jiri Zmidloch",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "dc03847a-f1a4-4e6f-905d-56692aad6949",
+  "connections": {
+    "Executed_Trigger": {
+      "main": [
+        [
+          {
+            "node": "IfCondition",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BufferMemory": {
+      "ai_memory": [
+        [
+          {
+            "node": "OpsAgent",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "FallbackAgent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpsAgent": {
+      "main": [
+        [
+          {
+            "node": "SetResponse",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "FallbackAgent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "CompanyData_Tool",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Openrouter": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "OpsAgent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WebSearch_Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpsAgent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CompanyData_Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpsAgent",
+            "type": "ai_tool",
+            "index": 0
+          },
+          {
+            "node": "FallbackAgent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calendar_Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpsAgent",
+            "type": "ai_tool",
+            "index": 0
+          },
+          {
+            "node": "FallbackAgent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email_Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "OpsAgent",
+            "type": "ai_tool",
+            "index": 0
+          },
+          {
+            "node": "FallbackAgent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IfCondition": {
+      "main": [
+        [
+          {
+            "node": "OpsAgent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Stop and Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "FallbackAgent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FallbackAgent": {
+      "main": [
+        [
+          {
+            "node": "SetResponse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-09T22:25:26.711Z",
+  "id": "TtdJ1lqmwJG7qNzy",
+  "isArchived": false,
+  "meta": null,
+  "name": "3 Layer Failure Handling",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 1. Triggers\n",
+        "height": 220,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -2416,
+        672
+      ],
+      "id": "3dc960d1-7f48-4906-8e9e-644cf5a19293",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## 2. Operations Agent\n- Schedules and updates calendar invites\n- Response to emails",
+        "height": 400,
+        "width": 800,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1296,
+        592
+      ],
+      "id": "1c2b2e78-1149-4450-8b82-721a2998828e",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "inputSource": "jsonExample",
+        "jsonExample": "{\n  \"query\": \"string\",\n  \"context\": \"string\"\n}"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -2368,
+        720
+      ],
+      "id": "1bbf6e96-8f45-4d74-a19c-8fe7fdbdf798",
+      "name": "Executed_Trigger"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -1248,
+        1120
+      ],
+      "id": "1fd51e5a-0ca8-4bd0-a8ac-71ab60e63651",
+      "name": "BufferMemory"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a17f706b-6292-4c9b-b2de-1fb7a1205eaf",
+              "name": "response",
+              "value": "={{ $('OpsAgent').item.json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -768,
+        704
+      ],
+      "id": "deae0f33-5e9a-4963-b942-7265e71350d1",
+      "name": "SetResponse"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=<Role>\nYou are an operations (ops) agent flow expert, designed to facilitate and streamline operational tasks. Your primary function is to manage scheduling and email operations by utilizing the calendar and email flows efficiently.\n</Role>\n\n<Constraints>\n*Today's date is {{ $now }}\n* Ensure that the ops agent can handle scheduling and email management effectively using respective actions within the calendar and email flows.\n</Constraints>\n\n<Inputs>\n* Natural language request from users regarding scheduling or email tasks.\n* Examples include: “Schedule a meeting for tomorrow at 3 PM,” or “Send an email to the finance team regarding the budget report.\"\n</Inputs>\n\n<Tools>\n*CalendarFlow  \nPurpose: Manage scheduling tasks.\nActions:    \n   - Create event   \n   - Update event    \n   - Delete event  \nParameters for Actions:    \n   - eventTitle (string)    \n   - eventTime (string)    \n   - participants (array of strings)\n\n*EmailFlow  \nPurpose: Manage email tasks.\nActions:    \n   - Send email\n   - Draft email\n   - Label email    \n   - Archive email  \nParameters for Actions:\n   - recipientEmail (string)\n   - emailSubject (string)\n   - emailBody (string)\n</Tools>\n\n<Instructions>\n1. **Analyze and Clarify User Requests**:\n   - Utilize natural language understanding to discern the specific task required by the user.   \n   - If the request is ambiguous, prompt the user for clarification using direct but courteous questions.\n\n2. **Execute Calendar Management Tasks**:   \n   - Determine if the task involves scheduling and select the appropriate action from the CalendarFlow.   \n   - Collect necessary details such as event time, title, and participant list.   \n   - Execute the scheduling task using parameters specified.\n\n3. **Execute Email Management Tasks**: \n   - If the task involves email management, select the appropriate action from the EmailFlow.\n   - Gather required information such as recipient email, subject, and body content.\n   - Perform the email task using provided parameters.\n\n4. **Confirmation and Follow-Up**:   \n   - After performing any task, confirm completion to the user and provide any relevant follow-up actions or information.\n5. **Example Use Cases**:   \n   - Calendar: “Set up a meeting with John Doe and Jane Smith for next Wednesday at 10 AM.”\n   - Email: “Send an email to hr@example.com with the subject ‘New Policy Updates’.”\n</Instructions>\n\n<Conclusions> \nThe ops agent effectively handles scheduling and email tasks with precise execution.\\n* Tasks are seamlessly integrated into the user’s operational workflow.\n* Users receive timely confirmations and notifications regarding task status updates.\n</Conclusions>\n\n<Solutions>\n* If user requests lack clarity, ask for specific details related to the task such as time or participant list for scheduling, and recipient or subject for emails.\n* Notify users when a particular calendar or email action cannot be completed and provide alternative suggestions.\n* In case the calendar or email tools are temporarily unavailable, inform the user and retry the action automatically when the tools are accessible.\n</Solutions>\n\n<user query>\n{{ $json.query }}\n{{ $json.context }}\n</user query>",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        -1216,
+        704
+      ],
+      "id": "456faea7-a8b3-45a4-95f1-cf422dd6ba73",
+      "name": "OpsAgent",
+      "retryOnFail": true,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -928,
+        1248
+      ],
+      "id": "a9e27e1e-acb4-4526-84cc-1700fa26ddd5",
+      "name": "Embeddings OpenAI"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolName": "company_knowledge_base",
+        "toolDescription": "Work with your data in Supabase Vector Store",
+        "tableName": {
+          "__rl": true,
+          "value": "=Test",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1,
+      "position": [
+        -944,
+        1120
+      ],
+      "id": "07244a37-c219-4918-aec5-808b3c9a4bbe",
+      "name": "CompanyData_Tool"
+    },
+    {
+      "parameters": {
+        "content": "## 4. Execution Routing\nPass query to relevant execution tool",
+        "height": 300,
+        "width": 320,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -576,
+        1008
+      ],
+      "id": "b2d10be3-9d82-4ec3-bf53-d60b525a97fa",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Use this tool to search the internet",
+        "method": "POST",
+        "url": "https://api.tavily.com/search",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n    \"api_key\": \"your-api-key\",\n    \"query\": \"{searchTerm}\",\n    \"search_depth\": \"basic\",\n    \"include_answer\": true,\n    \"topic\": \"news\",\n    \"include_raw_content\": true,\n    \"max_results\": 3\n} ",
+        "placeholderDefinitions": {
+          "values": [
+            {
+              "name": "searchTerm",
+              "description": "What the user has requested to search the internet for",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        -1104,
+        1120
+      ],
+      "id": "c6c51a08-1757-447d-b703-ccd77c138166",
+      "name": "WebSearch_Tool",
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "content": "## 3. Pre-processing\nRefine + supplement query where appropriate",
+        "height": 300,
+        "width": 680,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1296,
+        1008
+      ],
+      "id": "3d11be2e-a7e4-42ef-acab-c161cccc625f",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "openai/gpt-4o",
+          "mode": "list",
+          "cachedResultName": "openai/gpt-4o"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -1216,
+        864
+      ],
+      "id": "30628147-ae6f-4a05-b8bf-25422393c236",
+      "name": "Openrouter"
+    },
+    {
+      "parameters": {
+        "name": "CalendarTool",
+        "description": "Call this tool to create events, update events, delete events or get information on availability",
+        "workflowId": {
+          "__rl": true,
+          "value": "l5OvAo5WlF9OxwYA",
+          "mode": "list",
+          "cachedResultName": "🤖 Agent - Tool 🛠️ Calendar"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('query', ``, 'string') }}",
+            "context": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('context', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "query",
+              "displayName": "query",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "context",
+              "displayName": "context",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2,
+      "position": [
+        -544,
+        1120
+      ],
+      "id": "e5a0ccbd-0696-4396-b9d6-079f5beeea1e",
+      "name": "Calendar_Tool"
+    },
+    {
+      "parameters": {
+        "name": "CustomerTeam",
+        "workflowId": {
+          "__rl": true,
+          "value": "7osgHxnOLhIko4ud",
+          "mode": "list",
+          "cachedResultName": "⭐ TEMPLATE: I Built +30 AI Agents with N8N, here’s what I learned…"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2,
+      "position": [
+        -400,
+        1120
+      ],
+      "id": "af1dbf71-89e5-4284-8489-70448b0f0082",
+      "name": "Email_Tool"
+    },
+    {
+      "parameters": {
+        "content": "## Layer 1: Preventative Measures\n\nStop errors before they happen by validating and cleaning input data.\n\n### Key Implementation Techniques:\n* Input validation on trigger nodes\n* Data type checking (strings, numbers, objects)\n* Format validation for emails, dates, phone numbers\n* Null/empty value detection\n* Character limit enforcement\n\n### Business Value:\n* Prevents 60-70% of common workflow failures\n* Reduces debugging time by catching issues early\n* Creates cleaner data throughout your entire system\n",
+        "height": 540,
+        "width": 1000
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -2848,
+        448
+      ],
+      "id": "6d5448dd-ac09-4363-a7f3-fcf94daae284",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "errorMessage": "Data validation failed"
+      },
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        -1984,
+        848
+      ],
+      "id": "39c3ea00-3438-4cd3-9718-90a3792c51d0",
+      "name": "Stop and Error"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cf3c1ee1-99f4-4bba-9632-a90946c23014",
+              "leftValue": "",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -2144,
+        720
+      ],
+      "id": "05e3b378-55a9-457d-9239-d99d7120539c",
+      "name": "IfCondition"
+    },
+    {
+      "parameters": {
+        "content": "## Layer 2: Corrective Measures\n\nAutomatic recovery systems that handle temporary failures.\n\n### Key Implementation Techniques:\n* Retry mechanisms (typically 3 attempts)\n* Delay between retries (1000ms standard)\n* Exponential backoff for sophisticated recovery\n* Error logging without workflow interruption\n* Alternate route selection based on error types\n* N8N Settings\n\n### Business Value:\n* Handles temporary API outages automatically\n* Prevents workflows from failing during brief service disruptions\n* Reduces manual intervention needs by 80%\n",
+        "height": 560,
+        "width": 1060
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1520,
+        160
+      ],
+      "id": "bce02165-23d1-4399-b945-3d208f3bdcd8",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "claude-3-7-sonnet-20250219",
+          "cachedResultName": "Claude 3.7 Sonnet"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.3,
+      "position": [
+        -928,
+        432
+      ],
+      "id": "80add184-250c-459d-b37a-c44395b1b0c6",
+      "name": "Anthropic Chat Model"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=<Role>\nYou are an operations (ops) agent flow expert, designed to facilitate and streamline operational tasks. Your primary function is to manage scheduling and email operations by utilizing the calendar and email flows efficiently.\n</Role>\n\n<Constraints>\n*Today's date is {{ $now }}\n* Ensure that the ops agent can handle scheduling and email management effectively using respective actions within the calendar and email flows.\n</Constraints>\n\n<Inputs>\n* Natural language request from users regarding scheduling or email tasks.\n* Examples include: “Schedule a meeting for tomorrow at 3 PM,” or “Send an email to the finance team regarding the budget report.\"\n</Inputs>\n\n<Tools>\n*CalendarFlow  \nPurpose: Manage scheduling tasks.\nActions:    \n   - Create event   \n   - Update event    \n   - Delete event  \nParameters for Actions:    \n   - eventTitle (string)    \n   - eventTime (string)    \n   - participants (array of strings)\n\n*EmailFlow  \nPurpose: Manage email tasks.\nActions:    \n   - Send email\n   - Draft email\n   - Label email    \n   - Archive email  \nParameters for Actions:\n   - recipientEmail (string)\n   - emailSubject (string)\n   - emailBody (string)\n</Tools>\n\n<Instructions>\n1. **Analyze and Clarify User Requests**:\n   - Utilize natural language understanding to discern the specific task required by the user.   \n   - If the request is ambiguous, prompt the user for clarification using direct but courteous questions.\n\n2. **Execute Calendar Management Tasks**:   \n   - Determine if the task involves scheduling and select the appropriate action from the CalendarFlow.   \n   - Collect necessary details such as event time, title, and participant list.   \n   - Execute the scheduling task using parameters specified.\n\n3. **Execute Email Management Tasks**: \n   - If the task involves email management, select the appropriate action from the EmailFlow.\n   - Gather required information such as recipient email, subject, and body content.\n   - Perform the email task using provided parameters.\n\n4. **Confirmation and Follow-Up**:   \n   - After performing any task, confirm completion to the user and provide any relevant follow-up actions or information.\n5. **Example Use Cases**:   \n   - Calendar: “Set up a meeting with John Doe and Jane Smith for next Wednesday at 10 AM.”\n   - Email: “Send an email to hr@example.com with the subject ‘New Policy Updates’.”\n</Instructions>\n\n<Conclusions> \nThe ops agent effectively handles scheduling and email tasks with precise execution.\\n* Tasks are seamlessly integrated into the user’s operational workflow.\n* Users receive timely confirmations and notifications regarding task status updates.\n</Conclusions>\n\n<Solutions>\n* If user requests lack clarity, ask for specific details related to the task such as time or participant list for scheduling, and recipient or subject for emails.\n* Notify users when a particular calendar or email action cannot be completed and provide alternative suggestions.\n* In case the calendar or email tools are temporarily unavailable, inform the user and retry the action automatically when the tools are accessible.\n</Solutions>\n\n<user query>\n{{ $json.query }}\n{{ $json.context }}\n</user query>",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        -928,
+        272
+      ],
+      "id": "48aeda3d-0ca6-4bbf-8e3f-a232a07f442d",
+      "name": "FallbackAgent",
+      "retryOnFail": true,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "content": "## Layer 3: Fallback Mechanisms\n\nComplete alternative pathways when primary systems fail.\n\n\n### Dependencies\n1. Prompt issues\n2. Underlying provider (OpenAI, Anthropic, Openrouter)\n3. N8N instance (for mission critical)\n\n### Key Implementation Techniques:\n* Provider-agnostic prompts and structures\n* Multi-provider implementation (Openrouter -> OpenAI → Anthropic)\n* Database redundancy options\n* Service-specific fallback options:\n  - AI completions: Switch models/providers\n  - Data storage: Alternative databases\n  - External APIs: Backup services or cached responses\n\n### Business Value:\n* Provides business continuity during major service outages\n* Creates true 24/7 reliability for critical systems\n* Becomes your strongest selling point with enterprise clients\n",
+        "height": 580,
+        "width": 1060
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b923b919-bda2-45e5-8507-7ab5683dcfd1",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "## Layer 4: Fixes & Error notifications\nIf all else fails, make sure you're there to pick up the pieces ASAP\n\nhttps://n8n.automake.io/workflow/LSwvoNHos0M7zeqs\n",
+        "height": 580,
+        "width": 1060
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        720,
+        1088
+      ],
+      "id": "76bb4653-cc0d-414d-898e-4ddc0eda1d7c",
+      "name": "Sticky Note7"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "errorWorkflow": "zVAjJgKV17IWzFP7",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-09T22:25:26.711Z",
+      "createdAt": "2025-12-09T22:25:26.711Z",
+      "role": "workflow:owner",
+      "workflowId": "TtdJ1lqmwJG7qNzy",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2025-11-25T08:56:22.817Z",
+      "createdAt": "2025-11-25T08:56:22.817Z",
+      "id": "m5HoE181tEOd7Bs1",
+      "name": "Demo"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-12-21T15:00:20.430Z",
+  "versionId": "dc03847a-f1a4-4e6f-905d-56692aad6949"
+}
