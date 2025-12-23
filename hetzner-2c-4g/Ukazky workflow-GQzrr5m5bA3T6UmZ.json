@@ -1,0 +1,2010 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "SetEmailValues",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SetEmailValues": {
+      "main": [
+        [
+          {
+            "node": "ConvertToMarkdown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ConvertToMarkdown": {
+      "main": [
+        [
+          {
+            "node": "PostEmails",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail_Trigger": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "FormatText",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FormatText": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Openrouter": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain2",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Auto-fixing Output Parser",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Auto-fixing Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Basic LLM Chain2",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Auto-fixing Output Parser",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail_Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetURLforUpload": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "GetURLforUpload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "PutPDFtoPDFco",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PutPDFtoPDFco": {
+      "main": [
+        [
+          {
+            "node": "PostPDFFile",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PostPDFFile": {
+      "main": [
+        [
+          {
+            "node": "POSTJobCheck",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "In-Memory Vector Store": {
+      "ai_tool": [
+        [
+          {
+            "node": "ToolsAgent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Text Classifier",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Sentiment Analysis",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Summarization Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Information Extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain2": {
+      "main": [
+        [
+          {
+            "node": "PostInvoices",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "In-Memory Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vector Store Retriever": {
+      "ai_retriever": [
+        [
+          {
+            "node": "Question and Answer Chain",
+            "type": "ai_retriever",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Vector Store": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Vector Store Retriever",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EmailWorkflow": {
+      "ai_tool": [
+        [
+          {
+            "node": "ToolsAgent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Calendar": {
+      "ai_tool": [
+        [
+          {
+            "node": "ToolsAgent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDF.co": {
+      "ai_tool": [
+        [
+          {
+            "node": "ToolsAgent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "ConversationAgent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "ConversationAgent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "ConversationAgent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI_": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "ToolsAgent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Question and Answer Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "POSTJobCheck": {
+      "main": [
+        [
+          {
+            "node": "PostInvoicesAPI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-25T08:53:11.020Z",
+  "id": "GQzrr5m5bA3T6UmZ",
+  "isArchived": false,
+  "meta": null,
+  "name": "Ukazky workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        48,
+        192
+      ],
+      "id": "be4f4e06-7029-49e2-9a86-2459a78b06b7",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "cUMqdo7XCF6noXLb",
+          "name": "Gmail-zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Get a file - trigger\nGDrive or GMail",
+        "height": 240,
+        "width": 360,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        112
+      ],
+      "id": "0ade4e28-c8fc-4c60-b7ec-44ec42ec6280",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Pre-processing\nData formatting",
+        "height": 240,
+        "width": 420,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        384,
+        112
+      ],
+      "id": "6b12d0dd-1599-4466-ba60-0387ef3df350",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "803319e2-a3f3-492b-8c49-7ae87c4e8f90",
+              "name": "from",
+              "value": "={{ $('Gmail Trigger').item.json.headers.from }}",
+              "type": "string"
+            },
+            {
+              "id": "237b35ea-7144-4119-bf16-17566f351360",
+              "name": "subject",
+              "value": "={{ $('Gmail Trigger').item.json.subject }}",
+              "type": "string"
+            },
+            {
+              "id": "a45b3cd4-7883-4afe-ad3c-525d04c61094",
+              "name": "id",
+              "value": "={{ $('Gmail Trigger').item.json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "6f370846-d49d-4df3-adbe-c93cbc9a5be7",
+              "name": "threadId",
+              "value": "={{ $('Gmail Trigger').item.json.threadId }}",
+              "type": "string"
+            },
+            {
+              "id": "0ade5915-f4a4-4460-99fb-995261c66070",
+              "name": "textAsHtml",
+              "value": "={{ $('Gmail Trigger').item.json.textAsHtml }}",
+              "type": "string"
+            },
+            {
+              "id": "3f403665-1b65-4b49-a1d3-0d5914f128ae",
+              "name": "text",
+              "value": "={{ $('Gmail Trigger').item.json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        192
+      ],
+      "id": "b045b418-fc22-49e0-9ced-ebebd36c64cf",
+      "name": "SetEmailValues"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appFx3ID8xjW6CRsH",
+          "mode": "list",
+          "cachedResultName": "scrapes.ai - tutorials",
+          "cachedResultUrl": "https://airtable.com/appFx3ID8xjW6CRsH"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblS7XtvC6sDELpeF",
+          "mode": "list",
+          "cachedResultName": "Emails",
+          "cachedResultUrl": "https://airtable.com/appFx3ID8xjW6CRsH/tblS7XtvC6sDELpeF"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "from": "={{ $json.from }}",
+            " subject": "={{ $json.subject }}",
+            " threadId": "={{ $json.threadId }}",
+            " textAsHTML": "={{ $json.textAsHtml }}",
+            " text": "={{ $json.text }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "from",
+              "displayName": "from",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": " threadId",
+              "displayName": " threadId",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": " subject",
+              "displayName": " subject",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": " textAsHTML",
+              "displayName": " textAsHTML",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": " text",
+              "displayName": " text",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        640,
+        192
+      ],
+      "id": "fc998764-a3b1-4679-b67f-039a93898a3c",
+      "name": "PostEmails",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "html": "={{ $json.textAsHtml }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.markdown",
+      "typeVersion": 1,
+      "position": [
+        448,
+        192
+      ],
+      "id": "4b26daf0-f43c-4eb6-8b69-43b31b41ae38",
+      "name": "ConvertToMarkdown"
+    },
+    {
+      "parameters": {
+        "content": "## Get a file - trigger\nGDrive or GMail",
+        "height": 240,
+        "width": 360,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        528
+      ],
+      "id": "ffd7e5ce-0a59-4b32-a754-7fbcf9b968f1",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "## Pre-processing\nData formatting",
+        "height": 240,
+        "width": 420,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        384,
+        528
+      ],
+      "id": "9d9c23bf-d103-4ef9-b883-8d0f667eed1e",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "## Extract key info\nLLM ",
+        "height": 240,
+        "width": 360,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        832,
+        528
+      ],
+      "id": "89aed4ff-cc9b-49eb-8347-88b0f78178fc",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "## Output data\nInto database",
+        "height": 240,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        528
+      ],
+      "id": "f25f18cf-a111-4fc4-9916-3b6ab3325759",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {},
+        "options": {
+          "dataPropertyAttachmentsPrefixName": "attachment_",
+          "downloadAttachments": true
+        }
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        48,
+        608
+      ],
+      "id": "f72c6d73-1491-4769-b460-2e7600133f54",
+      "name": "Gmail_Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "cUMqdo7XCF6noXLb",
+          "name": "Gmail-zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "803319e2-a3f3-492b-8c49-7ae87c4e8f90",
+              "name": "from",
+              "value": "={{ $('Gmail_Trigger').item.json.headers.from }}",
+              "type": "string"
+            },
+            {
+              "id": "237b35ea-7144-4119-bf16-17566f351360",
+              "name": "subject",
+              "value": "={{ $('Gmail_Trigger').item.json.subject }}",
+              "type": "string"
+            },
+            {
+              "id": "a45b3cd4-7883-4afe-ad3c-525d04c61094",
+              "name": "id",
+              "value": "={{ $('Gmail_Trigger').item.json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "6f370846-d49d-4df3-adbe-c93cbc9a5be7",
+              "name": "threadId",
+              "value": "={{ $('Gmail_Trigger').item.json.threadId }}",
+              "type": "string"
+            },
+            {
+              "id": "0ade5915-f4a4-4460-99fb-995261c66070",
+              "name": "textAsHtml",
+              "value": "={{ $('Gmail_Trigger').item.json.textAsHtml }}",
+              "type": "string"
+            },
+            {
+              "id": "3f403665-1b65-4b49-a1d3-0d5914f128ae",
+              "name": "text",
+              "value": "={{ $('Gmail_Trigger').item.json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -448,
+        368
+      ],
+      "id": "cc0fd5a0-a81d-49a5-a908-e8d2d613d23d",
+      "name": "SetFileValues"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "binaryPropertyName": "attachment_1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        448,
+        608
+      ],
+      "id": "3c6b1acf-d57b-49ef-8d96-b342237b56bd",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and clean the text field\nfor (const item of $input.all()) {\n  // Get the text from input\n  const dirtyText = item.json.text;\n  \n  // Remove all special characters except commas and periods\n  // Also removes newlines, tabs, and multiple spaces\n  const cleanText = dirtyText\n    .replace(/[\\r\\n]+/g, ' ')           // Replace newlines with space\n    .replace(/[^\\w\\s,.]|\\t/g, '')       // Remove everything except words, spaces, commas, periods\n    .replace(/\\s+/g, ' ')               // Replace multiple spaces with single space\n    .trim();                            // Remove leading/trailing spaces\n    \n  // Update the text field with cleaned version\n  item.json.text = cleanText;\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        624,
+        608
+      ],
+      "id": "2440f573-27e7-434c-8797-db8e84c64d08",
+      "name": "FormatText"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cf84e327-bbf6-4baa-9017-46e08b075354",
+              "leftValue": "={{ $('Gmail_Trigger').item.binary }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -448,
+        208
+      ],
+      "id": "1f01c823-fabe-48e5-91d0-472e742d5320",
+      "name": "IfFileExists"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        208,
+        608
+      ],
+      "id": "ea917d6c-a341-4c92-9bca-1a899a826aee",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        864,
+        784
+      ],
+      "id": "c11ed903-01af-4a82-85e8-bab6ac7df612",
+      "name": "Openrouter"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserAutofixing",
+      "typeVersion": 1,
+      "position": [
+        1008,
+        832
+      ],
+      "id": "76c5d91a-8e7b-410a-841d-5a87af39bc3c",
+      "name": "Auto-fixing Output Parser"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"required\": [\n    \"Invoice number\",\n    \"Invoice date\",\n    \"Description\",\n    \"Payment date\",\n    \"Type\",\n    \"Total price\"\n  ],\n  \"properties\": {\n    \"Description\": { \"type\": \"string\" },\n    \"Invoice date\": { \"type\": \"date\" },\n    \"Payment date\": { \"type\": \"date\" },\n    \"Type\": { \n      \"type\": \"string\",\n      \"enum\": [\"Annual Recurring\", \"Monthly Recurring\", \"Single Payment\"]\n    },\n    \"Invoice number\": { \"type\": \"string\" },\n    \"Purchase order number\": { \"type\": \"string\" },\n    \"Supplier name\": { \"type\": \"string\" },\n    \"Supplier address\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"address 1\": { \"type\": \"string\" },\n        \"address 2\": { \"type\": \"string\" },\n        \"city\": { \"type\": \"string\" },\n        \"postcode\": { \"type\": \"string\" }\n      }\n    },\n    \"Supplier VAT identification number\": { \"type\": \"string\" },\n    \"Customer name\": { \"type\": \"string\" },\n    \"Customer address\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"address 1\": { \"type\": \"string\" },\n        \"address 2\": { \"type\": \"string\" },\n        \"city\": { \"type\": \"string\" },\n        \"postcode\": { \"type\": \"string\" }\n      }\n    },\n    \"Customer VAT identification number\": { \"type\": \"string\" }, \n    \"Shipping addresses\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"address 1\": { \"type\": \"string\" },\n          \"address 2\": { \"type\": \"string\" },\n          \"city\": { \"type\": \"string\" },\n          \"postcode\": { \"type\": \"string\" }\n        }\n      }\n    },\n    \"Line items\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"price\": \"number\",\n        \"discount\": \"number\"\n      }\n    },\n    \"Subtotal without VAT\": { \"type\": \"number\" },\n    \"Subtotal with VAT\": { \"type\": \"number\" },\n    \"Total price\": { \"type\": \"number\" },\n    \"Currency\": { \"type\": \"string\" },\n    \"Additional information\": { \"type\": \"string\" }\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        1120,
+        960
+      ],
+      "id": "a5ef9e41-3336-4e58-9303-a9f318974d90",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "base": {
+          "__rl": true,
+          "value": "appFx3ID8xjW6CRsH",
+          "mode": "list",
+          "cachedResultName": "scrapes.ai - tutorials",
+          "cachedResultUrl": "https://airtable.com/appFx3ID8xjW6CRsH"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblwHCeEb0Xg69CFM",
+          "mode": "list",
+          "cachedResultName": "Financial",
+          "cachedResultUrl": "https://airtable.com/appFx3ID8xjW6CRsH/tblwHCeEb0Xg69CFM"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Invoice number": "={{ $('Basic LLM Chain2').item.json.output['Invoice number'] }}",
+            "Description": "={{ $('Basic LLM Chain2').item.json.output.Description }}",
+            "Invoice date": "={{ $('Basic LLM Chain2').item.json.output['Invoice date'] }}",
+            "Payment date": "={{ $('Basic LLM Chain2').item.json.output['Payment date'] }}",
+            "Type": "={{ $('Basic LLM Chain2').item.json.output.Type }}",
+            "Total price": "={{ $('Basic LLM Chain2').item.json.output['Total price'] }}",
+            "Currency": "={{ $('Basic LLM Chain2').item.json.output.Currency }}",
+            "Line items": "={{ $('Basic LLM Chain2').item.json.output['Line items'] }}",
+            "Additional info": "={{ $('Basic LLM Chain2').item.json.output['Additional information'] }}",
+            "Supplier VAT number": "={{ $('Basic LLM Chain2').item.json.output['Supplier VAT identification number'] }}",
+            "Supplier name": "={{ $('Basic LLM Chain2').item.json.output['Supplier name'] }}",
+            "Purchase order number": "={{ $('Basic LLM Chain2').item.json.output['Purchase order number'] }}"
+          },
+          "matchingColumns": [
+            "Invoice number"
+          ],
+          "schema": [
+            {
+              "id": "Invoice number",
+              "displayName": "Invoice number",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Invoice date",
+              "displayName": "Invoice date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Payment date",
+              "displayName": "Payment date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Type",
+              "displayName": "Type",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Total price",
+              "displayName": "Total price",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Currency",
+              "displayName": "Currency",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Line items",
+              "displayName": "Line items",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Purchase order number",
+              "displayName": "Purchase order number",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Supplier name",
+              "displayName": "Supplier name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Supplier VAT number",
+              "displayName": "Supplier VAT number",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Additional info",
+              "displayName": "Additional info",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Invoice URL",
+              "displayName": "Invoice URL",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1264,
+        608
+      ],
+      "id": "5e5ebd18-dec4-43f4-a41c-681ee5e78f4e",
+      "name": "PostInvoices",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.pdf.co/v1/file/upload/get-presigned-url",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        48,
+        1408
+      ],
+      "id": "611c4e6f-9207-45a6-b3d0-2329b1b9655e",
+      "name": "GetURLforUpload"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {},
+        "options": {
+          "dataPropertyAttachmentsPrefixName": "attachment_",
+          "downloadAttachments": true
+        }
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        48,
+        1152
+      ],
+      "id": "573b64f4-61e9-4eaa-8697-c1d1e3ca782b",
+      "name": "Gmail_Trigger1",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "cUMqdo7XCF6noXLb",
+          "name": "Gmail-zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Get a file - trigger\nGDrive or GMail",
+        "height": 240,
+        "width": 260,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        1072
+      ],
+      "id": "e0f8f9f4-b984-4537-b4ae-a484cd524f5f",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        368,
+        1200
+      ],
+      "id": "f75b17ef-7c5c-4a69-8b3d-b41271e7c092",
+      "name": "Merge"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -144,
+        1408
+      ],
+      "id": "1bd2460a-88e4-4b17-b2e3-d8918f3c80bc",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "={{ $('GetURLforUpload').first().json.presignedUrl }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/pdf"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "attachment_1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        608,
+        1200
+      ],
+      "id": "5122573c-f9ff-4baa-b08d-88d46dad6344",
+      "name": "PutPDFtoPDFco"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.pdf.co/v1/ai-invoice-parser",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "={{ $('GetURLforUpload').first().json.url }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        832,
+        1200
+      ],
+      "id": "8c2de60b-0d2d-4aaf-9898-d689f50e9766",
+      "name": "PostPDFFile"
+    },
+    {
+      "parameters": {
+        "url": "https://api.pdf.co/v1/job/check",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "jobId",
+              "value": "={{ $('PostPDFFile').item.json.jobId }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1072,
+        1200
+      ],
+      "id": "6bbcf082-09b8-4bfc-8049-0ea611a73a1b",
+      "name": "POSTJobCheck"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.pdf.co/v1/ai-invoice-parser",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "={{ $('GetURLforUpload').first().json.url }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        832,
+        1392
+      ],
+      "id": "290b2849-8281-4a17-b6ea-52dbd57e9e62",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolName": "t",
+        "toolDescription": "t"
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1,
+      "position": [
+        2960,
+        1472
+      ],
+      "id": "4ca4ca79-42e1-41b2-9757-ccb77dee53e1",
+      "name": "In-Memory Vector Store"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        2880,
+        720
+      ],
+      "id": "15e0fb9e-d5e6-4b96-b6d2-a4ac42c1fb2d",
+      "name": "OpenAI Chat Model"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=<invoice>\n{{ $json.text }}\n</invoice>",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "Given the following invoice in the <invoice> xml tags, extract the following information as listed below.\nIf you cannot find the information for a specific item, then leave blank and skip to the next. \n\n* Description - short (1-2 line) description of the invoice 'e.g. Monthly database usage for Supabase' - REQUIRED\n* Type - [OPTIONS: Monthly Recurring, Annual Recurring, Single Payment] - REQUIRED\n* Invoice date (date invoice received) - REQUIRED\n* Payment date (date that payment will come out - this is not always the same as the invoice sent date) - REQUIRED\n* Invoice number - REQUIRED\n* Purchase order number\n* Supplier name\n* Supplier VAT identification number\n* Line items, including a description of the goods or services rendered\n* Price with and without VAT (without currency)\n* Total price (without currency) - REQUIRED\n* Currency (USD, Israeli New Shekel, Euro, GBP) - REQUIRED\n* Additional information you deem important that isn't included above \nAdditional important information such as:\n- Payment terms (Net 30, immediate payment, etc.)\n- Payment methods accepted\n- Bank account details if provided\n- Discount terms or early payment incentives\n- Late payment penalties or interest rates\n- Tax exemption references\n- Contract or framework agreement references\n- Delivery terms\n- Special instructions\n- Contact information for billing inquiries\n- Return/refund policies\n- Warranty information if applicable\n- Certificate of origin if present\n- Insurance requirements\n- Customs information for international shipments"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        864,
+        608
+      ],
+      "id": "df92c7a7-62a9-4a43-955f-7b862cd075dc",
+      "name": "Basic LLM Chain2"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "hello"
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        2848,
+        352
+      ],
+      "id": "7363e538-9b3d-4040-8980-8a50f4558134",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "inputText": "hello",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.sentimentAnalysis",
+      "typeVersion": 1,
+      "position": [
+        3328,
+        480
+      ],
+      "id": "9bda09d7-8a83-40b8-9d85-4725089336df",
+      "name": "Sentiment Analysis"
+    },
+    {
+      "parameters": {
+        "inputText": "hello",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1,
+      "position": [
+        3328,
+        640
+      ],
+      "id": "decd646c-8876-409e-bc59-aca14474d250",
+      "name": "Text Classifier"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainSummarization",
+      "typeVersion": 2,
+      "position": [
+        3328,
+        832
+      ],
+      "id": "4086aaac-9d7f-4575-ac3e-80c4fc26c34f",
+      "name": "Summarization Chain"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        3328,
+        320
+      ],
+      "id": "ab5144a3-e282-4614-bf70-c04c37395dce",
+      "name": "Information Extractor"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "th",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainRetrievalQa",
+      "typeVersion": 1.4,
+      "position": [
+        3904,
+        352
+      ],
+      "id": "b0c7d747-e6df-4921-82bc-59768383cf29",
+      "name": "Question and Answer Chain"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        2944,
+        1600
+      ],
+      "id": "8ebd9eb7-e05b-436c-b3d5-1afc95cbd110",
+      "name": "Embeddings OpenAI"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.retrieverVectorStore",
+      "typeVersion": 1,
+      "position": [
+        3904,
+        480
+      ],
+      "id": "256b9e5f-5bbc-4c0e-b5f0-68e311e4103b",
+      "name": "Vector Store Retriever"
+    },
+    {
+      "parameters": {
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "test-index",
+          "mode": "list",
+          "cachedResultName": "test-index"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1,
+      "position": [
+        4000,
+        592
+      ],
+      "id": "f93566a3-6573-4bd1-9f93-6d418bcae432",
+      "name": "Pinecone Vector Store"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        4000,
+        720
+      ],
+      "id": "fdc31bf2-ef9a-472a-8f07-b17af7385a34",
+      "name": "Embeddings OpenAI1"
+    },
+    {
+      "parameters": {
+        "name": "c",
+        "workflowId": {
+          "__rl": true,
+          "value": "7osgHxnOLhIko4ud",
+          "mode": "list",
+          "cachedResultName": "⭐ TEMPLATE: I Built +30 AI Agents with N8N, here’s what I learned…"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2,
+      "position": [
+        3328,
+        1648
+      ],
+      "id": "8ff05b9f-f954-4d45-a767-684ad12e750d",
+      "name": "EmailWorkflow"
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "simon@scrapes.ai",
+          "mode": "list",
+          "cachedResultName": "simon@scrapes.ai"
+        },
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        3328,
+        1488
+      ],
+      "id": "0131c898-24c5-49ac-a957-1ca70a153d42",
+      "name": "Google Calendar"
+    },
+    {
+      "parameters": {
+        "url": "ce"
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        3328,
+        1328
+      ],
+      "id": "58574a6a-f57c-4c34-865a-c6497fe47201",
+      "name": "PDF.co"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "hello",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        2864,
+        1200
+      ],
+      "id": "750d00aa-3767-423e-9005-0c392365f80d",
+      "name": "ToolsAgent"
+    },
+    {
+      "parameters": {
+        "agent": "conversationalAgent",
+        "promptType": "define",
+        "text": "Test",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        3552,
+        1200
+      ],
+      "id": "458279a1-87d9-4c45-beeb-56f117d41f0c",
+      "name": "ConversationAgent"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        3664,
+        1360
+      ],
+      "id": "7d389c84-7425-4f72-bc28-ca143927d4b7",
+      "name": "Window Buffer Memory"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        3792,
+        1360
+      ],
+      "id": "ad80ffe6-3630-4cc7-b17e-54015b4c26b5",
+      "name": "Calculator"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        3552,
+        1360
+      ],
+      "id": "9885833f-5442-416f-a61f-341c34823fdf",
+      "name": "OpenAI"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        2848,
+        1392
+      ],
+      "id": "3fde54bc-9d7a-4016-8f36-8b3e4215614e",
+      "name": "OpenAI_"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        3808,
+        464
+      ],
+      "id": "a41633b4-2d00-4421-a5a8-8fd24e5403f3",
+      "name": "OpenAI Chat Model1"
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "base": {
+          "__rl": true,
+          "value": "appFx3ID8xjW6CRsH",
+          "mode": "list",
+          "cachedResultName": "scrapes.ai - tutorials",
+          "cachedResultUrl": "https://airtable.com/appFx3ID8xjW6CRsH"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblwHCeEb0Xg69CFM",
+          "mode": "list",
+          "cachedResultName": "Financial",
+          "cachedResultUrl": "https://airtable.com/appFx3ID8xjW6CRsH/tblwHCeEb0Xg69CFM"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Invoice number": "={{ $('POSTJobCheck').item.json.body.invoice.invoiceNo }}",
+            "Description": "=",
+            "Invoice date": "={{ $('POSTJobCheck').item.json.body.invoice.invoiceDate }}",
+            "Payment date": "={{ $('POSTJobCheck').item.json.body.paymentDetails.dueDate }}",
+            "Type": "=",
+            "Total price": "={{ $('POSTJobCheck').item.json.body.paymentDetails.total }}",
+            "Currency": "=",
+            "Line items": "={{ $('POSTJobCheck').item.json.body.lineItems }}",
+            "Additional info": "={{ $('POSTJobCheck').item.json.body.paymentDetails }}",
+            "Supplier VAT number": "=",
+            "Supplier name": "={{ $('POSTJobCheck').item.json.body.vendor.name }}",
+            "Purchase order number": "="
+          },
+          "matchingColumns": [
+            "Invoice number"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Invoice number",
+              "displayName": "Invoice number",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Invoice date",
+              "displayName": "Invoice date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Payment date",
+              "displayName": "Payment date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Type",
+              "displayName": "Type",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Total price",
+              "displayName": "Total price",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Currency",
+              "displayName": "Currency",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Line items",
+              "displayName": "Line items",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Purchase order number",
+              "displayName": "Purchase order number",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Supplier name",
+              "displayName": "Supplier name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Supplier VAT number",
+              "displayName": "Supplier VAT number",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Additional info",
+              "displayName": "Additional info",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Invoice URL",
+              "displayName": "Invoice URL",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1280,
+        1200
+      ],
+      "id": "baed9d89-6bfc-4802-83d7-094496aa664f",
+      "name": "PostInvoicesAPI",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Get file upload URL",
+        "height": 240,
+        "width": 260,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        1328
+      ],
+      "id": "f360f1ba-8941-4e8b-b13c-f092ffd728a3",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "content": "## Upload file to PDF.co and return output",
+        "height": 240,
+        "width": 680,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        544,
+        1120
+      ],
+      "id": "29cf1a6d-74a7-4e5f-8b5c-ae7ca432a54f",
+      "name": "Sticky Note11"
+    },
+    {
+      "parameters": {
+        "content": "## Output data\nInto database",
+        "height": 240,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1248,
+        1120
+      ],
+      "id": "53393d03-b9cb-4fbf-89ff-31003af199f1",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "content": "## INVOICE PARSER - LLM",
+        "height": 80,
+        "width": 400,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        432
+      ],
+      "id": "b9e0dc4f-a424-4e44-81b1-9a693967aabb",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## INVOICE PARSER - API MASTERY",
+        "height": 80,
+        "width": 400,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        960
+      ],
+      "id": "6fab9084-6ad6-4262-a0a5-ab87b6aace1f",
+      "name": "Sticky Note12"
+    },
+    {
+      "parameters": {
+        "content": "## EMAIL PARSER",
+        "height": 80,
+        "width": 400,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "71bd0942-7cbf-4d19-905d-9002c678802b",
+      "name": "Sticky Note13"
+    },
+    {
+      "parameters": {
+        "content": "## LLM NODES",
+        "height": 80,
+        "width": 400,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2848,
+        192
+      ],
+      "id": "4758c77f-acc3-419f-919c-b451b9d3cd0d",
+      "name": "Sticky Note14"
+    },
+    {
+      "parameters": {
+        "content": "## AI AGENT NODES",
+        "height": 80,
+        "width": 400,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2864,
+        1088
+      ],
+      "id": "62754fa4-5463-4a58-ab7c-a71de37b3202",
+      "name": "Sticky Note15"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-11-25T08:53:11.020Z",
+      "createdAt": "2025-11-25T08:53:11.020Z",
+      "role": "workflow:owner",
+      "workflowId": "GQzrr5m5bA3T6UmZ",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2025-11-25T08:56:22.817Z",
+      "createdAt": "2025-11-25T08:56:22.817Z",
+      "id": "m5HoE181tEOd7Bs1",
+      "name": "Demo"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-25T21:44:47.886Z",
+  "versionId": "edcdf382-2c2b-47e5-a73a-77e874a56c30"
+}
