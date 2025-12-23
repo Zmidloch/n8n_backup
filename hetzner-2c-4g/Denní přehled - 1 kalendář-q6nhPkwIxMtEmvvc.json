@@ -1,0 +1,568 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "9amDaily_Trigger": {
+      "main": [
+        [
+          {
+            "node": "Google Calendar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Calendar": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get many events",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many events": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate1": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-09T21:40:08.894Z",
+  "id": "q6nhPkwIxMtEmvvc",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Denní přehled - 1 kalendář",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Trigger daily\n",
+        "height": 220,
+        "width": 260,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        400
+      ],
+      "id": "3a402941-c034-4ad9-892c-6f9eeee5e069",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 7
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        80,
+        464
+      ],
+      "id": "7431b865-a37c-426c-b225-9a3e5fd4abe3",
+      "name": "9amDaily_Trigger",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "j.zmidloch@gmail.com",
+          "mode": "list",
+          "cachedResultName": "Jiří Zmidloch - osobní"
+        },
+        "timeMax": "={{ $now.plus({ hours: 8 }) }}",
+        "options": {
+          "orderBy": "startTime"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        384,
+        464
+      ],
+      "id": "161267cb-1aee-4a38-b5ae-64ff1117c790",
+      "name": "Google Calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "di76UVJp04drlP3F",
+          "name": "Google Calendar zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Get Daily Events\n",
+        "height": 220,
+        "width": 260,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        304,
+        400
+      ],
+      "id": "78540d84-140a-4f5b-bd75-04704e59f232",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "sendTo": "example@email.com",
+        "subject": "=Happy {{ $now.format('EEEE') }}! {{ $now.format('dd-LLL-yyyy') }}",
+        "emailType": "text",
+        "message": "={{ $json.formattedList }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1424,
+        464
+      ],
+      "id": "204078aa-b250-4fe9-a13a-8944006b2a2b",
+      "name": "Gmail",
+      "webhookId": "c8883faa-ef18-4688-894f-d2bf03d0dc21",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "cUMqdo7XCF6noXLb",
+          "name": "Gmail-info@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Send email\n",
+        "height": 220,
+        "width": 260,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1344,
+        400
+      ],
+      "id": "4afa3afc-e2e5-4695-a302-3f1be9ccfada",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "summary"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        880,
+        464
+      ],
+      "id": "b9ce3d68-14a1-43a4-b6ab-eb278f775644",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "content": "## Combine meetings\n",
+        "height": 220,
+        "width": 400,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        624,
+        400
+      ],
+      "id": "dc476aec-6883-484a-9117-733ccf18b10f",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d85e156f-b899-46c0-81a3-0dc41dd41fe5",
+              "name": "summary",
+              "value": "={{ $json.start.dateTime?.toDateTime().format('HH:mm') }} - {{ $json.summary }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        688,
+        464
+      ],
+      "id": "aa06af46-dece-4723-88b3-31aef2944ac3",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "content": "## Format them\n",
+        "height": 220,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1072,
+        400
+      ],
+      "id": "b91c889e-e532-4592-b8b1-8b33a0f8ac7c",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'formattedList' to the JSON of each one\nfor (const item of $input.all()) {\n  // Check if the 'events' field exists and is an array\n  if (Array.isArray(item.json.summary)) {\n    // Join the array elements with newlines\n    item.json.formattedList = item.json.summary.join('\\n');\n  } else {\n    // If 'events' is not an array, set formattedList to an error message\n    item.json.formattedList = 'Error: events field is not an array';\n  }\n}\n\n// Return all items\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        464
+      ],
+      "id": "b1fe3e9f-a8b0-43a2-b051-07a17c1f7a07",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "content": "## Trigger daily\n",
+        "height": 220,
+        "width": 260,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "5d36385b-152c-4832-9984-84ec4595fe5b",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Get Daily Events\n",
+        "height": 220,
+        "width": 260,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        304,
+        0
+      ],
+      "id": "892a9dad-7c91-469a-a6f1-4d8fbdeefed7",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "## Send email\n",
+        "height": 220,
+        "width": 260,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1344,
+        0
+      ],
+      "id": "b93355db-9e71-455a-9887-6554134a0da4",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "## Combine meetings\n",
+        "height": 220,
+        "width": 400,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        624,
+        0
+      ],
+      "id": "9b01848d-4272-453b-ae79-37be53dfb61b",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "content": "## Format them\n",
+        "height": 220,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1072,
+        0
+      ],
+      "id": "4d1f2cb1-827a-4329-a6ab-555808f104b2",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 7
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        64,
+        80
+      ],
+      "id": "313a143f-df3d-4b8b-a4c2-2ae4911de55b",
+      "name": "Schedule Trigger",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "zmidloch@z-agency.cz",
+          "mode": "list",
+          "cachedResultName": "Z-AGENCY - provozní kalendář"
+        },
+        "timeMax": "={{ $now.plus({ hours: 15 }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        368,
+        80
+      ],
+      "id": "a72bc711-f146-4b0f-9872-c408e1934ad6",
+      "name": "Get many events",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "di76UVJp04drlP3F",
+          "name": "Google Calendar zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "zmidloch@z-agency.cz",
+        "subject": "=Přehled událostí: {{ $now.setLocale('cs').toFormat('EEEE dd.MM.yyyy') }}",
+        "message": "={{ Array.isArray($json[\"Přehled událostí\"])\n\t? $json[\"Přehled událostí\"].join('<br>')\n\t: $json[\"Přehled událostí\"]\n}}\n",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1408,
+        80
+      ],
+      "id": "ca6bd43f-ea4e-4011-9a92-7f19155e615c",
+      "name": "Send a message",
+      "webhookId": "d7656db5-76dc-4715-a863-69bdfe21a43d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "cUMqdo7XCF6noXLb",
+          "name": "Gmail-info@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ba452296-3b5c-4f58-87af-3913e844a686",
+              "name": "Přehled událostí",
+              "value": "={{ $json.start.dateTime ? DateTime.fromISO($json.start.dateTime).toFormat('dd.MM.yyyy - HH:mm') : DateTime.fromISO($json.start.date).toFormat('dd.MM.yyyy') }} - {{ $json.summary }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        640,
+        80
+      ],
+      "id": "d9adee08-52d2-45b1-adbc-dfd1607a5f15",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "Přehled událostí"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        848,
+        80
+      ],
+      "id": "f793b8c5-5f0e-4b29-8b05-188eeb8da27a",
+      "name": "Aggregate1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'formattedList' to the JSON of each one\nfor (const item of $input.all()) {\n  // Check if the 'events' field exists and is an array\n  if (Array.isArray(item.json.summary)) {\n    // Join the array elements with newlines\n    item.json.formattedList = item.json.summary.join('\\n');\n  } else {\n    // If 'events' is not an array, set formattedList to an error message\n    item.json.formattedList = 'Error: events field is not an array';\n  }\n}\n\n// Return all items\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1136,
+        80
+      ],
+      "id": "1a1dd93f-7115-4d7a-b180-1cba1f7a1c2f",
+      "name": "Code1"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Prague",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "zVAjJgKV17IWzFP7"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-09T21:40:08.894Z",
+      "createdAt": "2025-12-09T21:40:08.894Z",
+      "role": "workflow:owner",
+      "workflowId": "q6nhPkwIxMtEmvvc",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-12-16T14:42:29.354Z",
+  "versionId": "295a8c15-efa7-43f7-a01b-0c3d566157ba"
+}
