@@ -1,0 +1,1203 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-09T21:11:19.198Z",
+    "createdAt": "2025-12-09T21:11:19.198Z",
+    "versionId": "7f4be4cb-5944-408d-a9d7-90a032c6ef99",
+    "workflowId": "wRCD0bgyR36YpHC4",
+    "nodes": [
+      {
+        "parameters": {
+          "content": "## Move previous days backup files to old folder\nKeeps backups folder with only very latest. Must be done one at a time to work.",
+          "height": 308.58559954294066,
+          "width": 565.5417318483551,
+          "color": 7
+        },
+        "id": "273a6eb7-0ef9-45a5-a7f9-f20838e134b9",
+        "name": "Sticky Note",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          1024,
+          288
+        ]
+      },
+      {
+        "parameters": {
+          "content": "## [Access folders here]()",
+          "height": 80,
+          "width": 360,
+          "color": 7
+        },
+        "id": "f6fe88fe-bd6d-439b-a3ba-2c55e94dfb66",
+        "name": "Sticky Note2",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          272,
+          0
+        ]
+      },
+      {
+        "parameters": {
+          "filters": {},
+          "requestOptions": {}
+        },
+        "id": "1f692f0c-c691-49c1-a12a-a9b679e61a96",
+        "name": "Return N8N Workflows",
+        "type": "n8n-nodes-base.n8n",
+        "position": [
+          1712,
+          144
+        ],
+        "typeVersion": 1,
+        "executeOnce": true,
+        "credentials": {
+          "n8nApi": {
+            "id": "Ig7f5BT2PKf0yVbH",
+            "name": "n8n account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "authentication": "oAuth2",
+          "binaryData": true,
+          "name": "={{ $('Return N8N Workflows').item.json.name }} - {{ $now.toUTC() }}.json",
+          "parents": [
+            "1E3JcgoM8_dO04ng-26WJ89G71jk-dkXO"
+          ],
+          "options": {}
+        },
+        "id": "352b0a8c-8a85-45f8-b4d4-32317ffbc6b0",
+        "name": "Upload workflows into N8N Backup",
+        "type": "n8n-nodes-base.googleDrive",
+        "position": [
+          2304,
+          144
+        ],
+        "typeVersion": 1,
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "0y8WKhAVB7SLUFcI",
+            "name": "Google Drive zmidloch@z-agency.cz"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "batchSize": 10,
+          "options": {}
+        },
+        "id": "cdaf4c9f-f4a0-49ab-8aa1-c833c95c294a",
+        "name": "Batch Upload",
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 3,
+        "position": [
+          2064,
+          144
+        ]
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "7038a2d3-d5d7-4ff7-82e3-6a72c69b58f5",
+        "name": "Batch Move",
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 3,
+        "position": [
+          1248,
+          400
+        ]
+      },
+      {
+        "parameters": {
+          "resource": "fileFolder",
+          "queryString": ".json",
+          "returnAll": true,
+          "filter": {
+            "folderId": {
+              "__rl": true,
+              "value": "https://drive.google.com/drive/u/0/folders/1E3JcgoM8_dO04ng-26WJ89G71jk-dkXO",
+              "mode": "url"
+            }
+          },
+          "options": {}
+        },
+        "id": "44c38cda-9f4d-4bbb-b483-331dcbd98411",
+        "name": "Get N8N Files",
+        "type": "n8n-nodes-base.googleDrive",
+        "position": [
+          1072,
+          400
+        ],
+        "executeOnce": true,
+        "notesInFlow": true,
+        "retryOnFail": true,
+        "typeVersion": 3,
+        "alwaysOutputData": true,
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "0y8WKhAVB7SLUFcI",
+            "name": "Google Drive zmidloch@z-agency.cz"
+          }
+        },
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "operation": "move",
+          "fileId": {
+            "__rl": true,
+            "value": "={{ $json.id }}",
+            "mode": "id"
+          },
+          "driveId": {
+            "__rl": true,
+            "value": "https://drive.google.com/drive/u/0/folders/1qgssuUp6rZ7cM-Uip0m74ol_-Cqe-f0F",
+            "mode": "url"
+          },
+          "folderId": {
+            "__rl": true,
+            "value": "https://drive.google.com/drive/u/0/folders/1qgssuUp6rZ7cM-Uip0m74ol_-Cqe-f0F",
+            "mode": "url"
+          }
+        },
+        "id": "58f22fb2-1c5e-44cc-81c3-aba658546932",
+        "name": "Move to 'n8n_old'",
+        "type": "n8n-nodes-base.googleDrive",
+        "position": [
+          1440,
+          400
+        ],
+        "executeOnce": true,
+        "notesInFlow": true,
+        "retryOnFail": true,
+        "typeVersion": 3,
+        "alwaysOutputData": true,
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "0y8WKhAVB7SLUFcI",
+            "name": "Google Drive zmidloch@z-agency.cz"
+          }
+        },
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 1
+            },
+            "conditions": [
+              {
+                "id": "c3ecdc68-4236-419c-8218-f3b202f0382a",
+                "leftValue": "={{ $json.createdTime.toDateTime() }}",
+                "rightValue": "={{ DateTime.now().minus({ days: 90 }) }}",
+                "operator": {
+                  "type": "dateTime",
+                  "operation": "before"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "id": "106f25e9-b3d0-4a89-86cd-1be27799396d",
+        "name": "If older than 90 days",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          1264,
+          720
+        ]
+      },
+      {
+        "parameters": {
+          "includeOtherFields": true,
+          "options": {}
+        },
+        "id": "59c02711-1c19-4937-914f-4c288f65cc6d",
+        "name": "Example - N8N JSON Data",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1712,
+          432
+        ]
+      },
+      {
+        "parameters": {
+          "content": "## [GDrive credentials](https://console.cloud.google.com/apis/credentials)",
+          "height": 80,
+          "color": 7
+        },
+        "id": "e75b7868-0ef9-47a9-ad5d-fed0a206078b",
+        "name": "Sticky Note8",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          0,
+          0
+        ]
+      },
+      {
+        "parameters": {
+          "mode": "jsonToBinary",
+          "options": {
+            "useRawData": false
+          }
+        },
+        "id": "6f050a36-4d2e-4bdd-982f-fb267e966b26",
+        "name": "Move Binary Data1",
+        "type": "n8n-nodes-base.moveBinaryData",
+        "position": [
+          1888,
+          144
+        ],
+        "typeVersion": 1
+      },
+      {
+        "parameters": {
+          "resource": "fileFolder",
+          "returnAll": true,
+          "filter": {
+            "folderId": {
+              "__rl": true,
+              "value": "https://drive.google.com/drive/u/0/folders/1qgssuUp6rZ7cM-Uip0m74ol_-Cqe-f0F",
+              "mode": "url"
+            }
+          },
+          "options": {
+            "fields": [
+              "*"
+            ]
+          }
+        },
+        "id": "fe72fa1d-f7ae-4c41-84f1-647f98284c26",
+        "name": "List old backups1",
+        "type": "n8n-nodes-base.googleDrive",
+        "position": [
+          1072,
+          720
+        ],
+        "typeVersion": 3,
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "0y8WKhAVB7SLUFcI",
+            "name": "Google Drive zmidloch@z-agency.cz"
+          }
+        }
+      },
+      {
+        "parameters": {},
+        "id": "f76c8fca-70b2-427d-86e1-e7cc92331075",
+        "name": "No Operation, do nothing1",
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          1472,
+          880
+        ]
+      },
+      {
+        "parameters": {
+          "operation": "deleteFile",
+          "fileId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "={{ $json.id }}"
+          },
+          "options": {
+            "deletePermanently": true
+          }
+        },
+        "id": "16fd08c9-2eea-4064-b662-3f1de0416622",
+        "name": "Delete from folder1",
+        "type": "n8n-nodes-base.googleDrive",
+        "position": [
+          1472,
+          720
+        ],
+        "typeVersion": 3,
+        "alwaysOutputData": true,
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "0y8WKhAVB7SLUFcI",
+            "name": "Google Drive zmidloch@z-agency.cz"
+          }
+        },
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "triggerAtMinute": 5
+              }
+            ]
+          }
+        },
+        "id": "d73ac828-812c-47ba-957a-dab8636ba059",
+        "name": "00:05 daily1",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "position": [
+          704,
+          720
+        ],
+        "typeVersion": 1.1
+      },
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {}
+            ]
+          }
+        },
+        "id": "4a22a8d5-8550-4896-b5e5-93d99eef7509",
+        "name": "00:00 daily1",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          704,
+          400
+        ]
+      },
+      {
+        "parameters": {
+          "content": "## Automated JSON Backup to Google Drive\n\n## Use Case\nCreate automated JSON file backups of N8N flows in GDrive for version control & security.\n\n## What this Workflow Does\nThe workflow manages JSON backup automation:\n- Creates daily JSON backups with timestamps\n- Uploads files to Google Drive\n- Maintains organized folder structure\n- Moves previous backups to archive folder\n- Runs automatically every 24 hours\n- Deletes backups older than 90 days to save storage\n\n## Setup\n1. Configure [Google Drive OAuth credentials](https://docs.n8n.io/integrations/builtin/app-nodes/n8n-nodes-base.googledrive/)\n2. Set up source JSON file location\n3. Create main backup and archive folders in Google Drive\n4. Set schedule trigger for daily execution\n\n",
+          "height": 532.1905837838266,
+          "width": 618,
+          "color": 7
+        },
+        "id": "5a32550e-89c4-47a8-8617-7a009b9f2060",
+        "name": "Sticky Note9",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          0,
+          112
+        ]
+      },
+      {
+        "parameters": {},
+        "id": "4b133ad3-f636-469a-adfc-156bb7e0277f",
+        "name": "When clicking ‘Test workflow’",
+        "type": "n8n-nodes-base.manualTrigger",
+        "typeVersion": 1,
+        "position": [
+          704,
+          208
+        ]
+      },
+      {
+        "parameters": {
+          "content": "## Download json files for existing workflows and upload to backup\nLatest days backups",
+          "height": 308.58559954294066,
+          "width": 857.1970927037466,
+          "color": 7
+        },
+        "id": "f10f4f7d-96b9-4d0f-ba87-0cf4ac57615b",
+        "name": "Sticky Note4",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          1648,
+          48
+        ]
+      },
+      {
+        "parameters": {
+          "content": "## Delete old backups > 90 days old\nKeeps backups for only 90 days to save storage",
+          "height": 391.81613601807794,
+          "width": 621.0287561651137,
+          "color": 7
+        },
+        "id": "593595dc-a870-475a-a7ef-ec697b3ba6ef",
+        "name": "Sticky Note5",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          1024,
+          640
+        ]
+      }
+    ],
+    "connections": {
+      "Return N8N Workflows": {
+        "main": [
+          [
+            {
+              "node": "Move Binary Data1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Upload workflows into N8N Backup": {
+        "main": [
+          [
+            {
+              "node": "Batch Upload",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Batch Upload": {
+        "main": [
+          [],
+          [
+            {
+              "node": "Upload workflows into N8N Backup",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Batch Move": {
+        "main": [
+          [
+            {
+              "node": "Return N8N Workflows",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Move to 'n8n_old'",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get N8N Files": {
+        "main": [
+          [
+            {
+              "node": "Batch Move",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Move to 'n8n_old'": {
+        "main": [
+          [
+            {
+              "node": "Batch Move",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If older than 90 days": {
+        "main": [
+          [
+            {
+              "node": "Delete from folder1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "No Operation, do nothing1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Move Binary Data1": {
+        "main": [
+          [
+            {
+              "node": "Batch Upload",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "List old backups1": {
+        "main": [
+          [
+            {
+              "node": "If older than 90 days",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "00:05 daily1": {
+        "main": [
+          [
+            {
+              "node": "List old backups1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "00:00 daily1": {
+        "main": [
+          [
+            {
+              "node": "Get N8N Files",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "When clicking ‘Test workflow’": {
+        "main": [
+          [
+            {
+              "node": "Get N8N Files",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jiri Zmidloch",
+    "name": null,
+    "description": null
+  },
+  "activeVersionId": "7f4be4cb-5944-408d-a9d7-90a032c6ef99",
+  "connections": {
+    "Return N8N Workflows": {
+      "main": [
+        [
+          {
+            "node": "Move Binary Data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload workflows into N8N Backup": {
+      "main": [
+        [
+          {
+            "node": "Batch Upload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Batch Upload": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Upload workflows into N8N Backup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Batch Move": {
+      "main": [
+        [
+          {
+            "node": "Return N8N Workflows",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Move to 'n8n_old'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get N8N Files": {
+      "main": [
+        [
+          {
+            "node": "Batch Move",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Move to 'n8n_old'": {
+      "main": [
+        [
+          {
+            "node": "Batch Move",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If older than 90 days": {
+      "main": [
+        [
+          {
+            "node": "Delete from folder1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Move Binary Data1": {
+      "main": [
+        [
+          {
+            "node": "Batch Upload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List old backups1": {
+      "main": [
+        [
+          {
+            "node": "If older than 90 days",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "00:05 daily1": {
+      "main": [
+        [
+          {
+            "node": "List old backups1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "00:00 daily1": {
+      "main": [
+        [
+          {
+            "node": "Get N8N Files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get N8N Files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-08T22:27:35.602Z",
+  "id": "wRCD0bgyR36YpHC4",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "ADMIN - Backup N8N to GDrive",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Move previous days backup files to old folder\nKeeps backups folder with only very latest. Must be done one at a time to work.",
+        "height": 308.58559954294066,
+        "width": 565.5417318483551,
+        "color": 7
+      },
+      "id": "273a6eb7-0ef9-45a5-a7f9-f20838e134b9",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1024,
+        288
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## [Access folders here]()",
+        "height": 80,
+        "width": 360,
+        "color": 7
+      },
+      "id": "f6fe88fe-bd6d-439b-a3ba-2c55e94dfb66",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        272,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "filters": {},
+        "requestOptions": {}
+      },
+      "id": "1f692f0c-c691-49c1-a12a-a9b679e61a96",
+      "name": "Return N8N Workflows",
+      "type": "n8n-nodes-base.n8n",
+      "position": [
+        1712,
+        144
+      ],
+      "typeVersion": 1,
+      "executeOnce": true,
+      "credentials": {
+        "n8nApi": {
+          "id": "Ig7f5BT2PKf0yVbH",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "binaryData": true,
+        "name": "={{ $('Return N8N Workflows').item.json.name }} - {{ $now.toUTC() }}.json",
+        "parents": [
+          "1E3JcgoM8_dO04ng-26WJ89G71jk-dkXO"
+        ],
+        "options": {}
+      },
+      "id": "352b0a8c-8a85-45f8-b4d4-32317ffbc6b0",
+      "name": "Upload workflows into N8N Backup",
+      "type": "n8n-nodes-base.googleDrive",
+      "position": [
+        2304,
+        144
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "0y8WKhAVB7SLUFcI",
+          "name": "Google Drive zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "batchSize": 10,
+        "options": {}
+      },
+      "id": "cdaf4c9f-f4a0-49ab-8aa1-c833c95c294a",
+      "name": "Batch Upload",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2064,
+        144
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "7038a2d3-d5d7-4ff7-82e3-6a72c69b58f5",
+      "name": "Batch Move",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1248,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": ".json",
+        "returnAll": true,
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "https://drive.google.com/drive/u/0/folders/1E3JcgoM8_dO04ng-26WJ89G71jk-dkXO",
+            "mode": "url"
+          }
+        },
+        "options": {}
+      },
+      "id": "44c38cda-9f4d-4bbb-b483-331dcbd98411",
+      "name": "Get N8N Files",
+      "type": "n8n-nodes-base.googleDrive",
+      "position": [
+        1072,
+        400
+      ],
+      "executeOnce": true,
+      "notesInFlow": true,
+      "retryOnFail": true,
+      "typeVersion": 3,
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "0y8WKhAVB7SLUFcI",
+          "name": "Google Drive zmidloch@z-agency.cz"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "move",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "driveId": {
+          "__rl": true,
+          "value": "https://drive.google.com/drive/u/0/folders/1qgssuUp6rZ7cM-Uip0m74ol_-Cqe-f0F",
+          "mode": "url"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "https://drive.google.com/drive/u/0/folders/1qgssuUp6rZ7cM-Uip0m74ol_-Cqe-f0F",
+          "mode": "url"
+        }
+      },
+      "id": "58f22fb2-1c5e-44cc-81c3-aba658546932",
+      "name": "Move to 'n8n_old'",
+      "type": "n8n-nodes-base.googleDrive",
+      "position": [
+        1440,
+        400
+      ],
+      "executeOnce": true,
+      "notesInFlow": true,
+      "retryOnFail": true,
+      "typeVersion": 3,
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "0y8WKhAVB7SLUFcI",
+          "name": "Google Drive zmidloch@z-agency.cz"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "c3ecdc68-4236-419c-8218-f3b202f0382a",
+              "leftValue": "={{ $json.createdTime.toDateTime() }}",
+              "rightValue": "={{ DateTime.now().minus({ days: 90 }) }}",
+              "operator": {
+                "type": "dateTime",
+                "operation": "before"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "106f25e9-b3d0-4a89-86cd-1be27799396d",
+      "name": "If older than 90 days",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1264,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "59c02711-1c19-4937-914f-4c288f65cc6d",
+      "name": "Example - N8N JSON Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1712,
+        432
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## [GDrive credentials](https://console.cloud.google.com/apis/credentials)",
+        "height": 80,
+        "color": 7
+      },
+      "id": "e75b7868-0ef9-47a9-ad5d-fed0a206078b",
+      "name": "Sticky Note8",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "jsonToBinary",
+        "options": {
+          "useRawData": false
+        }
+      },
+      "id": "6f050a36-4d2e-4bdd-982f-fb267e966b26",
+      "name": "Move Binary Data1",
+      "type": "n8n-nodes-base.moveBinaryData",
+      "position": [
+        1888,
+        144
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "returnAll": true,
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "https://drive.google.com/drive/u/0/folders/1qgssuUp6rZ7cM-Uip0m74ol_-Cqe-f0F",
+            "mode": "url"
+          }
+        },
+        "options": {
+          "fields": [
+            "*"
+          ]
+        }
+      },
+      "id": "fe72fa1d-f7ae-4c41-84f1-647f98284c26",
+      "name": "List old backups1",
+      "type": "n8n-nodes-base.googleDrive",
+      "position": [
+        1072,
+        720
+      ],
+      "typeVersion": 3,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "0y8WKhAVB7SLUFcI",
+          "name": "Google Drive zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "f76c8fca-70b2-427d-86e1-e7cc92331075",
+      "name": "No Operation, do nothing1",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1472,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "deleteFile",
+        "fileId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $json.id }}"
+        },
+        "options": {
+          "deletePermanently": true
+        }
+      },
+      "id": "16fd08c9-2eea-4064-b662-3f1de0416622",
+      "name": "Delete from folder1",
+      "type": "n8n-nodes-base.googleDrive",
+      "position": [
+        1472,
+        720
+      ],
+      "typeVersion": 3,
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "0y8WKhAVB7SLUFcI",
+          "name": "Google Drive zmidloch@z-agency.cz"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtMinute": 5
+            }
+          ]
+        }
+      },
+      "id": "d73ac828-812c-47ba-957a-dab8636ba059",
+      "name": "00:05 daily1",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        704,
+        720
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "id": "4a22a8d5-8550-4896-b5e5-93d99eef7509",
+      "name": "00:00 daily1",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        704,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Automated JSON Backup to Google Drive\n\n## Use Case\nCreate automated JSON file backups of N8N flows in GDrive for version control & security.\n\n## What this Workflow Does\nThe workflow manages JSON backup automation:\n- Creates daily JSON backups with timestamps\n- Uploads files to Google Drive\n- Maintains organized folder structure\n- Moves previous backups to archive folder\n- Runs automatically every 24 hours\n- Deletes backups older than 90 days to save storage\n\n## Setup\n1. Configure [Google Drive OAuth credentials](https://docs.n8n.io/integrations/builtin/app-nodes/n8n-nodes-base.googledrive/)\n2. Set up source JSON file location\n3. Create main backup and archive folders in Google Drive\n4. Set schedule trigger for daily execution\n\n",
+        "height": 532.1905837838266,
+        "width": 618,
+        "color": 7
+      },
+      "id": "5a32550e-89c4-47a8-8617-7a009b9f2060",
+      "name": "Sticky Note9",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        112
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "4b133ad3-f636-469a-adfc-156bb7e0277f",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        704,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Download json files for existing workflows and upload to backup\nLatest days backups",
+        "height": 308.58559954294066,
+        "width": 857.1970927037466,
+        "color": 7
+      },
+      "id": "f10f4f7d-96b9-4d0f-ba87-0cf4ac57615b",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1648,
+        48
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Delete old backups > 90 days old\nKeeps backups for only 90 days to save storage",
+        "height": 391.81613601807794,
+        "width": 621.0287561651137,
+        "color": 7
+      },
+      "id": "593595dc-a870-475a-a7ef-ec697b3ba6ef",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1024,
+        640
+      ]
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "errorWorkflow": "zVAjJgKV17IWzFP7",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "timezone": "Europe/Prague"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-08T22:27:35.602Z",
+      "createdAt": "2025-12-08T22:27:35.602Z",
+      "role": "workflow:owner",
+      "workflowId": "wRCD0bgyR36YpHC4",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": {
+    "node:00:05 daily1": {
+      "recurrenceRules": []
+    },
+    "node:00:00 daily1": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [
+    {
+      "updatedAt": "2025-12-08T22:27:29.780Z",
+      "createdAt": "2025-12-08T22:27:29.780Z",
+      "id": "uBF9657DFDtoNWGs",
+      "name": "Security"
+    }
+  ],
+  "triggerCount": 2,
+  "updatedAt": "2025-12-09T21:11:19.212Z",
+  "versionId": "7f4be4cb-5944-408d-a9d7-90a032c6ef99"
+}
