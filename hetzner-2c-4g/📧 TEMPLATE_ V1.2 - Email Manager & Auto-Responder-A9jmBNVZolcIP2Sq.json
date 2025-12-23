@@ -1,0 +1,1176 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Auto-fixing Output Parser2": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AssessEmail",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Auto-fixing Output Parser2",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Attachment": {
+      "main": [
+        [
+          {
+            "node": "GetBinaryDataALL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ReceiveEmail_Trigger": {
+      "main": [
+        [
+          {
+            "node": "OneAtATime",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetThreadMessages": {
+      "main": [
+        [
+          {
+            "node": "GetLatestMsgId",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetLatestMsgId": {
+      "main": [
+        [
+          {
+            "node": "GetLatestMessage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetLatestMessage": {
+      "main": [
+        [
+          {
+            "node": "GetLabels",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AssessEmail": {
+      "main": [
+        [
+          {
+            "node": "ActionRoutes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ActionRoutes": {
+      "main": [
+        [
+          {
+            "node": "CreateReplyText",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Attachment",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "UrgentAlert_Output",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "AggregateLabelIds",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AggregateLabelIds": {
+      "main": [
+        [
+          {
+            "node": "AssignDigested_Output",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AssignLabel_Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CreateReplyText": {
+      "main": [
+        [
+          {
+            "node": "CreateDraft_Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AssignDigested_Output": {
+      "main": [
+        [
+          {
+            "node": "OneAtATime",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetAttachments": {
+      "main": [
+        [
+          {
+            "node": "IfExists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IfExists": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "PostAttachments_Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OneAtATime": {
+      "main": [
+        [],
+        [
+          {
+            "node": "GetThreadMessages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetLabels": {
+      "main": [
+        [
+          {
+            "node": "IfUserCreated",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IfUserCreated": {
+      "main": [
+        [
+          {
+            "node": "UserLabels",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "UserLabels": {
+      "main": [
+        [
+          {
+            "node": "AssessEmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude-3.5-Sonnet": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AssessEmail",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Auto-fixing Output Parser2",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "CreateReplyText",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetBinaryDataALL": {
+      "main": [
+        [
+          {
+            "node": "GetAttachments",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-22T22:47:56.209Z",
+  "id": "A9jmBNVZolcIP2Sq",
+  "isArchived": false,
+  "meta": null,
+  "name": "📧 TEMPLATE: V1.2 - Email Manager & Auto-Responder",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## New email received\nProcess last message in thread - get context\n",
+        "height": 306,
+        "width": 1009,
+        "color": 7
+      },
+      "id": "bab7e4df-7737-46ff-a66f-0c669449ca96",
+      "name": "Sticky Note13",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2400,
+        880
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Draft response\nResponse based on specific instructions for that category of email",
+        "height": 313,
+        "width": 583,
+        "color": 7
+      },
+      "id": "80d4d784-aed7-469a-a8e5-9069ba8c4719",
+      "name": "Sticky Note20",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -176,
+        384
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserAutofixing",
+      "typeVersion": 1,
+      "position": [
+        -640,
+        1200
+      ],
+      "id": "750eefba-7ade-414b-85e7-414473a1d4fa",
+      "name": "Auto-fixing Output Parser2"
+    },
+    {
+      "parameters": {
+        "content": "## Assess email\n1. Choose most appropriate categories and labels\n2. Assess whether toReply, urgent, attachmentsToUpload",
+        "height": 313,
+        "width": 383,
+        "color": 7
+      },
+      "id": "8c3999ce-b04c-429e-8a44-1e6196d7e5bc",
+      "name": "Sticky Note16",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -848,
+        880
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"type\": \"object\",\n  \"required\": [\"metadata\", \"classification\", \"actions\"],\n  \"properties\": {\n    \"metadata\": {\n      \"type\": \"object\",\n      \"required\": [\"sender\", \"subject\", \"receivedDate\"],\n      \"properties\": {\n        \"sender\": {\n          \"type\": \"string\",\n          \"format\": \"email\"\n        },\n        \"subject\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        },\n        \"receivedDate\": {\n          \"type\": \"string\",\n          \"format\": \"date-time\"\n        }\n      }\n    },\n    \"classification\": {\n      \"type\": \"object\",\n      \"required\": [\n        \"summary\",\n        \"toReply\",\n        \"urgent\",\n        \"dateRelated\",\n        \"attachmentsToUpload\",\n        \"requiresFollowUp\",\n        \"forwardToTeam\",\n        \"priority\",\n        \"label_ids\",\n        \"label_categories\"\n      ],\n      \"properties\": {\n        \"summaryOfEmail\": {\n          \"type\": \"string\"\n        },\n        \"toReply\": {\n          \"type\": \"boolean\"\n        },\n        \"urgent\": {\n          \"type\": \"boolean\"\n        },\n        \"dateRelated\": {\n          \"type\": \"boolean\"\n        },\n        \"attachmentsToUpload\": {\n          \"type\": \"boolean\"\n        },\n        \"requiresFollowUp\": {\n          \"type\": \"boolean\"\n        },\n        \"forwardToTeam\": {\n          \"type\": \"boolean\"\n        },\n        \"priority\": {\n          \"type\": \"string\",\n          \"enum\": [\"High\", \"Medium\", \"Low\"]\n        },\n        \"label_ids\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"string\"\n          },\n          \"minItems\": 1\n        },\n        \"label_categories\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"string\"\n          },\n          \"minItems\": 1\n        }\n      }\n    },\n    \"actions\": {\n      \"type\": \"object\",\n      \"required\": [\n        \"notes\",\n        \"dueDate\",\n        \"uploadAttachments\",\n        \"createTask\",\n        \"additionalTasks\"\n      ],\n      \"properties\": {\n        \"notes\": {\n          \"type\": \"string\"\n        },\n        \"dueDate\": {\n          \"type\": \"string\",\n          \"format\": \"date\"\n        },\n        \"uploadAttachments\": {\n          \"type\": \"boolean\"\n        },\n        \"createTask\": {\n          \"type\": \"boolean\"\n        },\n        \"additionalTasks\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"string\"\n          }\n        }\n      }\n    }\n  },\n  \"additionalProperties\": false\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        -528,
+        1344
+      ],
+      "id": "9f1b30c9-dbb4-457b-965a-ce18d216371e",
+      "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {
+        "content": "## Assign labels\nAssign selected labels as well as 'digested'",
+        "height": 373,
+        "width": 463,
+        "color": 7
+      },
+      "id": "9d8e14ec-425b-4978-8d58-b78db9b11555",
+      "name": "Sticky Note24",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -176,
+        1280
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Attachments\nIf attachments - upload & parse\nIf no attachments - nothing\n`GetBinaryData` ignores any files that aren't xml and pdf",
+        "height": 273,
+        "width": 423,
+        "color": 7
+      },
+      "id": "65b456dd-c859-4f0a-8f74-6c676d93c086",
+      "name": "Sticky Note25",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -176,
+        704
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Urgent / Alert\nNotify on Telegram",
+        "height": 253,
+        "width": 243,
+        "color": 7
+      },
+      "id": "668ba949-9bcb-4503-a3f8-0425a63a8949",
+      "name": "Sticky Note27",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -176,
+        1008
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "22f8d83a-b7d1-4b4a-8967-4335c0d1f510",
+              "leftValue": "={{ $('ReceiveEmail_Trigger').item.binary }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -160,
+        832
+      ],
+      "id": "272cc254-9d3d-4c66-9eed-2ab532206974",
+      "name": "Attachment"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {
+          "q": "-from:me"
+        },
+        "options": {
+          "downloadAttachments": true
+        }
+      },
+      "id": "f4c61722-29c7-42b1-bb33-c7b70e1ca184",
+      "name": "ReceiveEmail_Trigger",
+      "type": "n8n-nodes-base.gmailTrigger",
+      "position": [
+        -2336,
+        1008
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "qNSaYVEcaWOf5U3k",
+          "name": "Gmail zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "thread",
+        "operation": "get",
+        "threadId": "={{ $('ReceiveEmail_Trigger').item.json.threadId }}",
+        "options": {
+          "returnOnlyMessages": true
+        }
+      },
+      "id": "a235c043-4db0-4cba-a144-1bf86b885098",
+      "name": "GetThreadMessages",
+      "type": "n8n-nodes-base.gmail",
+      "position": [
+        -1888,
+        1008
+      ],
+      "typeVersion": 2.1,
+      "webhookId": "669ea381-16ba-4a90-a451-173051a09c18",
+      "retryOnFail": true,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "qNSaYVEcaWOf5U3k",
+          "name": "Gmail zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "keep": "lastItems"
+      },
+      "id": "b4c01e7c-81c4-4c92-8d32-871dc2a3376f",
+      "name": "GetLatestMsgId",
+      "type": "n8n-nodes-base.limit",
+      "position": [
+        -1696,
+        1008
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "messageId": "={{ $('GetLatestMsgId').item.json.id }}",
+        "simple": false,
+        "options": {}
+      },
+      "id": "00c3702a-9adb-4680-b90a-75bf93a04c3f",
+      "name": "GetLatestMessage",
+      "type": "n8n-nodes-base.gmail",
+      "position": [
+        -1520,
+        1008
+      ],
+      "typeVersion": 2.1,
+      "webhookId": "0c1a04d0-b517-42b0-ba9b-c120eae6645e",
+      "executeOnce": false,
+      "retryOnFail": true,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "qNSaYVEcaWOf5U3k",
+          "name": "Gmail zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=<message>\n{{ $('GetLatestMessage').item.json.textAsHtml }} \n</message>\n\n<subject>\n{{ $('GetLatestMessage').item.json.subject }}\n</subject>\n\n<metadata>\n{{ $('GetLatestMessage').item.json.headers.from }}\n{{ $('GetLatestMessage').item.json.headers.date }}\n</metadata>\n\n<attachments>\n{{ $('ReceiveEmail_Trigger').item.binary ? true : false }}\n</attachments>\n\n<categories>\n{{ JSON.stringify($('UserLabels').all(), null, 2) }}\n</categories>\n\n<current_category_labels>\n{{ $('ReceiveEmail_Trigger').item.json.labelIds }}\n</current_category_labels>\n\n<message_thread>\n{{ $('ReceiveEmail_Trigger').item.json.textAsHtml }}\n</message_thread>",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=# Email Assessment Agent\n<role>\nYou are an intelligent email analysis system that evaluates incoming emails to determine their characteristics, priority, and required actions.\n</role>\n\n<scope>\nProcess and analyze email content and metadata to classify messages, determine response requirements, assess urgency, and identify attachment needs.\n</scope>\n\n<command>\nFor each email received, perform the following analysis steps:\n\nStep 1: Analyze the email content and metadata to extract key information\nStep 2: Classify the email using provided labels and categories\nStep 3: Determine response requirements and urgency\nStep 4: Check for attachment handling needs\nStep 5: Generate a comprehensive assessment in the specified JSON output format\n</command>\n\n<inputs>\n- message: The full email body text of the most recent message in the thread\n- subject: Email subject line\n- metadata: Sender information, received date, and any system flags\n- attachments: Boolean indicating presence of attachments <attachmentsToUpload guidelines>\n- categories: list of label categories\n- categories_ids: list of associated label category ids\n- message_thread: the full context from the previous messages exchanged in the conversation (including the most recent message)\n</inputs>\n\n<constraints>\n- Must only use provided categories for classification\n- Classifications must be evidence-based from email content\n- Urgency assessment must align with defined criteria\n- Do not infer information not present in the email\n- Each email can have multiple labels\n- Response requirements must follow specified guidelines\n</constraints> \n\n<format>\nReturn a single JSON object with the following structure:\n```json\n{\n  \"metadata\": {\n    \"sender\": string,\n    \"subject\": string,\n    \"receivedDate\": string (ISO 8601)\n  },\n  \"classification\": {\n    \"toReply\": boolean,\n    \"urgent\": boolean,\n    \"dateRelated\": boolean,\n    \"attachmentsToUpload\": boolean,\n    \"requiresFollowUp\": boolean,\n    \"forwardToTeam\": boolean,\n    \"priority\": \"High\" | \"Medium\" | \"Low\",\n    \"label_ids\": string[],\n    \"label_categories\": string[]\n  },\n  \"actions\": {\n    \"notes\": string,\n    \"dueDate\": string,\n    \"uploadAttachments\": boolean,\n    \"createTask\": boolean,\n    \"additionalTasks\": string[]\n  }\n}\n```\n\n\"<categorization rules>\nAll Categorization elements (e.g. toReply, urgent, requiresFollowUp) should be considered independent but related to one another. \n\nTake into account current_category_labels when deciding on labels for an individual email, for example, if the incoming message thread is already labelled as urgent then this message should also be labelled as urgent.\n\nAll emails that fall into the 'financial' category should be marked as financialAttachmentsToUpload: true, so they can be processed further.\n\n<examples>\n1. An email could be highly urgent but no reply is needed - for example a \"\"server down\"\" email\n2. An email that's not urgent but requires a reply - for example, a client requesting a meeting next month\n3. An email that needs team input but isn't urgent - for example, a request for process improvement suggestions\n4. An email that's urgent and requires both reply and team involvement - for example, a client threatening to cancel their contract\n5. An email that requires follow-up but no immediate reply - for example, a quarterly report that needs to be reviewed in detail later\n6. An email that needs to be forwarded to the team but doesn't need a reply - for example, an FYI about a competitor's new product launch\n7. An email that's urgent and needs team forwarding but no reply - for example, a security alert affecting multiple departments\n8. An email that requires follow-up and team input but isn't urgent - for example, a long-term strategic planning proposal\n9. An email that needs a reply but no other action - for example, a simple vendor confirmation request\n</examples>\n</categorization rules>\"\n\"<toReply guidelines>\nResponse Required Criteria:\n- Direct questions or requests\n- Time-sensitive matters\n- Requests for action/feedback\n- Messages requiring approval\n- RSVP requirements\n\nOverview: Messages that require direct communication back to the sender. This category helps identify when an explicit response is needed versus when information can simply be noted.\n\n<examples>\nResponse would be required:\n1. \"\"Please provide your feedback on the Q4 strategy document\"\"\n2. \"\"Can you approve the new vendor contract?\"\"\n3. \"\"Are you available for a client meeting next Tuesday?\"\"\n4. \"\"What's your estimated completion time for the project?\"\"\n5. \"\"Please confirm receipt of the updated specifications\"\"\n\nResponse wouldn't be required:\n1. \"\"FYI - Office will be closed for maintenance this weekend\"\"\n2. \"\"Sharing the latest market research report for your reference\"\"\n3. \"\"Meeting notes from yesterday's team sync attached\"\"\n4. \"\"Monthly analytics report - for your information\"\"\n5. \"\"New employee handbook available on intranet\"\"\n6. Invoice attachments\n7. Invoices that don't need approval or need action for payment \n8. Receipts\n</examples>\n</toReply guidelines>\"\n\"<urgent guidelines>\nUrgency Criteria:\n- Immediate business impact\n- System or security incidents\n- Time-critical deadlines\n- Crisis situations\n- Immediate decision requirements\n- Customer-facing emergencies\n- Keywords: \"\"\"\"URGENT,\"\"\"\" \"\"\"\"EMERGENCY,\"\"\"\" \"\"\"\"CRITICAL,\"\"\"\" \"\"\"\"ASAP\"\"\"\"\n- Government appointments\n\nOverview: Messages requiring immediate attention or quick action, typically within hours rather than days. This categorization helps prioritize time-sensitive matters regardless of reply status.\n\n<examples>\nWould be urgent:\n1. \"\"System outage affecting customer transactions\"\"\n2. \"\"Security breach detected in customer database\"\"\n3. \"\"Key client threatening to terminate contract immediately\"\"\n4. \"\"Legal filing deadline in 3 hours\"\"\n5. \"\"Emergency leadership meeting in 30 minutes\"\"\n6. \"\"Server down\"\" automated email\n\nWouldn't be urgent:\n1. \"\"Planning next quarter's team building activities\"\"\n2. \"\"Updates to brand guidelines effective next month\"\"\n3. \"\"Requesting feedback on new office layout\"\"\n4. \"\"Monthly performance metrics review\"\"\n5. \"\"New training courses available next quarter\"\"\n</examples>\n</urgent guidelines>\"\n\"<dateRelated guidelines>\nDate-Related Criteria:\n- Expiry: Items with end dates or termination points\n- Calendar: Time-specific events or deadlines\n- Subscription: Recurring or renewal-based items\n- Deadline: Due dates for actions or deliverables\n- Timeline: Sequential or phased date requirements\n\nOverview: Date-related classifications help track and manage time-sensitive items, renewals, and scheduling requirements across different timeframes.\n\n<examples>\nWould be Date-Related:\n1. \"\"SSL Certificate expires in 30 days\"\" (Expiry)\n2. \"\"Board meeting scheduled for next Tuesday\"\" (Calendar)\n3. \"\"Monthly software subscription renewal due\"\" (Subscription)\n4. \"\"Project deliverables deadline: Friday\"\" (Deadline)\n5. \"\"Product launch timeline - 3 phase rollout\"\" (Timeline)\n6. \"\"License renewal required by month end\"\" (Expiry)\n7. \"\"Team training sessions every Wednesday\"\" (Calendar)\n8. \"\"Quarterly review cycle starting next month\"\" (Timeline)\n\nWouldn't be Date-Related:\n1. \"\"General company announcement\"\"\n2. \"\"Updated employee handbook available\"\"\n3. \"\"New office location announcement\"\"\n4. \"\"Team member introduction email\"\"\n5. \"\"General policy updates\"\"\n6. \"\"Parking space assignments\"\"\n7. \"\"Department restructuring notice\"\"\n8. \"\"New system features announcement\"\"\n</examples>\n</dateRelated guidelines>\"\n\n<attachmentsToUpload guidelines>\nEvery attachment that is received via email should be uploaded. \n\ne.g. Financial Attachments Criteria:\n- Invoices: Bills, receipts, and payment records\n- Expenses: Reimbursement claims and cost documentation\n- Statements: Bank, credit card, and financial reports\n- Tax: Tax-related documents and filings\n- Payroll: Salary slips and compensation records\n- Budgets: Financial planning and forecast documents\n- Contracts: Financial agreements and terms\n- Investments: Portfolio statements and trading records\n- Contains 'finance', 'accounting', 'billing', 'statement' or 'accounts' in the from email\n\nOverview: Financial attachment classifications ensure proper documentation, tracking, and organization of monetary transactions and financial records for accounting and compliance purposes. ALL financial emails should be assessed as attachmentsToUpload: true, with or without attachments. This is so they can go on for further processing. \n\n<examples>\nEmails that could contain Financial Attachments:\n1. \"\"March Expenses - London Client Visit\"\"\n2. \"\"Invoice for December Services\"\"\n3. \"\"Your 2024 Tax Return Documents\"\"\n4. \"\"December 2024 Payroll Report\"\"\n5. \"\"Your Q1 2025 Portfolio Statement\"\"\n6. \"\"Payment Confirmation #RT78900\"\"\n</examples>\n\n</AttachmentsToUpload guidelines>\"\n\"<requiresFollowUp guidelines>\nFollow-Up Criteria:\n- Multi-step processes\n- Future deadlines\n- Progress monitoring requirements\n- Ongoing projects\n- Delegated tasks requiring verification\n- Items needing future review\n- Do not follow up to any marketing emails\n\nOverview: Messages that need future action or monitoring beyond initial handling. This helps track items requiring ongoing attention or future checkpoints.\n\n<examples>\nWould require follow-up:\n1. \"\"Track project milestones through Q3\"\"\n2. \"\"Monitor competitor pricing changes monthly\"\"\n3. \"\"Schedule quarterly review with client\"\"\n4. \"\"Implement new process by end of quarter\"\"\n5. \"\"Check back on software deployment progress weekly\"\"\n\nWouldn't require follow-up:\n1. \"\"Today's lunch menu in cafeteria\"\"\n2. \"\"Office closed tomorrow for holiday\"\"\n3. \"\"Weekly newsletter\"\"\n4. \"\"Completed project files attached\"\"\n5. \"\"Updated contact information for team directory\"\"\n6. Marketing emails or product updates\n</examples>\n</requiresFollowUp guidelines>\"\n\"<forwardToTeam guidelines>\nTeam Forwarding Criteria:\n- Cross-departmental impact\n- Shared responsibilities\n- Knowledge sharing requirements\n- Team-wide announcements\n- Collaborative projects\n- Information relevant to multiple roles\n\nOverview: Messages that need to be shared with other team members or departments. This identifies communication that requires broader distribution beyond the initial recipient.\n\n<examples>\nWould need team forwarding:\n1. \"\"New compliance requirements affecting all departments\"\"\n2. \"\"Customer feedback requiring cross-team collaboration\"\"\n3. \"\"Industry updates relevant to product development\"\"\n4. \"\"Training opportunity open to all team members\"\"\n5. \"\"Process changes affecting multiple departments\"\"\n\nWouldn't need team forwarding:\n1. \"\"Your individual performance review scheduled\"\"\n2. \"\"Personal time-off approval\"\"\n3. \"\"Your new laptop is ready for pickup\"\"\n4. \"\"Your parking permit has been renewed\"\"\n5. \"\"Your password reset confirmation\"\"\n</examples>\n</forwardToTeam guidelines>\"\n\"<priority guidelines>\nPriority Criteria:\n- High: Urgent matters requiring immediate attention\n- Medium: Important but not time-critical issues\n- Low: Routine or informational messages\n\nOverview: The priority classification helps determine the urgency and importance of messages, guiding response times and resource allocation decisions.\n\n<examples>\nWould be High Priority:\n1. \"\"System down affecting customer transactions - immediate action required\"\"\n2. \"\"Security breach detected in main database - urgent investigation needed\"\"\n3. \"\"CEO requesting emergency board meeting materials within hour\"\"\n4. \"\"Major client escalation - immediate response required\"\"\n5. \"\"Legal deadline for regulatory filing in 2 hours\"\"\n\nWouldn't be High Priority:\n1. \"\"Team lunch planned for next week\"\"\n2. \"\"New office supplies catalog available\"\"\n3. \"\"Monthly newsletter published\"\"\n4. \"\"Updated parking policy for next quarter\"\"\n5. \"\"Optional training sessions announced\"\"\n\nWould be Medium Priority:\n1. \"\"Client meeting preparation needed for next week\"\"\n2. \"\"Project proposal review needed by Friday\"\"\n3. \"\"Department budget updates due next month\"\"\n4. \"\"Team hiring requirements for next quarter\"\"\n5. \"\"Regular maintenance schedule review\"\"\n\nWouldn't be Medium Priority:\n1. \"\"FYI: Office closed for holiday next month\"\"\n2. \"\"General company announcement\"\"\n3. \"\"Employee survey - respond when convenient\"\"\n4. \"\"New cafeteria menu posted\"\"\n5. \"\"Optional team building event next month\"\"\n\nWould be Low Priority:\n1. \"\"FYI - New employee handbook available\"\"\n2. \"\"Monthly department newsletter\"\"\n3. \"\"Optional training opportunities\"\"\n4. \"\"Office events calendar updated\"\"\n5. \"\"General IT maintenance notification\"\"\n\nWouldn't be Low Priority:\n1. \"\"Server outage affecting customers\"\"\n2. \"\"Urgent client escalation\"\"\n3. \"\"Immediate security patch required\"\"\n4. \"\"Emergency evacuation notice\"\"\n5. \"\"Critical deadline in 1 hour\"\"\n</examples>\n</priority guidelines>\""
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        -768,
+        1008
+      ],
+      "id": "b7747664-1c80-49a1-ae31-67bf59c76e43",
+      "name": "AssessEmail",
+      "retryOnFail": true,
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "6d9939fa-0ddd-4b1b-b607-e4a521384c71",
+                    "leftValue": "={{ $json.output.classification.toReply }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "RESPONSE"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "cb7c3b89-b19b-4e32-987b-7f462bc221cd",
+                    "leftValue": "={{ $json.output.classification.attachmentsToUpload }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "ATTACHMENTS"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "ca803c7f-8884-4e40-b818-03c46d545ada",
+                    "leftValue": "={{ $json.output.classification.urgent }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "ALERT"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "bd20b778-b44f-4927-a337-f6cfae3ef590",
+                    "leftValue": "=",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "LABEL"
+            }
+          ]
+        },
+        "options": {
+          "allMatchingOutputs": true
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -416,
+        992
+      ],
+      "id": "73d7f7a7-a475-4868-9735-1745d24d261f",
+      "name": "ActionRoutes",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "output.classification.label_ids",
+              "renameField": true,
+              "outputFieldName": "label_ids"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "cabf7cee-301a-4e72-b0c1-eca59ebaa132",
+      "name": "AggregateLabelIds",
+      "type": "n8n-nodes-base.aggregate",
+      "position": [
+        -128,
+        1440
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Subject: {{ $('ReceiveEmail_Trigger').item.json.subject }}\nMessage: {{ $('ReceiveEmail_Trigger').item.json.textAsHtml }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=<Guidelines for Email Responses>\n<Tone & Style>\n*Use business casual tone, warm but professional - e.g. 'thanks for the info!'\n*Be concise and direct\n*Mirror the formality level of the incoming email\n*Match the language of the incoming email\n*Match the urgency level of the incoming email\n\n<Structure>\n*Start with \"Hi [Name]\"\n*For multi-point emails, use short paragraphs (2-3 sentences each)\n*End with \"Cheers,\\nSimon\"\n\n<Response Types>\nFor yes/no questions, provide two alternatives:\n[AFFIRMATIVE RESPONSE]\nOR - - - - - - -\n[NEGATIVE RESPONSE]\n\n<Content Guidelines>\n*Never invent information\n*Use \"[PLACEHOLDER]\" for missing information\n*For SALES inquiries: Include next steps (call booking, demo scheduling)\n*For COMPLAINTS: Express understanding, provide clear resolution steps\n*Plain text only, no formatting\n*Keep sentences concise but informative\n\n<Key Response Principles>\n*Address the specific issue/request\n*Provide clear next steps\n*Request any missing information\n*Set clear expectations\n*Maintain professional and warm tone\n*Include follow-up plan when needed"
+            }
+          ]
+        }
+      },
+      "id": "28cb1233-7b57-46fc-b967-0c17f7a8b6cf",
+      "name": "CreateReplyText",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "position": [
+        -144,
+        480
+      ],
+      "typeVersion": 1.4
+    },
+    {
+      "parameters": {
+        "name": "={{ \n$('AssessEmail').item.json.output.metadata.receivedDate.toDateTime().format('yyyy.MM.dd')\n+ \" - \"\n+ $('ReceiveEmail_Trigger').item.json.from.value[0].address \n+ ' - ' \n+ $('GetBinaryDataALL').item.json.fileName.split(\".\")[0] \n+ \".\" + $('GetBinaryDataALL').item.json.fileName.split(\".\")[1]}}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "https://drive.google.com/drive/u/0/folders/1dNl56Nrck8L9gckJWcdV9Wf0iGQz7-GO",
+          "mode": "url"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        768,
+        1008
+      ],
+      "id": "49469070-7974-4c40-a725-4a1eea597bec",
+      "name": "PostAttachments_Output",
+      "notesInFlow": true,
+      "retryOnFail": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "0y8WKhAVB7SLUFcI",
+          "name": "Google Drive zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "={{ $('ReceiveEmail_Trigger').item.json.headers.subject }}",
+        "emailType": "html",
+        "message": "={{ $('CreateReplyText').item.json.text.replace(/\\n/g, \"<br />\\n\") }}",
+        "options": {
+          "threadId": "={{ $('ReceiveEmail_Trigger').item.json.threadId }}",
+          "sendTo": "={{ $('ReceiveEmail_Trigger').item.json.headers.from }}"
+        }
+      },
+      "id": "b6f19c59-3961-44bb-aa21-4d3329905347",
+      "name": "CreateDraft_Output",
+      "type": "n8n-nodes-base.gmail",
+      "position": [
+        208,
+        480
+      ],
+      "typeVersion": 2.1,
+      "webhookId": "ef19ee4d-876e-4cfb-a284-227e013d57dc",
+      "retryOnFail": true,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "cUMqdo7XCF6noXLb",
+          "name": "Gmail-info@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('ReceiveEmail_Trigger').item.json.id }}",
+        "labelIds": "={{ $('AggregateLabelIds').item.json.label_ids[0] }}"
+      },
+      "id": "d5fa2b18-4782-4787-a4a2-33f1e17e8c5e",
+      "name": "AssignLabel_Output",
+      "type": "n8n-nodes-base.gmail",
+      "position": [
+        64,
+        1360
+      ],
+      "typeVersion": 2.1,
+      "webhookId": "ef966666-b459-4cba-8858-3952dfd9e16d",
+      "notesInFlow": true,
+      "retryOnFail": true,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "cUMqdo7XCF6noXLb",
+          "name": "Gmail-info@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('ReceiveEmail_Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_5866165066330470187"
+        ]
+      },
+      "id": "b394ad03-ca59-4141-b885-41b04a67e0c6",
+      "name": "AssignDigested_Output",
+      "type": "n8n-nodes-base.gmail",
+      "position": [
+        64,
+        1520
+      ],
+      "typeVersion": 2.1,
+      "webhookId": "ef966666-b459-4cba-8858-3952dfd9e16d",
+      "notesInFlow": true,
+      "retryOnFail": true,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "cUMqdo7XCF6noXLb",
+          "name": "Gmail-info@z-agency.cz"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "text": "=URGENT EMAIL\n\nFrom: {{ $('ReceiveEmail_Trigger').item.json.from.value[0].name }}\nSubject: {{ $('ReceiveEmail_Trigger').item.json.subject }}\nSummary: {{ $('AssessEmail').item.json.output.classification.summaryOfEmail }}\nLink: https://mail.google.com/mail/u/0/#inbox/{{ $('ReceiveEmail_Trigger').item.json.id }};",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -144,
+        1088
+      ],
+      "id": "2fa3de68-13ea-4c59-9039-416de83e7d25",
+      "name": "UrgentAlert_Output",
+      "webhookId": "5b7d79c3-64e2-4bf2-8622-9cd7ac221425",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ \n$('AssessEmail').item.json.output.metadata.receivedDate.toDateTime().format('yyyy.MM.dd')\n+ \" - \"\n+ $('ReceiveEmail_Trigger').item.json.from.value[0].address \n+ ' - ' \n+ $('GetBinaryDataALL').item.json.fileName.split(\".\")[0] \n+ \".\" + $('GetBinaryDataALL').item.json.fileName.split(\".\")[1]}}",
+        "returnAll": true,
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "https://drive.google.com/drive/u/0/folders/1dNl56Nrck8L9gckJWcdV9Wf0iGQz7-GO",
+            "mode": "url"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        288,
+        832
+      ],
+      "id": "add77675-9925-48bd-ba9d-e42554e7a930",
+      "name": "GetAttachments",
+      "notesInFlow": true,
+      "retryOnFail": true,
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "0y8WKhAVB7SLUFcI",
+          "name": "Google Drive zmidloch@z-agency.cz"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "44944380-9ba0-4cf7-abbb-aba711fb0b9a",
+              "leftValue": "={{ $('GetAttachments').item.json }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        448,
+        832
+      ],
+      "id": "818ff52a-6d05-4704-9715-377999f50424",
+      "name": "IfExists"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch",
+        "useDataOfInput": 2
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        608,
+        1008
+      ],
+      "id": "66a5b90a-853e-4f9b-959f-018cd1aa9aa0",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "content": "## Uploads Attachments\nIf they don't already exist, only",
+        "height": 453,
+        "width": 663,
+        "color": 7
+      },
+      "id": "3bb19db8-e1cf-4ba6-a44b-d088ea294c1a",
+      "name": "Sticky Note26",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        272,
+        720
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Features\n- Context-aware responses\n- Automatic labelling & sorting\n- Drafting responses in your voice\n- Urgent notifications\n- Spend 90% less time on email",
+        "height": 180,
+        "width": 360,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -2400,
+        688
+      ],
+      "id": "22bab345-cb44-4917-9e21-c1cb5da2eb05",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -2128,
+        1008
+      ],
+      "id": "8034793f-190a-4c99-bfe8-bde9244882eb",
+      "name": "OneAtATime"
+    },
+    {
+      "parameters": {
+        "resource": "label",
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -1360,
+        1008
+      ],
+      "id": "0c43bfda-63d8-4515-a73c-c327cc1274a8",
+      "name": "GetLabels",
+      "webhookId": "f3241a25-93a8-4629-945d-2e35869e43e3",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "qNSaYVEcaWOf5U3k",
+          "name": "Gmail zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "2ae0a220-4198-41ed-9ee5-78ae7b774ef6",
+              "leftValue": "={{ $('GetLabels').item.json.type }}",
+              "rightValue": "user",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1216,
+        1008
+      ],
+      "id": "fbaa183b-8488-45a5-91f8-f1e093b553da",
+      "name": "IfUserCreated"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "id"
+            },
+            {
+              "fieldToAggregate": "name"
+            }
+          ]
+        },
+        "options": {
+          "mergeLists": true
+        }
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -1008,
+        1008
+      ],
+      "id": "07954861-fb99-4570-bfee-3dcaabddf2ff",
+      "name": "UserLabels"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5.2",
+          "mode": "list",
+          "cachedResultName": "gpt-5.2"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -864,
+        1280
+      ],
+      "id": "7f4028d3-4584-4b91-85df-1d7e8a14f96e",
+      "name": "Claude-3.5-Sonnet",
+      "credentials": {
+        "openAiApi": {
+          "id": "OyAnM4ykrgDRQ4Jq",
+          "name": "OpenAI API Zetko"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Pull labels\nDynamically i.e. update in gmail directly\n",
+        "height": 306,
+        "width": 509,
+        "color": 7
+      },
+      "id": "060b4542-cfec-434a-b676-40deb13ed44a",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1376,
+        880
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Optional: Only pull specific file types\nSwitch out this node for the GetBinaryDataALL if you want to specify file types\n",
+        "height": 320,
+        "width": 340,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "669f240e-754b-4b78-9178-adb9414ed6f1",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "functionCode": "let results = [];\nconst emailData = $('ReceiveEmail_Trigger').item;\n\nif (emailData.binary) {\n    for (const key of Object.keys(emailData.binary)) {\n        const attachment = emailData.binary[key];\n        const mimeType = attachment.mimeType;\n        \n        // Check if attachment is PDF or XML\n        if (mimeType === 'application/jpg' || mimeType === 'application/pdf' ||  mimeType === 'text/xml') {\n            results.push({\n                json: {\n                    fileName: attachment.fileName,\n                    mimeType: attachment.mimeType\n                },\n                binary: {\n                    data: attachment\n                }\n            });\n        }\n    }\n}\n\nreturn results;"
+      },
+      "id": "9ce24446-8dcb-4462-afee-faf63d3057e9",
+      "name": "GetBinaryData",
+      "type": "n8n-nodes-base.function",
+      "position": [
+        64,
+        144
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "functionCode": "let results = [];\nconst emailData = $('ReceiveEmail_Trigger').item;\nif (emailData.binary) {\n  for (const key of Object.keys(emailData.binary)) {\n    const attachment = emailData.binary[key];\n    results.push({\n      json: {\n        fileName: attachment.fileName,\n        mimeType: attachment.mimeType\n      },\n      binary: {\n        data: attachment\n      }\n    });\n  }\n}\n\nreturn results;"
+      },
+      "id": "54f29cad-b72f-4499-920e-922b44aaa887",
+      "name": "GetBinaryDataALL",
+      "type": "n8n-nodes-base.function",
+      "position": [
+        112,
+        832
+      ],
+      "typeVersion": 1
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-22T22:47:56.209Z",
+      "createdAt": "2025-12-22T22:47:56.209Z",
+      "role": "workflow:owner",
+      "workflowId": "A9jmBNVZolcIP2Sq",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2025-12-22T22:47:26.752Z",
+      "createdAt": "2025-12-22T22:47:26.752Z",
+      "id": "TXxnmBf4zpPPVtoG",
+      "name": "IN PROGRESS"
+    },
+    {
+      "updatedAt": "2025-12-22T22:47:26.726Z",
+      "createdAt": "2025-12-22T22:47:26.726Z",
+      "id": "98rdzjHLvbT6u8C1",
+      "name": "AI agent"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-12-22T23:53:43.983Z",
+  "versionId": "bc70f9ae-35ae-49dd-8e46-f30998a8c333"
+}
