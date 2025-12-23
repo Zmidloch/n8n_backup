@@ -1,0 +1,725 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Openrouter": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "PromptAgent_Tool",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat_Trigger": {
+      "main": [
+        [
+          {
+            "node": "SetQuery",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PromptAgent_Tool": {
+      "main": [
+        [
+          {
+            "node": "ReturnForm",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BufferMemory": {
+      "ai_memory": [
+        [
+          {
+            "node": "PromptAgent_Tool",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SetQuery": {
+      "main": [
+        [
+          {
+            "node": "PromptAgent_Tool",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WebSearch_Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "PromptAgent_Tool",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Form_Trigger": {
+      "main": [
+        [
+          {
+            "node": "PromptRequest",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SetQueryForm": {
+      "main": [
+        [
+          {
+            "node": "ClarificationLLM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "ClarificationLLM",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ClarificationLLM": {
+      "main": [
+        [
+          {
+            "node": "Questions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Questions": {
+      "main": [
+        [
+          {
+            "node": "EachQuestion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AskQuestions": {
+      "main": [
+        [
+          {
+            "node": "EachQuestion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EachQuestion": {
+      "main": [
+        [
+          {
+            "node": "SetQuery1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "AskQuestions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PromptRequest": {
+      "main": [
+        [
+          {
+            "node": "SetQueryForm",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SetQuery1": {
+      "main": [
+        [
+          {
+            "node": "PromptAgent_Tool",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GPT-5.1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "ClarificationLLM",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-09T23:04:05.673Z",
+  "id": "hALE3EUCCoftPx5Y",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "🤖 Agent - Tool 🛠️ Prompt Engineer v1",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=<Role> You are an expert Prompt Generator specialized in creating structured prompts for AI tools agents as well as editing existing prompts to enhance them. Your purpose is to transform user requirements into comprehensive, well-formatted agent prompts using the CRITICS framework (Constraints, Role, Inputs, Tools, Instructions, Conclusions, Solutions). </Role>\n\n<Constraints> \n*Always maintain the CRITICS structure in your output \n*When writing the Constraints, make them relevant to the prompt - don't just copy these Constraints - these are your constraints for answering.\n*Use XML tags for each section with proper formatting *Include bullet points for list items \n*Format tool parameters clearly with indentation \n*Ask clarifying questions when critical information is missing \n*Never assume tool capabilities without confirmation \n*Ensure all prompts include error handling strategies in the Solutions section \n*Today's date is {{ $now }}. Always include this expression in the prompt constraints\n*If asked to edit an existing prompt, make sure to keep the essence of it's existing content in the enhanced prompt, do not embellish it to do things the user has not asked for or change the things it already asks for (changing wording to make it clearer is fine, but same functionality) \n*If no tools are needed, skip the Tools section\n</Constraints> \n\n<Inputs> \n  *Natural language request from a user detailing (might be missing some details):\n  *Description of the desired agent (type, purpose, functionality) \n  *Specific tools the agent should access (optional) \n  *Particular constraints or requirements (optional) \n  *Expected input/output formats (optional) \n  *Error handling preferences (optional) \n  *Example use cases (optional) \n</Inputs> \n\n<Tools> \n1. WebSearch_Tool - Searches the web using perplexity with parameters: \n   *searchTerm (required - query that you are searching the web for) \n</Tools>\n\n<Instructions> \nFor generating a complete CRITICS prompt: \n  1. Analyze the user's request to identify the agent type and purpose \n  2. Determine appropriate tools and parameters based on the agent's function \n  3. Determine if those tools can be connected to inside N8N using the tools database.\n  4. If N8N does not have a suitable tool, use the WebSearch_Tool to search for a relevant API to suit the desired tool functionality. The searchTerm passed should help understand and create the HTTP request node, including the endpoints and parameters passed \n  5. Create a comprehensive set of constraints appropriate for the agent type \n  6. Develop clear, step-by-step instructions for common workflows \n  7. Define expected inputs and outputs \n  8. Include robust error handling strategies \n  9. Format the entire prompt with proper XML tags and bullet points\n\nFor handling incomplete requests:\n  1. Identify missing critical information\n  2. Ask specific clarifying questions\n  3. Suggest reasonable defaults based on the agent type\n  4. Incorporate user feedback into the final prompt\n\nFor refining existing prompts:\n  1. Analyze the current prompt structure\n  2. Identify areas for improvement\n  3. Suggest enhancements while maintaining the CRITICS format\n  4. Preserve the original intent and functionality\n</Instructions>\n\n<Conclusions (expected outputs)> \n  *Complete CRITICS-formatted prompts with all required sections \n  *XML-tagged structure with proper formatting *Clear documentation of tools and parameters \n  *Comprehensive workflows for common tasks *Robust error handling strategies \n  *Clarifying questions when critical information is missing \n  *Don't include any supporting information, just output the prompt\n  *Switch C and R around so that role comes first in the output\n  *Output in clear markdown (bullet points etc for list items) as it'll be converted\n</Conclusions (expected outputs)> \n\n<Solutions (Error handling)> \n*If the agent type is unclear, ask for clarification with examples. Do not return a prompt.\n*If tools are not specified, suggest appropriate tools based on agent function \n*If workflows are ambiguous, provide structured examples and ask for confirmation \n*If constraints are missing, suggest industry-standard limitations for the agent type \n*If the user provides an existing prompt, analyze it and suggest improvements while maintaining its core functionality \n*If the request is too broad, break it down into manageable components and address each separately \n*Use the WebSearch_Tool to find any relevant apis for a http request tool\n</Solutions>\n\n<Input query>\n{{ $json.query }}\n</Input query>",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        528,
+        400
+      ],
+      "id": "ca82ac14-4f9b-470c-97a2-e1336f014621",
+      "name": "PromptAgent_Tool"
+    },
+    {
+      "parameters": {
+        "content": "## Writing a clear prompt\n**C**onstraints/Rules - **[rules I need to abide by]** - Defines boundaries, limitations, and guidelines for operation\n**R**ole/Scope - **[what am I an expert of?]** - Establishes the agent's purpose, identity, and overall objective\n**I**nputs - **[tell me what inputs I’m receiving]** - Specifies expected data formats & parameters (inc. examples)\n**T**ools - **[what resources can I access? e.g. web search]** - Outlines available resources, functions, and capabilities\n**I**nstructions/Tasklist - **[order of tasks]** - Provides step-by-step procedures with examples\n**C**onclusions/Outputs - **[what output am I providing (examples)]** - Defines expected response formats and deliverables\n**S**olutions/Error handling - **[what do I do if I don't get the information I expected to?]** - Addresses troubleshooting and exception management",
+        "height": 220,
+        "width": 1020,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        480,
+        64
+      ],
+      "id": "a471b73f-d7d5-48d5-85ce-dff9f1047c69",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5.1",
+          "mode": "list",
+          "cachedResultName": "gpt-5.1"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        528,
+        560
+      ],
+      "id": "bb4e21ad-e841-476f-8111-bba777ee8d89",
+      "name": "Openrouter",
+      "credentials": {
+        "openAiApi": {
+          "id": "OyAnM4ykrgDRQ4Jq",
+          "name": "OpenAI_API_Zetko"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## 0. Chat Trigger\nIf you know what you're doing with prompting - no clarifying questions",
+        "height": 280,
+        "width": 460,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "3ed2f67b-a832-425e-b500-0a8dd81b5b2c",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## 2. PromptAgent\nCreates a CRITICS prompt and returns the data",
+        "height": 380,
+        "width": 600,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        480,
+        304
+      ],
+      "id": "3d4bfa3f-904d-45a7-8c4f-76e4f9649750",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## 3. Pre-processing\nRefine + supplement query where appropriate",
+        "height": 260,
+        "width": 440,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        608,
+        704
+      ],
+      "id": "3fa30902-7536-4603-8a22-817487c1cc1d",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        64,
+        128
+      ],
+      "id": "94f9af5f-99b2-45ff-8176-8195a4f36d98",
+      "name": "Chat_Trigger",
+      "webhookId": "0fcb8409-3646-42a4-92e9-5fb0266374fc"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "=customKey",
+        "sessionKey": "{{ $('Chat_Trigger').item.json.sessionId }}",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        640,
+        800
+      ],
+      "id": "ed201ffa-5a3e-43c0-9e12-30ae25a74fb6",
+      "name": "BufferMemory"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d5a0d042-ba31-4706-b789-681999936339",
+              "name": "query",
+              "value": "={{ $json.chatInput }}",
+              "type": "string"
+            },
+            {
+              "id": "b2673cda-8f15-47f2-9614-53c57c7832d1",
+              "name": "sessionId",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        288,
+        128
+      ],
+      "id": "a4c3ab19-0eef-4152-b19d-789d1978283e",
+      "name": "SetQuery"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Use this tool to search the internet",
+        "method": "POST",
+        "url": "https://api.perplexity.ai/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"model\": \"sonar-pro\",\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"Be precise and concise.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"{searchTerm}\"\n    }\n  ],\n  \"max_tokens\": 123,\n  \"temperature\": 0.2,\n  \"top_p\": 0.9,\n  \"stream\": false\n}",
+        "placeholderDefinitions": {
+          "values": [
+            {
+              "name": "searchTerm",
+              "description": "The search query to find appropriate api's to connect to if no tool is available",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        784,
+        800
+      ],
+      "id": "a4902acc-ffc7-40a9-ad32-b8235b78460d",
+      "name": "WebSearch_Tool",
+      "notesInFlow": true,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "CUDchy7BKzXokol4",
+          "name": "Header Auth Perplexity"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "formTitle": "PromptAgent",
+        "formDescription": "=PromptAgent is designed to return a complete prompt, with role, constraints, inputs, tools (if appropriate), instructions, conclusions (outputs), and solutions (error handling scenarios) by following the CRITICS prompt structure.\n\nTo use, provide a short summary with the goal of your prompt. Note, more detailed inputs will give you better results.",
+        "formFields": {
+          "values": [
+            {
+              "fieldType": "html"
+            }
+          ]
+        },
+        "options": {
+          "buttonLabel": "Next",
+          "path": "promptAgent_tool",
+          "ignoreBots": true
+        }
+      },
+      "id": "59fc9599-bd0a-4064-90af-68f90b2ea39e",
+      "name": "Form_Trigger",
+      "type": "n8n-nodes-base.formTrigger",
+      "position": [
+        -1104,
+        464
+      ],
+      "webhookId": "026629c8-7644-493c-b830-d9c72eea307d",
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "df28b12e-7c20-4ff5-b5b8-dc773aa14d4b",
+              "name": "query",
+              "type": "string",
+              "value": "=Goal: {{ $json['What is the goal of your prompt?'] }}\nAccess to tools? {{ $json[\"Does it need access to any tools?\"] }}\nSuggested tools: {{ $json[\"If yes, what tools should the agent have access to? \"] }}\nExpected inputs:{{ $json[\"What are the expected inputs?\"] }}\nExpected outputs:{{ $json[\"What are the expected outputs?\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a3802b0c-e308-44aa-8ca4-bc2402da1dd6",
+      "name": "SetQueryForm",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -736,
+        464
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "## 0. Form Trigger\nAnswer a series of questions about your workflow\n\n",
+        "height": 452,
+        "width": 569,
+        "color": 7
+      },
+      "id": "39fb6dd8-2a9a-4cdb-a9c8-c5de5b3320e3",
+      "name": "Sticky Note19",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1136,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"questions\": {\n      \"type\": \"array\",\n      \"description\": \"Follow up questions to clarify the prompt goals, max of 3.\",\n      \"items\": {\n          \"type\": \"string\"\n      }\n    }\n  }\n}"
+      },
+      "id": "67200a90-0831-464d-8997-1c12b4546375",
+      "name": "Structured Output Parser",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "position": [
+        -256,
+        624
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "content": "## 1. Ask Clarifying Questions\nHelps to build out the required level of detail for the workflow plan. ",
+        "height": 460,
+        "width": 1000,
+        "color": 7
+      },
+      "id": "e1c6d541-7927-4560-8b03-40ee32c81376",
+      "name": "Sticky Note7",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -544,
+        304
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=<instructions>\nGiven the following query from the user, ask follow-up questions to clarify the goals, inputs, outputs, and use of tools for the required prompt. Only ask about themes that are not made clear in the input.\n</instructions>\n\n<constraints>\n*Don't ask clarifying questions that you already have the answers to. These are just for getting additional detail.\n*Ask up to 3 questions, no need to ask 3 if the original query is clear.\n*If you feel like 3 questions is not enough given the inputs, combine multiple questions into a single question.\n</constraints>\n\n<outputs>\n*Return a maximum of 3 questions, but feel free to return less if the original query is clear.\n</outputs>\n\n<input_query>\n{{ $json.query }}\n</input_query>",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "type": "HumanMessagePromptTemplate",
+              "message": "=You are an expert LLM and AI Agent prompt creator. \n\nToday is {{ $now.toLocaleString() }}. \n\nFollow these instructions when responding:\n  - The user is a highly experienced analyst, no need to simplify it, be as detailed as possible and make sure your response is correct.\n  - Be highly organized.\n  - Suggest solutions that I didn't think about.\n  - Be proactive and anticipate my needs.\n  - Treat me as an expert in all subject matters.\n  - Mistakes erode my trust, so be accurate and thorough.\n  - Provide detailed explanations, I'm comfortable with lots of detail.\n  - Value good arguments over authorities, the source is irrelevant.\n  - Consider new technologies and contrarian ideas, not just the conventional wisdom.\n  - You may use high levels of speculation or prediction, just flag it for me."
+            }
+          ]
+        }
+      },
+      "id": "26d65720-48f2-4270-8f5f-da3eabc7fa66",
+      "name": "ClarificationLLM",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "position": [
+        -464,
+        464
+      ],
+      "typeVersion": 1.5
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "output.questions",
+        "options": {}
+      },
+      "id": "bcdb0fd9-aac2-44c4-82a4-9c021e92aec5",
+      "name": "Questions",
+      "type": "n8n-nodes-base.splitOut",
+      "position": [
+        -144,
+        464
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "={{ $json[\"output.questions\"] }}",
+              "fieldType": "textarea",
+              "placeholder": "=",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "formTitle": "PromptAgent",
+          "formDescription": "=<img\n  src=\"https://i.ibb.co/9mJ68JnW/Screenshot-609.png\"\n  width=\"100%\"\n  style=\"border:1px solid #ccc\"\n/>\n<p style=\"text-align:left\">\nAnswer the below clarification questions (up to 3 questions) in as much details as possible to improve the quality of the output prompt.\n</p>\n<hr style=\"display:block;margin-top:16px;margin-bottom:0\" />\n<p style=\"text-align:left\">\nOriginal query:\n</p>\n<p style=\"text-align:left; font-size:12px;\">\n<i>\"{{ $('PromptRequest').item.json['What is the goal of your prompt?'] }}\"</i>\n</p>\n<hr style=\"display:block;margin-top:16px;margin-bottom:0\" />",
+          "buttonLabel": "Answer"
+        }
+      },
+      "id": "87b72a78-9b9c-4af7-8957-7873ea3741fc",
+      "name": "AskQuestions",
+      "type": "n8n-nodes-base.form",
+      "position": [
+        224,
+        544
+      ],
+      "webhookId": "d3375ba6-0008-4fcb-96bc-110374de2603",
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "bd47b9cb-f15a-43f2-a396-39dc277508f4",
+      "name": "EachQuestion",
+      "type": "n8n-nodes-base.splitInBatches",
+      "position": [
+        48,
+        464
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "14b77741-c3c3-4bd2-be6e-37bd09fcea2b",
+              "name": "query",
+              "type": "string",
+              "value": "=Initial query: {{ $('SetQueryForm').item.json.query }}\nFollow-up Questions and Answers:\n{{\n$input.all()\n  .map(item => {\n    const q = Object.keys(item.json)[0];\n    const a = item.json[q];\n    return `question: ${q}\\nanswer: ${a}`;\n  })\n  .join('\\n')\n}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c5ad6fba-1d03-418f-8b1f-fc1e713ba53a",
+      "name": "SetQuery1",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        224,
+        384
+      ],
+      "executeOnce": true,
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "What is the goal of your prompt?",
+              "fieldType": "textarea",
+              "placeholder": "Be descriptive... what are the inputs, the outputs, the tools or software you see it using or traps to avoid",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Does it need access to any tools?",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Not sure"
+                  },
+                  {
+                    "option": "Yes"
+                  },
+                  {
+                    "option": "No"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "If yes, what tools should the agent have access to? ",
+              "placeholder": "For example.. web search, Google Calendar"
+            },
+            {
+              "fieldLabel": "What are the expected inputs?",
+              "placeholder": "For example, a natural language chat query"
+            },
+            {
+              "fieldLabel": "What are the expected outputs?",
+              "placeholder": "For example, updates an Airtable table or schedules a meeting"
+            }
+          ]
+        },
+        "options": {
+          "formTitle": "PromptAgent"
+        }
+      },
+      "id": "15639bbd-646f-4be4-8ecc-1557aaee55dc",
+      "name": "PromptRequest",
+      "type": "n8n-nodes-base.form",
+      "position": [
+        -928,
+        464
+      ],
+      "webhookId": "46142c14-3692-40f6-80e5-f3d976e95191",
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "completionTitle": "Your Prompt is ready 🥳",
+        "completionMessage": "={{ $('PromptAgent_Tool').item.json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        880,
+        400
+      ],
+      "id": "45aed8d6-a1af-46db-bc6f-e39d8bb9b074",
+      "name": "ReturnForm",
+      "webhookId": "55edd79f-008a-4c63-a0c2-f862122b879c"
+    },
+    {
+      "parameters": {
+        "content": "**BufferMemory**\n- Turn on for Chat_Trigger",
+        "height": 80,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        608,
+        992
+      ],
+      "id": "4f934ca6-be19-4c45-a8e6-4f23ccc68a55",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5.1",
+          "mode": "list",
+          "cachedResultName": "gpt-5.1"
+        },
+        "options": {}
+      },
+      "id": "95c51b87-f3ec-42c9-b9b2-1b9317d59d8a",
+      "name": "GPT-5.1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -480,
+        624
+      ],
+      "typeVersion": 1.2,
+      "credentials": {
+        "openAiApi": {
+          "id": "OyAnM4ykrgDRQ4Jq",
+          "name": "OpenAI_API_Zetko"
+        }
+      }
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-09T23:04:05.673Z",
+      "createdAt": "2025-12-09T23:04:05.673Z",
+      "role": "workflow:owner",
+      "workflowId": "hALE3EUCCoftPx5Y",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-12-16T15:21:44.288Z",
+  "versionId": "21e6976c-0b3a-41c2-bb36-409b17e637e9"
+}
