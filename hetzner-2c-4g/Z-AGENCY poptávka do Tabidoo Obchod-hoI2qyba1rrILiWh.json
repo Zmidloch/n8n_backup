@@ -1,0 +1,411 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Gmail Trigger - info@z-agency.cz": {
+      "main": [
+        [
+          {
+            "node": "Form Z-AGENCY Poptavka",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Form Z-AGENCY Poptavka": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Tabulka Poptávky",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Tabulka Kontakty",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Tabulka Programy",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Tabulka Lokality",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tabulka Poptávky": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tabulka Kontakty": {
+      "main": [
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tabulka Programy": {
+      "main": [
+        [
+          {
+            "node": "Split Out2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tabulka Lokality": {
+      "main": [
+        [
+          {
+            "node": "Split Out3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Post Poptávky",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-16T15:27:54.498Z",
+  "id": "hoI2qyba1rrILiWh",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Z-AGENCY poptávka do Tabidoo Obchod",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        32,
+        0
+      ],
+      "id": "cf56e2e6-c249-4ecd-a2f4-8097c8682c5b",
+      "name": "Gmail Trigger - info@z-agency.cz",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "cUMqdo7XCF6noXLb",
+          "name": "Gmail-info@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "3b0057c0-d2d0-47b2-a6c6-835d35adadfc",
+              "leftValue": "={{ $json.subject }}",
+              "rightValue": "Nová poptávka z webu Z-AGENCY",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        288,
+        0
+      ],
+      "id": "600f6e5e-ec61-4dea-80b3-a13a7679cf9d",
+      "name": "Form Z-AGENCY Poptavka"
+    },
+    {
+      "parameters": {
+        "content": "## Gmail Trigger - Poptávka Z-AGENCY\n** Je z poptávkového formuláře? Když ano, tak pokračuj!",
+        "height": 448,
+        "width": 496
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -80,
+        -160
+      ],
+      "typeVersion": 1,
+      "id": "84e28ce2-b6ca-443a-9ac6-3ebb1a9c53f1",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Vezmeme HTML obsah (ujisti se, že máš v předchozím kroku zapnuté Simplify Output)\nconst html = $input.item.json.html || \"\";\n\n// Pomocná funkce, která najde v HTML tabulce řádek s daným klíčem\nfunction extractHtmlValue(htmlString, keyName) {\n  // Tento Regex hledá: <td>KLÍČ</td> následované jakýmikoliv mezerami/odřádkováním a pak <td>HODNOTA</td>\n  // Vysvětlení regexu:\n  // <td>${keyName}<\\/td>  -> najde buňku s názvem (např. Jméno)\n  // \\s* -> ignoruje mezery a odřádkování mezi buňkami\n  // <td>([\\s\\S]*?)<\\/td>  -> zachytí obsah druhé buňky (hodnotu)\n  const regex = new RegExp(`<td>${keyName}<\\\\/td>\\\\s*<td>([\\\\s\\\\S]*?)<\\\\/td>`, 'i');\n  \n  const match = htmlString.match(regex);\n  \n  if (match && match[1]) {\n    // Odstraníme případné HTML značky uvnitř hodnoty (např. <br>, <a>) a ořežeme mezery\n    return match[1].replace(/<[^>]*>?/gm, '').trim();\n  }\n  return null;\n}\n\nreturn {\n  json: {\n    requestFormId: extractHtmlValue(html, \"RequestFormID\"),\n    datum: extractHtmlValue(html, \"Form inserted\"),\n    jmeno: extractHtmlValue(html, \"Jméno\"),\n    email: extractHtmlValue(html, \"E-mail\"),\n    telefon: extractHtmlValue(html, \"Telefon\"),\n    pocet_osob: extractHtmlValue(html, \"Počet osob\"),\n    lokalita: extractHtmlValue(html, \"Upřednostňované lokality\"),\n    akce: extractHtmlValue(html, \"Mám zájem o akci\"),\n    poznamka: extractHtmlValue(html, \"Poznámka\"),\n    checkbox: extractHtmlValue(html, \"CheckBox\")\n  }\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        544,
+        -16
+      ],
+      "id": "9a5fb5ed-c854-49d9-986b-1e92fedf62bb",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "content": "## Format Dat do seznamu\n",
+        "height": 448,
+        "width": 336
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        448,
+        -160
+      ],
+      "typeVersion": 1,
+      "id": "f47d35c3-b99a-4774-9f2e-a2ec13ed8cc3",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "url": "https://app.tabidoo.cloud/api/v2/apps/obchod-1b4y/tables/poptavky/data",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        896,
+        -368
+      ],
+      "id": "b978e417-ffc5-44e2-97f0-a4063441457c",
+      "name": "Tabulka Poptávky",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "iShv4anYkU0xcul0",
+          "name": "Header Auth Tabidoo Obchod"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://app.tabidoo.cloud/api/v2/apps/obchod-1b4y/tables/kontakty/data",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        896,
+        -144
+      ],
+      "id": "15370e76-24fc-4435-a033-8aa63c47ebfc",
+      "name": "Tabulka Kontakty",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "iShv4anYkU0xcul0",
+          "name": "Header Auth Tabidoo Obchod"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://app.tabidoo.cloud/api/v2/apps/obchod-1b4y/tables/programy/data",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        896,
+        80
+      ],
+      "id": "92f560a4-69e7-4886-b93d-a48747cea159",
+      "name": "Tabulka Programy",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "iShv4anYkU0xcul0",
+          "name": "Header Auth Tabidoo Obchod"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://app.tabidoo.cloud/api/v2/apps/obchod-1b4y/tables/lokality/data",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        880,
+        304
+      ],
+      "id": "562c4d9a-7faf-4ffa-82f0-ac917eddd5b2",
+      "name": "Tabulka Lokality",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "iShv4anYkU0xcul0",
+          "name": "Header Auth Tabidoo Obchod"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        -368
+      ],
+      "id": "d496ac47-0bd1-4361-b9ae-0b50bfe5feea",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        -144
+      ],
+      "id": "44c57fc6-d3f2-478e-a186-6de35172f56a",
+      "name": "Split Out1"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "={{ $json.data[0].fields.nazev }}",
+        "include": "=",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        80
+      ],
+      "id": "78c9209d-a967-48c6-a5a9-16c25cf1089a",
+      "name": "Split Out2"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "data[0].fields.nazev",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        304
+      ],
+      "id": "89100836-179f-4a01-a47a-7a82d0a1bd38",
+      "name": "Split Out3"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app.tabidoo.cloud/api/v2/apps/obchod-1b4y/tables/poptavky/data",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"fields\": {\n    \"stav\": \"Nová\",\n    \"pocetOsob\": {{ parseInt($('Code in JavaScript').item.json.pocet_osob) || 0 }},\n    \"jmeno\": \"{{ $('Code in JavaScript').item.json.jmeno }}\",\n    \"email\": \"{{ $('Code in JavaScript').item.json.email }}\",\n    \"telefon\": \"{{ $('Code in JavaScript').item.json.telefon }}\",\n    \"lokalita\": \"{{ $('Code in JavaScript').item.json.lokalita }}\",\n    \"akce\": \"{{ $('Code in JavaScript').item.json.akce }}\",\n    \"poznamka\": \"{{ $('Code in JavaScript').item.json.poznamka }}\",\n    \"checkbox\": \"{{ $('Code in JavaScript').item.json.checkbox }}\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1344,
+        -368
+      ],
+      "id": "41936b36-9472-46cc-9b77-cc1453f2fad7",
+      "name": "Post Poptávky",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "iShv4anYkU0xcul0",
+          "name": "Header Auth Tabidoo Obchod"
+        }
+      }
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-16T15:27:54.498Z",
+      "createdAt": "2025-12-16T15:27:54.498Z",
+      "role": "workflow:owner",
+      "workflowId": "hoI2qyba1rrILiWh",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-12-16T17:06:58.007Z",
+  "versionId": "9336bde5-b1e6-46dc-ade1-3eaa61858340"
+}
