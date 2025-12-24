@@ -1,7 +1,7 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2025-12-23T23:18:37.856Z",
+    "updatedAt": "2025-12-24T09:48:17.506Z",
     "createdAt": "2025-12-23T23:18:34.428Z",
     "versionId": "87da60c8-0e51-470a-859b-664c947e11cd",
     "workflowId": "l2iGkcI0ZJVK9RUS",
@@ -7015,7 +7015,7 @@
   "staticData": {
     "node:Schedule Trigger": {
       "recurrenceRules": [
-        0
+        6
       ]
     }
   },
