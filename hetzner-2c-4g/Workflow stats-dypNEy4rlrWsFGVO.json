@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2025-12-23T20:29:54.959Z",
-    "createdAt": "2025-12-23T20:29:51.154Z",
-    "versionId": "d0badf6b-d00f-47bc-9b90-fff6a0fa98bd",
+    "updatedAt": "2025-12-23T23:51:06.277Z",
+    "createdAt": "2025-12-23T23:51:02.899Z",
+    "versionId": "23ae27c7-792d-4e01-a711-2dfc2437134c",
     "workflowId": "dypNEy4rlrWsFGVO",
     "nodes": [
       {
@@ -492,7 +492,7 @@
                 "id": "08064cc3-f34e-4f05-9975-726378fe63ae",
                 "name": "instance_url",
                 "type": "string",
-                "value": "={{$env[\"N8N_PROTOCOL\"]}}://{{$env[\"N8N_HOST\"]}}"
+                "value": "=https://n8n-zagency-u62265.vm.elestio.app/"
               },
               {
                 "id": "1fdb9640-b628-4e13-9e4c-fef19cae7611",
@@ -959,10 +959,10 @@
       }
     },
     "authors": "Jiri Zmidloch",
-    "name": "Version d0badf6b",
+    "name": "Version 23ae27c7",
     "description": ""
   },
-  "activeVersionId": "d0badf6b-d00f-47bc-9b90-fff6a0fa98bd",
+  "activeVersionId": "23ae27c7-792d-4e01-a711-2dfc2437134c",
   "connections": {
     "Sort-tags": {
       "main": [
@@ -1754,7 +1754,7 @@
               "id": "08064cc3-f34e-4f05-9975-726378fe63ae",
               "name": "instance_url",
               "type": "string",
-              "value": "={{$env[\"N8N_PROTOCOL\"]}}://{{$env[\"N8N_HOST\"]}}"
+              "value": "=https://n8n-zagency-u62265.vm.elestio.app/"
             },
             {
               "id": "1fdb9640-b628-4e13-9e4c-fef19cae7611",
@@ -1938,6 +1938,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 2,
-  "updatedAt": "2025-12-23T20:29:51.151Z",
-  "versionId": "d0badf6b-d00f-47bc-9b90-fff6a0fa98bd"
+  "updatedAt": "2025-12-23T23:51:02.895Z",
+  "versionId": "23ae27c7-792d-4e01-a711-2dfc2437134c"
 }
