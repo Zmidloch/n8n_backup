@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2025-12-23T23:51:06.277Z",
-    "createdAt": "2025-12-23T23:51:02.899Z",
-    "versionId": "23ae27c7-792d-4e01-a711-2dfc2437134c",
+    "updatedAt": "2025-12-24T17:09:26.153Z",
+    "createdAt": "2025-12-24T17:09:15.715Z",
+    "versionId": "93b3704a-6ff9-4d81-803f-1e7abbf5d0eb",
     "workflowId": "dypNEy4rlrWsFGVO",
     "nodes": [
       {
@@ -134,7 +134,7 @@
       },
       {
         "parameters": {
-          "html": "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<?xml-stylesheet type=\"text/xsl\" href=\"{{ $env.WEBHOOK_URL }}webhook/73a91e4d-143d-4168-9efb-6c56f2258aec/dashboard.xsl\"?>\n\n{{ $json.data }}"
+          "html": "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<?xml-stylesheet type=\"text/xsl\" href=\"https://n8n-zagency-u62265.vm.elestio.app/webhook/73a91e4d-143d-4168-9efb-6c56f2258aec/dashboard.xsl\"?>\n\n{{ $json.data }}"
         },
         "id": "b8c578f2-cb1d-4e4c-b1c4-6d23d143a611",
         "name": "Create HTML",
@@ -460,20 +460,6 @@
       },
       {
         "parameters": {
-          "workflowId": "={{ $workflow.id }}",
-          "options": {}
-        },
-        "id": "49345ec0-95f6-4210-845a-c23fcf71d18d",
-        "name": "Prepare JSON object",
-        "type": "n8n-nodes-base.executeWorkflow",
-        "position": [
-          656,
-          1616
-        ],
-        "typeVersion": 1
-      },
-      {
-        "parameters": {
           "assignments": {
             "assignments": [
               {
@@ -659,6 +645,46 @@
           1600
         ],
         "typeVersion": 1
+      },
+      {
+        "parameters": {
+          "workflowId": "={{ $workflow.id }}",
+          "options": {}
+        },
+        "id": "49345ec0-95f6-4210-845a-c23fcf71d18d",
+        "name": "Prepare JSON object-old",
+        "type": "n8n-nodes-base.executeWorkflow",
+        "position": [
+          80,
+          1888
+        ],
+        "typeVersion": 1
+      },
+      {
+        "parameters": {
+          "workflowId": {
+            "__rl": true,
+            "value": "={{ $workflow.id }}",
+            "mode": "id"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {},
+            "matchingColumns": [],
+            "schema": [],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": true
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1.3,
+        "position": [
+          688,
+          1616
+        ],
+        "id": "774849e0-cf31-403c-9ccf-16d57e424a27",
+        "name": "Prepare JSON object"
       }
     ],
     "connections": {
@@ -891,17 +917,6 @@
           ]
         ]
       },
-      "Prepare JSON object": {
-        "main": [
-          [
-            {
-              "node": "Convert to XML",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
       "Request xsl template": {
         "main": [
           [
@@ -956,13 +971,29 @@
             }
           ]
         ]
+      },
+      "Prepare JSON object-old": {
+        "main": [
+          []
+        ]
+      },
+      "Prepare JSON object": {
+        "main": [
+          [
+            {
+              "node": "Convert to XML",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
       }
     },
     "authors": "Jiri Zmidloch",
-    "name": "Version 23ae27c7",
+    "name": "Version 93b3704a",
     "description": ""
   },
-  "activeVersionId": "23ae27c7-792d-4e01-a711-2dfc2437134c",
+  "activeVersionId": "93b3704a-6ff9-4d81-803f-1e7abbf5d0eb",
   "connections": {
     "Sort-tags": {
       "main": [
@@ -1193,17 +1224,6 @@
         ]
       ]
     },
-    "Prepare JSON object": {
-      "main": [
-        [
-          {
-            "node": "Convert to XML",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Request xsl template": {
       "main": [
         [
@@ -1253,6 +1273,22 @@
         [
           {
             "node": "n8n-get-workflows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare JSON object-old": {
+      "main": [
+        []
+      ]
+    },
+    "Prepare JSON object": {
+      "main": [
+        [
+          {
+            "node": "Convert to XML",
             "type": "main",
             "index": 0
           }
@@ -1396,7 +1432,7 @@
     },
     {
       "parameters": {
-        "html": "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<?xml-stylesheet type=\"text/xsl\" href=\"{{ $env.WEBHOOK_URL }}webhook/73a91e4d-143d-4168-9efb-6c56f2258aec/dashboard.xsl\"?>\n\n{{ $json.data }}"
+        "html": "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<?xml-stylesheet type=\"text/xsl\" href=\"https://n8n-zagency-u62265.vm.elestio.app/webhook/73a91e4d-143d-4168-9efb-6c56f2258aec/dashboard.xsl\"?>\n\n{{ $json.data }}"
       },
       "id": "b8c578f2-cb1d-4e4c-b1c4-6d23d143a611",
       "name": "Create HTML",
@@ -1722,20 +1758,6 @@
     },
     {
       "parameters": {
-        "workflowId": "={{ $workflow.id }}",
-        "options": {}
-      },
-      "id": "49345ec0-95f6-4210-845a-c23fcf71d18d",
-      "name": "Prepare JSON object",
-      "type": "n8n-nodes-base.executeWorkflow",
-      "position": [
-        656,
-        1616
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
         "assignments": {
           "assignments": [
             {
@@ -1921,10 +1943,53 @@
         1600
       ],
       "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "workflowId": "={{ $workflow.id }}",
+        "options": {}
+      },
+      "id": "49345ec0-95f6-4210-845a-c23fcf71d18d",
+      "name": "Prepare JSON object-old",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "position": [
+        80,
+        1888
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "={{ $workflow.id }}",
+          "mode": "id"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        688,
+        1616
+      ],
+      "id": "774849e0-cf31-403c-9ccf-16d57e424a27",
+      "name": "Prepare JSON object"
     }
   ],
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "errorWorkflow": "zVAjJgKV17IWzFP7",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
   },
   "shared": [
     {
@@ -1938,6 +2003,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 2,
-  "updatedAt": "2025-12-23T23:51:02.895Z",
-  "versionId": "23ae27c7-792d-4e01-a711-2dfc2437134c"
+  "updatedAt": "2025-12-24T17:09:15.712Z",
+  "versionId": "93b3704a-6ff9-4d81-803f-1e7abbf5d0eb"
 }
