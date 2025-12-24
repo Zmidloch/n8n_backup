@@ -412,7 +412,6 @@
     }
   },
   "createdAt": "2025-12-23T23:41:44.069Z",
-  "description": null,
   "id": "OXNakBJzGhrktbUH",
   "isArchived": false,
   "meta": {
@@ -1652,7 +1651,6 @@
       "alwaysOutputData": true
     }
   ],
-  "pinData": null,
   "settings": null,
   "shared": [
     {
@@ -1660,61 +1658,12 @@
       "createdAt": "2025-12-23T23:41:44.069Z",
       "role": "workflow:owner",
       "workflowId": "OXNakBJzGhrktbUH",
-      "projectId": "XqkS7oX8lMj4YbIK",
-      "project": {
-        "updatedAt": "2025-11-25T08:54:16.920Z",
-        "createdAt": "2025-11-25T08:47:58.481Z",
-        "id": "XqkS7oX8lMj4YbIK",
-        "name": "Jiri Zmidloch <zmidloch@z-agency.cz>",
-        "type": "personal",
-        "icon": null,
-        "description": null,
-        "projectRelations": [
-          {
-            "updatedAt": "2025-11-25T08:47:58.481Z",
-            "createdAt": "2025-11-25T08:47:58.481Z",
-            "userId": "3e6bd2a1-cb85-4098-9460-1568d24c70f2",
-            "projectId": "XqkS7oX8lMj4YbIK",
-            "user": {
-              "updatedAt": "2025-12-23T23:15:36.028Z",
-              "createdAt": "2025-11-25T08:47:57.034Z",
-              "id": "3e6bd2a1-cb85-4098-9460-1568d24c70f2",
-              "email": "zmidloch@z-agency.cz",
-              "firstName": "Jiri",
-              "lastName": "Zmidloch",
-              "personalizationAnswers": {
-                "version": "v4",
-                "personalization_survey_submitted_at": "2025-11-25T08:50:28.520Z",
-                "personalization_survey_n8n_version": "1.120.4",
-                "companySize": "<20",
-                "companyType": "digital-agency",
-                "role": "business-owner",
-                "reportedSource": "youtube"
-              },
-              "settings": {
-                "userActivated": true,
-                "easyAIWorkflowOnboarded": true,
-                "firstSuccessfulWorkflowId": "S4eLCZ1pQQZsruy0",
-                "userActivatedAt": 1766531735990,
-                "npsSurvey": {
-                  "responded": true,
-                  "lastShownAt": 1764796188287
-                }
-              },
-              "disabled": false,
-              "mfaEnabled": false,
-              "lastActiveAt": "2025-12-23",
-              "isPending": false
-            }
-          }
-        ]
-      }
+      "projectId": "XqkS7oX8lMj4YbIK"
     }
   ],
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
   "updatedAt": "2025-12-23T23:41:44.069Z",
-  "versionCounter": 1,
   "versionId": "97a11658-b727-4f57-9e1e-37c1d0c769cd"
 }
