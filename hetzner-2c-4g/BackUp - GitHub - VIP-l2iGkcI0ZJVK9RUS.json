@@ -3497,17 +3497,7 @@
     },
     "authors": "Jiri Zmidloch",
     "name": "Version 87da60c8",
-    "description": "",
-    "workflowPublishHistory": [
-      {
-        "createdAt": "2025-12-23T23:18:37.850Z",
-        "id": 55,
-        "workflowId": "l2iGkcI0ZJVK9RUS",
-        "versionId": "87da60c8-0e51-470a-859b-664c947e11cd",
-        "event": "activated",
-        "userId": "3e6bd2a1-cb85-4098-9460-1568d24c70f2"
-      }
-    ]
+    "description": ""
   },
   "activeVersionId": "87da60c8-0e51-470a-859b-664c947e11cd",
   "connections": {
@@ -4523,7 +4513,6 @@
     }
   },
   "createdAt": "2025-12-18T22:41:31.062Z",
-  "description": null,
   "id": "l2iGkcI0ZJVK9RUS",
   "isArchived": false,
   "meta": {
@@ -7008,7 +6997,6 @@
       "name": "Split Commits Path"
     }
   ],
-  "pinData": {},
   "settings": {
     "executionOrder": "v1",
     "errorWorkflow": "zVAjJgKV17IWzFP7",
@@ -7021,65 +7009,18 @@
       "createdAt": "2025-12-18T22:41:31.062Z",
       "role": "workflow:owner",
       "workflowId": "l2iGkcI0ZJVK9RUS",
-      "projectId": "XqkS7oX8lMj4YbIK",
-      "project": {
-        "updatedAt": "2025-11-25T08:54:16.920Z",
-        "createdAt": "2025-11-25T08:47:58.481Z",
-        "id": "XqkS7oX8lMj4YbIK",
-        "name": "Jiri Zmidloch <zmidloch@z-agency.cz>",
-        "type": "personal",
-        "icon": null,
-        "description": null,
-        "projectRelations": [
-          {
-            "updatedAt": "2025-11-25T08:47:58.481Z",
-            "createdAt": "2025-11-25T08:47:58.481Z",
-            "userId": "3e6bd2a1-cb85-4098-9460-1568d24c70f2",
-            "projectId": "XqkS7oX8lMj4YbIK",
-            "user": {
-              "updatedAt": "2025-12-23T23:15:36.028Z",
-              "createdAt": "2025-11-25T08:47:57.034Z",
-              "id": "3e6bd2a1-cb85-4098-9460-1568d24c70f2",
-              "email": "zmidloch@z-agency.cz",
-              "firstName": "Jiri",
-              "lastName": "Zmidloch",
-              "personalizationAnswers": {
-                "version": "v4",
-                "personalization_survey_submitted_at": "2025-11-25T08:50:28.520Z",
-                "personalization_survey_n8n_version": "1.120.4",
-                "companySize": "<20",
-                "companyType": "digital-agency",
-                "role": "business-owner",
-                "reportedSource": "youtube"
-              },
-              "settings": {
-                "userActivated": true,
-                "easyAIWorkflowOnboarded": true,
-                "firstSuccessfulWorkflowId": "S4eLCZ1pQQZsruy0",
-                "userActivatedAt": 1766531735990,
-                "npsSurvey": {
-                  "responded": true,
-                  "lastShownAt": 1764796188287
-                }
-              },
-              "disabled": false,
-              "mfaEnabled": false,
-              "lastActiveAt": "2025-12-23",
-              "isPending": false
-            }
-          }
-        ]
-      }
+      "projectId": "XqkS7oX8lMj4YbIK"
     }
   ],
   "staticData": {
     "node:Schedule Trigger": {
-      "recurrenceRules": []
+      "recurrenceRules": [
+        0
+      ]
     }
   },
   "tags": [],
   "triggerCount": 3,
   "updatedAt": "2025-12-23T23:18:34.424Z",
-  "versionCounter": 32,
   "versionId": "87da60c8-0e51-470a-859b-664c947e11cd"
 }
