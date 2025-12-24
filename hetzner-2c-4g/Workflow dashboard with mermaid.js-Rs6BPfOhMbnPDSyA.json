@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2025-12-23T20:30:47.739Z",
-    "createdAt": "2025-12-23T20:30:41.277Z",
-    "versionId": "e9bc0e83-7819-41e1-81a3-0971c236d3d8",
+    "updatedAt": "2025-12-23T23:47:28.554Z",
+    "createdAt": "2025-12-23T23:45:48.854Z",
+    "versionId": "6921a520-650b-4102-b08b-f8649bc9abe2",
     "workflowId": "Rs6BPfOhMbnPDSyA",
     "nodes": [
       {
@@ -217,7 +217,7 @@
                 "id": "07da029f-3de3-45cb-8d33-798fa1a3d529",
                 "name": "instance_url",
                 "type": "string",
-                "value": "={{$env[\"N8N_PROTOCOL\"]}}://{{$env[\"N8N_HOST\"]}}"
+                "value": "=https://n8n-zagency-u62265.vm.elestio.app/"
               },
               {
                 "id": "f7dae7f3-e51b-4da3-ac8b-d198747679d2",
@@ -229,7 +229,7 @@
                 "id": "185e41a7-8b61-46e3-99ea-0b0a66982080",
                 "name": "webhook_path",
                 "type": "string",
-                "value": "={{$env[\"N8N_ENDPOINT_WEBHOOK\"] || \"webhook\"}}"
+                "value": "=webhook"
               }
             ]
           },
@@ -400,10 +400,10 @@
       }
     },
     "authors": "Jiri Zmidloch",
-    "name": "Version e9bc0e83",
+    "name": "Version 6921a520",
     "description": ""
   },
-  "activeVersionId": "e9bc0e83-7819-41e1-81a3-0971c236d3d8",
+  "activeVersionId": "6921a520-650b-4102-b08b-f8649bc9abe2",
   "connections": {
     "Code": {
       "main": [
@@ -731,7 +731,7 @@
               "id": "07da029f-3de3-45cb-8d33-798fa1a3d529",
               "name": "instance_url",
               "type": "string",
-              "value": "={{$env[\"N8N_PROTOCOL\"]}}://{{$env[\"N8N_HOST\"]}}"
+              "value": "=https://n8n-zagency-u62265.vm.elestio.app/"
             },
             {
               "id": "f7dae7f3-e51b-4da3-ac8b-d198747679d2",
@@ -743,7 +743,7 @@
               "id": "185e41a7-8b61-46e3-99ea-0b0a66982080",
               "name": "webhook_path",
               "type": "string",
-              "value": "={{$env[\"N8N_ENDPOINT_WEBHOOK\"] || \"webhook\"}}"
+              "value": "=webhook"
             }
           ]
         },
@@ -824,6 +824,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-12-23T20:31:01.191Z",
-  "versionId": "e9bc0e83-7819-41e1-81a3-0971c236d3d8"
+  "updatedAt": "2025-12-23T23:45:48.852Z",
+  "versionId": "6921a520-650b-4102-b08b-f8649bc9abe2"
 }
