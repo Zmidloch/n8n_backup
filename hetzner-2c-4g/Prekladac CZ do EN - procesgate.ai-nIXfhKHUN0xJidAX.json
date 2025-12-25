@@ -1,21 +1,21 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2025-12-22T10:37:02.037Z",
-    "createdAt": "2025-12-22T10:36:48.017Z",
-    "versionId": "ed78fe87-1380-47ee-9d11-2ebfb85ee290",
+    "updatedAt": "2025-12-25T00:17:17.792Z",
+    "createdAt": "2025-12-25T00:17:14.792Z",
+    "versionId": "95e9d118-e776-4a03-8d4a-9982b2dc9c34",
     "workflowId": "nIXfhKHUN0xJidAX",
     "nodes": [
       {
         "parameters": {
           "content": "## Wordpress Webhook - Airtable\nKdyž vznikne na webu nový CZ článek, tak tak se vytvoří záznam v Airtable",
           "height": 416,
-          "width": 1008,
+          "width": 1104,
           "color": 3
         },
         "type": "n8n-nodes-base.stickyNote",
         "position": [
-          336,
+          288,
           -624
         ],
         "typeVersion": 1,
@@ -24,7 +24,7 @@
       },
       {
         "parameters": {
-          "content": "## Trigger for Translation - Status Change\n",
+          "content": "## Trigger for Translation - Status\n",
           "height": 416,
           "width": 464
         },
@@ -221,8 +221,8 @@
         "type": "n8n-nodes-base.airtableTrigger",
         "typeVersion": 1,
         "position": [
-          0,
-          32
+          -64,
+          -96
         ],
         "id": "76f3830b-4b23-449d-a5aa-9922a60c2bd1",
         "name": "Airtable Trigger",
@@ -432,8 +432,8 @@
           "additionalFields": {
             "content": "={{ $json.translated_content }}",
             "slug": "={{ $json.translated_slug }}",
-            "categories": "={{ $('Get Post for Translation').item.json.categories[0] }}",
-            "tags": "={{ $('Get Post for Translation').item.json.tags[0] }}"
+            "categories": "={{ $('Get Post for Translation').item.json.categories }}",
+            "tags": "={{ $('Get Post for Translation').item.json.tags }}"
           }
         },
         "type": "n8n-nodes-base.wordpress",
@@ -634,8 +634,8 @@
         "type": "n8n-nodes-base.airtable",
         "typeVersion": 2.1,
         "position": [
-          2416,
-          64
+          1408,
+          880
         ],
         "id": "f5f4177b-d55c-4a02-87d2-e0af40ba7f2f",
         "name": "Update Status",
@@ -665,12 +665,12 @@
         "parameters": {
           "content": "## Airtable Update\nName and URL of new post",
           "height": 432,
-          "width": 304
+          "width": 432
         },
         "type": "n8n-nodes-base.stickyNote",
         "position": [
-          2304,
-          -144
+          1280,
+          688
         ],
         "typeVersion": 1,
         "id": "60552b16-eb70-457f-ae58-06cbafa1cd46",
@@ -687,12 +687,134 @@
         "type": "n8n-nodes-base.wordpress",
         "typeVersion": 1,
         "position": [
-          2128,
-          64
+          128,
+          896
         ],
         "id": "f7e3fe2a-cf95-4091-b378-6c48af903e0a",
         "name": "Publish",
         "credentials": {
+          "wordpressApi": {
+            "id": "flqY5YMCvIpv5fpx",
+            "name": "Processgate.ai_propojeni"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "url": "https://processgate.ai/wp-json/wp/v2/tags",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "wordpressApi",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "include",
+                "value": "={{ $('Get Post for Translation').item.json.tags && $('Get Post for Translation').item.json.tags.length > 0 ? $('Get Post for Translation').item.json.tags.join(',') : 0 }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          672,
+          896
+        ],
+        "id": "e0beeaff-7f2b-49a2-a2a6-ae64bd27013e",
+        "name": "Get CZ Tags",
+        "alwaysOutputData": true,
+        "credentials": {
+          "wordpressApi": {
+            "id": "flqY5YMCvIpv5fpx",
+            "name": "Processgate.ai_propojeni"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// 1. Získání dat z předchozích uzlů\nlet categoriesData = [];\nlet tagsData = [];\n\ntry {\n  categoriesData = $('Get CZ Categories Details').all().map(item => item.json);\n} catch (e) {}\n\ntry {\n  tagsData = $('Get CZ Tags Details').all().map(item => item.json);\n} catch (e) {}\n\n// 2. Funkce pro vytažení EN ID\nfunction getEnIds(items) {\n  const enIds = [];\n  const flatItems = items.flat(); \n  for (const item of flatItems) {\n    if (item && item.translations && item.translations.en) {\n      enIds.push(item.translations.en);\n    }\n  }\n  return enIds;\n}\n\nconst enCategoryIds = getEnIds(categoriesData);\nconst enTagIds = getEnIds(tagsData);\n\n// 3. Získání ID článků pro propojení\n// ID nového EN článku (z předchozího kroku)\nconst enPostId = $('Set image ID for the post').first().json.id;\n// ID původního CZ článku (musíme sáhnout hlouběji do historie workflow)\nconst czPostId = $('Get Post for Translation').first().json.id;\n\n// 4. Příprava objektu 'translations' pro Polylang\n// Toto řekne WP: \"CS verze je článek X, EN verze je článek Y\"\nconst translationsMap = {\n  'cs': czPostId,\n  'en': enPostId\n};\n\n// 5. Výstup\nreturn {\n  json: {\n    requestBody: {\n      categories: enCategoryIds,\n      tags: enTagIds,\n      translations: translationsMap, // <-- TOTO propojí články\n      status: 'publish'\n    },\n    postId: enPostId\n  }\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          848,
+          896
+        ],
+        "id": "b44cbb3f-bd27-4cc9-96b3-5f2fbb001573",
+        "name": "Map IDs to EN"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "=https://processgate.ai/wp-json/wp/v2/posts/{{ $json.postId }}",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "wordpressApi",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify($json.requestBody) }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          992,
+          896
+        ],
+        "id": "8b104d25-d284-47b6-b3fe-21ad6b80c0c6",
+        "name": "Update Post Taxonomies",
+        "credentials": {
+          "wordpressApi": {
+            "id": "flqY5YMCvIpv5fpx",
+            "name": "Processgate.ai_propojeni"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "content": "## Categories & Tags Update\n",
+          "height": 432,
+          "width": 752
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          336,
+          688
+        ],
+        "typeVersion": 1,
+        "id": "8e730e2a-3ba1-4062-8942-e2c48e82cde5",
+        "name": "Sticky Note9"
+      },
+      {
+        "parameters": {
+          "url": "https://processgate.ai/wp-json/wp/v2/categories",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "wordpressApi",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "include",
+                "value": "={{ $('Get Post for Translation').item.json.categories && $('Get Post for Translation').item.json.categories.length > 0 ? $('Get Post for Translation').item.json.categories.join(',') : 0 }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          448,
+          896
+        ],
+        "id": "72c97dc1-0ebb-47d7-b099-8fb1542f043f",
+        "name": "Get CZ Categories",
+        "alwaysOutputData": true,
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "iShv4anYkU0xcul0",
+            "name": "Header Auth Tabidoo Obchod"
+          },
           "wordpressApi": {
             "id": "flqY5YMCvIpv5fpx",
             "name": "Processgate.ai_propojeni"
@@ -853,7 +975,51 @@
         "main": [
           [
             {
+              "node": "Get CZ Categories",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get CZ Tags": {
+        "main": [
+          [
+            {
+              "node": "Map IDs to EN",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Map IDs to EN": {
+        "main": [
+          [
+            {
+              "node": "Update Post Taxonomies",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Update Post Taxonomies": {
+        "main": [
+          [
+            {
               "node": "Update Status",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get CZ Categories": {
+        "main": [
+          [
+            {
+              "node": "Get CZ Tags",
               "type": "main",
               "index": 0
             }
@@ -862,10 +1028,10 @@
       }
     },
     "authors": "Jiri Zmidloch",
-    "name": "Version ed78fe87",
-    "description": "Spojená workflow"
+    "name": "Version 95e9d118",
+    "description": ""
   },
-  "activeVersionId": "ed78fe87-1380-47ee-9d11-2ebfb85ee290",
+  "activeVersionId": "95e9d118-e776-4a03-8d4a-9982b2dc9c34",
   "connections": {
     "Webhook": {
       "main": [
@@ -1019,7 +1185,51 @@
       "main": [
         [
           {
+            "node": "Get CZ Categories",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get CZ Tags": {
+      "main": [
+        [
+          {
+            "node": "Map IDs to EN",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Map IDs to EN": {
+      "main": [
+        [
+          {
+            "node": "Update Post Taxonomies",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Post Taxonomies": {
+      "main": [
+        [
+          {
             "node": "Update Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get CZ Categories": {
+      "main": [
+        [
+          {
+            "node": "Get CZ Tags",
             "type": "main",
             "index": 0
           }
@@ -1663,8 +1873,8 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2.1,
       "position": [
-        2416,
-        64
+        1408,
+        880
       ],
       "id": "f5f4177b-d55c-4a02-87d2-e0af40ba7f2f",
       "name": "Update Status",
@@ -1694,12 +1904,12 @@
       "parameters": {
         "content": "## Airtable Update\nName and URL of new post",
         "height": 432,
-        "width": 304
+        "width": 432
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2304,
-        -144
+        1280,
+        688
       ],
       "typeVersion": 1,
       "id": "60552b16-eb70-457f-ae58-06cbafa1cd46",
@@ -1716,12 +1926,134 @@
       "type": "n8n-nodes-base.wordpress",
       "typeVersion": 1,
       "position": [
-        2128,
-        64
+        128,
+        896
       ],
       "id": "f7e3fe2a-cf95-4091-b378-6c48af903e0a",
       "name": "Publish",
       "credentials": {
+        "wordpressApi": {
+          "id": "flqY5YMCvIpv5fpx",
+          "name": "Processgate.ai_propojeni"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://processgate.ai/wp-json/wp/v2/tags",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "wordpressApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "include",
+              "value": "={{ $('Get Post for Translation').item.json.tags && $('Get Post for Translation').item.json.tags.length > 0 ? $('Get Post for Translation').item.json.tags.join(',') : 0 }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        672,
+        896
+      ],
+      "id": "e0beeaff-7f2b-49a2-a2a6-ae64bd27013e",
+      "name": "Get CZ Tags",
+      "alwaysOutputData": true,
+      "credentials": {
+        "wordpressApi": {
+          "id": "flqY5YMCvIpv5fpx",
+          "name": "Processgate.ai_propojeni"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1. Získání dat z předchozích uzlů\nlet categoriesData = [];\nlet tagsData = [];\n\ntry {\n  categoriesData = $('Get CZ Categories Details').all().map(item => item.json);\n} catch (e) {}\n\ntry {\n  tagsData = $('Get CZ Tags Details').all().map(item => item.json);\n} catch (e) {}\n\n// 2. Funkce pro vytažení EN ID\nfunction getEnIds(items) {\n  const enIds = [];\n  const flatItems = items.flat(); \n  for (const item of flatItems) {\n    if (item && item.translations && item.translations.en) {\n      enIds.push(item.translations.en);\n    }\n  }\n  return enIds;\n}\n\nconst enCategoryIds = getEnIds(categoriesData);\nconst enTagIds = getEnIds(tagsData);\n\n// 3. Získání ID článků pro propojení\n// ID nového EN článku (z předchozího kroku)\nconst enPostId = $('Set image ID for the post').first().json.id;\n// ID původního CZ článku (musíme sáhnout hlouběji do historie workflow)\nconst czPostId = $('Get Post for Translation').first().json.id;\n\n// 4. Příprava objektu 'translations' pro Polylang\n// Toto řekne WP: \"CS verze je článek X, EN verze je článek Y\"\nconst translationsMap = {\n  'cs': czPostId,\n  'en': enPostId\n};\n\n// 5. Výstup\nreturn {\n  json: {\n    requestBody: {\n      categories: enCategoryIds,\n      tags: enTagIds,\n      translations: translationsMap, // <-- TOTO propojí články\n      status: 'publish'\n    },\n    postId: enPostId\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        848,
+        896
+      ],
+      "id": "b44cbb3f-bd27-4cc9-96b3-5f2fbb001573",
+      "name": "Map IDs to EN"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://processgate.ai/wp-json/wp/v2/posts/{{ $json.postId }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "wordpressApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.requestBody) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        992,
+        896
+      ],
+      "id": "8b104d25-d284-47b6-b3fe-21ad6b80c0c6",
+      "name": "Update Post Taxonomies",
+      "credentials": {
+        "wordpressApi": {
+          "id": "flqY5YMCvIpv5fpx",
+          "name": "Processgate.ai_propojeni"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Categories & Tags Update\n",
+        "height": 432,
+        "width": 752
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        336,
+        688
+      ],
+      "typeVersion": 1,
+      "id": "8e730e2a-3ba1-4062-8942-e2c48e82cde5",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "url": "https://processgate.ai/wp-json/wp/v2/categories",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "wordpressApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "include",
+              "value": "={{ $('Get Post for Translation').item.json.categories && $('Get Post for Translation').item.json.categories.length > 0 ? $('Get Post for Translation').item.json.categories.join(',') : 0 }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        448,
+        896
+      ],
+      "id": "72c97dc1-0ebb-47d7-b099-8fb1542f043f",
+      "name": "Get CZ Categories",
+      "alwaysOutputData": true,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "iShv4anYkU0xcul0",
+          "name": "Header Auth Tabidoo Obchod"
+        },
         "wordpressApi": {
           "id": "flqY5YMCvIpv5fpx",
           "name": "Processgate.ai_propojeni"
@@ -1753,6 +2085,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-12-22T11:25:04.735Z",
-  "versionId": "50f7edc1-bcd0-4936-a468-69b13953b77e"
+  "updatedAt": "2025-12-25T00:17:14.790Z",
+  "versionId": "95e9d118-e776-4a03-8d4a-9982b2dc9c34"
 }
