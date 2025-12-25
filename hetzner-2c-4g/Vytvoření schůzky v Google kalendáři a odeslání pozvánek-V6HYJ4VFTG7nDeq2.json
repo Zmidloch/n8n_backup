@@ -1,0 +1,221 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Spustit workflow": {
+      "main": [
+        [
+          {
+            "node": "Vytvoř událost v kalendáři",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vytvoř událost v kalendáři": {
+      "main": [
+        [
+          {
+            "node": "Zpracuj účastníky",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Zpracuj účastníky": {
+      "main": [
+        [
+          {
+            "node": "Odešli pozvánku emailem",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-25T21:47:15.938Z",
+  "id": "V6HYJ4VFTG7nDeq2",
+  "isArchived": true,
+  "meta": null,
+  "name": "Vytvoření schůzky v Google kalendáři a odeslání pozvánek",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ],
+      "id": "a1b2c3d4-1234-5678-90ab-cdef12345678",
+      "name": "Spustit workflow"
+    },
+    {
+      "parameters": {
+        "content": "## 📅 Vytvoření schůzky\n\nTento node vytvoří událost v Google kalendáři.\n\n**Potřebné nastavení:**\n- Připojit Google Calendar credentials\n- Nastavit název schůzky\n- Datum a čas začátku/konce\n- Seznam účastníků (email adresy oddělené čárkami)\n- Popis schůzky",
+        "height": 340,
+        "width": 380
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        220,
+        80
+      ],
+      "id": "b2c3d4e5-2345-6789-01bc-def123456789",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "calendar": "primary",
+        "start": "={{ $json.startDate }}",
+        "end": "={{ $json.endDate }}",
+        "summary": "={{ $json.meetingTitle }}",
+        "description": "={{ $json.meetingDescription }}",
+        "attendees": "={{ $json.attendees }}",
+        "options": {
+          "sendUpdates": "all"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 2,
+      "position": [
+        460,
+        300
+      ],
+      "id": "c3d4e5f6-3456-7890-12cd-ef1234567890",
+      "name": "Vytvoř událost v kalendáři",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "google-calendar-auth-id",
+          "name": "Google Calendar Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## ✉️ Příprava emailových pozvánek\n\nTento node rozdělí seznam účastníků a připraví data pro jednotlivé emaily.\n\n**Co se děje:**\n- Rozdělí účastníky na jednotlivé emailové adresy\n- Připraví informace o schůzce\n- Vytvoří personalizované zprávy",
+        "height": 320,
+        "width": 380
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        660,
+        80
+      ],
+      "id": "d4e5f6g7-4567-8901-23de-f12345678901",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Získání dat z předchozího kroku\nconst calendarData = $input.first().json;\nconst attendees = calendarData.attendees || $json.attendees;\n\n// Rozdělení účastníků\nconst attendeesList = attendees.split(',').map(email => email.trim());\n\n// Vytvoření výstupních dat pro každého účastníka\nconst outputData = attendeesList.map(email => ({\n  attendeeEmail: email,\n  meetingTitle: calendarData.summary || $json.meetingTitle,\n  meetingDescription: calendarData.description || $json.meetingDescription,\n  startDate: calendarData.start?.dateTime || $json.startDate,\n  endDate: calendarData.end?.dateTime || $json.endDate,\n  meetingLocation: calendarData.location || $json.meetingLocation || 'Online',\n  calendarLink: calendarData.htmlLink,\n  organizerEmail: calendarData.creator?.email || 'vas-email@example.com'\n}));\n\nreturn outputData;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        680,
+        300
+      ],
+      "id": "e5f6g7h8-5678-9012-34ef-123456789012",
+      "name": "Zpracuj účastníky"
+    },
+    {
+      "parameters": {
+        "content": "## 📧 Odeslání pozvánek\n\nTento node odešle emailovou pozvánku každému účastníkovi.\n\n**Potřebné nastavení:**\n- Připojit Gmail credentials\n- Email se automaticky přizpůsobí každému účastníkovi\n- Obsahuje všechny důležité informace o schůzce\n- Odkaz na kalendář\n\n**Poznámka:** Google Calendar již automaticky posílá pozvánky, tento krok slouží pro vlastní personalizované emaily.",
+        "height": 420,
+        "width": 380
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        880,
+        40
+      ],
+      "id": "f6g7h8i9-6789-0123-45fg-234567890123",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.attendeeEmail }}",
+        "subject": "=Pozvánka: {{ $json.meetingTitle }}",
+        "emailType": "html",
+        "message": "=<html>\n<head>\n<style>\nbody { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }\n.container { max-width: 600px; margin: 0 auto; padding: 20px; }\n.header { background-color: #4285f4; color: white; padding: 20px; text-align: center; border-radius: 5px 5px 0 0; }\n.content { background-color: #f9f9f9; padding: 20px; border: 1px solid #ddd; }\n.detail { margin: 10px 0; padding: 10px; background-color: white; border-left: 4px solid #4285f4; }\n.button { display: inline-block; padding: 12px 24px; background-color: #4285f4; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; }\n.footer { text-align: center; padding: 20px; color: #666; font-size: 12px; }\n</style>\n</head>\n<body>\n<div class=\"container\">\n  <div class=\"header\">\n    <h1>📅 Pozvánka na schůzku</h1>\n  </div>\n  <div class=\"content\">\n    <p>Dobrý den,</p>\n    <p>byli jste pozváni na následující schůzku:</p>\n    \n    <div class=\"detail\">\n      <strong>📋 Název:</strong> {{ $json.meetingTitle }}\n    </div>\n    \n    <div class=\"detail\">\n      <strong>📅 Datum a čas začátku:</strong> {{ $json.startDate }}\n    </div>\n    \n    <div class=\"detail\">\n      <strong>⏰ Datum a čas konce:</strong> {{ $json.endDate }}\n    </div>\n    \n    <div class=\"detail\">\n      <strong>📍 Místo:</strong> {{ $json.meetingLocation }}\n    </div>\n    \n    <div class=\"detail\">\n      <strong>📝 Popis:</strong><br>\n      {{ $json.meetingDescription }}\n    </div>\n    \n    <div class=\"detail\">\n      <strong>👤 Organizátor:</strong> {{ $json.organizerEmail }}\n    </div>\n    \n    <div style=\"text-align: center;\">\n      <a href=\"{{ $json.calendarLink }}\" class=\"button\">Zobrazit v Google kalendáři</a>\n    </div>\n    \n    <p>Těšíme se na vaši účast!</p>\n  </div>\n  <div class=\"footer\">\n    <p>Tato pozvánka byla odeslána automaticky.</p>\n  </div>\n</div>\n</body>\n</html>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        900,
+        300
+      ],
+      "id": "g7h8i9j0-7890-1234-56gh-345678901234",
+      "name": "Odešli pozvánku emailem",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "gmail-auth-id",
+          "name": "Gmail Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## 🚀 Spuštění workflow\n\n**Jak použít:**\n1. Klikněte na \"Execute Workflow\"\n2. V \"Manual Trigger\" zadejte:\n   - meetingTitle: \"Název schůzky\"\n   - startDate: \"2024-01-15T10:00:00\"\n   - endDate: \"2024-01-15T11:00:00\"\n   - attendees: \"email1@example.com, email2@example.com\"\n   - meetingDescription: \"Popis schůzky\"\n   - meetingLocation: \"Místnost 101\" (volitelné)\n\n**Příklad JSON:**\n```json\n{\n  \"meetingTitle\": \"Týmová schůzka\",\n  \"startDate\": \"2024-02-01T14:00:00+01:00\",\n  \"endDate\": \"2024-02-01T15:00:00+01:00\",\n  \"attendees\": \"jan.novak@example.com, petra.svobodova@example.com\",\n  \"meetingDescription\": \"Projednání Q1 cílů a aktuálního stavu projektů\",\n  \"meetingLocation\": \"Online - Google Meet\"\n}\n```",
+        "height": 560,
+        "width": 380
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -20,
+        40
+      ],
+      "id": "h8i9j0k1-8901-2345-67hi-456789012345",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "## ✅ Hotovo!\n\nWorkflow úspěšně:\n- Vytvořil událost v Google kalendáři\n- Odeslal personalizované pozvánky všem účastníkům\n\n**Další možnosti rozšíření:**\n- Přidat Webhook trigger pro automatické spouštění\n- Propojit s formulářem (Google Forms, Typeform)\n- Přidat připomínky před schůzkou\n- Uložit informace do databáze\n- Přidat SMS notifikace",
+        "height": 360,
+        "width": 380
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        80
+      ],
+      "id": "i9j0k1l2-9012-3456-78ij-567890123456",
+      "name": "Sticky Note5"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveDataErrorExecution": "all",
+    "errorWorkflow": "",
+    "timezone": "Europe/Prague",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-25T21:47:15.938Z",
+      "createdAt": "2025-12-25T21:47:15.938Z",
+      "role": "workflow:owner",
+      "workflowId": "V6HYJ4VFTG7nDeq2",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-12-25T22:10:05.156Z",
+  "versionId": "4f7b8caf-038e-4e8a-9586-7a58a937afe4"
+}
