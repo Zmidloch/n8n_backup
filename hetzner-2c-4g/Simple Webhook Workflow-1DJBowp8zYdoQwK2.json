@@ -1,0 +1,96 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-25T21:07:11.822Z",
+  "id": "1DJBowp8zYdoQwK2",
+  "isArchived": false,
+  "meta": null,
+  "name": "Simple Webhook Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "webhook",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ],
+      "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "name": "Webhook",
+      "webhookId": "webhook-id-12345"
+    },
+    {
+      "parameters": {
+        "content": "## ⚠️ No Request Provided\nPlease provide a specific workflow request so I can generate a custom automation for you.\n\nThis is a placeholder workflow with a basic webhook trigger.",
+        "height": 200,
+        "width": 400
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        220,
+        100
+      ],
+      "id": "sticky-note-001",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"message\": \"Webhook received successfully\", \"timestamp\": $now.toISO() } }}"
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        460,
+        300
+      ],
+      "id": "respond-webhook-001",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveDataErrorExecution": "all",
+    "errorWorkflow": "",
+    "timezone": "America/New_York",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-25T21:07:11.822Z",
+      "createdAt": "2025-12-25T21:07:11.822Z",
+      "role": "workflow:owner",
+      "workflowId": "1DJBowp8zYdoQwK2",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-12-25T21:07:11.822Z",
+  "versionId": "36168d89-4205-404e-bc78-639fa6261462"
+}
