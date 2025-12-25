@@ -1,0 +1,559 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-25T22:46:10.603Z",
+    "createdAt": "2025-12-25T22:45:55.144Z",
+    "versionId": "bf272505-88f9-47cf-9d53-4a262f51e987",
+    "workflowId": "03lWvKOWwS7JYxAz",
+    "nodes": [
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "value": "claude-opus-4-20250514",
+            "mode": "list",
+            "cachedResultName": "Claude Opus 4"
+          },
+          "options": {
+            "maxTokensToSample": 8000,
+            "thinking": true,
+            "thinkingBudget": 1024
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+        "typeVersion": 1.3,
+        "position": [
+          544,
+          288
+        ],
+        "id": "6fe5b039-81cc-40bc-a0b4-d8b4bc3476d7",
+        "name": "Claude Opus 4",
+        "credentials": {
+          "anthropicApi": {
+            "id": "Un8VhObHV3fiqTVr",
+            "name": "Anthropic - Translate_To_English"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "text",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.extractFromFile",
+        "typeVersion": 1,
+        "position": [
+          416,
+          96
+        ],
+        "id": "9e2acbcb-f0bb-4ce4-b52c-eb1d7d03b821",
+        "name": "Extract from File"
+      },
+      {
+        "parameters": {
+          "operation": "create",
+          "workflowObject": "={\n  \"nodes\": [\n    {\n      \"parameters\": {\n        \"jsCode\": \"// 1. Najdeme textovou odpověď z AI (zkoušíme různé názvy proměnných)\\nconst aiResponse = $input.item.json.text || $input.item.json.output || $input.item.json.response || \\\"\\\";\\n\\n// 2. Najdeme první složenou závorku '{' a poslední '}'\\nconst firstBracket = aiResponse.indexOf('{');\\nconst lastBracket = aiResponse.lastIndexOf('}');\\n\\n// 3. Kontrola chyb\\nif (firstBracket === -1 || lastBracket === -1) {\\n  throw new Error(\\\"AI nevrátila žádný JSON. Odpověď byla: \\\" + aiResponse);\\n}\\n\\n// 4. Vyřízneme přesně jen JSON část (ignorujeme text okolo)\\nconst jsonString = aiResponse.substring(firstBracket, lastBracket + 1);\\n\\ntry {\\n  // 5. Převedeme na objekt a pošleme dál\\n  const parsedObject = JSON.parse(jsonString);\\n  return { json: { workflowObject: parsedObject } };\\n} catch (e) {\\n  throw new Error(\\\"Text mezi závorkami není platný JSON. Chyba: \\\" + e.message);\\n}\"\n      },\n      \"type\": \"n8n-nodes-base.code\",\n      \"typeVersion\": 2,\n      \"position\": [\n        740,\n        288\n      ],\n      \"id\": \"e5b8c16e-6788-4c17-b643-94a3f0620999\",\n      \"name\": \"Clean JSON\"\n    }\n  ]\n}",
+          "requestOptions": {}
+        },
+        "type": "n8n-nodes-base.n8n",
+        "typeVersion": 1,
+        "position": [
+          1104,
+          96
+        ],
+        "id": "9cbdbde1-5aa6-4440-bdee-c390e09ea1cd",
+        "name": "n8n",
+        "credentials": {
+          "n8nApi": {
+            "id": "Ig7f5BT2PKf0yVbH",
+            "name": "n8n account zmidloch@z-agency.cz - BackUp"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "f4b8c16e-6788-4c17-b643-94a3f0620860",
+                "name": "Workflow Link",
+                "value": "={{ 'https://n8n-zagency-u62265.vm.elestio.app/workflow/' + $json.id }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1264,
+          96
+        ],
+        "id": "f85d71a6-1789-4f15-beb3-25615be448d6",
+        "name": "Workflow Link"
+      },
+      {
+        "parameters": {
+          "operation": "download",
+          "fileId": {
+            "__rl": true,
+            "value": "1E5Gx7opv3QplvDzZZt7wJqjb63ZbL7z8PO6wuSo9KTQ",
+            "mode": "list",
+            "cachedResultName": "n8n Documentation",
+            "cachedResultUrl": "https://docs.google.com/document/d/1E5Gx7opv3QplvDzZZt7wJqjb63ZbL7z8PO6wuSo9KTQ/edit?usp=drivesdk"
+          },
+          "options": {
+            "googleFileConversion": {
+              "conversion": {
+                "docsToFormat": "text/plain"
+              }
+            }
+          }
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          256,
+          96
+        ],
+        "id": "32ece4c9-582d-4f97-92ff-7b773ce0bd5a",
+        "name": "Get n8n Docs",
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "0y8WKhAVB7SLUFcI",
+            "name": "Google Drive zmidloch@z-agency.cz"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=User request: {{ $('When Executed by Another Workflow').item.json.query }}",
+          "options": {
+            "systemMessage": "=# Overview\nYou are an expert AI automation developer specializing in building workflows for n8n. Your job is to translate a human’s natural language request into a fully functional n8n workflow JSON. It should be comprehensive, functional, and importable. It should have 100% valid JSON structure, node types, and connection methods.\n\n## Output\nYour output should only be the final JSON of the full workflow.\n\nYour output must start with a { and must end with a }.\n- Do not include anything before the { (such as ```json or any markdown formatting).\n- Do not include anything after the } (such as closing code blocks like ``` or explanations).\n\nYour output should be a pure JSON object that begins with { and ends with }, ready to be used as the body of a POST request.\n\nThe JSON must:\n- Be syntactically valid and complete\n- Include a `nodes` array with each node containing all required parameters\n- Include a `connections` object that correctly maps outputs to inputs\n- Start with a `trigger` node if one is required for the use case (e.g., Webhook, Schedule, etc.)\n- Contain descriptive names and parameter values relevant to the user request\n- Avoid placeholders unless no reasonable value can be inferred\n- Contain sticky notes that are explaining what's going on within each step and any credentials or connections that still need to be configured. The colors should vary throughout the workflow.\n\nBefore generating the JSON, analyze the request and:\n1. Break it down into logical automation steps\n2. Choose appropriate nodes based on the steps\n3. Properly connect the nodes to reflect execution order\n\nIf the request is ambiguous, make a best guess using standard automation logic.\n\nDo not return explanations, comments, or any output outside of the JSON markdown block.\n\nYou are expected to produce developer-grade output suitable for direct import into n8n.\n\n## API Submission Requirements\nTo automatically create a workflow using the n8n API, your generated JSON must include the following top-level fields in the final object:\n\n- `name` (string): A clear, descriptive workflow name.\n- `nodes` (array): The complete array of node objects used in the workflow.\n- `connections` (object): A valid map of node-to-node connections.\n- `settings` (object): Workflow-level settings (e.g. `saveManualExecutions`, `executionOrder`).\n- `staticData` (null or object): Set to `null` unless specific static data is needed.\n\nExample “settings” object:\n  \"settings\": {\n    \"executionOrder\": \"v1\",\n    \"saveManualExecutions\": true,\n    \"saveDataSuccessExecution\": \"all\",\n    \"saveExecutionProgress\": true,\n    \"saveDataErrorExecution\": \"all\",\n    \"errorWorkflow\": \"\",\n    \"timezone\": \"America/New_York\"\n  }\n\n## n8n Documentation\n\n{{ $json.data }}"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 2,
+        "position": [
+          576,
+          96
+        ],
+        "id": "ff3d3d35-b90b-44d1-9628-56210cfdf67d",
+        "name": "n8n Builder"
+      },
+      {
+        "parameters": {
+          "content": "# Workflow Builder\n",
+          "height": 340,
+          "width": 1280,
+          "color": 2
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          0,
+          0
+        ],
+        "id": "05a9ea8e-a873-4544-85ed-cb983322cfb3",
+        "name": "Sticky Note"
+      },
+      {
+        "parameters": {
+          "inputSource": "passthrough"
+        },
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          80,
+          96
+        ],
+        "id": "30520642-1ae0-44da-9b39-4a7870ac8bf0",
+        "name": "When Executed by Another Workflow"
+      },
+      {
+        "parameters": {
+          "jsCode": "// 1. Získáme data z předchozího kroku\nconst item = $input.item.json;\n\n// 2. Zkusíme najít odpověď v různých běžných proměnných (text, output, response)\n// Převedeme na string, kdyby to náhodou přišlo jako objekt\nlet aiRawText = (item.text || item.output || item.response || JSON.stringify(item)).toString();\n\n// 3. Najdeme začátek JSONu (první '{') a konec (poslední '}')\nconst firstBracket = aiRawText.indexOf('{');\nconst lastBracket = aiRawText.lastIndexOf('}');\n\n// 4. DIAGNOSTIKA: Pokud tam závorky nejsou, vyhodíme detailní chybu\nif (firstBracket === -1 || lastBracket === -1) {\n  // Zkrátíme výpis na 200 znaků, aby nezahltil obrazovku\n  const ukazka = aiRawText.length > 200 ? aiRawText.substring(0, 200) + \"...\" : aiRawText;\n  throw new Error(`Nenalezen JSON objekt (složené závorky). AI vrátila toto: \"${ukazka}\". Zkontrolujte, zda AI nehlásí chybu.`);\n}\n\n// 5. Vyřízneme čistý JSON\nconst jsonString = aiRawText.substring(firstBracket, lastBracket + 1);\n\ntry {\n  // 6. Převedeme na objekt\n  const workflowObj = JSON.parse(jsonString);\n  \n  return {\n    json: {\n      workflowObject: workflowObj\n    }\n  };\n} catch (e) {\n  throw new Error(\"Našly se závorky, ale obsah není validní JSON. Chyba: \" + e.message);\n}"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          928,
+          96
+        ],
+        "id": "835fea90-47c1-42b0-88c0-1acf2dbaaece",
+        "name": "Code in JavaScript"
+      }
+    ],
+    "connections": {
+      "Claude Opus 4": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "n8n Builder",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Extract from File": {
+        "main": [
+          [
+            {
+              "node": "n8n Builder",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "n8n": {
+        "main": [
+          [
+            {
+              "node": "Workflow Link",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get n8n Docs": {
+        "main": [
+          [
+            {
+              "node": "Extract from File",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "n8n Builder": {
+        "main": [
+          [
+            {
+              "node": "Code in JavaScript",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "Get n8n Docs",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code in JavaScript": {
+        "main": [
+          [
+            {
+              "node": "n8n",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jiri Zmidloch",
+    "name": "Version bf272505",
+    "description": ""
+  },
+  "activeVersionId": "bf272505-88f9-47cf-9d53-4a262f51e987",
+  "connections": {
+    "Claude Opus 4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "n8n Builder",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "n8n Builder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "n8n": {
+      "main": [
+        [
+          {
+            "node": "Workflow Link",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get n8n Docs": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "n8n Builder": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Get n8n Docs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "n8n",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-25T22:23:19.516Z",
+  "id": "03lWvKOWwS7JYxAz",
+  "isArchived": false,
+  "meta": null,
+  "name": "Workflow Builder",
+  "nodes": [
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "claude-opus-4-20250514",
+          "mode": "list",
+          "cachedResultName": "Claude Opus 4"
+        },
+        "options": {
+          "maxTokensToSample": 8000,
+          "thinking": true,
+          "thinkingBudget": 1024
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.3,
+      "position": [
+        544,
+        288
+      ],
+      "id": "6fe5b039-81cc-40bc-a0b4-d8b4bc3476d7",
+      "name": "Claude Opus 4",
+      "credentials": {
+        "anthropicApi": {
+          "id": "Un8VhObHV3fiqTVr",
+          "name": "Anthropic - Translate_To_English"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        416,
+        96
+      ],
+      "id": "9e2acbcb-f0bb-4ce4-b52c-eb1d7d03b821",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "workflowObject": "={\n  \"nodes\": [\n    {\n      \"parameters\": {\n        \"jsCode\": \"// 1. Najdeme textovou odpověď z AI (zkoušíme různé názvy proměnných)\\nconst aiResponse = $input.item.json.text || $input.item.json.output || $input.item.json.response || \\\"\\\";\\n\\n// 2. Najdeme první složenou závorku '{' a poslední '}'\\nconst firstBracket = aiResponse.indexOf('{');\\nconst lastBracket = aiResponse.lastIndexOf('}');\\n\\n// 3. Kontrola chyb\\nif (firstBracket === -1 || lastBracket === -1) {\\n  throw new Error(\\\"AI nevrátila žádný JSON. Odpověď byla: \\\" + aiResponse);\\n}\\n\\n// 4. Vyřízneme přesně jen JSON část (ignorujeme text okolo)\\nconst jsonString = aiResponse.substring(firstBracket, lastBracket + 1);\\n\\ntry {\\n  // 5. Převedeme na objekt a pošleme dál\\n  const parsedObject = JSON.parse(jsonString);\\n  return { json: { workflowObject: parsedObject } };\\n} catch (e) {\\n  throw new Error(\\\"Text mezi závorkami není platný JSON. Chyba: \\\" + e.message);\\n}\"\n      },\n      \"type\": \"n8n-nodes-base.code\",\n      \"typeVersion\": 2,\n      \"position\": [\n        740,\n        288\n      ],\n      \"id\": \"e5b8c16e-6788-4c17-b643-94a3f0620999\",\n      \"name\": \"Clean JSON\"\n    }\n  ]\n}",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        96
+      ],
+      "id": "9cbdbde1-5aa6-4440-bdee-c390e09ea1cd",
+      "name": "n8n",
+      "credentials": {
+        "n8nApi": {
+          "id": "Ig7f5BT2PKf0yVbH",
+          "name": "n8n account zmidloch@z-agency.cz - BackUp"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f4b8c16e-6788-4c17-b643-94a3f0620860",
+              "name": "Workflow Link",
+              "value": "={{ 'https://n8n-zagency-u62265.vm.elestio.app/workflow/' + $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1264,
+        96
+      ],
+      "id": "f85d71a6-1789-4f15-beb3-25615be448d6",
+      "name": "Workflow Link"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "1E5Gx7opv3QplvDzZZt7wJqjb63ZbL7z8PO6wuSo9KTQ",
+          "mode": "list",
+          "cachedResultName": "n8n Documentation",
+          "cachedResultUrl": "https://docs.google.com/document/d/1E5Gx7opv3QplvDzZZt7wJqjb63ZbL7z8PO6wuSo9KTQ/edit?usp=drivesdk"
+        },
+        "options": {
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "text/plain"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        256,
+        96
+      ],
+      "id": "32ece4c9-582d-4f97-92ff-7b773ce0bd5a",
+      "name": "Get n8n Docs",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "0y8WKhAVB7SLUFcI",
+          "name": "Google Drive zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=User request: {{ $('When Executed by Another Workflow').item.json.query }}",
+        "options": {
+          "systemMessage": "=# Overview\nYou are an expert AI automation developer specializing in building workflows for n8n. Your job is to translate a human’s natural language request into a fully functional n8n workflow JSON. It should be comprehensive, functional, and importable. It should have 100% valid JSON structure, node types, and connection methods.\n\n## Output\nYour output should only be the final JSON of the full workflow.\n\nYour output must start with a { and must end with a }.\n- Do not include anything before the { (such as ```json or any markdown formatting).\n- Do not include anything after the } (such as closing code blocks like ``` or explanations).\n\nYour output should be a pure JSON object that begins with { and ends with }, ready to be used as the body of a POST request.\n\nThe JSON must:\n- Be syntactically valid and complete\n- Include a `nodes` array with each node containing all required parameters\n- Include a `connections` object that correctly maps outputs to inputs\n- Start with a `trigger` node if one is required for the use case (e.g., Webhook, Schedule, etc.)\n- Contain descriptive names and parameter values relevant to the user request\n- Avoid placeholders unless no reasonable value can be inferred\n- Contain sticky notes that are explaining what's going on within each step and any credentials or connections that still need to be configured. The colors should vary throughout the workflow.\n\nBefore generating the JSON, analyze the request and:\n1. Break it down into logical automation steps\n2. Choose appropriate nodes based on the steps\n3. Properly connect the nodes to reflect execution order\n\nIf the request is ambiguous, make a best guess using standard automation logic.\n\nDo not return explanations, comments, or any output outside of the JSON markdown block.\n\nYou are expected to produce developer-grade output suitable for direct import into n8n.\n\n## API Submission Requirements\nTo automatically create a workflow using the n8n API, your generated JSON must include the following top-level fields in the final object:\n\n- `name` (string): A clear, descriptive workflow name.\n- `nodes` (array): The complete array of node objects used in the workflow.\n- `connections` (object): A valid map of node-to-node connections.\n- `settings` (object): Workflow-level settings (e.g. `saveManualExecutions`, `executionOrder`).\n- `staticData` (null or object): Set to `null` unless specific static data is needed.\n\nExample “settings” object:\n  \"settings\": {\n    \"executionOrder\": \"v1\",\n    \"saveManualExecutions\": true,\n    \"saveDataSuccessExecution\": \"all\",\n    \"saveExecutionProgress\": true,\n    \"saveDataErrorExecution\": \"all\",\n    \"errorWorkflow\": \"\",\n    \"timezone\": \"America/New_York\"\n  }\n\n## n8n Documentation\n\n{{ $json.data }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        576,
+        96
+      ],
+      "id": "ff3d3d35-b90b-44d1-9628-56210cfdf67d",
+      "name": "n8n Builder"
+    },
+    {
+      "parameters": {
+        "content": "# Workflow Builder\n",
+        "height": 340,
+        "width": 1280,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "05a9ea8e-a873-4544-85ed-cb983322cfb3",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        80,
+        96
+      ],
+      "id": "30520642-1ae0-44da-9b39-4a7870ac8bf0",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1. Získáme data z předchozího kroku\nconst item = $input.item.json;\n\n// 2. Zkusíme najít odpověď v různých běžných proměnných (text, output, response)\n// Převedeme na string, kdyby to náhodou přišlo jako objekt\nlet aiRawText = (item.text || item.output || item.response || JSON.stringify(item)).toString();\n\n// 3. Najdeme začátek JSONu (první '{') a konec (poslední '}')\nconst firstBracket = aiRawText.indexOf('{');\nconst lastBracket = aiRawText.lastIndexOf('}');\n\n// 4. DIAGNOSTIKA: Pokud tam závorky nejsou, vyhodíme detailní chybu\nif (firstBracket === -1 || lastBracket === -1) {\n  // Zkrátíme výpis na 200 znaků, aby nezahltil obrazovku\n  const ukazka = aiRawText.length > 200 ? aiRawText.substring(0, 200) + \"...\" : aiRawText;\n  throw new Error(`Nenalezen JSON objekt (složené závorky). AI vrátila toto: \"${ukazka}\". Zkontrolujte, zda AI nehlásí chybu.`);\n}\n\n// 5. Vyřízneme čistý JSON\nconst jsonString = aiRawText.substring(firstBracket, lastBracket + 1);\n\ntry {\n  // 6. Převedeme na objekt\n  const workflowObj = JSON.parse(jsonString);\n  \n  return {\n    json: {\n      workflowObject: workflowObj\n    }\n  };\n} catch (e) {\n  throw new Error(\"Našly se závorky, ale obsah není validní JSON. Chyba: \" + e.message);\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        928,
+        96
+      ],
+      "id": "835fea90-47c1-42b0-88c0-1acf2dbaaece",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "zVAjJgKV17IWzFP7"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-25T22:23:19.516Z",
+      "createdAt": "2025-12-25T22:23:19.516Z",
+      "role": "workflow:owner",
+      "workflowId": "03lWvKOWwS7JYxAz",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-12-25T22:45:55.140Z",
+  "versionId": "bf272505-88f9-47cf-9d53-4a262f51e987"
+}
