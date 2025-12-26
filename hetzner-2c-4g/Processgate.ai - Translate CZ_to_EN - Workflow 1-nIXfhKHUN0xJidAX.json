@@ -1,0 +1,654 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-26T12:25:34.434Z",
+    "createdAt": "2025-12-26T12:15:34.944Z",
+    "versionId": "d64cb9f6-8a99-46d3-9b78-4087bd417b0a",
+    "workflowId": "nIXfhKHUN0xJidAX",
+    "nodes": [
+      {
+        "parameters": {
+          "content": "## Wordpress Webhook - Airtable\nKdyž vznikne na webu nový CZ článek, tak tak se vytvoří záznam v Airtable",
+          "height": 416,
+          "width": 1104,
+          "color": 3
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          272,
+          -576
+        ],
+        "typeVersion": 1,
+        "id": "20a61a61-fc12-4a90-b9d2-aba17a29ae53",
+        "name": "Sticky Note"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "28f0c6e4-5fcc-4960-917a-f1da7d91eba1",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          368,
+          -416
+        ],
+        "id": "863e53e6-8307-4cb6-9882-2e9e0d8c6a65",
+        "name": "Webhook",
+        "webhookId": "28f0c6e4-5fcc-4960-917a-f1da7d91eba1"
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "postId": "={{ $json.body.post_id }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.wordpress",
+        "typeVersion": 1,
+        "position": [
+          752,
+          -416
+        ],
+        "id": "36254957-54a1-49d6-94be-e7292e362526",
+        "name": "Get a post",
+        "credentials": {
+          "wordpressApi": {
+            "id": "flqY5YMCvIpv5fpx",
+            "name": "Processgate.ai_propojeni"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "create",
+          "base": {
+            "__rl": true,
+            "value": "app75Y90Vp6abIF1u",
+            "mode": "list",
+            "cachedResultName": "Překlad CZ-EN processgate.ai",
+            "cachedResultUrl": "https://airtable.com/app75Y90Vp6abIF1u"
+          },
+          "table": {
+            "__rl": true,
+            "value": "tblAsvbCC7ZvChht8",
+            "mode": "list",
+            "cachedResultName": "Proces překladu",
+            "cachedResultUrl": "https://airtable.com/app75Y90Vp6abIF1u/tblAsvbCC7ZvChht8"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "WP ID": "={{ $json.id }}",
+              "Název": "={{ $json.title.rendered }}",
+              "Status": "K překladu",
+              "URL": "={{ $('Get a post').item.json.link }}"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "WP ID",
+                "displayName": "WP ID",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "URL",
+                "displayName": "URL",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Název",
+                "displayName": "Název",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Status",
+                "displayName": "Status",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "options",
+                "options": [
+                  {
+                    "name": "K překladu",
+                    "value": "K překladu"
+                  },
+                  {
+                    "name": "Přeložit",
+                    "value": "Přeložit"
+                  },
+                  {
+                    "name": "Přeloženo",
+                    "value": "Přeloženo"
+                  }
+                ],
+                "readOnly": false,
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.airtable",
+        "typeVersion": 2.1,
+        "position": [
+          1152,
+          -432
+        ],
+        "id": "8009ce26-f44e-4040-9102-b8d82f0686e6",
+        "name": "Create a record",
+        "credentials": {
+          "airtableTokenApi": {
+            "id": "112UtIzO07XgrN7A",
+            "name": "Airtable - zmidloch@z-agency.cz"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "55e26024-8069-4722-b46e-a5736ff8ab72",
+                "leftValue": "={{ $json.body.post.post_type }}",
+                "rightValue": "revision",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEquals"
+                }
+              },
+              {
+                "id": "a01f5f20-fded-408e-b68d-bd3873c3cbb9",
+                "leftValue": "={{ $json.body.post.post_status }}",
+                "rightValue": "publish",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.3,
+        "position": [
+          560,
+          -416
+        ],
+        "id": "667f76c9-c23f-4a06-94a7-3b1b3fa6b20c",
+        "name": "Only Post"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "f553a4b2-9d94-468d-bb29-05757dcf6781",
+                "leftValue": "={{ $('Webhook').item.json.body.taxonomies.language.cs.slug }}",
+                "rightValue": "cs",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          944,
+          -416
+        ],
+        "id": "28887690-a2dc-4c29-b81b-eea5f7ab4202",
+        "name": "Only Czech Language"
+      },
+      {
+        "parameters": {
+          "content": "## Translation of Czech Wordpress Post to English\n\n**Airtable** . [Table for Posts and for STATUS change](https://airtable.com/app75Y90Vp6abIF1u/tblAsvbCC7ZvChht8/viwe74zIu1XgCf5sD?blocks=hide)\n\n**Webhook** Wordpress plugin - WP Webhooks (Post Created - only Published an only Post)\n\n**Image** Same image for both posts (HTTP request - Set Image)",
+          "height": 928,
+          "width": 688,
+          "color": 6
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          -464,
+          -576
+        ],
+        "typeVersion": 1,
+        "id": "605c5662-6751-448c-9f32-4faa5d28598a",
+        "name": "Sticky Note6"
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Only Post",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get a post": {
+        "main": [
+          [
+            {
+              "node": "Only Czech Language",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a record": {
+        "main": [
+          []
+        ]
+      },
+      "Only Post": {
+        "main": [
+          [
+            {
+              "node": "Get a post",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Only Czech Language": {
+        "main": [
+          [
+            {
+              "node": "Create a record",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jiri Zmidloch",
+    "name": "Version d64cb9f6",
+    "description": ""
+  },
+  "activeVersionId": "d64cb9f6-8a99-46d3-9b78-4087bd417b0a",
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Only Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a post": {
+      "main": [
+        [
+          {
+            "node": "Only Czech Language",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a record": {
+      "main": [
+        []
+      ]
+    },
+    "Only Post": {
+      "main": [
+        [
+          {
+            "node": "Get a post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Only Czech Language": {
+      "main": [
+        [
+          {
+            "node": "Create a record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-20T22:59:31.468Z",
+  "id": "nIXfhKHUN0xJidAX",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Processgate.ai - Translate CZ_to_EN - Workflow 1",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Wordpress Webhook - Airtable\nKdyž vznikne na webu nový CZ článek, tak tak se vytvoří záznam v Airtable",
+        "height": 416,
+        "width": 1104,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        272,
+        -576
+      ],
+      "typeVersion": 1,
+      "id": "20a61a61-fc12-4a90-b9d2-aba17a29ae53",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "28f0c6e4-5fcc-4960-917a-f1da7d91eba1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        368,
+        -416
+      ],
+      "id": "863e53e6-8307-4cb6-9882-2e9e0d8c6a65",
+      "name": "Webhook",
+      "webhookId": "28f0c6e4-5fcc-4960-917a-f1da7d91eba1"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "postId": "={{ $json.body.post_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.wordpress",
+      "typeVersion": 1,
+      "position": [
+        752,
+        -416
+      ],
+      "id": "36254957-54a1-49d6-94be-e7292e362526",
+      "name": "Get a post",
+      "credentials": {
+        "wordpressApi": {
+          "id": "flqY5YMCvIpv5fpx",
+          "name": "Processgate.ai_propojeni"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "app75Y90Vp6abIF1u",
+          "mode": "list",
+          "cachedResultName": "Překlad CZ-EN processgate.ai",
+          "cachedResultUrl": "https://airtable.com/app75Y90Vp6abIF1u"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblAsvbCC7ZvChht8",
+          "mode": "list",
+          "cachedResultName": "Proces překladu",
+          "cachedResultUrl": "https://airtable.com/app75Y90Vp6abIF1u/tblAsvbCC7ZvChht8"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "WP ID": "={{ $json.id }}",
+            "Název": "={{ $json.title.rendered }}",
+            "Status": "K překladu",
+            "URL": "={{ $('Get a post').item.json.link }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "WP ID",
+              "displayName": "WP ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "URL",
+              "displayName": "URL",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Název",
+              "displayName": "Název",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "K překladu",
+                  "value": "K překladu"
+                },
+                {
+                  "name": "Přeložit",
+                  "value": "Přeložit"
+                },
+                {
+                  "name": "Přeloženo",
+                  "value": "Přeloženo"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1152,
+        -432
+      ],
+      "id": "8009ce26-f44e-4040-9102-b8d82f0686e6",
+      "name": "Create a record",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable - zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "55e26024-8069-4722-b46e-a5736ff8ab72",
+              "leftValue": "={{ $json.body.post.post_type }}",
+              "rightValue": "revision",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            },
+            {
+              "id": "a01f5f20-fded-408e-b68d-bd3873c3cbb9",
+              "leftValue": "={{ $json.body.post.post_status }}",
+              "rightValue": "publish",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [
+        560,
+        -416
+      ],
+      "id": "667f76c9-c23f-4a06-94a7-3b1b3fa6b20c",
+      "name": "Only Post"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "f553a4b2-9d94-468d-bb29-05757dcf6781",
+              "leftValue": "={{ $('Webhook').item.json.body.taxonomies.language.cs.slug }}",
+              "rightValue": "cs",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        944,
+        -416
+      ],
+      "id": "28887690-a2dc-4c29-b81b-eea5f7ab4202",
+      "name": "Only Czech Language"
+    },
+    {
+      "parameters": {
+        "content": "## Translation of Czech Wordpress Post to English\n\n**Airtable** . [Table for Posts and for STATUS change](https://airtable.com/app75Y90Vp6abIF1u/tblAsvbCC7ZvChht8/viwe74zIu1XgCf5sD?blocks=hide)\n\n**Webhook** Wordpress plugin - WP Webhooks (Post Created - only Published an only Post)\n\n**Image** Same image for both posts (HTTP request - Set Image)",
+        "height": 928,
+        "width": 688,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -464,
+        -576
+      ],
+      "typeVersion": 1,
+      "id": "605c5662-6751-448c-9f32-4faa5d28598a",
+      "name": "Sticky Note6"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "timeSavedMode": "fixed",
+    "timezone": "Europe/Prague",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "zVAjJgKV17IWzFP7"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-20T22:59:31.468Z",
+      "createdAt": "2025-12-20T22:59:31.468Z",
+      "role": "workflow:owner",
+      "workflowId": "nIXfhKHUN0xJidAX",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": {
+    "node:Airtable Trigger": {
+      "lastTimeChecked": "2025-12-26T12:04:40Z"
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-12-26T12:15:34.941Z",
+  "versionId": "d64cb9f6-8a99-46d3-9b78-4087bd417b0a"
+}
