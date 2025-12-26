@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2025-12-25T00:17:17.792Z",
-    "createdAt": "2025-12-25T00:17:14.792Z",
-    "versionId": "95e9d118-e776-4a03-8d4a-9982b2dc9c34",
+    "updatedAt": "2025-12-26T00:58:02.096Z",
+    "createdAt": "2025-12-26T00:31:17.490Z",
+    "versionId": "4c6fe2e6-01ea-47bf-a004-0fd649777198",
     "workflowId": "nIXfhKHUN0xJidAX",
     "nodes": [
       {
@@ -469,7 +469,7 @@
       },
       {
         "parameters": {
-          "jsCode": "// Vezme textový výstup z AI a převede ho na skutečný JSON objekt\nconst aiOutput = $input.item.json.output;\nreturn JSON.parse(aiOutput);"
+          "jsCode": "// 1. Získáme textový výstup z AI\nlet aiOutput = $input.item.json.output;\n\n// 2. OČIŠTĚNÍ: Odstraníme \"```json\", \"```\" a případné mezery okolo\n// Tento regulární výraz najde začátek i konec code blocku a smaže ho\nif (typeof aiOutput === 'string') {\n  aiOutput = aiOutput.replace(/^```json/i, '').replace(/^```/, '').replace(/```$/, '').trim();\n  \n  // Pojistka: Pokud AI přidalo nějaký text před nebo za JSON (např. \"Zde je JSON:\"),\n  // najdeme první '{' a poslední '}' a vezmeme jen to mezi tím.\n  const firstBrace = aiOutput.indexOf('{');\n  const lastBrace = aiOutput.lastIndexOf('}');\n  \n  if (firstBrace !== -1 && lastBrace !== -1) {\n    aiOutput = aiOutput.substring(firstBrace, lastBrace + 1);\n  }\n}\n\n// 3. Převedeme na objekt\ntry {\n  return JSON.parse(aiOutput);\n} catch (error) {\n  // Pokud to stále nejde, vyhodíme chybu s výpisem toho, co se nepovedlo parsovat\n  throw new Error(\"Nepodařilo se parsovat JSON. AI vrátilo: \" + aiOutput);\n}"
         },
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
@@ -733,7 +733,7 @@
       },
       {
         "parameters": {
-          "jsCode": "// 1. Získání dat z předchozích uzlů\nlet categoriesData = [];\nlet tagsData = [];\n\ntry {\n  categoriesData = $('Get CZ Categories Details').all().map(item => item.json);\n} catch (e) {}\n\ntry {\n  tagsData = $('Get CZ Tags Details').all().map(item => item.json);\n} catch (e) {}\n\n// 2. Funkce pro vytažení EN ID\nfunction getEnIds(items) {\n  const enIds = [];\n  const flatItems = items.flat(); \n  for (const item of flatItems) {\n    if (item && item.translations && item.translations.en) {\n      enIds.push(item.translations.en);\n    }\n  }\n  return enIds;\n}\n\nconst enCategoryIds = getEnIds(categoriesData);\nconst enTagIds = getEnIds(tagsData);\n\n// 3. Získání ID článků pro propojení\n// ID nového EN článku (z předchozího kroku)\nconst enPostId = $('Set image ID for the post').first().json.id;\n// ID původního CZ článku (musíme sáhnout hlouběji do historie workflow)\nconst czPostId = $('Get Post for Translation').first().json.id;\n\n// 4. Příprava objektu 'translations' pro Polylang\n// Toto řekne WP: \"CS verze je článek X, EN verze je článek Y\"\nconst translationsMap = {\n  'cs': czPostId,\n  'en': enPostId\n};\n\n// 5. Výstup\nreturn {\n  json: {\n    requestBody: {\n      categories: enCategoryIds,\n      tags: enTagIds,\n      translations: translationsMap, // <-- TOTO propojí články\n      status: 'publish'\n    },\n    postId: enPostId\n  }\n};"
+          "jsCode": "// ... (začátek kódu zůstává stejný: získání ID, categories, tags atd.) ...\n\n// 1. Získání ID\nconst czPostIdRaw = $('Get Post for Translation').item.json.id;\nconst enPostIdRaw = $('Set image ID for the post').item.json.id; \n\nconst czPostId = parseInt(czPostIdRaw);\nconst enPostId = parseInt(enPostIdRaw);\n\n// 2. Kontroly...\nif (!czPostId || isNaN(czPostId)) throw new Error(\"Chybí ID českého článku!\");\nif (!enPostId || isNaN(enPostId)) throw new Error(\"Chybí ID anglického článku!\");\n\nconst langCodeCZ = 'cs'; \nconst langCodeEN = 'en'; \n\n// 3. Mapa překladů\nconst translationsMap = {};\ntranslationsMap[langCodeCZ] = czPostId;\ntranslationsMap[langCodeEN] = enPostId;\n\n// ... (Kód pro kategorie a tagy nechte tak, jak byl) ...\nlet enCategoryIds = [];\n// ... (váš kód pro kategorie) ...\n\n// 4. FINÁLNÍ BODY - ZMĚNA NÁZVU POLE\nconst requestBody = {\n  status: 'publish',\n  \n  // TADY JE ZMĚNA: Používáme náš vlastní název, aby se to nehádalo s Polylangem\n  _n8n_polylang_pair: translationsMap \n};\n\n// Přidání kategorií/tagů\nif (typeof enCategoryIds !== 'undefined' && enCategoryIds.length > 0) requestBody.categories = enCategoryIds;\nif (typeof enTagIds !== 'undefined' && enTagIds.length > 0) requestBody.tags = enTagIds;\n\nreturn {\n  json: {\n    targetPostId: enPostId,\n    body: requestBody\n  }\n};"
         },
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
@@ -747,12 +747,12 @@
       {
         "parameters": {
           "method": "POST",
-          "url": "=https://processgate.ai/wp-json/wp/v2/posts/{{ $json.postId }}",
+          "url": "=https://processgate.ai/wp-json/wp/v2/posts/{{ $json.targetPostId }}",
           "authentication": "predefinedCredentialType",
           "nodeCredentialType": "wordpressApi",
           "sendBody": true,
           "specifyBody": "json",
-          "jsonBody": "={{ JSON.stringify($json.requestBody) }}",
+          "jsonBody": "={{ JSON.stringify($json.body) }}",
           "options": {}
         },
         "type": "n8n-nodes-base.httpRequest",
@@ -1028,10 +1028,10 @@
       }
     },
     "authors": "Jiri Zmidloch",
-    "name": "Version 95e9d118",
+    "name": "Version 4c6fe2e6",
     "description": ""
   },
-  "activeVersionId": "95e9d118-e776-4a03-8d4a-9982b2dc9c34",
+  "activeVersionId": "4c6fe2e6-01ea-47bf-a004-0fd649777198",
   "connections": {
     "Webhook": {
       "main": [
@@ -1708,7 +1708,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Vezme textový výstup z AI a převede ho na skutečný JSON objekt\nconst aiOutput = $input.item.json.output;\nreturn JSON.parse(aiOutput);"
+        "jsCode": "// 1. Získáme textový výstup z AI\nlet aiOutput = $input.item.json.output;\n\n// 2. OČIŠTĚNÍ: Odstraníme \"```json\", \"```\" a případné mezery okolo\n// Tento regulární výraz najde začátek i konec code blocku a smaže ho\nif (typeof aiOutput === 'string') {\n  aiOutput = aiOutput.replace(/^```json/i, '').replace(/^```/, '').replace(/```$/, '').trim();\n  \n  // Pojistka: Pokud AI přidalo nějaký text před nebo za JSON (např. \"Zde je JSON:\"),\n  // najdeme první '{' a poslední '}' a vezmeme jen to mezi tím.\n  const firstBrace = aiOutput.indexOf('{');\n  const lastBrace = aiOutput.lastIndexOf('}');\n  \n  if (firstBrace !== -1 && lastBrace !== -1) {\n    aiOutput = aiOutput.substring(firstBrace, lastBrace + 1);\n  }\n}\n\n// 3. Převedeme na objekt\ntry {\n  return JSON.parse(aiOutput);\n} catch (error) {\n  // Pokud to stále nejde, vyhodíme chybu s výpisem toho, co se nepovedlo parsovat\n  throw new Error(\"Nepodařilo se parsovat JSON. AI vrátilo: \" + aiOutput);\n}"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -1972,7 +1972,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// 1. Získání dat z předchozích uzlů\nlet categoriesData = [];\nlet tagsData = [];\n\ntry {\n  categoriesData = $('Get CZ Categories Details').all().map(item => item.json);\n} catch (e) {}\n\ntry {\n  tagsData = $('Get CZ Tags Details').all().map(item => item.json);\n} catch (e) {}\n\n// 2. Funkce pro vytažení EN ID\nfunction getEnIds(items) {\n  const enIds = [];\n  const flatItems = items.flat(); \n  for (const item of flatItems) {\n    if (item && item.translations && item.translations.en) {\n      enIds.push(item.translations.en);\n    }\n  }\n  return enIds;\n}\n\nconst enCategoryIds = getEnIds(categoriesData);\nconst enTagIds = getEnIds(tagsData);\n\n// 3. Získání ID článků pro propojení\n// ID nového EN článku (z předchozího kroku)\nconst enPostId = $('Set image ID for the post').first().json.id;\n// ID původního CZ článku (musíme sáhnout hlouběji do historie workflow)\nconst czPostId = $('Get Post for Translation').first().json.id;\n\n// 4. Příprava objektu 'translations' pro Polylang\n// Toto řekne WP: \"CS verze je článek X, EN verze je článek Y\"\nconst translationsMap = {\n  'cs': czPostId,\n  'en': enPostId\n};\n\n// 5. Výstup\nreturn {\n  json: {\n    requestBody: {\n      categories: enCategoryIds,\n      tags: enTagIds,\n      translations: translationsMap, // <-- TOTO propojí články\n      status: 'publish'\n    },\n    postId: enPostId\n  }\n};"
+        "jsCode": "// ... (začátek kódu zůstává stejný: získání ID, categories, tags atd.) ...\n\n// 1. Získání ID\nconst czPostIdRaw = $('Get Post for Translation').item.json.id;\nconst enPostIdRaw = $('Set image ID for the post').item.json.id; \n\nconst czPostId = parseInt(czPostIdRaw);\nconst enPostId = parseInt(enPostIdRaw);\n\n// 2. Kontroly...\nif (!czPostId || isNaN(czPostId)) throw new Error(\"Chybí ID českého článku!\");\nif (!enPostId || isNaN(enPostId)) throw new Error(\"Chybí ID anglického článku!\");\n\nconst langCodeCZ = 'cs'; \nconst langCodeEN = 'en'; \n\n// 3. Mapa překladů\nconst translationsMap = {};\ntranslationsMap[langCodeCZ] = czPostId;\ntranslationsMap[langCodeEN] = enPostId;\n\n// ... (Kód pro kategorie a tagy nechte tak, jak byl) ...\nlet enCategoryIds = [];\n// ... (váš kód pro kategorie) ...\n\n// 4. FINÁLNÍ BODY - ZMĚNA NÁZVU POLE\nconst requestBody = {\n  status: 'publish',\n  \n  // TADY JE ZMĚNA: Používáme náš vlastní název, aby se to nehádalo s Polylangem\n  _n8n_polylang_pair: translationsMap \n};\n\n// Přidání kategorií/tagů\nif (typeof enCategoryIds !== 'undefined' && enCategoryIds.length > 0) requestBody.categories = enCategoryIds;\nif (typeof enTagIds !== 'undefined' && enTagIds.length > 0) requestBody.tags = enTagIds;\n\nreturn {\n  json: {\n    targetPostId: enPostId,\n    body: requestBody\n  }\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -1986,12 +1986,12 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "=https://processgate.ai/wp-json/wp/v2/posts/{{ $json.postId }}",
+        "url": "=https://processgate.ai/wp-json/wp/v2/posts/{{ $json.targetPostId }}",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "wordpressApi",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify($json.requestBody) }}",
+        "jsonBody": "={{ JSON.stringify($json.body) }}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -2085,6 +2085,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-12-25T00:17:14.790Z",
-  "versionId": "95e9d118-e776-4a03-8d4a-9982b2dc9c34"
+  "updatedAt": "2025-12-26T00:31:17.486Z",
+  "versionId": "4c6fe2e6-01ea-47bf-a004-0fd649777198"
 }
