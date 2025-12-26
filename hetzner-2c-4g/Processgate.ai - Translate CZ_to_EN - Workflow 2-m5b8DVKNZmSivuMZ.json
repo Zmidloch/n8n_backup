@@ -1,0 +1,1485 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2025-12-26T12:11:47.342Z",
+    "createdAt": "2025-12-26T12:11:41.076Z",
+    "versionId": "e58546ce-a5cd-4abd-97ad-540f8dc15c46",
+    "workflowId": "m5b8DVKNZmSivuMZ",
+    "nodes": [
+      {
+        "parameters": {
+          "content": "## Trigger for Translation - Status\n",
+          "height": 416,
+          "width": 464
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          0,
+          0
+        ],
+        "typeVersion": 1,
+        "id": "c7c7ad4e-45a6-4b12-8413-54bf10a09677",
+        "name": "Sticky Note1"
+      },
+      {
+        "parameters": {
+          "content": "## Get Post - Translate - Format\nPřepínač pošle ščánek do překládajícího agenta na Gemini 3 Pro",
+          "height": 672,
+          "width": 752
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          512,
+          0
+        ],
+        "typeVersion": 1,
+        "id": "2b7199f2-52b8-4700-9ca9-c1a3dd295ffa",
+        "name": "Sticky Note3"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "c3e0bf0f-74bd-488d-9ad3-b741742d9b07",
+                "leftValue": "={{ $json.fields.Status }}",
+                "rightValue": "Přeložit",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          240,
+          192
+        ],
+        "id": "6f5bd039-45ee-42f1-b0f7-8e5de3cbfb26",
+        "name": "Status - Preklad"
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "postId": "={{ $json.fields[\"WP ID\"] }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.wordpress",
+        "typeVersion": 1,
+        "position": [
+          576,
+          192
+        ],
+        "id": "051ebc05-1365-4802-8bf5-5ad44a6ece34",
+        "name": "Get Post for Translation",
+        "credentials": {
+          "wordpressApi": {
+            "id": "flqY5YMCvIpv5fpx",
+            "name": "Processgate.ai_propojeni"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=Přelož a adaptuj následující data WordPress článku z češtiny do angličtiny (US English).\n\nJsi zkušený technologický copywriter a překladatel se specializací na AI, automatizaci, LLM a produktivitu práce. Tvým cílem je vytvořit text, který zní přirozeně, odborně a čtivě, nikoliv jako strojový překlad.\n\n--- VSTUPNÍ DATA ---\nTitle: {{ $json.title.rendered }}\nContent: {{ $json.content.rendered }}\nExcerpt: {{ $json.excerpt.rendered }}\n\n--- INSTRUKCE PRO PŘEKLAD ---\n\n1. ZACHOVÁNÍ STRUKTURY A FORMÁTU (KRITICKÉ):\n   - Musíš striktně dodržet původní HTML strukturu.\n   - Neměň hierarchii nadpisů (pokud je v textu <h2>, musí zůstat <h2>, neměň ho na <h3> ani na tučný text).\n   - Zachovej všechny HTML tagy (<p>, <ul>, <li>, <strong>, <blockquote>, <a>) a atributy (class, id, href) přesně tak, jak jsou. Překládej pouze text uvnitř těchto elementů.\n   - Pokud narazíš na formátování, které nelze v angličtině replikovat 1:1, prioritou je zachovat technickou validitu HTML kódu.\n\n2. STYL, TÓN A LOKALIZACE:\n   - Piš jako expert pro experty. Používej správnou terminologii (např. \"remote work workflows\" místo \"work from home processes\").\n   - Idiomy a fráze: Nepřekládej doslovně. Pokud narazíš na české přísloví, idiom nebo specifický obrat, nahraď ho anglickým ekvivalentem, který dává smysl v kontextu moderních technologií a byznysu. Text musí mít \"flow\".\n\n3. URL SLUG:\n   - Vytvoř SEO-friendly URL slug z anglického nadpisu (pouze malá písmena, čísla a pomlčky, odstraň stop-words).\n\n4. VÝSTUPNÍ FORMÁT:\n   - Vrať POUZE validní JSON objekt.\n   - Žádný markdown (```json), žádný úvodní text.\n   - Dbej na správné \"escapování\" uvozovek uvnitř HTML obsahu, aby byl JSON validní.\n\n--- POŽADOVANÁ STRUKTURA JSON ---\n{\n  \"translated_title\": \"Anglický nadpis\",\n  \"translated_content\": \"Anglický HTML obsah (se zachovanými tagy)\",\n  \"translated_excerpt\": \"Anglický perex\",\n  \"translated_slug\": \"english-slug-example\"\n}",
+          "hasOutputParser": true,
+          "needsFallback": true,
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 3,
+        "position": [
+          784,
+          192
+        ],
+        "id": "3301fcf6-e3ee-4df8-ba17-9ac26f837c58",
+        "name": "AI Agent"
+      },
+      {
+        "parameters": {
+          "modelName": "models/gemini-3-pro-preview",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          592,
+          432
+        ],
+        "id": "edd26b57-a060-4a68-ade5-6083eae4a8af",
+        "name": "Google Gemini Chat Model",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "O18dqBggPBVuy0CJ",
+            "name": "Google Gemini(PaLM) Api account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "value": "claude-opus-4-5-20251101",
+            "mode": "list",
+            "cachedResultName": "Claude Opus 4.5"
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+        "typeVersion": 1.3,
+        "position": [
+          784,
+          432
+        ],
+        "id": "1a58520d-ecde-4906-82dc-950352cd5ecc",
+        "name": "Anthropic Chat Model",
+        "credentials": {
+          "anthropicApi": {
+            "id": "Un8VhObHV3fiqTVr",
+            "name": "Anthropic - Translate_To_English"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "title": "={{ $json.translated_title }}",
+          "additionalFields": {
+            "content": "={{ $json.translated_content }}",
+            "slug": "={{ $json.translated_slug }}",
+            "categories": "={{ $('Get Post for Translation').item.json.categories }}",
+            "tags": "={{ $('Get Post for Translation').item.json.tags }}"
+          }
+        },
+        "type": "n8n-nodes-base.wordpress",
+        "typeVersion": 1,
+        "position": [
+          1376,
+          192
+        ],
+        "id": "e819f1b5-8c75-4265-928d-2c2dadb98d98",
+        "name": "Create a post",
+        "credentials": {
+          "wordpressApi": {
+            "id": "flqY5YMCvIpv5fpx",
+            "name": "Processgate.ai_propojeni"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// 1. Získáme textový výstup z AI\nlet aiOutput = $input.item.json.output;\n\n// 2. OČIŠTĚNÍ: Odstraníme \"```json\", \"```\" a případné mezery okolo\n// Tento regulární výraz najde začátek i konec code blocku a smaže ho\nif (typeof aiOutput === 'string') {\n  aiOutput = aiOutput.replace(/^```json/i, '').replace(/^```/, '').replace(/```$/, '').trim();\n  \n  // Pojistka: Pokud AI přidalo nějaký text před nebo za JSON (např. \"Zde je JSON:\"),\n  // najdeme první '{' a poslední '}' a vezmeme jen to mezi tím.\n  const firstBrace = aiOutput.indexOf('{');\n  const lastBrace = aiOutput.lastIndexOf('}');\n  \n  if (firstBrace !== -1 && lastBrace !== -1) {\n    aiOutput = aiOutput.substring(firstBrace, lastBrace + 1);\n  }\n}\n\n// 3. Převedeme na objekt\ntry {\n  return JSON.parse(aiOutput);\n} catch (error) {\n  // Pokud to stále nejde, vyhodíme chybu s výpisem toho, co se nepovedlo parsovat\n  throw new Error(\"Nepodařilo se parsovat JSON. AI vrátilo: \" + aiOutput);\n}"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1136,
+          192
+        ],
+        "id": "d187c500-60d7-486e-8f30-5735d4d5f050",
+        "name": "Code in JavaScript"
+      },
+      {
+        "parameters": {
+          "method": "PUT",
+          "url": "=https://processgate.ai/wp-json/wp/v2/posts/{{ $json.id }}",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "wordpressApi",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"featured_media\": {{ $('Get Post for Translation').item.json.featured_media }}\n}",
+          "options": {}
+        },
+        "id": "00fed8ef-5c76-4325-850c-a886ab2a921a",
+        "name": "Set image ID for the post",
+        "type": "n8n-nodes-base.httpRequest",
+        "position": [
+          1568,
+          192
+        ],
+        "typeVersion": 4.2,
+        "credentials": {
+          "wordpressApi": {
+            "id": "flqY5YMCvIpv5fpx",
+            "name": "Processgate.ai_propojeni"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "content": "## Post Article + Set Featured Image\nSame picture for both languages CZ and EN",
+          "height": 432,
+          "width": 640
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          1312,
+          0
+        ],
+        "typeVersion": 1,
+        "id": "f3d10d5b-a0e7-4b19-82e5-a5341da8455e",
+        "name": "Sticky Note7"
+      },
+      {
+        "parameters": {
+          "content": "## Airtable Update\nName and URL of new post",
+          "height": 432,
+          "width": 432
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          992,
+          816
+        ],
+        "typeVersion": 1,
+        "id": "3698bdc2-c674-4f6d-8bff-1fc87d7a0d8d",
+        "name": "Sticky Note8"
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "postId": "={{ $json.id }}",
+          "updateFields": {
+            "status": "publish"
+          }
+        },
+        "type": "n8n-nodes-base.wordpress",
+        "typeVersion": 1,
+        "position": [
+          1744,
+          192
+        ],
+        "id": "f0bb7650-3694-409b-be35-d7d30e223d93",
+        "name": "Publish",
+        "credentials": {
+          "wordpressApi": {
+            "id": "flqY5YMCvIpv5fpx",
+            "name": "Processgate.ai_propojeni"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "url": "https://processgate.ai/wp-json/wp/v2/tags",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "wordpressApi",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "include",
+                "value": "={{ $('Get Post for Translation').item.json.tags && $('Get Post for Translation').item.json.tags.length > 0 ? $('Get Post for Translation').item.json.tags.join(',') : 0 }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          384,
+          1024
+        ],
+        "id": "c262be87-9f73-455d-99dd-925840d0a940",
+        "name": "Get CZ Tags",
+        "alwaysOutputData": true,
+        "credentials": {
+          "wordpressApi": {
+            "id": "flqY5YMCvIpv5fpx",
+            "name": "Processgate.ai_propojeni"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// ... (začátek kódu zůstává stejný: získání ID, categories, tags atd.) ...\n\n// 1. Získání ID\nconst czPostIdRaw = $('Get Post for Translation').item.json.id;\nconst enPostIdRaw = $('Set image ID for the post').item.json.id; \n\nconst czPostId = parseInt(czPostIdRaw);\nconst enPostId = parseInt(enPostIdRaw);\n\n// 2. Kontroly...\nif (!czPostId || isNaN(czPostId)) throw new Error(\"Chybí ID českého článku!\");\nif (!enPostId || isNaN(enPostId)) throw new Error(\"Chybí ID anglického článku!\");\n\nconst langCodeCZ = 'cs'; \nconst langCodeEN = 'en'; \n\n// 3. Mapa překladů\nconst translationsMap = {};\ntranslationsMap[langCodeCZ] = czPostId;\ntranslationsMap[langCodeEN] = enPostId;\n\n// ... (Kód pro kategorie a tagy nechte tak, jak byl) ...\nlet enCategoryIds = [];\n// ... (váš kód pro kategorie) ...\n\n// 4. FINÁLNÍ BODY - ZMĚNA NÁZVU POLE\nconst requestBody = {\n  status: 'publish',\n  \n  // TADY JE ZMĚNA: Používáme náš vlastní název, aby se to nehádalo s Polylangem\n  _n8n_polylang_pair: translationsMap \n};\n\n// Přidání kategorií/tagů\nif (typeof enCategoryIds !== 'undefined' && enCategoryIds.length > 0) requestBody.categories = enCategoryIds;\nif (typeof enTagIds !== 'undefined' && enTagIds.length > 0) requestBody.tags = enTagIds;\n\nreturn {\n  json: {\n    targetPostId: enPostId,\n    body: requestBody\n  }\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          560,
+          1024
+        ],
+        "id": "ecaa0d78-70e3-4a47-8bce-cb8eabd28c0c",
+        "name": "Map IDs to EN"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "=https://processgate.ai/wp-json/wp/v2/posts/{{ $json.targetPostId }}",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "wordpressApi",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify($json.body) }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          736,
+          1024
+        ],
+        "id": "b5e17aa2-89e9-4de4-972a-f99e2ed6df32",
+        "name": "Update Post Taxonomies",
+        "credentials": {
+          "wordpressApi": {
+            "id": "flqY5YMCvIpv5fpx",
+            "name": "Processgate.ai_propojeni"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "content": "## Categories & Tags Update\n",
+          "height": 432,
+          "width": 880
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          48,
+          816
+        ],
+        "typeVersion": 1,
+        "id": "e7a19f99-5ec9-48ca-9939-3a2e62d4e36f",
+        "name": "Sticky Note9"
+      },
+      {
+        "parameters": {
+          "url": "https://processgate.ai/wp-json/wp/v2/categories",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "wordpressApi",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "include",
+                "value": "={{ $('Get Post for Translation').item.json.categories && $('Get Post for Translation').item.json.categories.length > 0 ? $('Get Post for Translation').item.json.categories.join(',') : 0 }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          160,
+          1024
+        ],
+        "id": "125a727a-5af2-4d33-9edc-7051855db491",
+        "name": "Get CZ Categories",
+        "alwaysOutputData": true,
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "iShv4anYkU0xcul0",
+            "name": "Header Auth Tabidoo Obchod"
+          },
+          "wordpressApi": {
+            "id": "flqY5YMCvIpv5fpx",
+            "name": "Processgate.ai_propojeni"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "base": {
+            "__rl": true,
+            "value": "app75Y90Vp6abIF1u",
+            "mode": "list",
+            "cachedResultName": "Překlad CZ-EN processgate.ai",
+            "cachedResultUrl": "https://airtable.com/app75Y90Vp6abIF1u"
+          },
+          "table": {
+            "__rl": true,
+            "value": "tblAsvbCC7ZvChht8",
+            "mode": "list",
+            "cachedResultName": "Proces překladu",
+            "cachedResultUrl": "https://airtable.com/app75Y90Vp6abIF1u/tblAsvbCC7ZvChht8"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "WP ID": "={{ $('Map IDs to EN').item.json.body._n8n_polylang_pair.cs }}",
+              "Status": "Přeloženo",
+              "New URL": "={{ $json.link }}",
+              "New Name": "={{ $json.title.rendered }}"
+            },
+            "matchingColumns": [
+              "WP ID"
+            ],
+            "schema": [
+              {
+                "id": "id",
+                "displayName": "id",
+                "required": false,
+                "defaultMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": true,
+                "removed": true
+              },
+              {
+                "id": "WP ID",
+                "displayName": "WP ID",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "number",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "URL",
+                "displayName": "URL",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": true
+              },
+              {
+                "id": "Název",
+                "displayName": "Název",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": true
+              },
+              {
+                "id": "Status",
+                "displayName": "Status",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "options",
+                "options": [
+                  {
+                    "name": "K překladu",
+                    "value": "K překladu"
+                  },
+                  {
+                    "name": "Přeložit",
+                    "value": "Přeložit"
+                  },
+                  {
+                    "name": "Přeloženo",
+                    "value": "Přeloženo"
+                  }
+                ],
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "New Name",
+                "displayName": "New Name",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "New URL",
+                "displayName": "New URL",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.airtable",
+        "typeVersion": 2.1,
+        "position": [
+          1136,
+          1024
+        ],
+        "id": "68de7a03-9bef-4269-8eae-ec20d64f5b38",
+        "name": "Update record",
+        "credentials": {
+          "airtableTokenApi": {
+            "id": "112UtIzO07XgrN7A",
+            "name": "Airtable - zmidloch@z-agency.cz"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "pollTimes": {
+            "item": [
+              {
+                "mode": "everyMinute"
+              }
+            ]
+          },
+          "authentication": "airtableTokenApi",
+          "baseId": {
+            "__rl": true,
+            "value": "app75Y90Vp6abIF1u",
+            "mode": "id"
+          },
+          "tableId": {
+            "__rl": true,
+            "value": "tblAsvbCC7ZvChht8",
+            "mode": "id"
+          },
+          "triggerField": "Status",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.airtableTrigger",
+        "typeVersion": 1,
+        "position": [
+          48,
+          192
+        ],
+        "id": "0f2eb490-5e62-47d6-9b5d-00a0d3753c20",
+        "name": "Airtable Trigger",
+        "credentials": {
+          "airtableTokenApi": {
+            "id": "112UtIzO07XgrN7A",
+            "name": "Airtable - zmidloch@z-agency.cz"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Status - Preklad": {
+        "main": [
+          [
+            {
+              "node": "Get Post for Translation",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Post for Translation": {
+        "main": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AI Agent": {
+        "main": [
+          [
+            {
+              "node": "Code in JavaScript",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Gemini Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Anthropic Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_languageModel",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Create a post": {
+        "main": [
+          [
+            {
+              "node": "Set image ID for the post",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code in JavaScript": {
+        "main": [
+          [
+            {
+              "node": "Create a post",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set image ID for the post": {
+        "main": [
+          [
+            {
+              "node": "Publish",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Publish": {
+        "main": [
+          [
+            {
+              "node": "Get CZ Categories",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get CZ Tags": {
+        "main": [
+          [
+            {
+              "node": "Map IDs to EN",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Map IDs to EN": {
+        "main": [
+          [
+            {
+              "node": "Update Post Taxonomies",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Update Post Taxonomies": {
+        "main": [
+          [
+            {
+              "node": "Update record",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get CZ Categories": {
+        "main": [
+          [
+            {
+              "node": "Get CZ Tags",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Airtable Trigger": {
+        "main": [
+          [
+            {
+              "node": "Status - Preklad",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jiri Zmidloch",
+    "name": "Version e58546ce",
+    "description": ""
+  },
+  "activeVersionId": "e58546ce-a5cd-4abd-97ad-540f8dc15c46",
+  "connections": {
+    "Status - Preklad": {
+      "main": [
+        [
+          {
+            "node": "Get Post for Translation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Post for Translation": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Create a post": {
+      "main": [
+        [
+          {
+            "node": "Set image ID for the post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Create a post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set image ID for the post": {
+      "main": [
+        [
+          {
+            "node": "Publish",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Publish": {
+      "main": [
+        [
+          {
+            "node": "Get CZ Categories",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get CZ Tags": {
+      "main": [
+        [
+          {
+            "node": "Map IDs to EN",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Map IDs to EN": {
+      "main": [
+        [
+          {
+            "node": "Update Post Taxonomies",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Post Taxonomies": {
+      "main": [
+        [
+          {
+            "node": "Update record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get CZ Categories": {
+      "main": [
+        [
+          {
+            "node": "Get CZ Tags",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable Trigger": {
+      "main": [
+        [
+          {
+            "node": "Status - Preklad",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-26T12:11:41.076Z",
+  "id": "m5b8DVKNZmSivuMZ",
+  "isArchived": false,
+  "meta": null,
+  "name": "Processgate.ai - Translate CZ_to_EN - Workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Trigger for Translation - Status\n",
+        "height": 416,
+        "width": 464
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "c7c7ad4e-45a6-4b12-8413-54bf10a09677",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Get Post - Translate - Format\nPřepínač pošle ščánek do překládajícího agenta na Gemini 3 Pro",
+        "height": 672,
+        "width": 752
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        512,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "2b7199f2-52b8-4700-9ca9-c1a3dd295ffa",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "c3e0bf0f-74bd-488d-9ad3-b741742d9b07",
+              "leftValue": "={{ $json.fields.Status }}",
+              "rightValue": "Přeložit",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        240,
+        192
+      ],
+      "id": "6f5bd039-45ee-42f1-b0f7-8e5de3cbfb26",
+      "name": "Status - Preklad"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "postId": "={{ $json.fields[\"WP ID\"] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.wordpress",
+      "typeVersion": 1,
+      "position": [
+        576,
+        192
+      ],
+      "id": "051ebc05-1365-4802-8bf5-5ad44a6ece34",
+      "name": "Get Post for Translation",
+      "credentials": {
+        "wordpressApi": {
+          "id": "flqY5YMCvIpv5fpx",
+          "name": "Processgate.ai_propojeni"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Přelož a adaptuj následující data WordPress článku z češtiny do angličtiny (US English).\n\nJsi zkušený technologický copywriter a překladatel se specializací na AI, automatizaci, LLM a produktivitu práce. Tvým cílem je vytvořit text, který zní přirozeně, odborně a čtivě, nikoliv jako strojový překlad.\n\n--- VSTUPNÍ DATA ---\nTitle: {{ $json.title.rendered }}\nContent: {{ $json.content.rendered }}\nExcerpt: {{ $json.excerpt.rendered }}\n\n--- INSTRUKCE PRO PŘEKLAD ---\n\n1. ZACHOVÁNÍ STRUKTURY A FORMÁTU (KRITICKÉ):\n   - Musíš striktně dodržet původní HTML strukturu.\n   - Neměň hierarchii nadpisů (pokud je v textu <h2>, musí zůstat <h2>, neměň ho na <h3> ani na tučný text).\n   - Zachovej všechny HTML tagy (<p>, <ul>, <li>, <strong>, <blockquote>, <a>) a atributy (class, id, href) přesně tak, jak jsou. Překládej pouze text uvnitř těchto elementů.\n   - Pokud narazíš na formátování, které nelze v angličtině replikovat 1:1, prioritou je zachovat technickou validitu HTML kódu.\n\n2. STYL, TÓN A LOKALIZACE:\n   - Piš jako expert pro experty. Používej správnou terminologii (např. \"remote work workflows\" místo \"work from home processes\").\n   - Idiomy a fráze: Nepřekládej doslovně. Pokud narazíš na české přísloví, idiom nebo specifický obrat, nahraď ho anglickým ekvivalentem, který dává smysl v kontextu moderních technologií a byznysu. Text musí mít \"flow\".\n\n3. URL SLUG:\n   - Vytvoř SEO-friendly URL slug z anglického nadpisu (pouze malá písmena, čísla a pomlčky, odstraň stop-words).\n\n4. VÝSTUPNÍ FORMÁT:\n   - Vrať POUZE validní JSON objekt.\n   - Žádný markdown (```json), žádný úvodní text.\n   - Dbej na správné \"escapování\" uvozovek uvnitř HTML obsahu, aby byl JSON validní.\n\n--- POŽADOVANÁ STRUKTURA JSON ---\n{\n  \"translated_title\": \"Anglický nadpis\",\n  \"translated_content\": \"Anglický HTML obsah (se zachovanými tagy)\",\n  \"translated_excerpt\": \"Anglický perex\",\n  \"translated_slug\": \"english-slug-example\"\n}",
+        "hasOutputParser": true,
+        "needsFallback": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        784,
+        192
+      ],
+      "id": "3301fcf6-e3ee-4df8-ba17-9ac26f837c58",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3-pro-preview",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        592,
+        432
+      ],
+      "id": "edd26b57-a060-4a68-ade5-6083eae4a8af",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "O18dqBggPBVuy0CJ",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "claude-opus-4-5-20251101",
+          "mode": "list",
+          "cachedResultName": "Claude Opus 4.5"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.3,
+      "position": [
+        784,
+        432
+      ],
+      "id": "1a58520d-ecde-4906-82dc-950352cd5ecc",
+      "name": "Anthropic Chat Model",
+      "credentials": {
+        "anthropicApi": {
+          "id": "Un8VhObHV3fiqTVr",
+          "name": "Anthropic - Translate_To_English"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "title": "={{ $json.translated_title }}",
+        "additionalFields": {
+          "content": "={{ $json.translated_content }}",
+          "slug": "={{ $json.translated_slug }}",
+          "categories": "={{ $('Get Post for Translation').item.json.categories }}",
+          "tags": "={{ $('Get Post for Translation').item.json.tags }}"
+        }
+      },
+      "type": "n8n-nodes-base.wordpress",
+      "typeVersion": 1,
+      "position": [
+        1376,
+        192
+      ],
+      "id": "e819f1b5-8c75-4265-928d-2c2dadb98d98",
+      "name": "Create a post",
+      "credentials": {
+        "wordpressApi": {
+          "id": "flqY5YMCvIpv5fpx",
+          "name": "Processgate.ai_propojeni"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1. Získáme textový výstup z AI\nlet aiOutput = $input.item.json.output;\n\n// 2. OČIŠTĚNÍ: Odstraníme \"```json\", \"```\" a případné mezery okolo\n// Tento regulární výraz najde začátek i konec code blocku a smaže ho\nif (typeof aiOutput === 'string') {\n  aiOutput = aiOutput.replace(/^```json/i, '').replace(/^```/, '').replace(/```$/, '').trim();\n  \n  // Pojistka: Pokud AI přidalo nějaký text před nebo za JSON (např. \"Zde je JSON:\"),\n  // najdeme první '{' a poslední '}' a vezmeme jen to mezi tím.\n  const firstBrace = aiOutput.indexOf('{');\n  const lastBrace = aiOutput.lastIndexOf('}');\n  \n  if (firstBrace !== -1 && lastBrace !== -1) {\n    aiOutput = aiOutput.substring(firstBrace, lastBrace + 1);\n  }\n}\n\n// 3. Převedeme na objekt\ntry {\n  return JSON.parse(aiOutput);\n} catch (error) {\n  // Pokud to stále nejde, vyhodíme chybu s výpisem toho, co se nepovedlo parsovat\n  throw new Error(\"Nepodařilo se parsovat JSON. AI vrátilo: \" + aiOutput);\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1136,
+        192
+      ],
+      "id": "d187c500-60d7-486e-8f30-5735d4d5f050",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://processgate.ai/wp-json/wp/v2/posts/{{ $json.id }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "wordpressApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"featured_media\": {{ $('Get Post for Translation').item.json.featured_media }}\n}",
+        "options": {}
+      },
+      "id": "00fed8ef-5c76-4325-850c-a886ab2a921a",
+      "name": "Set image ID for the post",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1568,
+        192
+      ],
+      "typeVersion": 4.2,
+      "credentials": {
+        "wordpressApi": {
+          "id": "flqY5YMCvIpv5fpx",
+          "name": "Processgate.ai_propojeni"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Post Article + Set Featured Image\nSame picture for both languages CZ and EN",
+        "height": 432,
+        "width": 640
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1312,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "f3d10d5b-a0e7-4b19-82e5-a5341da8455e",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "## Airtable Update\nName and URL of new post",
+        "height": 432,
+        "width": 432
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        992,
+        816
+      ],
+      "typeVersion": 1,
+      "id": "3698bdc2-c674-4f6d-8bff-1fc87d7a0d8d",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "postId": "={{ $json.id }}",
+        "updateFields": {
+          "status": "publish"
+        }
+      },
+      "type": "n8n-nodes-base.wordpress",
+      "typeVersion": 1,
+      "position": [
+        1744,
+        192
+      ],
+      "id": "f0bb7650-3694-409b-be35-d7d30e223d93",
+      "name": "Publish",
+      "credentials": {
+        "wordpressApi": {
+          "id": "flqY5YMCvIpv5fpx",
+          "name": "Processgate.ai_propojeni"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://processgate.ai/wp-json/wp/v2/tags",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "wordpressApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "include",
+              "value": "={{ $('Get Post for Translation').item.json.tags && $('Get Post for Translation').item.json.tags.length > 0 ? $('Get Post for Translation').item.json.tags.join(',') : 0 }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        384,
+        1024
+      ],
+      "id": "c262be87-9f73-455d-99dd-925840d0a940",
+      "name": "Get CZ Tags",
+      "alwaysOutputData": true,
+      "credentials": {
+        "wordpressApi": {
+          "id": "flqY5YMCvIpv5fpx",
+          "name": "Processgate.ai_propojeni"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// ... (začátek kódu zůstává stejný: získání ID, categories, tags atd.) ...\n\n// 1. Získání ID\nconst czPostIdRaw = $('Get Post for Translation').item.json.id;\nconst enPostIdRaw = $('Set image ID for the post').item.json.id; \n\nconst czPostId = parseInt(czPostIdRaw);\nconst enPostId = parseInt(enPostIdRaw);\n\n// 2. Kontroly...\nif (!czPostId || isNaN(czPostId)) throw new Error(\"Chybí ID českého článku!\");\nif (!enPostId || isNaN(enPostId)) throw new Error(\"Chybí ID anglického článku!\");\n\nconst langCodeCZ = 'cs'; \nconst langCodeEN = 'en'; \n\n// 3. Mapa překladů\nconst translationsMap = {};\ntranslationsMap[langCodeCZ] = czPostId;\ntranslationsMap[langCodeEN] = enPostId;\n\n// ... (Kód pro kategorie a tagy nechte tak, jak byl) ...\nlet enCategoryIds = [];\n// ... (váš kód pro kategorie) ...\n\n// 4. FINÁLNÍ BODY - ZMĚNA NÁZVU POLE\nconst requestBody = {\n  status: 'publish',\n  \n  // TADY JE ZMĚNA: Používáme náš vlastní název, aby se to nehádalo s Polylangem\n  _n8n_polylang_pair: translationsMap \n};\n\n// Přidání kategorií/tagů\nif (typeof enCategoryIds !== 'undefined' && enCategoryIds.length > 0) requestBody.categories = enCategoryIds;\nif (typeof enTagIds !== 'undefined' && enTagIds.length > 0) requestBody.tags = enTagIds;\n\nreturn {\n  json: {\n    targetPostId: enPostId,\n    body: requestBody\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        1024
+      ],
+      "id": "ecaa0d78-70e3-4a47-8bce-cb8eabd28c0c",
+      "name": "Map IDs to EN"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://processgate.ai/wp-json/wp/v2/posts/{{ $json.targetPostId }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "wordpressApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.body) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        736,
+        1024
+      ],
+      "id": "b5e17aa2-89e9-4de4-972a-f99e2ed6df32",
+      "name": "Update Post Taxonomies",
+      "credentials": {
+        "wordpressApi": {
+          "id": "flqY5YMCvIpv5fpx",
+          "name": "Processgate.ai_propojeni"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Categories & Tags Update\n",
+        "height": 432,
+        "width": 880
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        48,
+        816
+      ],
+      "typeVersion": 1,
+      "id": "e7a19f99-5ec9-48ca-9939-3a2e62d4e36f",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "url": "https://processgate.ai/wp-json/wp/v2/categories",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "wordpressApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "include",
+              "value": "={{ $('Get Post for Translation').item.json.categories && $('Get Post for Translation').item.json.categories.length > 0 ? $('Get Post for Translation').item.json.categories.join(',') : 0 }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        160,
+        1024
+      ],
+      "id": "125a727a-5af2-4d33-9edc-7051855db491",
+      "name": "Get CZ Categories",
+      "alwaysOutputData": true,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "iShv4anYkU0xcul0",
+          "name": "Header Auth Tabidoo Obchod"
+        },
+        "wordpressApi": {
+          "id": "flqY5YMCvIpv5fpx",
+          "name": "Processgate.ai_propojeni"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "app75Y90Vp6abIF1u",
+          "mode": "list",
+          "cachedResultName": "Překlad CZ-EN processgate.ai",
+          "cachedResultUrl": "https://airtable.com/app75Y90Vp6abIF1u"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblAsvbCC7ZvChht8",
+          "mode": "list",
+          "cachedResultName": "Proces překladu",
+          "cachedResultUrl": "https://airtable.com/app75Y90Vp6abIF1u/tblAsvbCC7ZvChht8"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "WP ID": "={{ $('Map IDs to EN').item.json.body._n8n_polylang_pair.cs }}",
+            "Status": "Přeloženo",
+            "New URL": "={{ $json.link }}",
+            "New Name": "={{ $json.title.rendered }}"
+          },
+          "matchingColumns": [
+            "WP ID"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "WP ID",
+              "displayName": "WP ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "URL",
+              "displayName": "URL",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Název",
+              "displayName": "Název",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "K překladu",
+                  "value": "K překladu"
+                },
+                {
+                  "name": "Přeložit",
+                  "value": "Přeložit"
+                },
+                {
+                  "name": "Přeloženo",
+                  "value": "Přeloženo"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "New Name",
+              "displayName": "New Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "New URL",
+              "displayName": "New URL",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1136,
+        1024
+      ],
+      "id": "68de7a03-9bef-4269-8eae-ec20d64f5b38",
+      "name": "Update record",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable - zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "authentication": "airtableTokenApi",
+        "baseId": {
+          "__rl": true,
+          "value": "app75Y90Vp6abIF1u",
+          "mode": "id"
+        },
+        "tableId": {
+          "__rl": true,
+          "value": "tblAsvbCC7ZvChht8",
+          "mode": "id"
+        },
+        "triggerField": "Status",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtableTrigger",
+      "typeVersion": 1,
+      "position": [
+        48,
+        192
+      ],
+      "id": "0f2eb490-5e62-47d6-9b5d-00a0d3753c20",
+      "name": "Airtable Trigger",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable - zmidloch@z-agency.cz"
+        }
+      }
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "zVAjJgKV17IWzFP7"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-26T12:11:41.076Z",
+      "createdAt": "2025-12-26T12:11:41.076Z",
+      "role": "workflow:owner",
+      "workflowId": "m5b8DVKNZmSivuMZ",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": {
+    "node:Airtable Trigger": {
+      "lastTimeChecked": "2025-12-26T12:14:49Z"
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-12-26T12:34:46.797Z",
+  "versionId": "e58546ce-a5cd-4abd-97ad-540f8dc15c46"
+}
