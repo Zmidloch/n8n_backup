@@ -337,6 +337,17 @@
       "main": [
         [
           {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
             "node": "Create a record",
             "type": "main",
             "index": 0
@@ -371,6 +382,21 @@
     },
     {
       "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"nodes\": [\n    {\n      \"parameters\": {\n        \"assignments\": {\n          \"assignments\": [\n            {\n              \"id\": \"start_game_iso\",\n              \"name\": \"Zacatek_Hry\",\n              \"value\": \"{{ $json.body.date_1.split('.').reverse().join('-') }}T{{ $json.body.time_1_hours.toString().padStart(2, '0') }}:{{ $json.body.time_1_minutes.toString().padStart(2, '0') }}:00\",\n              \"type\": \"string\"\n            },\n            {\n              \"id\": \"end_game_iso\",\n              \"name\": \"Konec_Hry\",\n              \"value\": \"{{ (() => { const d = $json.body.date_1.split('.'); const start = new Date(parseInt(d[2]), parseInt(d[1]) - 1, parseInt(d[0]), parseInt($json.body.time_1_hours), parseInt($json.body.time_1_minutes)); const duration = parseFloat(JSON.parse($json.body.select_4)[0].replace(',', '.')); start.setMinutes(start.getMinutes() + (duration * 60)); const pad = (n) => n.toString().padStart(2, '0'); return start.getFullYear() + '-' + pad(start.getMonth() + 1) + '-' + pad(start.getDate()) + 'T' + pad(start.getHours()) + ':' + pad(start.getMinutes()) + ':00'; })() }}\",\n              \"type\": \"string\"\n            },\n            {\n              \"id\": \"duration_formatted\",\n              \"name\": \"Delka_Hry_Format\",\n              \"value\": \"{{ Math.floor(parseFloat(JSON.parse($json.body.select_4)[0].replace(',', '.'))).toString() + ':' + Math.round((parseFloat(JSON.parse($json.body.select_4)[0].replace(',', '.')) % 1) * 60).toString().padStart(2, '0') }}\",\n              \"type\": \"string\"\n            },\n            {\n              \"id\": \"price_num\",\n              \"name\": \"Cena_Cislo\",\n              \"value\": \"{{ $json.body.calculation_1 ? parseFloat($json.body.calculation_1) : 0 }}\",\n              \"type\": \"number\"\n            },\n            {\n              \"id\": \"teams_num\",\n              \"name\": \"Pocet_Tymu_Cislo\",\n              \"value\": \"{{ $json.body.number_1 ? parseInt($json.body.number_1) : 0 }}\",\n              \"type\": \"number\"\n            },\n            {\n              \"id\": \"custom_id\",\n              \"name\": \"TH_ID\",\n              \"value\": \"{{ $json.body.hidden_1 }}\",\n              \"type\": \"string\"\n            }\n          ]\n        },\n        \"options\": {}\n      },\n      \"id\": \"edit-fields-formatted-string\",\n      \"name\": \"Formatovani Dat\",\n      \"type\": \"n8n-nodes-base.set\",\n      \"typeVersion\": 3.4,\n      \"position\": [\n        460,\n        0\n      ]\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "54db1607-8f2d-43d9-ac17-d29544402801",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
         "operation": "create",
         "base": {
           "__rl": true,
@@ -389,29 +415,32 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "TH ID": "={{ $workflow.id }}",
-            "Kupující - Jméno a Příjmení": "={{ $json.body.name_1 }}",
-            "Kupující - Email": "={{ $json.body.email_1 }}",
-            "Kupující - Telefon": "={{ $json.body.phone_1 }}",
-            "Kupující - Město": "={{ $json.body.address_1_city }}",
-            "Kupující - Adresa": "={{ $json.body.address_1_street_address }}",
-            "Kupující - PSČ": "={{ $json.body.address_1_zip }}",
-            "Kupující - Stát": "={{ $json.body.address_1_country }}",
-            "Celková cena": "=",
-            "Cena za tým": 0,
-            "Počet týmů": "={{ $json.body.number_1 }}",
-            "Délka hry": "={{ $json.body.select_4 }}",
-            "Hráč - Jméno a Příjmení": "={{ $json.body.name_2 }}",
-            "Hráč - Email": "={{ $json.body.email_2 }}",
-            "Hráč - Telefon": "={{ $json.body.phone_2 }}",
+            "Kupující - Jméno a Příjmení": "={{ $('Webhook').item.json.body.name_1 }}",
+            "Kupující - Email": "={{ $('Webhook').item.json.body.confirm_email_1 }}",
+            "Kupující - Telefon": "={{ $('Webhook').item.json.body.phone_1 }}",
+            "Kupující - Město": "={{ $('Webhook').item.json.body.address_1_city }}",
+            "Kupující - Adresa": "={{ $('Webhook').item.json.body.address_1_street_address }}",
+            "Kupující - PSČ": "={{ $('Webhook').item.json.body.address_1_zip }}",
+            "Kupující - Stát": "={{ $('Webhook').item.json.body.address_1_country }}",
+            "Celková cena": "={{ $json.nodes[0].parameters.assignments.assignments[3].value }}",
+            "Cena za tým": "={{ $('Webhook').item.json.body.calculation_2 }}",
+            "Počet týmů": "={{ $json.nodes[0].parameters.assignments.assignments[4].value }}",
+            "Délka hry": "={{ $json.nodes[0].parameters.assignments.assignments[2].value }}",
+            "Hráč - Jméno a Příjmení": "={{ $('Webhook').item.json.body.name_2 }}",
+            "Hráč - Email": "={{ $('Webhook').item.json.body.email_2 }}",
+            "Hráč - Telefon": "={{ $('Webhook').item.json.body.phone_2 }}",
             "Stripe platba": "Čeká se na platbu",
-            "Datum hry": "={{ $json.body.date_1 }}"
+            "Datum hry": "={{ $json.nodes[0].parameters.assignments.assignments[0].value }}",
+            "Název hry": "Treasure Hunt Budapest",
+            "ID objednávky": "={{ $('Webhook').item.json.body.form_uid }}",
+            "Start hry": "={{ $json.nodes[0].parameters.assignments.assignments[0].value }}",
+            "Konec hry": "={{ $json.nodes[0].parameters.assignments.assignments[1].value }}"
           },
           "matchingColumns": [],
           "schema": [
             {
-              "id": "TH ID",
-              "displayName": "TH ID",
+              "id": "ID objednávky",
+              "displayName": "ID objednávky",
               "required": false,
               "defaultMatch": false,
               "canBeUsedToMatch": true,
@@ -564,6 +593,17 @@
               "removed": false
             },
             {
+              "id": "Start hry",
+              "displayName": "Start hry",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
               "id": "Délka hry",
               "displayName": "Délka hry",
               "required": false,
@@ -571,6 +611,17 @@
               "canBeUsedToMatch": true,
               "display": true,
               "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Konec hry",
+              "displayName": "Konec hry",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
               "readOnly": false,
               "removed": false
             },
@@ -643,12 +694,14 @@
           "attemptToConvertTypes": false,
           "convertFieldsToString": false
         },
-        "options": {}
+        "options": {
+          "typecast": true
+        }
       },
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2.1,
       "position": [
-        208,
+        432,
         0
       ],
       "id": "30094aef-be0d-423d-bb4b-5dccbe0c31ee",
@@ -676,6 +729,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-12-27T15:46:23.377Z",
-  "versionId": "f4e8233d-5deb-4d25-a05c-bb67fcb9039c"
+  "updatedAt": "2025-12-27T18:20:57.957Z",
+  "versionId": "d8d436b2-546a-4869-8156-6b383d2b6719"
 }
