@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2025-12-26T23:10:40.374Z",
-    "createdAt": "2025-12-26T23:10:37.114Z",
-    "versionId": "feb8fe8b-547a-44af-9e03-2b020b2f3fb1",
+    "updatedAt": "2025-12-26T23:19:13.709Z",
+    "createdAt": "2025-12-26T23:19:09.737Z",
+    "versionId": "2988ad7f-630f-4681-a35c-98d6c3972390",
     "workflowId": "nIXfhKHUN0xJidAX",
     "nodes": [
       {
@@ -408,7 +408,9 @@
           "title": "={{ $json.translated_title }}",
           "additionalFields": {
             "content": "={{ $json.translated_content }}",
-            "slug": "={{ $json.translated_slug }}"
+            "slug": "={{ $json.translated_slug }}",
+            "categories": "={{ $('Get Post for Translation').item.json.categories }}",
+            "tags": "={{ $('Get Post for Translation').item.json.tags }}"
           }
         },
         "type": "n8n-nodes-base.wordpress",
@@ -1079,10 +1081,10 @@
       }
     },
     "authors": "Jiri Zmidloch",
-    "name": "Version feb8fe8b",
+    "name": "Version 2988ad7f",
     "description": ""
   },
-  "activeVersionId": "feb8fe8b-547a-44af-9e03-2b020b2f3fb1",
+  "activeVersionId": "2988ad7f-630f-4681-a35c-98d6c3972390",
   "connections": {
     "Webhook": {
       "main": [
@@ -1728,7 +1730,9 @@
         "title": "={{ $json.translated_title }}",
         "additionalFields": {
           "content": "={{ $json.translated_content }}",
-          "slug": "={{ $json.translated_slug }}"
+          "slug": "={{ $json.translated_slug }}",
+          "categories": "={{ $('Get Post for Translation').item.json.categories }}",
+          "tags": "={{ $('Get Post for Translation').item.json.tags }}"
         }
       },
       "type": "n8n-nodes-base.wordpress",
@@ -2182,11 +2186,11 @@
   ],
   "staticData": {
     "node:Airtable Trigger": {
-      "lastTimeChecked": "2025-12-26T23:13:51Z"
+      "lastTimeChecked": "2025-12-26T23:27:31Z"
     }
   },
   "tags": [],
   "triggerCount": 2,
-  "updatedAt": "2025-12-26T23:10:37.111Z",
-  "versionId": "feb8fe8b-547a-44af-9e03-2b020b2f3fb1"
+  "updatedAt": "2025-12-26T23:19:09.733Z",
+  "versionId": "2988ad7f-630f-4681-a35c-98d6c3972390"
 }
