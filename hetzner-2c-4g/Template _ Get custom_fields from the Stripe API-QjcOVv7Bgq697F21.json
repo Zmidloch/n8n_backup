@@ -1,0 +1,911 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Stripe Trigger": {
+      "main": [
+        [
+          {
+            "node": "Filter by paid only",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stripe | Get checkout line items": {
+      "main": [
+        [
+          {
+            "node": "split templates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "split templates": {
+      "main": [
+        [
+          {
+            "node": "Stripe | Get product info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Set Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stripe | Get product info": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Fields": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Email with HTML design",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "WhatsApp Business Cloud",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter by paid only": {
+      "main": [
+        [
+          {
+            "node": "Stripe | Get checkout line items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Customer": {
+      "main": [
+        [
+          {
+            "node": "Stripe | Invoice Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stripe | Invoice Items": {
+      "main": [
+        [
+          {
+            "node": "Stripe | Create invoice",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stripe | Create invoice": {
+      "main": [
+        [
+          {
+            "node": "Stripe | Finalize invoice",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Create Customer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stripe | Get latest checkout sessions1": {
+      "main": [
+        [
+          {
+            "node": "split data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "split data1": {
+      "main": [
+        [
+          {
+            "node": "split custom_fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "split custom_fields1": {
+      "main": [
+        [
+          {
+            "node": "Filter by custom_field",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-28T21:10:35.525Z",
+  "id": "QjcOVv7Bgq697F21",
+  "isArchived": false,
+  "meta": null,
+  "name": "Template | Get custom_fields from the Stripe API",
+  "nodes": [
+    {
+      "parameters": {
+        "events": [
+          "checkout.session.completed"
+        ]
+      },
+      "type": "n8n-nodes-base.stripeTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1504,
+        256
+      ],
+      "id": "5fe0daee-63f4-43d8-99f9-ef0bd65d1745",
+      "name": "Stripe Trigger",
+      "webhookId": "5c5c7e27-2b87-4034-939f-b73045659428",
+      "credentials": {
+        "stripeApi": {
+          "id": "0ZpFJqgoU0OQpDBU",
+          "name": "Stripe account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://api.stripe.com/v1/checkout/sessions/{{ $json.data.object.id }}/line_items",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "stripeApi",
+        "options": {}
+      },
+      "id": "72f0c565-6d10-4e7f-b7c9-6349cb8a4de1",
+      "name": "Stripe | Get checkout line items",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1056,
+        256
+      ],
+      "credentials": {
+        "stripeApi": {
+          "id": "0ZpFJqgoU0OQpDBU",
+          "name": "Stripe account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -832,
+        256
+      ],
+      "id": "6e559f93-baf2-44f7-a8b7-9fc88ea7dee0",
+      "name": "split templates"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        256
+      ],
+      "id": "e15ffcfd-e854-4529-81c8-30607fe86bcb",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.stripe.com/v1/products/{{ $json.price.product }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "stripeApi",
+        "options": {}
+      },
+      "id": "0e5ee015-11ca-4095-8a37-a07cc1c19844",
+      "name": "Stripe | Get product info",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -624,
+        256
+      ],
+      "credentials": {
+        "stripeApi": {
+          "id": "0ZpFJqgoU0OQpDBU",
+          "name": "Stripe account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "25cb3a28-9536-4718-a1e5-d099f7796a1a",
+              "name": "product_names",
+              "value": "={{ $json.data.map(item => '- ' + item.name).join(\"\\n\") }}",
+              "type": "string"
+            },
+            {
+              "id": "d7f34c58-f5c3-4e4f-ae4e-241307c34cdf",
+              "name": "price",
+              "value": "={{ $('Stripe Trigger').item.json.data.object.amount_total/100 }}",
+              "type": "string"
+            },
+            {
+              "id": "2a45d9d9-191c-44d1-8825-997d34680354",
+              "name": "currency",
+              "value": "={{ $('Stripe | Get checkout line items').item.json.data[0].currency.toUpperCase() }}",
+              "type": "string"
+            },
+            {
+              "id": "1212f7b4-6781-4657-bf29-a4ae6e0a5261",
+              "name": "customer_email",
+              "value": "={{ $('Stripe Trigger').item.json.data.object.customer_details.email }}",
+              "type": "string"
+            },
+            {
+              "id": "9958ea3b-2639-4598-b5e6-073c344498d2",
+              "name": "customer_name",
+              "value": "={{ $('Stripe Trigger').item.json.data.object.customer_details.name }}",
+              "type": "string"
+            },
+            {
+              "id": "fe43f81a-c1b9-4e2d-846c-69a389501902",
+              "name": "customer_country",
+              "value": "={{ $('Stripe Trigger').item.json.data.object.customer_details.address.country }}",
+              "type": "string"
+            },
+            {
+              "id": "2d253715-bf82-4ebc-8b13-c3f707195212",
+              "name": "customer_phone",
+              "value": "={{ $('Stripe Trigger').item.json.data.object.customer_details.phone }}",
+              "type": "string"
+            },
+            {
+              "id": "31f9d1e0-b41a-44c3-aca5-2f2612f7cb13",
+              "name": "item_quantity",
+              "value": "={{ $json.data.length }}",
+              "type": "number"
+            },
+            {
+              "id": "2514c761-2e58-4b9b-92fd-064f37755a3b",
+              "name": "message_string",
+              "value": "={{ $if($json.data.length > 1, \"products sold\", \"product sold\") }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -176,
+        256
+      ],
+      "id": "c61334b0-6dc2-450b-ba07-a830bbb4028c",
+      "name": "Set Fields"
+    },
+    {
+      "parameters": {
+        "chatId": "-10034563496751",
+        "text": "={{ $json.item_quantity }} {{ $json.message_string }} - {{ $json.price }} {{ $json.currency }}\n\n*{{ $json.product_names }}*\n\n{{ $json.customer_name }}\n{{ $json.customer_email }}\n{{ $json.customer_phone }}\n{{ $json.customer_country }}\n\nhttps://wa.me/{{ $json.customer_phone }}",
+        "additionalFields": {
+          "disable_web_page_preview": true,
+          "parse_mode": "Markdown",
+          "message_thread_id": 0
+        }
+      },
+      "id": "14d8d9b1-21f5-46ed-8e8d-1f28f6240ab9",
+      "name": "Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        128,
+        256
+      ],
+      "webhookId": "2468ec1b-d26d-41fc-ae74-8176c5822eab"
+    },
+    {
+      "parameters": {
+        "content": "# Use test mode\nStripe has an option to use TEST MODE, that allows you to create invoices and simulate orders without affecting your real account.\n\nThe test environment has a different API token than the production environment.\nAfter you are done testing, change the credentials from test to production.\n\nInvoices created in the test environment will not be sent via email automatically.",
+        "height": 317,
+        "width": 395,
+        "color": 5
+      },
+      "id": "81a34026-cd0b-44fa-bfb1-21a2a6976135",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1984,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Checkout items\nThis retrieves all items that were purchased during the checkout.\n\nIncluding order-bumps and recommended products the user purchased in the same checkout session.",
+        "height": 380,
+        "width": 220,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1120,
+        32
+      ],
+      "id": "20c28630-5312-4cb0-a7a7-792d81b81dc3",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Product info\nProduct information to include in the notification.",
+        "height": 380,
+        "width": 220,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -672,
+        32
+      ],
+      "id": "4693b50b-6f6d-4079-91f5-76524fbc04b1",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "### Adjust message_string\nChange the message_string to fit your use case.\n\nProducts, items... you give the name you want.",
+        "height": 380,
+        "width": 220,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        32
+      ],
+      "id": "5692a448-d0df-400d-afb5-15b6c9890b01",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Customize your notification message here.\nThe message that will be sent to your apps.\n\nFor example, at the end of the message, you can include a WhatsApp link that opens a chat with the customer.\n\nDelete any nodes you don't need, or add new ones if necessary.",
+        "height": 860,
+        "width": 340,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "358e469e-b6d0-4b61-b425-5ceedcaff70d",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "recipientPhoneNumber": "+123456789",
+        "textBody": "={{ $json.item_quantity }} {{ $json.message_string }} - {{ $json.price }} {{ $json.currency }}\n\n*{{ $json.product_names }}*\n\n{{ $json.customer_name }}\n{{ $json.customer_email }}\n{{ $json.customer_phone }}\n{{ $json.customer_country }}\n\nhttps://wa.me/{{ $json.customer_phone }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        128,
+        672
+      ],
+      "id": "cfab87db-0700-42e6-b982-716b4b7f8cc9",
+      "name": "WhatsApp Business Cloud",
+      "webhookId": "1ae05470-5f7a-40e7-b458-f5a563b705b0"
+    },
+    {
+      "parameters": {
+        "sendTo": "youremail@gmail.com",
+        "subject": "={{ $json.item_quantity }} {{ $json.message_string }} - {{ $json.price }} {{ $json.currency }}",
+        "message": "=<div style=\"max-width: 600px; margin: auto; background-color: #ffffff; padding: 20px; border: 1px solid #ddd; border-radius: 8px;\">\n  <h2 style=\"color: #333; text-align: center; margin-bottom: 10px;\">{{ $json.item_quantity }} {{ $json.message_string }} - {{ $json.price }} {{ $json.currency }}</h2>\n  \n  <h3 style=\"color: #333;\">Products:</h3>\n  <p style=\"font-size: 14px; color: #555; line-height: 1.6;\">\n    {{ $json.product_names.replace(\"\\n\",\"<br>\") }}\n  </p>\n  \n  <h3 style=\"color: #333; margin-top: 30px;\">Customer Details:</h3>\n  <p style=\"font-size: 14px; color: #555; line-height: 1.6;\">\n    {{ $json.customer_name }}<br>\n    {{ $json.customer_email }}<br>\n    {{ $json.customer_phone }}<br>\n    {{ $json.customer_country }}\n  </p>\n  \n  <div style=\"text-align: center; margin-top: 30px;\">\n    <a href=\"https://wa.me/{{ $json.customer_phone }}\" style=\"display: inline-block; padding: 12px 24px; background-color: #25d366; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 14px;\">\n      Contact via WhatsApp\n    </a>\n  </div>\n</div>\n",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        128,
+        464
+      ],
+      "id": "43f417ea-84f2-49e4-be73-24f0fd360b76",
+      "name": "Email with HTML design",
+      "webhookId": "74206a90-fea2-410b-b46a-65f7f9757162"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c69c4fd6-f06a-42cc-b474-daccb39ac147",
+              "leftValue": "={{ $json.data.object.payment_status }}",
+              "rightValue": "paid",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        -1280,
+        256
+      ],
+      "id": "2abc0b26-0c34-4cab-904c-41d0b33f1c97",
+      "name": "Filter by paid only"
+    },
+    {
+      "parameters": {
+        "resource": "customer",
+        "operation": "create",
+        "name": "John Doe",
+        "additionalFields": {
+          "email": "mytestemail@gmail.com",
+          "phone": "+1 876 789 675"
+        }
+      },
+      "id": "a272c04a-fd03-452e-8894-5e523bec99c7",
+      "name": "Create Customer",
+      "type": "n8n-nodes-base.stripe",
+      "typeVersion": 1,
+      "position": [
+        -1328,
+        704
+      ],
+      "credentials": {
+        "stripeApi": {
+          "id": "0ZpFJqgoU0OQpDBU",
+          "name": "Stripe account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.stripe.com/v1/invoiceitems",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "stripeApi",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "customer",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "name": "amount",
+              "value": "={{ 50 *100 }}"
+            },
+            {
+              "name": "currency",
+              "value": "USD"
+            },
+            {
+              "name": "description",
+              "value": "Full house premium cleaning"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9ab8c9f2-a1e6-4a48-accb-81ee3db453c9",
+      "name": "Stripe | Invoice Items",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1024,
+        704
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.stripe.com/v1/invoices",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "stripeApi",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "customer",
+              "value": "={{ $json.customer }}"
+            },
+            {
+              "name": "auto_advance",
+              "value": "true"
+            },
+            {
+              "name": "collection_method",
+              "value": "send_invoice"
+            },
+            {
+              "name": "description",
+              "value": "House cleaning services"
+            },
+            {
+              "name": "footer",
+              "value": "CleaningCompany Inc."
+            },
+            {
+              "name": "days_until_due",
+              "value": "2"
+            },
+            {
+              "name": "pending_invoice_items_behavior",
+              "value": "include"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "62237762-9c96-415d-9fdc-83f2042bccc9",
+      "name": "Stripe | Create invoice",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -704,
+        704
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.stripe.com/v1/invoices/{{ $json.id }}/finalize",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "stripeApi",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "auto_advance",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7d5112d6-a1ae-48b4-8d61-8c8855cdf8e0",
+      "name": "Stripe | Finalize invoice",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -400,
+        704
+      ]
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1568,
+        704
+      ],
+      "id": "b2972f61-34a4-4b7b-9d79-0799c2e672cf",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "content": "# Use test mode\nStripe has an option to use TEST MODE, that allows you to create invoices and simulate orders without affecting your real account.\n\nThe test environment has a different API token than the production environment.\nAfter you are done testing, change the credentials from test to production.\n\nInvoices created in the test environment will not be sent via email automatically.",
+        "height": 317,
+        "width": 395,
+        "color": 5
+      },
+      "id": "3ab9bc67-8aba-4e9e-8810-5dc81812e46a",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -2032,
+        576
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Invoice items\n- **amount** - the value of the invoice in cents (50 bucks must be sent as 5000)\n\n- **currency** - the currency ISO code. [Check here](https://docs.stripe.com/currencies#presentment-currencies) if you don't know yours.\n\n- **description** - this is used to describe the items related to that invoice and the customer will see this text when he clicks \"view details\" on the payment link.",
+        "height": 320,
+        "width": 260,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1104,
+        880
+      ],
+      "typeVersion": 1,
+      "id": "eaa04273-b457-4ec1-958b-2ce32644d10f",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "## Create invoice\n- **description** - this is used to describe the invoice itself and this text will show up for the customer\n\n- **days_until_due** - how many days the customer will have to pay the invoice before it expires\n\n- **footer** - unfortunately  the footer only shows up on the invoice PDF and will not show up on the payment link",
+        "height": 320,
+        "width": 260,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -784,
+        880
+      ],
+      "typeVersion": 1,
+      "id": "31a0b04b-cd60-42d7-8bf1-f8b2e4225091",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "## Finalize invoice\nThis node is essential if you want to send the invoice via email to the customer.\n\nStripe will only send invoices if you finalize them.\n\nBut invoices created in the test environment will not be sent via email automatically.",
+        "height": 320,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -464,
+        880
+      ],
+      "typeVersion": 1,
+      "id": "991d9a58-8ecb-4e9d-b52d-e3588824b838",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.stripe.com/v1/checkout/sessions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "stripeApi",
+        "sendQuery": true,
+        "specifyQuery": "json",
+        "jsonQuery": "={\n  \"created\": {\n    \"gte\":{{ $today.minus(20, 'days').toSeconds() }},\n    \"lte\":{{ $today.toSeconds() }}\n  }\n}",
+        "options": {
+          "pagination": {
+            "pagination": {
+              "parameters": {
+                "parameters": [
+                  {
+                    "name": "starting_after",
+                    "value": "={{ $response.body.data.last().id }}"
+                  }
+                ]
+              },
+              "paginationCompleteWhen": "other",
+              "completeExpression": "={{ $response.body.has_more == false }}"
+            }
+          }
+        }
+      },
+      "id": "faa56947-6c9d-43e6-84f5-d6d7a6d74beb",
+      "name": "Stripe | Get latest checkout sessions1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1984,
+        1744
+      ],
+      "credentials": {
+        "stripeApi": {
+          "id": "0ZpFJqgoU0OQpDBU",
+          "name": "Stripe account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "data",
+        "options": {}
+      },
+      "id": "e97f6e18-ae29-4b43-a83d-a2543dc680cc",
+      "name": "split data1",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -1696,
+        1744
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "custom_fields",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "id": "e0abbc85-cb2c-4d29-b44c-d2a7d8d299c4",
+      "name": "split custom_fields1",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -1472,
+        1744
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "4579d72e-8d48-4146-952d-9b5b400f5bce",
+              "leftValue": "={{ $json.custom_fields.key }}",
+              "rightValue": "nickname",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "34197f40-9b41-46e4-8796-be3a86e4dcca",
+              "leftValue": "={{ $json.custom_fields.key }}",
+              "rightValue": "job_title",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "193fa8ea-8b3c-4ba3-bb8e-3a177751d72b",
+      "name": "Filter by custom_field",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2,
+      "position": [
+        -1168,
+        1744
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Retrieve all checkout sessions from the last 7 days.\n\nYou can adjust the period by changing the \"created\" value.\n\n[🔍 Learn more about the \"created\" parameter](https://docs.stripe.com/api/checkout/sessions/list?lang=curl#list_checkout_sessions-created)\n\n\nAnd this node uses pagination to get all results. You want to keep those settings at the bottom.",
+        "height": 593.3373455805055,
+        "width": 252.741654751449,
+        "color": 7
+      },
+      "id": "6c27122b-4e6b-40c6-a533-d66d219aed53",
+      "name": "Sticky Note9",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -2064,
+        1344
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Split data for easier visualization",
+        "height": 267.24226082469556,
+        "width": 451.2991079615292,
+        "color": 7
+      },
+      "id": "385bd649-0707-4ee4-9539-7b4280fe2584",
+      "name": "Sticky Note10",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1744,
+        1648
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Select the custom fields you want\n\nHere you can choose to filter your contacts to keep only the ones who contain certain custom_fields.\n\nLet's say you only want the ones who have filled their nickname and job title.",
+        "height": 598.2429925878827,
+        "color": 7
+      },
+      "id": "e6a39e57-526a-4c16-9a5c-e2526673e5bf",
+      "name": "Sticky Note11",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1232,
+        1328
+      ]
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-28T21:10:35.525Z",
+      "createdAt": "2025-12-28T21:10:35.525Z",
+      "role": "workflow:owner",
+      "workflowId": "QjcOVv7Bgq697F21",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2025-12-28T09:47:20.360Z",
+      "createdAt": "2025-12-28T09:47:20.360Z",
+      "id": "qodIzhtI3JukOmNQ",
+      "name": "template"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-12-28T21:10:35.525Z",
+  "versionId": "1bde76d5-73d8-4344-a02e-065184f52346"
+}
