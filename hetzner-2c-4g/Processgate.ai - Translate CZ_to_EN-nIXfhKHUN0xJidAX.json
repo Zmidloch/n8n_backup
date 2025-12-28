@@ -1082,7 +1082,8 @@
     },
     "authors": "Jiri Zmidloch",
     "name": "Version 2988ad7f",
-    "description": ""
+    "description": "",
+    "autosaved": false
   },
   "activeVersionId": "2988ad7f-630f-4681-a35c-98d6c3972390",
   "connections": {
@@ -2186,7 +2187,7 @@
   ],
   "staticData": {
     "node:Airtable Trigger": {
-      "lastTimeChecked": "2025-12-27T10:56:31Z"
+      "lastTimeChecked": "2025-12-28T01:04:03Z"
     }
   },
   "tags": [],
