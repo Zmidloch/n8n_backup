@@ -474,7 +474,13 @@
     },
     "If": {
       "main": [
-        [],
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ],
         [
           {
             "node": "Send Error Message",
@@ -1355,7 +1361,7 @@
       "parameters": {
         "content": "## Pairing check\n**If Yes** Continue ! - **If no** Send a message!",
         "height": 336,
-        "width": 320
+        "width": 416
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
@@ -1373,8 +1379,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1040,
-        608
+        1072,
+        496
       ],
       "id": "bc51db5c-723a-4a98-b235-02795ad48fd4",
       "name": "Send Error Message",
@@ -1432,8 +1438,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1296,
-        320
+        1632,
+        272
       ],
       "typeVersion": 1,
       "id": "f4265396-a6ae-47a3-9bbc-00ddfcefdc7f",
@@ -1447,8 +1453,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1792,
-        416
+        2128,
+        368
       ],
       "typeVersion": 1,
       "id": "059d6670-aa3c-4100-bce7-937af2470676",
@@ -1462,8 +1468,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2208,
-        400
+        2544,
+        352
       ],
       "typeVersion": 1,
       "id": "2fc10fe0-f2ce-4324-bfcc-1d12f5d53bfc",
@@ -1551,8 +1557,8 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.8,
       "position": [
-        1808,
-        544
+        2144,
+        496
       ],
       "id": "ab90bea0-a7a3-4f6f-addd-9f1e21f3203e",
       "name": "Basic LLM Chain"
@@ -1564,8 +1570,8 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        2304,
-        512
+        2640,
+        464
       ],
       "id": "7b8743ae-9bd1-40b2-bd3e-d03d6db41080",
       "name": "Send a message",
@@ -1657,8 +1663,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1792,
-        112
+        2128,
+        48
       ],
       "typeVersion": 1,
       "id": "7e1ea9e5-bc45-434a-b69f-c8e0dd43d2fd",
@@ -1671,11 +1677,25 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        1856,
-        240
+        2160,
+        160
       ],
       "id": "5e45822d-f824-4abd-9908-942b0e0fd353",
       "name": "HTTP Request4"
+    },
+    {
+      "parameters": {
+        "resource": "spreadsheet",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1744,
+        416
+      ],
+      "id": "fb75efee-93a2-4ea7-8048-e40df57cd1e6",
+      "name": "Create spreadsheet"
     }
   ],
   "settings": {
@@ -1696,6 +1716,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-12-28T23:12:00.180Z",
-  "versionId": "1f689245-9ed1-4dd1-93de-721a7256dc8f"
+  "updatedAt": "2025-12-28T23:17:57.654Z",
+  "versionId": "0a018e13-f93e-4c38-8730-22fc275744ca"
 }
