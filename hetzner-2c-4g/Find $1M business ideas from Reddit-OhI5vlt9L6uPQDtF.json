@@ -1,0 +1,474 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Posts": {
+      "main": [
+        [
+          {
+            "node": "Filter Posts By Features",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Posts By Features": {
+      "main": [
+        [
+          {
+            "node": "Select Key Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select Key Fields": {
+      "main": [
+        [
+          {
+            "node": "Analysis Content By AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analysis Content By AI": {
+      "main": [
+        [
+          {
+            "node": "Parse AI Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse AI Response": {
+      "main": [
+        [
+          {
+            "node": "Filter Posts By Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Posts By Content": {
+      "main": [
+        [
+          {
+            "node": "Post Summarization",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Find Proper Solutions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post Summarization": {
+      "main": [
+        [
+          {
+            "node": "Format For Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Post Summarization",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find Proper Solutions": {
+      "main": [
+        [
+          {
+            "node": "Format For Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format For Sheets": {
+      "main": [
+        [
+          {
+            "node": "Output The Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Analysis Content By AI",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-29T13:28:19.066Z",
+  "id": "OhI5vlt9L6uPQDtF",
+  "isArchived": false,
+  "meta": null,
+  "name": "Find $1M business ideas from Reddit",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -1632,
+        352
+      ],
+      "id": "c45a95d4-9af6-462b-95b5-3bc363214d01",
+      "name": "Telegram Trigger",
+      "webhookId": "your-webhook-id"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "subreddit": "={{ $json.message.text }}",
+        "keyword": "looking for a solution",
+        "limit": 20,
+        "additionalFields": {
+          "sort": "hot"
+        }
+      },
+      "id": "aef5ad2d-aaee-4458-81c8-2dbc3cb29750",
+      "name": "Get Posts",
+      "type": "n8n-nodes-base.reddit",
+      "position": [
+        -1440,
+        352
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "upvotes-check",
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              },
+              "leftValue": "={{ $json.ups }}",
+              "rightValue": 5
+            },
+            {
+              "id": "content-check",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              },
+              "leftValue": "={{ $json.selftext }}"
+            },
+            {
+              "id": "date-check",
+              "operator": {
+                "type": "dateTime",
+                "operation": "after"
+              },
+              "leftValue": "={{ DateTime.fromSeconds($json.created).toISO() }}",
+              "rightValue": "={{ $today.minus(180,'days').toISO() }}"
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "e0e65d4e-dd32-473d-a94b-a8c486b0fa96",
+      "name": "Filter Posts By Features",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        -1232,
+        352
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "upvotes",
+              "name": "upvotes",
+              "type": "number",
+              "value": "={{ $json.ups }}"
+            },
+            {
+              "id": "subscribers",
+              "name": "subreddit_subscribers",
+              "type": "number",
+              "value": "={{ $json.subreddit_subscribers }}"
+            },
+            {
+              "id": "content",
+              "name": "postcontent",
+              "type": "string",
+              "value": "={{ $json.selftext }}"
+            },
+            {
+              "id": "url",
+              "name": "url",
+              "type": "string",
+              "value": "={{ $json.url }}"
+            },
+            {
+              "id": "date",
+              "name": "date",
+              "type": "string",
+              "value": "={{ DateTime.fromSeconds($json.created).toISO() }}"
+            },
+            {
+              "id": "title",
+              "name": "title",
+              "type": "string",
+              "value": "={{ $json.title }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d5756306-63cc-45f8-8736-af2d824b6afc",
+      "name": "Select Key Fields",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -992,
+        352
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "agent": "conversationalAgent",
+        "promptType": "define",
+        "text": "=Decide whether this reddit post is describing a business-related problem or a need for a solution. The post should mention a specific challenge or requirement that a business is trying to address.\n\nReddit post: {{ $json.postcontent }}\n\nIs this post about a business problem or need for a solution? Output only 'yes' or 'no' in lowercase.",
+        "options": {}
+      },
+      "id": "6fee5250-6074-4872-9abb-7925f7c4f53a",
+      "name": "Analysis Content By AI",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -800,
+        160
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse AI response and add flag\nconst items = $input.all();\n\nreturn items.map(item => {\n  const aiText = (item.json.output || item.json.text || '').toLowerCase().trim();\n  const isBusinessProblem = aiText.includes('yes');\n  \n  return {\n    json: {\n      ...item.json,\n      isBusinessProblem,\n      aiResponse: aiText\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -512,
+        352
+      ],
+      "id": "f9196e9f-d992-4b7d-acdf-61871a3ad3c0",
+      "name": "Parse AI Response"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "business-check",
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              },
+              "leftValue": "={{ $json.isBusinessProblem }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d53e46ec-e2f3-43be-9a0a-9691f4e96cfa",
+      "name": "Filter Posts By Content",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        -272,
+        352
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "chunkingMode": "advanced",
+        "options": {}
+      },
+      "id": "281e0e1e-2407-4afa-8850-1d54bf545c9a",
+      "name": "Post Summarization",
+      "type": "@n8n/n8n-nodes-langchain.chainSummarization",
+      "position": [
+        -128,
+        112
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -96,
+        288
+      ],
+      "id": "17e5accf-7c59-4ecf-a619-5ed954525909",
+      "name": "Google Gemini Chat Model1"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Based on the following Reddit post, suggest a business idea or service that I could create to help this problem for this business and others with similar needs.\n\nReddit post: \"{{ $json.postcontent }}\"\n\nProvide a concise description of a business idea or service that would address this issue effectively for multiple businesses facing similar challenges."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3e10fc8d-bef7-402b-86b5-b2106c626393",
+      "name": "Find Proper Solutions",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "position": [
+        -112,
+        544
+      ],
+      "typeVersion": 1.8
+    },
+    {
+      "parameters": {
+        "jsCode": "// Combine all three outputs into structured data for Google Sheets\nconst items = $input.all();\n\n// Group by sets of 3 (summary, solution, original)\nconst results = [];\n\nfor (let i = 0; i < items.length; i += 3) {\n  const summaryItem = items[i];\n  const solutionItem = items[i + 1];\n  const originalItem = items[i + 2];\n  \n  if (summaryItem && solutionItem && originalItem) {\n    results.push({\n      json: {\n        Title: originalItem.json.title || '',\n        URL: originalItem.json.url || '',\n        Upvotes: originalItem.json.upvotes || 0,\n        Subscribers: originalItem.json.subreddit_subscribers || 0,\n        Date: originalItem.json.date || '',\n        Summary: summaryItem.json.output || summaryItem.json.text || '',\n        Solution: solutionItem.json.message?.content || solutionItem.json.output || '',\n        'Original Content': originalItem.json.postcontent?.substring(0, 500) || ''\n      }\n    });\n  }\n}\n\nreturn results.length > 0 ? results : [];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        352
+      ],
+      "id": "dd0099da-be51-4bdc-8845-109f789976cd",
+      "name": "Format For Sheets"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "your-sheet-id",
+          "mode": "list"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "IDEAS2",
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "bd16dfed-c581-4d3b-a72a-8d1fef5106ee",
+      "name": "Output The Results",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        448,
+        352
+      ],
+      "typeVersion": 4.5
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -752,
+        512
+      ],
+      "id": "ff27b0d0-eb7a-4b40-a491-f41c516e2236",
+      "name": "Google Gemini Chat Model2"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-29T13:28:19.066Z",
+      "createdAt": "2025-12-29T13:28:19.066Z",
+      "role": "workflow:owner",
+      "workflowId": "OhI5vlt9L6uPQDtF",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-12-29T13:28:19.066Z",
+  "versionId": "8c1913bf-c2e4-47ac-82f4-f3cb81153cab"
+}
