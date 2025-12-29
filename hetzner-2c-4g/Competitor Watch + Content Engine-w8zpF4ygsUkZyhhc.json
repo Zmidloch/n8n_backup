@@ -1,0 +1,2058 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Get All Profiles": {
+      "main": [
+        [
+          {
+            "node": "Prepare Platform Configs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Platform Configs": {
+      "main": [
+        [
+          {
+            "node": "Loop Through Platforms",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Through Platforms": {
+      "main": [
+        [
+          {
+            "node": "Collect All Results",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Start Scraper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start Scraper": {
+      "main": [
+        [
+          {
+            "node": "Store Run Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Run Data": {
+      "main": [
+        [
+          {
+            "node": "Initial Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Initial Wait": {
+      "main": [
+        [
+          {
+            "node": "Check Run Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Run Status": {
+      "main": [
+        [
+          {
+            "node": "Is Run Complete?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Run Complete?": {
+      "main": [
+        [
+          {
+            "node": "Get Dataset Items",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait Before Retry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait Before Retry": {
+      "main": [
+        [
+          {
+            "node": "Check Run Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Dataset Items": {
+      "main": [
+        [
+          {
+            "node": "Normalize Posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Posts": {
+      "main": [
+        [
+          {
+            "node": "Batch Posts for DB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Batch Posts for DB": {
+      "main": [
+        [
+          {
+            "node": "Loop Through Platforms",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Needs Transcript?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Needs Transcript?": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Save to Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get TikTok Transcript": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save to Airtable": {
+      "main": [
+        [
+          {
+            "node": "Batch Posts for DB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Save to Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Get TikTok Transcript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop each viral content": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "AI Pattern Analysis (Universal)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upsert Pattern": {
+      "main": [
+        [
+          {
+            "node": "Loop each viral content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Loop each viral content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Pattern Analysis (Universal)": {
+      "main": [
+        [
+          {
+            "node": "Structure Patterns",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Content Virality": {
+      "main": [
+        [
+          {
+            "node": "Search records",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search records": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structure Patterns": {
+      "main": [
+        [
+          {
+            "node": "Update Content Virality",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Pattern Uniqueness Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pattern Uniqueness Check": {
+      "main": [
+        [
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code3": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Upsert Pattern",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop each viral content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Posts": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get All Profiles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Get Posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-29T13:36:26.442Z",
+  "id": "w8zpF4ygsUkZyhhc",
+  "isArchived": false,
+  "meta": null,
+  "name": "Competitor Watch + Content Engine",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appgaortOLSebDF5Q",
+          "mode": "list",
+          "cachedResultName": "Competitor Watcher (August 15, 2025) (August 15, 2025)",
+          "cachedResultUrl": "https://airtable.com/appgaortOLSebDF5Q"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl94YVg8Rh7EynLV",
+          "mode": "list",
+          "cachedResultName": "Competitors",
+          "cachedResultUrl": "https://airtable.com/appgaortOLSebDF5Q/tbl94YVg8Rh7EynLV"
+        },
+        "filterByFormula": "({Active Status} = 'Active')",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        -656,
+        224
+      ],
+      "id": "2c981d00-4f51-450b-bf17-cccf9e49b3fc",
+      "name": "Get All Profiles"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Group profiles by platform based on domain and tracked platforms\nconst allProfiles = $input.all();\nconst platforms = {\n  twitter: [],\n  tiktok: [],\n  linkedin: []\n};\n\nallProfiles.forEach(item => {\n  const profile = item.json;\n  const url = profile.URL;\n  const trackedPlatformIds = profile['Tracked Platforms'] || []; // Array of platform record IDs\n  \n  if (!url || trackedPlatformIds.length === 0) return;\n  \n  // Determine platform based on domain\n  let platform = null;\n  if (url.includes('x.com') || url.includes('twitter.com')) {\n    platform = 'twitter';\n  } else if (url.includes('tiktok.com')) {\n    platform = 'tiktok';\n  } else if (url.includes('linkedin.com')) {\n    platform = 'linkedin';\n  }\n  \n  if (platform && platforms[platform]) {\n    // Extract username from URL\n    let username = '';\n    let fullUrl = url;\n    \n    if (platform === 'twitter') {\n      // For Twitter/X: extract username from x.com/username\n      const urlParts = url.split('/');\n      username = urlParts[urlParts.length - 1] || urlParts[urlParts.length - 2];\n      username = username.replace('@', ''); // Remove @ if present\n    } else if (platform === 'tiktok') {\n      // For TikTok: extract username from tiktok.com/@username\n      const tiktokMatch = url.match(/@([^\\/\\?]+)/);\n      if (tiktokMatch) {\n        username = tiktokMatch[1];\n      } else {\n        // Fallback to last part of URL\n        const urlParts = url.split('/');\n        username = urlParts[urlParts.length - 1] || urlParts[urlParts.length - 2];\n      }\n    } else if (platform === 'linkedin') {\n      // For LinkedIn: extract username from URL like linkedin.com/in/username\n      const linkedinMatch = url.match(/linkedin\\.com\\/in\\/([^\\/\\?]+)/);\n      if (linkedinMatch) {\n        username = linkedinMatch[1];\n      } else {\n        // Fallback to last part of URL\n        const urlParts = url.split('/');\n        username = urlParts[urlParts.length - 1] || urlParts[urlParts.length - 2];\n      }\n      \n      // Ensure full URL starts with https://\n      if (!url.startsWith('http')) {\n        fullUrl = 'https://' + url;\n      } else {\n        fullUrl = url;\n      }\n    }\n    \n    platforms[platform].push({\n      profileId: profile.id,\n      profileName: profile['Competitor Name'],\n      profileUrl: url,\n      username: username, // For LinkedIn, this is just the username part\n      fullUrl: platform === 'linkedin' ? fullUrl : url, // Store full URL for LinkedIn API\n      platform: platform,\n      platformRecordId: trackedPlatformIds[0] // Use the first tracked platform ID (assuming one platform per competitor URL)\n    });\n  }\n});\n\nconsole.log('Grouped profiles:', platforms);\n\n// Create a map of platform names to their record IDs from the profiles\nconst platformRecordIds = {};\nObject.keys(platforms).forEach(platformName => {\n  if (platforms[platformName].length > 0) {\n    // Get the platform record ID from the first profile of this platform type\n    platformRecordIds[platformName] = platforms[platformName][0].platformRecordId;\n  }\n});\n\nconsole.log('Platform record IDs:', platformRecordIds);\n\n// Prepare scraper inputs for each platform\nconst scraperConfigs = [];\n\n// Twitter/X config\nif (platforms.twitter.length > 0) {\n  const twitterHandles = platforms.twitter.map(p => p.username);\n  \n  scraperConfigs.push({\n    platform: 'twitter',\n    platformRecordId: platformRecordIds['twitter'],\n    profiles: platforms.twitter,\n    scraperActor: 'apidojo~twitter-scraper-lite',\n    inputConfig: {\n      maxItems: 200,\n      searchTerms: [],\n      sort: 'Top',\n      twitterHandles: twitterHandles\n    }\n  });\n}\n\n// TikTok config\nif (platforms.tiktok.length > 0) {\n  const tiktokProfiles = platforms.tiktok.map(p => p.username);\n  \n  scraperConfigs.push({\n    platform: 'tiktok',\n    platformRecordId: platformRecordIds['tiktok'],\n    profiles: platforms.tiktok,\n    scraperActor: 'clockworks~tiktok-scraper',\n    inputConfig: {\n      excludePinnedPosts: false,\n      profiles: tiktokProfiles,\n      proxyCountryCode: 'None',\n      resultsPerPage: 2,\n      scrapeRelatedVideos: false,\n      shouldDownloadAvatars: false,\n      shouldDownloadCovers: false,\n      shouldDownloadMusicCovers: false,\n      shouldDownloadSlideshowImages: false,\n      shouldDownloadSubtitles: false,\n      shouldDownloadVideos: true\n    }\n  });\n}\n\n// LinkedIn config  \nif (platforms.linkedin.length > 0) {\n  const linkedinUrls = platforms.linkedin.map(p => p.fullUrl);\n  \n  scraperConfigs.push({\n    platform: 'linkedin',\n    platformRecordId: platformRecordIds['linkedin'],\n    profiles: platforms.linkedin,\n    scraperActor: 'apimaestro~linkedin-batch-profile-posts-scraper',\n    inputConfig: {\n      limit: 10,\n      usernames: linkedinUrls // These are full URLs for the API\n    }\n  });\n}\n\nconsole.log('Scraper configs:', scraperConfigs);\nreturn scraperConfigs;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -464,
+        224
+      ],
+      "id": "106af159-0418-40c3-94b7-d95ba3a38550",
+      "name": "Prepare Platform Configs",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -256,
+        224
+      ],
+      "id": "e1ec1a99-3c24-4d38-9718-3f56681591ad",
+      "name": "Loop Through Platforms"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.apify.com/v2/acts/{{ $json.scraperActor }}/runs?token=your_token",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.inputConfig) }}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "b28df3f3-a74b-4351-8f4f-0c3a8601f63a",
+      "name": "Start Scraper",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -64,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "run-data",
+              "name": "runData",
+              "value": "={{ { runId: $json.data.defaultDatasetId, platform: $('Loop Through Platforms').item.json.platform, platformRecordId: $('Loop Through Platforms').item.json.platformRecordId,profiles: $('Loop Through Platforms').item.json.profiles, scraperActor: $('Loop Through Platforms').item.json.scraperActor, apiToken: $('Loop Through Platforms').item.json.apiToken } }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        144,
+        224
+      ],
+      "id": "913c7f79-62f8-42af-a1fd-b607540567a9",
+      "name": "Store Run Data"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        336,
+        224
+      ],
+      "id": "c835f3fe-6d23-42fc-8650-f6562e202767",
+      "name": "Initial Wait",
+      "webhookId": "9ae6345a-7e7e-4ab1-9852-eda97c4156bc"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.apify.com/v2/acts/{{ $('Store Run Data').item.json.runData.scraperActor}}/runs/last?token=your_token",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "a084f5b4-f25e-4c78-a1ea-0e494595ce0d",
+      "name": "Check Run Status",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        544,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "status-check",
+              "leftValue": "={{ $json.data.status }}",
+              "rightValue": "SUCCEEDED",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        736,
+        224
+      ],
+      "id": "8f45b707-2b1a-4093-ae26-a436e7c8cc08",
+      "name": "Is Run Complete?"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        736,
+        416
+      ],
+      "id": "34062d89-0cd6-4247-b36a-20cc9984d70c",
+      "name": "Wait Before Retry",
+      "webhookId": "8594729b-979d-4b1e-856b-fe418b5ccbbd"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.apify.com/v2/datasets/{{ $('Store Run Data').item.json.runData.runId }}/items?token=your_token",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "da2ec84e-1485-438a-8f88-25fbd4e4ec42",
+      "name": "Get Dataset Items",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        960,
+        416
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Universal post normalizer\nconst platform = $('Store Run Data').first().json.runData.platform;\nconst platformRecordId = $('Store Run Data').first().json.runData.platformRecordId;\nconst profiles = $('Store Run Data').first().json.runData.profiles;\nconst posts = $input.all();\n\nconsole.log(\"profiles\", profiles);\nconsole.log(\"platformRecordId\", platformRecordId);\n\n// Create username to profile map for easier lookup\nconst profileMap = {};\nprofiles.forEach(p => {\n  profileMap[p.username.toLowerCase()] = p;\n});\n\n// Helper function to format media for Airtable attachment field\nfunction formatMediaForAirtable(url) {\n  if (!url) return null;\n  return [{\n    url: url\n  }];\n}\n\n// Function to determine media type and get the best URL for Twitter\nfunction getTwitterMediaInfo(post) {\n  // Check extendedEntities first (preferred), then fall back to media array\n  const mediaArray = post.extendedEntities?.media || [];\n  \n  if (mediaArray.length === 0) {\n    return { type: null, url: null, videoUrl: null };\n  }\n  \n  const mediaItem = mediaArray[0]; // Get first media item\n  const mediaType = mediaItem.type; // 'video', 'photo', 'animated_gif'\n  \n  if (mediaType === 'video') {\n    // For videos, use the thumbnail image URL for Airtable display\n    const thumbnailUrl = mediaItem.media_url_https;\n    // Get the best quality MP4 video URL\n    const videoVariants = mediaItem.video_info?.variants || [];\n    const mp4Videos = videoVariants.filter(v => v.content_type === 'video/mp4');\n    const bestVideo = mp4Videos.sort((a, b) => (b.bitrate || 0) - (a.bitrate || 0))[0];\n    \n    return {\n      type: 'Video',\n      url: thumbnailUrl, // Thumbnail for Airtable preview\n      videoUrl: bestVideo?.url || null // Actual video URL\n    };\n  } else if (mediaType === 'photo') {\n    return {\n      type: 'Image',\n      url: mediaItem.media_url_https,\n      videoUrl: null\n    };\n  } else if (mediaType === 'animated_gif') {\n    // For GIFs, we can use the video variant URL for better quality\n    const videoVariants = mediaItem.video_info?.variants || [];\n    const mp4Videos = videoVariants.filter(v => v.content_type === 'video/mp4');\n    const gifVideo = mp4Videos[0]; // Usually just one variant for GIFs\n    \n    return {\n      type: 'GIF',\n      url: gifVideo?.url || mediaItem.media_url_https, // Use video URL if available, fallback to static\n      videoUrl: gifVideo?.url || null\n    };\n  }\n  \n  return { type: null, url: null, videoUrl: null };\n}\n\n// Normalize posts based on platform\nconst normalizedPosts = [];\n\nconsole.log(\"post\", posts);\nposts.forEach(item => {\n  const post = item.json;\n  let normalized = null;\n  \n  try {\n    switch(platform) {\n      case 'twitter':\n        if (post.author?.userName) {\n          const username = post.author.userName.toLowerCase();\n          const profile = profileMap[username];\n          \n          if (profile) {\n            // Get media info using the new function\n            const mediaInfo = getTwitterMediaInfo(post);\n            \n            normalized = {\n              // Field names must match exactly with your Airtable field names\n              \"Competitor\": [profile.profileId], // Array with competitor record ID\n              \"Platform\": [platformRecordId], // Array with platform record ID\n              \"PlatformName\": \"twitter\",\n              \"Content Title\": post.fullText?.substring(0, 100) || '', // First 100 chars as title\n              \"Content\": post.fullText || '',\n              \"Content URL\": post.url || '',\n              \"Media\": formatMediaForAirtable(mediaInfo.url), // Format as attachment array\n              \"Media Type\": mediaInfo.type, // 'Video', 'Image', 'GIF', or null\n              \"Video URL\": mediaInfo.videoUrl || null, // Direct video URL if it's a video/GIF\n              \"Publish Date\": post.createdAt || new Date().toISOString(),\n              \"Views\": post.viewCount || 0,\n              \"Likes\": post.likeCount || 0,\n              \"Comments\": post.replyCount || 0,\n              \"Shares\": post.retweetCount || 0,\n              \"Imported At\": new Date().toISOString()\n            };\n          }\n        }\n        break;\n        \n      case 'tiktok':\n        if (post.authorMeta?.name) {\n          const username = post.authorMeta.name.toLowerCase();\n          const profile = profileMap[username];\n          \n          if (profile) {\n            const mediaUrl = $input.first().json.webVideoUrl;\n            \n            normalized = {\n              \"Competitor\": [profile.profileId],\n              \"Platform\": [platformRecordId],\n              \"PlatformName\": \"tiktok\",\n              \"Content Title\": post.text?.substring(0, 100) || '',\n              \"Content\": post.text || '',\n              \"Content URL\": post.webVideoUrl || '',\n              \"Media\": formatMediaForAirtable($input.first().json.videoMeta.coverUrl), \n              \"Media Type\": 'Video', // Capital 'V' to match Airtable options\n              \"Publish Date\": post.createTimeISO || new Date().toISOString(),\n              \"Views\": post.playCount || 0,\n              \"Likes\": post.diggCount || 0,\n              \"Comments\": post.commentCount || 0,\n              \"Shares\": post.shareCount || 0,\n              \"Imported At\": new Date().toISOString(),\n              \"Needs Script\": true // For transcript fetching\n            };\n          }\n        }\n        break;\n        \n      case 'linkedin':\n        if (post.author?.username) {\n          const username = post.author.username.toLowerCase();\n          const profile = profileMap[username];\n          \n          if (profile) {\n            // Handle media based on type field\n            let mediaUrl = null;\n            let mediaType = null;\n            \n            if (post.media) {\n              // Check the type field to determine media type\n              if (post.media.type === 'image') {\n                // For images, use the main URL or get from images array\n                mediaUrl = post.media.url || (post.media.images && post.media.images[0]?.url);\n                mediaType = 'Image';\n              } else if (post.media.type === 'video') {\n                // For videos, use the video URL (not thumbnail)\n                mediaUrl = post.media.url;\n                mediaType = 'Video';\n              }\n            }\n            // Check for document (PDF, presentations, etc.)\n            else if (post.document) {\n              // Use thumbnail for preview\n              mediaUrl = post.document.thumbnail;\n              mediaType = 'Image'; // Documents show as images (thumbnails) in feed\n            }\n            \n            normalized = {\n              \"Competitor\": [profile.profileId],\n              \"Platform\": [platformRecordId],\n              \"PlatformName\": \"linkedin\",\n              \"Content Title\": post.text?.substring(0, 100) || '',\n              \"Content\": post.text || '',\n              \"Content URL\": post.url || '',\n              \"Media\": formatMediaForAirtable(mediaUrl), // Format as attachment array\n              \"Media Type\": mediaType, // Capitalized to match Airtable options\n              \"Publish Date\": post.posted_at?.date || new Date().toISOString(),\n              \"Views\": 0,\n              \"Likes\": post.stats?.like || 0,\n              \"Comments\": post.stats?.comments || 0,\n              \"Shares\": post.stats?.reposts || 0,\n              \"Imported At\": new Date().toISOString()\n            };\n          }\n        }\n        break;\n    }\n    \n    if (normalized) {\n      normalizedPosts.push(normalized);\n    }\n  } catch (error) {\n    console.error(`Error processing post for ${platform}:`, error);\n  }\n});\n\nconsole.log(`Normalized ${normalizedPosts.length} posts for ${platform}`);\nreturn normalizedPosts;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1136,
+        416
+      ],
+      "id": "2b1a152e-d5be-4e9e-a84c-080611214f11",
+      "name": "Normalize Posts",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1344,
+        240
+      ],
+      "id": "725917a6-d2d9-4e5c-a0be-2399098a55ec",
+      "name": "Batch Posts for DB"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "check-platform",
+              "leftValue": "={{ $json.PlatformName }}",
+              "rightValue": "tiktok",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1536,
+        352
+      ],
+      "id": "e539b198-e25d-4fc5-a7a0-8f216cfec6bd",
+      "name": "Needs Transcript?"
+    },
+    {
+      "parameters": {
+        "url": "https://api.scrapecreators.com/v1/tiktok/video/transcript",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "={{ $json['Content URL'] }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1936,
+        176
+      ],
+      "id": "6a4ceb62-135c-43be-9211-118cda25cc18",
+      "name": "Get TikTok Transcript",
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "base": {
+          "__rl": true,
+          "value": "appgaortOLSebDF5Q",
+          "mode": "list",
+          "cachedResultName": "Competitor Watcher (August 15, 2025) (August 15, 2025)",
+          "cachedResultUrl": "https://airtable.com/appgaortOLSebDF5Q"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblj9Oz4A8IS2LG87",
+          "mode": "list",
+          "cachedResultName": "Competitor Contents",
+          "cachedResultUrl": "https://airtable.com/appgaortOLSebDF5Q/tblj9Oz4A8IS2LG87"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Content Url": "={{ $('Needs Transcript?').item.json[\"Content URL\"] }}",
+            "Content Title": "={{ $('Needs Transcript?').item.json[\"Content\"] }}",
+            "Publish Date": "={{ $('Needs Transcript?').item.json[\"Publish Date\"] }}",
+            "Platform": "={{ $('Needs Transcript?').item.json.Platform }}",
+            "Competitor": "={{ $('Needs Transcript?').item.json.Competitor }}",
+            "Media": "={{ $('Needs Transcript?').item.json.Media }}",
+            "MediaType": "={{ $('Needs Transcript?').item.json[\"Media Type\"] }}",
+            "Views": "={{ $('Needs Transcript?').item.json.Views }}",
+            "Likes": "={{ $('Needs Transcript?').item.json.Likes }}",
+            "Comments": "={{ $('Needs Transcript?').item.json.Comments }}",
+            "Shares": "={{ $('Needs Transcript?').item.json.Shares }}",
+            "Transcript": "={{ $('Needs Transcript?').item.json.PlatformName === 'tiktok' ? $('Code').item.json.Transcript : '' }}"
+          },
+          "matchingColumns": [
+            "Content Url"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Content Title",
+              "displayName": "Content Title",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Content Url",
+              "displayName": "Content Url",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Publish Date",
+              "displayName": "Publish Date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Platform",
+              "displayName": "Platform",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Competitor",
+              "displayName": "Competitor",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Media",
+              "displayName": "Media",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "MediaType",
+              "displayName": "MediaType",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Image",
+                  "value": "Image"
+                },
+                {
+                  "name": "Images",
+                  "value": "Images"
+                },
+                {
+                  "name": "Video",
+                  "value": "Video"
+                },
+                {
+                  "name": "Text",
+                  "value": "Text"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Views",
+              "displayName": "Views",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Likes",
+              "displayName": "Likes",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Comments",
+              "displayName": "Comments",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Shares",
+              "displayName": "Shares",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Needs Script",
+              "displayName": "Needs Script",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Transcript",
+              "displayName": "Transcript",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Viral Status",
+              "displayName": "Viral Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Viral",
+                  "value": "Viral"
+                },
+                {
+                  "name": "Trending",
+                  "value": "Trending"
+                },
+                {
+                  "name": "Average",
+                  "value": "Average"
+                },
+                {
+                  "name": "Low",
+                  "value": "Low"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Pattern Extracted",
+              "displayName": "Pattern Extracted",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Repurposed Drafts",
+              "displayName": "Repurposed Drafts",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Days Since Published",
+              "displayName": "Days Since Published",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Is Viral or Trending",
+              "displayName": "Is Viral or Trending",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Pattern Count",
+              "displayName": "Pattern Count",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Repurposed Drafts Count",
+              "displayName": "Repurposed Drafts Count",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Performance Metrics Summary (AI)",
+              "displayName": "Performance Metrics Summary (AI)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Repurpose Suggestion (AI)",
+              "displayName": "Repurpose Suggestion (AI)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        2224,
+        384
+      ],
+      "id": "83556a03-7579-4889-9ee7-9e6f57e1db3f",
+      "name": "Save to Airtable",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -64,
+        32
+      ],
+      "id": "96e1b55e-44b5-4696-8bd6-ffe29f899093",
+      "name": "Collect All Results"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Replace \"Add Transcript\" with a Code node\nconst items = $input.all();\n\nreturn items.map(item => {\n  const transcript = item.json.transcript || '';\n  \n  // Clean WEBVTT format if present\n  let cleanTranscript = transcript;\n  if (transcript.startsWith('WEBVTT')) {\n    // Remove WEBVTT header and timestamps\n    cleanTranscript = transcript\n      .split('\\n')\n      .filter(line => !line.startsWith('WEBVTT') && !line.includes('-->') && line.trim() !== '')\n      .join(' ')\n      .replace(/\\s+/g, ' ')\n      .trim();\n  }\n  \n  return {\n    json: {\n      ...item.json,  // Preserve ALL existing fields\n      Transcript: cleanTranscript  // Add cleaned transcript\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2096,
+        176
+      ],
+      "id": "a78eab9a-0573-4c40-9a25-f40b5ca4b972",
+      "name": "Code"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1760,
+        256
+      ],
+      "id": "fed8f308-5ec0-408e-baac-e2782265faff",
+      "name": "Wait",
+      "webhookId": "9448f78a-4536-4865-861f-2002efb6a284"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "ccc7cc0d-b927-4662-a9c3-d918fb2acd93",
+      "name": "Loop each viral content",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -176,
+        896
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "base": {
+          "__rl": true,
+          "value": "appgaortOLSebDF5Q",
+          "mode": "list",
+          "cachedResultName": "Competitor Watcher"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblKCJR4R0F546AKD",
+          "mode": "list",
+          "cachedResultName": "Patterns",
+          "cachedResultUrl": "https://airtable.com/appgaortOLSebDF5Q/tblKCJR4R0F546AKD"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Viral Indicator": "={{ $('Structure Patterns').item.json.is_viral }}",
+            "Pattern Name": "={{ $('Structure Patterns').item.json.pattern_name }}",
+            "Description": "={{ $('Structure Patterns').item.json.description }}",
+            "Competitor Content Sources": "=[\"{{ $('Structure Patterns').item.json.post_id }}\"]",
+            "Platform": "=[\"{{ $('Structure Patterns').item.json.platform }}\"]",
+            "Emotions Evoked": "={{ $('Structure Patterns').item.json.emotions_evoked }}",
+            "Hook Type": "={{ $('Structure Patterns').item.json.hook_type }}",
+            "Hook Example": "={{ $('Structure Patterns').item.json.hook_example }}",
+            "Body Structure": "={{ $('Structure Patterns').item.json.body_structure }}",
+            "CTA Type": "={{ $('Structure Patterns').item.json.cta_type }}",
+            "CTA Example": "={{ $('Structure Patterns').item.json.cta_example }}",
+            "Visual Elements": "={{ $('Structure Patterns').item.json.visual_elements }}",
+            "Performance Summary": "={{ $('Structure Patterns').item.json.viral_factors }}",
+            "Psychological Triggers": "={{ $('Structure Patterns').item.json.psychological_triggers }}",
+            "Viral Factors": "={{ $('Structure Patterns').item.json.viral_factors }}",
+            "Optimization Notes": "={{ $('Structure Patterns').item.json.optimization_notes }}"
+          },
+          "matchingColumns": [
+            "Pattern Name"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Pattern Name",
+              "displayName": "Pattern Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Viral Factors",
+              "displayName": "Viral Factors",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Visual Elements",
+              "displayName": "Visual Elements",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Hook Type",
+              "displayName": "Hook Type",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Hook Example",
+              "displayName": "Hook Example",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Body Structure",
+              "displayName": "Body Structure",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "CTA Type",
+              "displayName": "CTA Type",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "CTA Example",
+              "displayName": "CTA Example",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Emotions Evoked",
+              "displayName": "Emotions Evoked",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Psychological Triggers",
+              "displayName": "Psychological Triggers",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Optimization Notes",
+              "displayName": "Optimization Notes",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Competitor Content Sources",
+              "displayName": "Competitor Content Sources",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Performance Summary",
+              "displayName": "Performance Summary",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Platform",
+              "displayName": "Platform",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Viral Indicator",
+              "displayName": "Viral Indicator",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "# of Viral Contents",
+              "displayName": "# of Viral Contents",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Total Content Sources",
+              "displayName": "Total Content Sources",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Platform Name (Lookup)",
+              "displayName": "Platform Name (Lookup)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Pattern Category",
+              "displayName": "Pattern Category",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Pattern Repurposing Suggestions",
+              "displayName": "Pattern Repurposing Suggestions",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Repurposed Drafts",
+              "displayName": "Repurposed Drafts",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "1299f8c6-e118-42d1-b8c5-9c94efaabc63",
+      "name": "Upsert Pattern",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        1184,
+        1232
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Pattern Analysis",
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -864,
+        752
+      ],
+      "id": "74a61596-a268-43eb-9b9e-a98f9cc95dec",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Collect Content\n",
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -832,
+        48
+      ],
+      "id": "5d08400c-06b6-460f-b807-4b2b6b677af1",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Add Platform and Competitor Names\nconst posts = $input.all();\nconst enrichedPosts = [];\n\nfor (const item of posts) {\n  const post = item.json;\n  \n  // Initialize enriched post with original data\n  let enrichedPost = { ...post };\n  \n  // Extract platform record ID\n  const platformId = Array.isArray(post.Platform) \n    ? post.Platform[0] \n    : post.Platform;\n    \n  // Extract competitor record ID\n  const competitorId = Array.isArray(post.Competitor) \n    ? post.Competitor[0] \n    : post.Competitor;\n  \n  // Set platform name based on ID (you'd need to maintain this mapping)\n  // Or fetch it with another Airtable node\n  const platformMap = {\n    'recuA14LKBGSnQdjs': 'Twitter',\n    'reczTx5Jkw3lk19lk': 'LinkedIn',\n    'recqbyAG8LYGlTLVe': 'TikTok'\n  };\n  \n  enrichedPost.PlatformName = platformMap[platformId] || 'Unknown';\n  enrichedPost.PlatformRecordId = platformId;\n  \n  enrichedPosts.push({ json: enrichedPost });\n}\n\nreturn enrichedPosts;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -336,
+        896
+      ],
+      "id": "ffd1e6f5-61f5-44f5-bf1d-cec534477ded",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "chatModel": "gpt-4.1-mini",
+        "prompt": {
+          "messages": [
+            {
+              "content": "=Analyze this {{ $json.Platform }} post:\n\n**Content:** {{ $json['Content Title'] || 'No content available' }}\n\n**Metrics:**\n- Views: {{ $json.Views || 0 }}\n- Likes: {{ $json.Likes || 0 }}\n- Comments: {{ $json.Comments || 0 }}\n- Shares: {{ $json.Shares || 0 }}\n- Engagement Rate: {{ $json['Engagement Rate'] || ((($json.Likes + $json.Comments + $json.Shares) / $json.Views * 100).toFixed(2)) }}%\n\n**Additional Context:**\n- Category: {{ $json.Category || 'General' }}\n- Posted: {{ $json['Publish Date'] || $json.Date || 'Unknown' }}\n\nIdentify the viral pattern and provide detailed analysis."
+            },
+            {
+              "role": "system",
+              "content": "=You are an expert viral content analyst specializing in social media patterns. Analyze posts from any platform and identify the viral patterns that make them successful.\n\nPLATFORM-SPECIFIC VIRAL THRESHOLDS:\n- Twitter/X: 25,000+ views = viral\n- LinkedIn: 500+ engagements (likes + comments + shares) = viral (use as proxy since views/impressions are often unavailable publicly; alternatively, 50,000+ impressions if accessible)\n- TikTok: 250,000+ views = viral\n- Instagram: 50,000+ views = viral\n\nFor LinkedIn posts without view data:\n- Calculate \"engagement score\" = likes + comments + shares\n- 500+ engagement score = likely viral\n- 100-499 = trending engagement\n- <100 = standard engagement\n\nVIRALITY CONFIDENCE MAPPING (MUST USE EXACTLY THESE VALUES):\n- If metrics exceed platform viral threshold: \"Viral\"\n- If metrics are 50-99% of viral threshold: \"Trending\" \n- If metrics are 10-49% of viral threshold: \"Average\"\n- If metrics are below 10% of viral threshold: \"Low\"\n\nYour analysis should identify:\n1. The core pattern that drives virality\n2. Psychological triggers and emotions\n3. Content structure and format\n4. Platform-specific success factors\n\nReturn a JSON object with this EXACT structure:\n{\n  \"pattern_name\": \"A concise, memorable name for this pattern (e.g., 'Controversy Hook + Data Story')\",\n  \"description\": \"Clear explanation of how this pattern creates virality (2-3 sentences)\",\n  \"hook_type\": \"Type of opening hook (e.g., Question, Statistic, Bold Claim, Story, Challenge, Tutorial, Announcement, Controversy, etc.)\",\n  \"hook_example\": \"The actual opening text/description (first 100-150 characters)\",\n  \"body_structure\": \"How the content is structured (e.g., Thread, List, Narrative, Tutorial Steps, Before/After, etc.)\",\n  \"cta_type\": \"Type of call-to-action (e.g., Follow Ask, Share Request, Comment Prompt, Link Click, Save Reminder, No CTA, etc.)\",\n  \"cta_example\": \"The actual CTA text if present\",\n  \"emotions_evoked\": [\"List primary emotions: Curiosity, FOMO, Anger, Joy, Surprise, Pride, Fear, Inspiration, etc.\"],\n  \"psychological_triggers\": [\"List key triggers: Social Proof, Authority, Scarcity, Reciprocity, Consistency, Liking, Unity, Curiosity Gap, Loss Aversion, etc.\"],\n  \"visual_elements\": [\"List visual/format elements: Images, Videos, Emojis, Charts, Screenshots, Text Overlay, Carousel, etc.\"],\n  \"viral_factors\": \"Explain why this specific post went viral (2-3 key reasons)\",\n  \"optimization_notes\": \"Actionable tips to replicate or improve this pattern\",\n  \"pattern_category\": \"Content category (e.g., Educational, Entertainment, Inspirational, News/Trending, Personal Story, How-to, Opinion, etc.)\",\n  \"platform_specific_insights\": {\n    \"key_success_factor\": \"The #1 reason this worked on this specific platform\",\n    \"audience_alignment\": \"How it matches this platform's audience expectations\",\n    \"algorithm_optimization\": \"How it leverages the platform's algorithm\"\n  },\n  \"metrics_analysis\": {\n    \"engagement_rate\": \"Calculate: (likes + comments + shares) / views * 100\",\n    \"viral_score\": \"Rate 0-100 based on platform threshold\",\n    \"virality_confidence\": \"MUST be exactly one of these four strings: 'Viral', 'Trending', 'Average', 'Low' - NO OTHER VALUES ALLOWED\"\n  }\n}\n\nCRITICAL: The virality_confidence field MUST contain EXACTLY one of these four strings with exact capitalization: \"Viral\", \"Trending\", \"Average\", \"Low\". Any other value will cause system failure."
+            }
+          ]
+        },
+        "options": {},
+        "requestOptions": {}
+      },
+      "id": "d22dff7a-9d2a-48d9-84cb-81ec53ae67d2",
+      "name": "AI Pattern Analysis (Universal)",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1.1,
+      "position": [
+        48,
+        1024
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appgaortOLSebDF5Q",
+          "mode": "list",
+          "cachedResultName": "Competitor Watcher (August 15, 2025) (August 15, 2025)",
+          "cachedResultUrl": "https://airtable.com/appgaortOLSebDF5Q"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblj9Oz4A8IS2LG87",
+          "mode": "list",
+          "cachedResultName": "Competitor Contents",
+          "cachedResultUrl": "https://airtable.com/appgaortOLSebDF5Q/tblj9Oz4A8IS2LG87"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Structure Patterns').item.json.post_id }}",
+            "Viral Status": "={{ $('Structure Patterns').item.json.virality_confidence }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Content Title",
+              "displayName": "Content Title",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Content Url",
+              "displayName": "Content Url",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Publish Date",
+              "displayName": "Publish Date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Platform",
+              "displayName": "Platform",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Competitor",
+              "displayName": "Competitor",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Media",
+              "displayName": "Media",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "MediaType",
+              "displayName": "MediaType",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Image",
+                  "value": "Image"
+                },
+                {
+                  "name": "Images",
+                  "value": "Images"
+                },
+                {
+                  "name": "Video",
+                  "value": "Video"
+                },
+                {
+                  "name": "Text",
+                  "value": "Text"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Views",
+              "displayName": "Views",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Likes",
+              "displayName": "Likes",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Comments",
+              "displayName": "Comments",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Shares",
+              "displayName": "Shares",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Needs Script",
+              "displayName": "Needs Script",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Transcript",
+              "displayName": "Transcript",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Analyzed",
+              "displayName": "Analyzed",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Mine",
+              "displayName": "Mine",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Viral Status",
+              "displayName": "Viral Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Viral",
+                  "value": "Viral"
+                },
+                {
+                  "name": "Trending",
+                  "value": "Trending"
+                },
+                {
+                  "name": "Average",
+                  "value": "Average"
+                },
+                {
+                  "name": "Low",
+                  "value": "Low"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Pattern Extracted",
+              "displayName": "Pattern Extracted",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Repurposed Drafts",
+              "displayName": "Repurposed Drafts",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Days Since Published",
+              "displayName": "Days Since Published",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Is Viral or Trending",
+              "displayName": "Is Viral or Trending",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Pattern Count",
+              "displayName": "Pattern Count",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Repurposed Drafts Count",
+              "displayName": "Repurposed Drafts Count",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Performance Metrics Summary (AI)",
+              "displayName": "Performance Metrics Summary (AI)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Repurpose Suggestion (AI)",
+              "displayName": "Repurpose Suggestion (AI)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        288,
+        944
+      ],
+      "id": "aa13650c-8ed0-4bdb-963d-bb8fb546b795",
+      "name": "Update Content Virality"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appgaortOLSebDF5Q",
+          "mode": "list",
+          "cachedResultName": "Competitor Watcher (August 15, 2025) (August 15, 2025)",
+          "cachedResultUrl": "https://airtable.com/appgaortOLSebDF5Q"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblKCJR4R0F546AKD",
+          "mode": "list",
+          "cachedResultName": "Patterns",
+          "cachedResultUrl": "https://airtable.com/appgaortOLSebDF5Q/tblKCJR4R0F546AKD"
+        },
+        "filterByFormula": "=({Platform} = '{{ $json.platformName }}')",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        368,
+        1072
+      ],
+      "id": "9d96e4c6-7885-4abb-8d62-3a8d96ccb032",
+      "name": "Search records",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "content": "## Check Pattern Uniqueness",
+        "width": 260,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        368,
+        1232
+      ],
+      "id": "04402d7f-5f09-479f-9a40-aa1178903cda",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Process and structure the AI analysis with original post data\nconst post = $(\"Loop each viral content\").item.json;\n// Process and structure the AI analysis with original post data\nconst input = $input.item.json;\nlet analysis = {};\nif (input.message?.content) {\n  try {\n    analysis = JSON.parse(input.message.content);\n  } catch (e) {\n    console.log('Failed to parse AI response:', e);\n    analysis = {};\n  }\n}\nconsole.log(\"analysis\", analysis)\n// Calculate additional metrics\nconst views = parseInt(post.Views) || 0;\nconst likes = parseInt(post.Likes) || 0;\nconst comments = parseInt(post.Comments) || 0;\nconst shares = parseInt(post.Shares) || 0;\nconst engagementRate = parseFloat(post['Engagement Rate']) ||\n  ((likes + comments + shares) / views * 100);\n// Calculate viral score based on platform\nlet viralScore = 0;\nlet isViral = false;\nswitch(post.PlatformName) {\n  case 'Twitter':\n    viralScore = Math.min(100, (views / 100000) * 100);\n    isViral = views > 100000;\n    break;\n  case 'LinkedIn':\n    viralScore = Math.min(100, (views / 50000) * 100);\n    isViral = views > 50000;\n    break;\n  case 'TikTok':\n    viralScore = Math.min(100, (views / 1000000) * 100);\n    isViral = views > 1000000;\n    break;\n  case 'Instagram':\n    viralScore = Math.min(100, (views / 200000) * 100);\n    isViral = views > 200000;\n    break;\n  default:\n    viralScore = Math.min(100, (views / 100000) * 100);\n    isViral = views > 100000;\n}\n// Create structured output\nreturn {\n  // Post identification\n  post_id: post['Post ID'] || post.id,\n  platform: post.Platform,\n  platformName: post.PlatformName,\n  account: post.Account,\n  url: post['Post URL'] || post.url,\n  created_date: post['Created Date'],\n \n  // Content data\n  content: post.Content,\n  hashtags: post.Hashtags,\n  category: post.Category || analysis.pattern_category,\n \n  // Raw metrics\n  views: views,\n  likes: likes,\n  comments: comments,\n  shares: shares,\n  engagement_rate: engagementRate.toFixed(2),\n \n  // Pattern analysis from AI\n  pattern_name: analysis.pattern_name || `${post.Platform} Pattern`,\n  description: analysis.description || '',\n  hook_type: analysis.hook_type || 'Unknown',\n  hook_example: analysis.hook_example || post.Content?.substring(0, 100),\n  body_structure: analysis.body_structure || '',\n  cta_type: analysis.cta_type || 'None',\n  cta_example: analysis.cta_example || '',\n \n  // Psychological elements (now as strings)\n  emotions_evoked: Array.isArray(analysis.emotions_evoked)\n    ? analysis.emotions_evoked.join(' / ')\n    : '',\n  psychological_triggers: Array.isArray(analysis.psychological_triggers)\n    ? analysis.psychological_triggers.join(' / ')\n    : '',\n  visual_elements: Array.isArray(analysis.visual_elements)\n    ? analysis.visual_elements.join(' / ')\n    : '',\n \n  // Insights\n  viral_factors: analysis.viral_factors || '',\n  optimization_notes: analysis.optimization_notes || '',\n  pattern_category: analysis.pattern_category || post.Category || 'General',\n \n  // Platform specific\n  platform_insights: analysis.platform_specific_insights || {},\n \n  // Calculated metrics\n  viral_score: viralScore.toFixed(0),\n  is_viral: isViral,\n  virality_confidence: analysis.virality_confidence,\n  share_ratio: ((shares / likes) * 100).toFixed(2),\n  comment_ratio: ((comments / likes) * 100).toFixed(2),\n \n  // Performance tier\n  performance_tier: isViral ? 'Viral' : engagementRate > 10 ? 'High Engagement' : 'Standard',\n \n  // For aggregation\n  pattern_key: `${analysis.hook_type || 'unknown'}-${post.Platform}-${analysis.pattern_category || 'general'}`.toLowerCase().replace(/[^a-z0-9-]/g, '')\n};"
+      },
+      "id": "20c51166-074c-440a-8031-d0b1a29c7b70",
+      "name": "Structure Patterns",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        1072
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Aggregate multiple Airtable records for AI comparison\nconst records = $input.all().map(item => item.json); // Get all input records\n\n// Structure each record into a simplified object for AI\nconst organizedPatterns = records.map(record => ({\n  id: record.id,\n  pattern_name: record[\"Pattern Name\"] || 'Unknown',\n  description: record.Description || '',\n  hook_type: record[\"Hook Type\"] || '',\n  hook_example: record[\"Hook Example\"] || '',\n  body_structure: record[\"Body Structure\"] || '',\n  cta_type: record[\"CTA Type\"] || '',\n  cta_example: record[\"CTA Example\"] || '',\n  emotions_evoked: record[\"Emotions Evoked\"] ? record[\"Emotions Evoked\"].split(' / ').map(e => e.trim()) : [],\n  psychological_triggers: record[\"Psychological Triggers\"] ? record[\"Psychological Triggers\"].split(' / ').map(t => t.trim()) : [],\n  visual_elements: record[\"Visual Elements\"] ? record[\"Visual Elements\"].split(' / ').map(v => v.trim()) : [],\n  viral_factors: record[\"Viral Factors\"] || '',\n  pattern_category: record[\"Pattern Category\"]?.value || record[\"Pattern Category\"] || 'General',\n  platform: record[\"Platform Name (Lookup)\"]?.[0] || 'Unknown'\n}));\n\nconsole.log(\"patterns\", organizedPatterns)\nconst newPattern = $(\"Structure Patterns\").first().json;\nconsole.log(\"new pattern\", newPattern);\nreturn [{\n  json: {\n    new_pattern: newPattern,\n    patterns: organizedPatterns,\n    prompt_summary: `New Pattern:\\n${JSON.stringify(newPattern, null, 2)}\\n\\nExisting Patterns:\\n${JSON.stringify(organizedPatterns, null, 2)}`\n }\n}]"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        528,
+        1072
+      ],
+      "id": "05ce92cc-8dc1-4cd3-abfc-7551797b5300",
+      "name": "Code2"
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "chatModel": "gpt-4.1-mini",
+        "prompt": {
+          "messages": [
+            {
+              "role": "system",
+              "content": "=You are a deduplication expert. Given a new pattern and a list of existing patterns, find if any existing one is semantically similar (>80% match in description, hook_type, emotions, triggers). Return the most similar pattern's ID (post_id) if match, else null.\n\n:{{ $json.prompt_summary }}\n\n\nOutput JSON:\n{\n  \"action\": \"update\" or \"create\",\n  \"matching_id\": \"existing post_id if update, else null\",\n  \"similarity_score\": 0-100\n}"
+            }
+          ]
+        },
+        "options": {
+          "temperature": 0.3
+        },
+        "requestOptions": {}
+      },
+      "id": "f3e7c321-1a12-40a9-8b43-2bea7a9e9f49",
+      "name": "Pattern Uniqueness Check",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1.1,
+      "position": [
+        688,
+        1072
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process the AI response\nconst aiResponse = $input.first().json.message.content; // Get the content string from the AI response\n\n// Parse the JSON (assuming it's already valid JSON without line breaks)\nlet responseData;\ntry {\n  responseData = JSON.parse(aiResponse.replace(/\\n/g, '')); // Remove line breaks and parse\n} catch (e) {\n  console.log('Failed to parse AI response:', e);\n  return [{ should_update: false }]; // Return array with false if parsing fails\n}\n\n// Check if action is \"update\" (return true), else false\nconst shouldCreate = responseData.action === \"create\";\nconst shouldUpdate = responseData.action === \"update\";\n\n// Return an array with the boolean and optionally the matching_id\nreturn [{\n  should_create: shouldCreate,\n  should_update: shouldUpdate,\n  matching_id: responseData.action === \"update\" ? responseData.matching_id : null\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        864,
+        1072
+      ],
+      "id": "14738bcc-80af-49aa-8ea8-dc55757ed70c",
+      "name": "Code3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ce0ff913-b05c-4126-99db-fcc563aa7ad7",
+              "leftValue": "={{ $json.should_create }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1040,
+        1072
+      ],
+      "id": "6036c216-111c-4800-9c3a-a7b68a1212c0",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appgaortOLSebDF5Q",
+          "mode": "list",
+          "cachedResultName": "Competitor Watcher",
+          "cachedResultUrl": "https://airtable.com/appgaortOLSebDF5Q"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblj9Oz4A8IS2LG87",
+          "mode": "list",
+          "cachedResultName": "Competitor Contents",
+          "cachedResultUrl": "https://airtable.com/appgaortOLSebDF5Q/tblj9Oz4A8IS2LG87"
+        },
+        "filterByFormula": "OR({Analyzed} = BLANK())",
+        "options": {}
+      },
+      "id": "f8ccc681-c927-4431-94b0-cf4b9643a331",
+      "name": "Get Posts",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        -496,
+        896
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "094acbf0-2466-44d9-a0c3-e02f9ced4fc2",
+              "name": "Outcome",
+              "value": "Finished",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        48,
+        800
+      ],
+      "id": "2c5b06f9-ee3c-483b-8a88-9d3b3cd9bb56",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 19
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -832,
+        224
+      ],
+      "id": "baa67985-1a90-4380-9eed-4407b3c9f53f",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -816,
+        896
+      ],
+      "id": "64a787da-3d66-4776-b7b1-dec8ee34884f",
+      "name": "Schedule Trigger1"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-29T13:36:26.442Z",
+      "createdAt": "2025-12-29T13:36:26.442Z",
+      "role": "workflow:owner",
+      "workflowId": "w8zpF4ygsUkZyhhc",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-12-29T13:36:26.442Z",
+  "versionId": "4a1fcc11-e444-48b5-b683-662595dd3c96"
+}
