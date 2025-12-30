@@ -17,7 +17,7 @@
   },
   "createdAt": "2025-12-25T21:07:11.822Z",
   "id": "1DJBowp8zYdoQwK2",
-  "isArchived": false,
+  "isArchived": true,
   "meta": null,
   "name": "Simple Webhook Workflow",
   "nodes": [
@@ -91,6 +91,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-12-25T21:07:11.822Z",
-  "versionId": "36168d89-4205-404e-bc78-639fa6261462"
+  "updatedAt": "2025-12-30T10:34:15.825Z",
+  "versionId": "555277fc-3e98-4074-95c3-772cd563bebd"
 }
