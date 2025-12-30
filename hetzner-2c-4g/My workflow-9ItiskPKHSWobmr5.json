@@ -5,7 +5,7 @@
   "connections": {},
   "createdAt": "2025-12-25T22:47:20.285Z",
   "id": "9ItiskPKHSWobmr5",
-  "isArchived": false,
+  "isArchived": true,
   "meta": null,
   "name": "My workflow",
   "nodes": [
@@ -39,6 +39,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-12-25T22:47:20.285Z",
-  "versionId": "c7a37e34-7843-4761-b8d2-e0b61885008f"
+  "updatedAt": "2025-12-30T10:33:33.774Z",
+  "versionId": "cdd5838d-a2e3-4eb0-be6f-a3df7a3314fe"
 }
