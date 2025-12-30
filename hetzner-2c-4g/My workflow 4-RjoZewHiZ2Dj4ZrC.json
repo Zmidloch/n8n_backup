@@ -1,0 +1,30 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {},
+  "createdAt": "2025-12-30T10:01:46.972Z",
+  "id": "RjoZewHiZ2Dj4ZrC",
+  "isArchived": false,
+  "meta": null,
+  "name": "My workflow 4",
+  "nodes": [],
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-30T10:01:46.972Z",
+      "createdAt": "2025-12-30T10:01:46.972Z",
+      "role": "workflow:owner",
+      "workflowId": "RjoZewHiZ2Dj4ZrC",
+      "projectId": "j2KGpH2gt0oq8xIS"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-12-30T10:02:02.288Z",
+  "versionId": "3c4829a8-cd76-4f27-8f64-0240592ca469"
+}
