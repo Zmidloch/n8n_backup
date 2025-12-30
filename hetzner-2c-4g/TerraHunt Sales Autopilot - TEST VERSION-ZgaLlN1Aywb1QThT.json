@@ -565,28 +565,6 @@
       "main": [
         [
           {
-            "node": "Update file",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Update file": {
-      "main": [
-        [
-          {
-            "node": "Code in JavaScript",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code in JavaScript": {
-      "main": [
-        [
-          {
             "node": "Update a document",
             "type": "main",
             "index": 0
@@ -609,12 +587,7 @@
       "main": [
         [
           {
-            "node": "Update PDF Status",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "HTTP Post PDF to UOL",
+            "node": "Code in JavaScript",
             "type": "main",
             "index": 0
           }
@@ -709,22 +682,11 @@
         ]
       ]
     },
-    "When clicking ‘Execute workflow’": {
+    "Code in JavaScript": {
       "main": [
         [
           {
-            "node": "Edit Fields",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Edit Fields": {
-      "main": [
-        [
-          {
-            "node": "Data Format for Airtable",
+            "node": "Update PDF Status",
             "type": "main",
             "index": 0
           }
@@ -1090,15 +1052,11 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "ID Stripe platby": "={{ $json.body.data.object.id }}",
+            "ID Stripe platby": "={{ $('Stripe Payment Succeeded Webhook').item.json.body.data.object.id }}",
             "Stripe platba": "Zaplaceno",
-            "Délka hry": 0,
-            "Počet týmů": 0,
-            "Cena za tým": 0,
-            "Celková cena": 0,
-            "Brand karty": "={{ $json.card.networks.available[0] }}",
-            "Poslední 4 čísla": "={{ $json.card.last4 }}",
-            "Země vydání": "={{ $json.card.country }}"
+            "Last 4 Digits": "={{ $json.card.last4 }}",
+            "Brand": "={{ $json.card.brand }}",
+            "Country": "={{ $json.card.country }}"
           },
           "matchingColumns": [
             "ID Stripe platby"
@@ -1123,7 +1081,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Datum a čas objednávky",
@@ -1145,7 +1103,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Kupující - Telefon",
@@ -1156,7 +1114,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Kupující - Email",
@@ -1167,7 +1125,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Kupující - Adresa",
@@ -1178,7 +1136,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Kupující - Město",
@@ -1189,7 +1147,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Kupující - PSČ",
@@ -1200,7 +1158,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Kupující - Stát",
@@ -1211,7 +1169,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Hráč - Jméno a Příjmení",
@@ -1222,7 +1180,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Hráč - Telefon",
@@ -1233,7 +1191,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Hráč - Email",
@@ -1244,7 +1202,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Název hry",
@@ -1255,7 +1213,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Datum hry",
@@ -1266,7 +1224,7 @@
               "display": true,
               "type": "dateTime",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Start hry",
@@ -1277,7 +1235,7 @@
               "display": true,
               "type": "dateTime",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Délka hry",
@@ -1288,7 +1246,7 @@
               "display": true,
               "type": "number",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Konec hry",
@@ -1299,7 +1257,7 @@
               "display": true,
               "type": "dateTime",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Počet týmů",
@@ -1310,7 +1268,7 @@
               "display": true,
               "type": "number",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Cena za tým",
@@ -1321,7 +1279,7 @@
               "display": true,
               "type": "number",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Celková cena",
@@ -1332,7 +1290,7 @@
               "display": true,
               "type": "number",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Stripe platba",
@@ -1378,8 +1336,8 @@
               "removed": false
             },
             {
-              "id": "Brand karty",
-              "displayName": "Brand karty",
+              "id": "Brand",
+              "displayName": "Brand",
               "required": false,
               "defaultMatch": false,
               "canBeUsedToMatch": true,
@@ -1389,8 +1347,8 @@
               "removed": false
             },
             {
-              "id": "Poslední 4 čísla",
-              "displayName": "Poslední 4 čísla",
+              "id": "Last 4 Digits",
+              "displayName": "Last 4 Digits",
               "required": false,
               "defaultMatch": false,
               "canBeUsedToMatch": true,
@@ -1400,8 +1358,8 @@
               "removed": false
             },
             {
-              "id": "Země vydání",
-              "displayName": "Země vydání",
+              "id": "Country",
+              "displayName": "Country",
               "required": false,
               "defaultMatch": false,
               "canBeUsedToMatch": true,
@@ -1409,6 +1367,50 @@
               "type": "string",
               "readOnly": false,
               "removed": false
+            },
+            {
+              "id": "Receipt Status",
+              "displayName": "Receipt Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "options": [
+                {
+                  "name": "Created DOC",
+                  "value": "Created DOC"
+                },
+                {
+                  "name": "Created PDF",
+                  "value": "Created PDF"
+                },
+                {
+                  "name": "Saved Airtable",
+                  "value": "Saved Airtable"
+                },
+                {
+                  "name": "Uploaded to UOL",
+                  "value": "Uploaded to UOL"
+                },
+                {
+                  "name": "Sent to Client",
+                  "value": "Sent to Client"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Receipt",
+              "displayName": "Receipt",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
             }
           ],
           "attemptToConvertTypes": false,
@@ -1485,7 +1487,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        384,
+        368,
         -176
       ],
       "id": "54db1607-8f2d-43d9-ac17-d29544402801",
@@ -1565,12 +1567,11 @@
           "conditions": [
             {
               "id": "25fd7588-6742-4cc1-8139-954c92709eeb",
-              "leftValue": "",
-              "rightValue": "",
+              "leftValue": "={{ $json.fields['ID Stripe platby'] }}",
+              "rightValue": "={{ $('Stripe Payment Succeeded Webhook').item.json.body.data.object.id }}",
               "operator": {
                 "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
+                "operation": "equals"
               }
             }
           ],
@@ -1601,27 +1602,6 @@
       "typeVersion": 1,
       "id": "6ce25670-971a-4911-a149-9bfec3d03650",
       "name": "Sticky Note5"
-    },
-    {
-      "parameters": {
-        "additionalFields": {}
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        1424,
-        592
-      ],
-      "id": "bc51db5c-723a-4a98-b235-02795ad48fd4",
-      "name": "Send Error Message",
-      "webhookId": "621b1d6f-2df9-408c-bfac-f89c3e381937",
-      "credentials": {
-        "telegramApi": {
-          "id": "UrrMYed7rpj32cus",
-          "name": "TelegramSef"
-        }
-      },
-      "disabled": true
     },
     {
       "parameters": {
@@ -1668,8 +1648,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3520,
-        -112
+        3568,
+        -304
       ],
       "typeVersion": 1,
       "id": "2fc10fe0-f2ce-4324-bfcc-1d12f5d53bfc",
@@ -1742,8 +1722,8 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        3568,
-        96
+        3824,
+        -96
       ],
       "id": "7b8743ae-9bd1-40b2-bd3e-d03d6db41080",
       "name": "Send a message",
@@ -1763,8 +1743,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3520,
-        480
+        3568,
+        288
       ],
       "typeVersion": 1,
       "id": "7e1ea9e5-bc45-434a-b69f-c8e0dd43d2fd",
@@ -1892,8 +1872,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1728,
-        -240
+        1776,
+        -432
       ],
       "typeVersion": 1,
       "id": "439f9b41-1e24-431f-8bba-908721ec9333",
@@ -1995,13 +1975,14 @@
           "cachedResultName": "Template_Receipt_Stripe",
           "cachedResultUrl": "https://docs.google.com/document/d/1i80iux_rFtmFcfL88Q2IvYUwew7RZAsLxfc2Y-KAamM/edit?usp=drivesdk"
         },
+        "name": "={{ $json.fields[\"Datum a čas objednávky\"] }}-{{ $json.fields[\"Kupující - Jméno a Příjmení\"] }}-{{ $json.fields['Název hry'] }}-Invoice-{{ $json.fields['ID Stripe platby'] }}",
         "options": {}
       },
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        1760,
-        96
+        1808,
+        -96
       ],
       "id": "3a5e65c0-39e6-4828-bbad-210cb095194a",
       "name": "Copy file",
@@ -2038,8 +2019,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        1888,
-        96
+        2032,
+        -96
       ],
       "id": "c65a5fc9-e448-4990-99f2-06fbeaf1ee28",
       "name": "Move file",
@@ -2053,99 +2034,68 @@
     {
       "parameters": {
         "operation": "update",
-        "fileId": {
-          "__rl": true,
-          "value": "={{ $json.id }}",
-          "mode": "id"
-        },
-        "newUpdatedFileName": "={{ $('Webhook').item.json.body.data.fields.jmeno_prijmeni + ' DPP ' + new Date().getDate() + '.' + (new Date().getMonth() + 1) + '.' + new Date().getFullYear() }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleDrive",
-      "typeVersion": 3,
-      "position": [
-        2016,
-        96
-      ],
-      "id": "52426d5a-a89e-4f68-a976-69b6010c3228",
-      "name": "Update file",
-      "credentials": {
-        "googleDriveOAuth2Api": {
-          "id": "0y8WKhAVB7SLUFcI",
-          "name": "Google Drive zmidloch@z-agency.cz"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "update",
-        "documentURL": "={{ $('Update file').item.json.id }}",
+        "documentURL": "={{ $json.id }}",
         "actionsUi": {
           "actionFields": [
             {
               "action": "replaceAll",
-              "text": "{{JMENO}}",
-              "replaceText": "={{ $('Webhook').item.json.body.data.fields.jmeno_prijmeni }}"
+              "text": " {{client_name}}",
+              "replaceText": "={{ $('If').item.json.fields['Kupující - Jméno a Příjmení'] }}"
             },
             {
               "action": "replaceAll",
-              "text": "{{RODNE_CISLO}}",
-              "replaceText": "={{ $('Webhook').item.json.body.data.fields.rodne_cislo }}"
+              "text": " {{client_address}}",
+              "replaceText": "={{ $('If').item.json.fields['Kupující - Adresa'] }} {{ $('If').item.json.fields['Kupující - PSČ'] }} {{ $('If').item.json.fields['Kupující - Město'] }} {{ $('If').item.json.fields['Kupující - Stát'] }}"
             },
             {
               "action": "replaceAll",
-              "text": "{{BYDLISTE}}",
-              "replaceText": "={{ $('Webhook').item.json.body.data.fields.trvale_bydliste }}"
+              "text": "{{client_email}}",
+              "replaceText": "={{ $('If').item.json.fields['Kupující - Email'] }}"
             },
             {
               "action": "replaceAll",
-              "text": "{{DATUM_NAROZENI}}",
-              "replaceText": "={{ $json.datum_narozeni_formatovano }}"
+              "text": "{{client_phone}}",
+              "replaceText": "={{ $('If').item.json.fields['Kupující - Telefon'] }}"
             },
             {
               "action": "replaceAll",
-              "text": "{{MISTO_NAROZENI}}",
-              "replaceText": "={{ $('Webhook').item.json.body.data.fields.misto_narozeni }}"
+              "text": "{{order_id}}",
+              "replaceText": "={{ $('If').item.json.fields['ID objednávky'] }}"
             },
             {
               "action": "replaceAll",
-              "text": "{{ZDRAVOTNI_POJISTOVNA}}",
-              "replaceText": "={{ $('Webhook').item.json.body.data.fields.zdravotni_pojistovna }}"
+              "text": "{{date}}",
+              "replaceText": "={{ $('If').item.json.fields['Datum a čas objednávky'] }}"
             },
             {
               "action": "replaceAll",
-              "text": "{{CISLO_UCTU}}",
-              "replaceText": "={{ $('Webhook').item.json.body.data.fields.cislo_uctu }}"
+              "text": "{{payment_status}}",
+              "replaceText": "={{ $('If').item.json.fields['Stripe platba'] }}"
             },
             {
               "action": "replaceAll",
-              "text": "{{DOKLAD_SK}}",
-              "replaceText": "={{ $('Webhook').item.json.body.data.fields.cislo_dokladu }}"
+              "text": "{{card_brand}}",
+              "replaceText": "={{ $('If').item.json.fields.Brand }}"
             },
             {
               "action": "replaceAll",
-              "text": "{{TELEFON}}",
-              "replaceText": "={{ $('Webhook').item.json.body.data.fields.telefon }}"
+              "text": "{{card_last4}}",
+              "replaceText": "={{ $('If').item.json.fields['Last 4 Digits'] }}"
             },
             {
               "action": "replaceAll",
-              "text": "{{EMAIL}}",
-              "replaceText": "={{ $('Webhook').item.json.body.data.fields.email.href }}"
+              "text": "{{item_name}}",
+              "replaceText": "={{ $('If').item.json.fields['Název hry'] }}"
             },
             {
               "action": "replaceAll",
-              "text": "{{DATUM}}",
-              "replaceText": "={{ $json.datum_vytvoreni_smlouvy }}"
+              "text": "{{game_date}}",
+              "replaceText": "={{ $('If').item.json.fields['Start hry'] }} - {{ $('If').item.json.fields['Konec hry'] }}"
             },
             {
               "action": "replaceAll",
-              "text": "{{RODNE_JMENO}}",
-              "replaceText": "={{ $('Webhook').item.json.body.data.fields.rodne_jmeno }}"
-            },
-            {
-              "action": "replaceAll",
-              "text": "{{PLATNOST_OD}} ",
-              "replaceText": "={{ $json.datum_vytvoreni_smlouvy }}"
+              "text": "{{total_price}}",
+              "replaceText": "={{ $('Update record').item.json.fields['Celková cena'].toString() }}"
             }
           ]
         }
@@ -2153,8 +2103,8 @@
       "type": "n8n-nodes-base.googleDocs",
       "typeVersion": 2,
       "position": [
-        2336,
-        96
+        2272,
+        -96
       ],
       "id": "0c639ffc-f623-43d5-ac8f-78799394363c",
       "name": "Update a document",
@@ -2167,27 +2117,14 @@
     },
     {
       "parameters": {
-        "jsCode": "for (const item of items) {\n    // Získání celého bloku 'fields' z Webhooku\n    const fields = $('Webhook').first().json.body.data.fields;\n    \n    // ==========================================================\n    // 1. Datum narození (načítáme z pole 'datum_narozeni')\n    // ==========================================================\n    // ZDE BYLA ZMĚNA: Používáme správný název pole\n    const isoDateString1 = fields.datum_narozeni;\n    \n    if (isoDateString1) {\n        const dateObj1 = new Date(isoDateString1);\n        // Protože datum končí na Z (UTC), getUTCDate vrátí správný den\n        const day1 = dateObj1.getUTCDate();\n        const month1 = dateObj1.getUTCMonth() + 1; \n        const year1 = dateObj1.getUTCFullYear();\n        \n        // Výsledek např: 10.7.2006\n        item.json.datum_narozeni_formatovano = `${day1}.${month1}.${year1}`;\n    } else {\n        item.json.datum_narozeni_formatovano = 'CHYBA: Datum narození nenalezeno';\n    }\n    \n    // ==========================================================\n    // 2. Datum vytvoření smlouvy (AKTUÁLNÍ DATUM)\n    // ==========================================================\n    const dateObj2 = new Date(); \n    \n    const day2 = dateObj2.getDate();\n    const month2 = dateObj2.getMonth() + 1; \n    const year2 = dateObj2.getFullYear();\n    \n    item.json.datum_vytvoreni_smlouvy = `${day2}.${month2}.${year2}`;\n}\n\nreturn items;"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        2176,
-        96
-      ],
-      "id": "5713f8c4-2d82-4765-a71d-1448ee9350f6",
-      "name": "Code in JavaScript"
-    },
-    {
-      "parameters": {
         "content": "## Receipt Creation\n**Google Disc Template File Manipulation  - Duplication of template, moving template to directory, set name, fill up, update Airtable status** \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTemplate:\nhttps://docs.google.com/document/d/1i80iux_rFtmFcfL88Q2IvYUwew7RZAsLxfc2Y-KAamM/edit?usp=sharing",
         "height": 560,
         "width": 912
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1728,
-        -112
+        1776,
+        -304
       ],
       "typeVersion": 1,
       "id": "6daf7b54-ab53-45e5-990d-071ad693e98b",
@@ -2201,8 +2138,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2672,
-        -112
+        2720,
+        -304
       ],
       "typeVersion": 1,
       "id": "8a5f00c2-ee93-4cff-9214-731f92cc06c1",
@@ -2213,16 +2150,22 @@
         "operation": "download",
         "fileId": {
           "__rl": true,
-          "value": "={{ $json.mimeType }}",
+          "value": "={{ $('Update a document').item.json.documentId }}",
           "mode": "id"
         },
-        "options": {}
+        "options": {
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "application/pdf"
+            }
+          }
+        }
       },
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        2720,
-        96
+        2768,
+        -96
       ],
       "id": "99af0f48-43d1-4fd5-aef8-9e2820829d05",
       "name": "Download file",
@@ -2261,8 +2204,8 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2.1,
       "position": [
-        2880,
-        96
+        3312,
+        -96
       ],
       "id": "58c2bcb7-7aef-471d-a192-a8b99b000fc4",
       "name": "Update PDF Status",
@@ -2293,10 +2236,8 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "Délka hry": 0,
-            "Počet týmů": 0,
-            "Cena za tým": 0,
-            "Celková cena": 0
+            "id": "={{ $('Update record').item.json.id }}",
+            "Receipt Status": "={{ ($('Update record').item.json.fields['Vase_Pole_Tagy'] || []).concat(['Created DOC']) }}"
           },
           "matchingColumns": [
             "id"
@@ -2321,7 +2262,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Datum a čas objednávky",
@@ -2343,7 +2284,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Kupující - Telefon",
@@ -2354,7 +2295,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Kupující - Email",
@@ -2365,7 +2306,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Kupující - Adresa",
@@ -2376,7 +2317,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Kupující - Město",
@@ -2387,7 +2328,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Kupující - PSČ",
@@ -2398,7 +2339,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Kupující - Stát",
@@ -2409,7 +2350,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Hráč - Jméno a Příjmení",
@@ -2420,7 +2361,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Hráč - Telefon",
@@ -2431,7 +2372,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Hráč - Email",
@@ -2442,7 +2383,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Název hry",
@@ -2453,7 +2394,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Datum hry",
@@ -2464,7 +2405,7 @@
               "display": true,
               "type": "dateTime",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Start hry",
@@ -2475,7 +2416,7 @@
               "display": true,
               "type": "dateTime",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Délka hry",
@@ -2486,7 +2427,7 @@
               "display": true,
               "type": "number",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Konec hry",
@@ -2497,7 +2438,7 @@
               "display": true,
               "type": "dateTime",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Počet týmů",
@@ -2508,7 +2449,7 @@
               "display": true,
               "type": "number",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Cena za tým",
@@ -2519,7 +2460,7 @@
               "display": true,
               "type": "number",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Celková cena",
@@ -2530,7 +2471,7 @@
               "display": true,
               "type": "number",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Stripe platba",
@@ -2551,7 +2492,7 @@
                 }
               ],
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Last Modified",
@@ -2573,40 +2514,40 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
-              "id": "Brand karty",
-              "displayName": "Brand karty",
+              "id": "Brand",
+              "displayName": "Brand",
               "required": false,
               "defaultMatch": false,
               "canBeUsedToMatch": true,
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
-              "id": "Poslední 4 čísla",
-              "displayName": "Poslední 4 čísla",
+              "id": "Last 4 Digits",
+              "displayName": "Last 4 Digits",
               "required": false,
               "defaultMatch": false,
               "canBeUsedToMatch": true,
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
-              "id": "Země vydání",
-              "displayName": "Země vydání",
+              "id": "Country",
+              "displayName": "Country",
               "required": false,
               "defaultMatch": false,
               "canBeUsedToMatch": true,
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Receipt Status",
@@ -2650,7 +2591,7 @@
               "display": true,
               "type": "array",
               "readOnly": false,
-              "removed": false
+              "removed": true
             }
           ],
           "attemptToConvertTypes": false,
@@ -2661,8 +2602,8 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2.1,
       "position": [
-        2496,
-        96
+        2544,
+        -96
       ],
       "id": "2d0b1760-a0e1-47fc-bd78-a7090d3a5f26",
       "name": "Update DOC Status",
@@ -3061,8 +3002,8 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2.1,
       "position": [
-        3056,
-        96
+        3456,
+        -96
       ],
       "id": "5e0998bd-2a18-4bc6-a1e3-eea3e4c91634",
       "name": "Airtable PDF Upload",
@@ -3456,8 +3397,8 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2.1,
       "position": [
-        3248,
-        96
+        3616,
+        -96
       ],
       "id": "682dcd79-946b-4aab-b0e1-a436c1aea7ea",
       "name": "Update Airtable Upload Status",
@@ -3851,8 +3792,8 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2.1,
       "position": [
-        3776,
-        96
+        4032,
+        -96
       ],
       "id": "abb543b4-e4a6-43da-aea3-e2cd051376ba",
       "name": "Update Client Email Status",
@@ -3870,8 +3811,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        3568,
-        624
+        3616,
+        432
       ],
       "id": "5e45822d-f824-4abd-9908-942b0e0fd353",
       "name": "HTTP Post PDF to UOL"
@@ -4264,8 +4205,8 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2.1,
       "position": [
-        3760,
-        624
+        3808,
+        432
       ],
       "id": "66dd28f4-d014-45fb-81ab-6e626cb381c7",
       "name": "Update UOL Status",
@@ -4326,31 +4267,42 @@
       "name": "Create Personalized Message"
     },
     {
-      "parameters": {},
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1,
+      "parameters": {
+        "sendTo": "zmidloch@z-agency.cz",
+        "subject": "⚠️ ALERT: Neshoda ID platby (Stripe vs Airtable) - {{ $json.fields['ID objednávky'] || 'Bez ID' }}",
+        "message": "=<!DOCTYPE html>\n<html>\n<head>\n<meta charset=\"utf-8\">\n</head>\n<body style=\"margin: 0; padding: 0; background-color: #f4f4f4; font-family: Arial, Helvetica, sans-serif;\">\n\n<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color: #f4f4f4;\">\n    <tr>\n        <td align=\"center\" style=\"padding: 20px;\">\n            \n            <table width=\"600\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); max-width: 600px;\">\n                \n                <tr>\n                    <td style=\"background-color: #D32F2F; padding: 20px; text-align: center; color: #ffffff;\">\n                        <h2 style=\"margin: 0; font-size: 24px; font-weight: bold;\">Chyba párování platby</h2>\n                        <p style=\"margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;\">Automatický report z n8n</p>\n                    </td>\n                </tr>\n\n                <tr>\n                    <td style=\"padding: 30px 30px 10px 30px; color: #333333; font-size: 16px; line-height: 1.5;\">\n                        Dobrý den,\n                        <br><br>\n                        Workflow narazilo na problém při kontrole platby. ID, které přišlo ze Stripe Webhooku, se <strong>neshoduje</strong> s ID, které je uloženo u nalezeného záznamu v Airtable.\n                        <br><br>\n                        Systém proto <strong>neprovedl aktualizaci</strong> záznamu, aby nedošlo k chybě.\n                    </td>\n                </tr>\n\n                <tr>\n                    <td style=\"padding: 10px 30px;\">\n                        <table width=\"100%\" border=\"0\" cellpadding=\"15\" cellspacing=\"0\" style=\"background-color: #fff4e5; border: 1px solid #ffcc80; border-radius: 4px;\">\n                            <tr>\n                                <td style=\"color: #663c00;\">\n                                    <strong style=\"display: block; font-size: 12px; text-transform: uppercase; color: #995c00;\">Nově přijaté ID (Stripe):</strong>\n                                    <code style=\"font-family: Consolas, 'Courier New', monospace; font-size: 16px; color: #2e7d32; background-color: #fff; padding: 2px 5px; border-radius: 3px;\">{{ $('Stripe Payment Succeeded Webhook').item.json.body.data.object.id }}</code>\n                                    \n                                    <br><br>\n                                    \n                                    <strong style=\"display: block; font-size: 12px; text-transform: uppercase; color: #995c00;\">Uložené ID (Airtable):</strong>\n                                    <code style=\"font-family: Consolas, 'Courier New', monospace; font-size: 16px; color: #c62828; background-color: #fff; padding: 2px 5px; border-radius: 3px;\">{{ $json.fields['ID Stripe platby'] }}</code>\n                                </td>\n                            </tr>\n                        </table>\n                    </td>\n                </tr>\n\n                <tr>\n                    <td style=\"padding: 20px 30px;\">\n                        <h3 style=\"margin: 0 0 15px 0; font-size: 16px; border-bottom: 2px solid #eeeeee; padding-bottom: 10px; color: #555555;\">🔍 Kontext záznamu</h3>\n                        \n                        <table width=\"100%\" border=\"0\" cellpadding=\"5\" cellspacing=\"0\" style=\"font-size: 14px; color: #333333;\">\n                            <tr>\n                                <td width=\"140\" style=\"font-weight: bold; color: #777;\">Jméno klienta:</td>\n                                <td>{{ $json.fields['Kupující - Jméno a Příjmení'] || 'Nenalezeno' }}</td>\n                            </tr>\n                            <tr>\n                                <td style=\"font-weight: bold; color: #777;\">Email:</td>\n                                <td>{{ $json.fields['Kupující - Email'] || 'Nenalezeno' }}</td>\n                            </tr>\n                            <tr>\n                                <td style=\"font-weight: bold; color: #777;\">ID Objednávky:</td>\n                                <td>{{ $json.fields['ID objednávky'] || 'Nenalezeno' }}</td>\n                            </tr>\n                            <tr>\n                                <td style=\"font-weight: bold; color: #777;\">Record ID:</td>\n                                <td style=\"font-family: monospace; color: #888;\">{{ $json.id }}</td>\n                            </tr>\n                        </table>\n                    </td>\n                </tr>\n\n                <tr>\n                    <td style=\"background-color: #eeeeee; padding: 15px; text-align: center; color: #888888; font-size: 12px;\">\n                        Toto je automaticky generovaná zpráva z n8n workflow.<br>\n                        Nereagujte na tento email.\n                    </td>\n                </tr>\n\n            </table>\n        </td>\n    </tr>\n</table>\n\n</body>\n</html>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
       "position": [
-        -256,
-        48
+        1136,
+        400
       ],
-      "id": "68527878-c449-44b7-ac07-1fb097b197fa",
-      "name": "When clicking ‘Execute workflow’"
+      "id": "f320d11f-9938-417b-9efb-2db5acf118e1",
+      "name": "Send Error Message",
+      "webhookId": "e02469a0-7a98-4cff-bca9-e0ebba622e34",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "cUMqdo7XCF6noXLb",
+          "name": "Gmail-info@z-agency.cz"
+        }
+      }
     },
     {
       "parameters": {
-        "mode": "raw",
-        "jsonOutput": "[\n  {\n    \"headers\": {\n      \"host\": \"n8n-zagency-u62265.vm.elestio.app\",\n      \"x-real-ip\": \"91.239.201.4\",\n      \"x-forwarded-for\": \"91.239.201.4\",\n      \"x-forwarded-proto\": \"https\",\n      \"x-forwarded-port\": \"443\",\n      \"connection\": \"close\",\n      \"content-length\": \"1144\",\n      \"user-agent\": \"WordPress/6.9; https://autopilot.terrahunt.cz ForminatorWebhook/1.0\",\n      \"accept-encoding\": \"deflate, gzip, br, zstd\",\n      \"accept\": \"application/json\",\n      \"content-type\": \"application/json\"\n    },\n    \"params\": {},\n    \"query\": {},\n    \"body\": {\n      \"name_1\": \"Jan Novák\",\n      \"phone_1\": \"+420 777 899 440\",\n      \"email_1\": \"jiri@zmidloch.cz\",\n      \"confirm_email_1\": \"jiri@zmidloch.cz\",\n      \"address_1_street_address\": \"Karlova 38\",\n      \"address_1_city\": \"Brno\",\n      \"address_1_zip\": \"21400\",\n      \"address_1_country\": \"Česká republika\",\n\n      \"name_2\": \"Jan Novák\",\n      \"phone_2\": \"+420 777 899 440\",\n      \"email_2\": \"jiri@zmidloch.cz\",\n      \"confirm_email_2\": \"jiri@zmidloch.cz\",\n\n      \"select_1\": \"one\",\n      \"date_1\": \"31.12.2025\",\n      \"time_1_hours\": \"2\",\n      \"time_1_minutes\": \"45\",\n      \"time_1\": \"02:45 \",\n\n      \"select_4\": \"[\\\"2,5\\\"]\",\n      \"number_1\": \"20\",\n      \"select_3\": \"one\",\n\n      \"paymentid\": \"pi_3SjQwBE4f4jzicDT0TMcP01j\",\n      \"paymentmethod\": \"pm_1SjQwAE4f4jzicDTbRzdbk4b\",\n      \"subscriptionid\": \"\",\n      \"stripe_ocs_1\": \"pi_3SjQwBE4f4jzicDT0TMcP01j\",\n\n      \"consent_1\": \"checked\",\n      \"hidden_1\": \"11\",\n\n      \"address_1\": \"{\\\"street_address\\\":\\\"Karlova 38\\\",\\\"city\\\":\\\"Brno\\\",\\\"zip\\\":\\\"21400\\\",\\\"country\\\":\\\"\\\\u010cesk\\\\u00e1 republika\\\"}\",\n\n      \"calculation_2\": \"CZK 350\",\n      \"calculation_1\": \"7000.00\",\n\n      \"_forminator_user_ip\": null,\n      \"form_title\": \"Event Registration Form\",\n      \"entry_time\": \"2025-12-28 21:51:43\",\n\n      \"referer_url\": \"\",\n      \"_wp_http_referer\": \"/\",\n      \"page_id\": \"0\",\n      \"form_type\": \"default\",\n      \"current_url\": \"\",\n      \"render_id\": \"0\",\n      \"form_uid\": \"695195693d226\"\n    },\n    \"webhookUrl\": \"https://n8n-zagency-u62265.vm.elestio.app/webhook-test/c525f8f0-1118-45a5-b301-c23e62577abc\",\n    \"executionMode\": \"test\"\n  }\n]\n",
-        "options": {}
+        "jsCode": "// Projde všechny položky (v tomto případě asi jen jednu)\nfor (const item of items) {\n  // Zkontroluje, zda existují binární data (soubor) pod klíčem 'data'\n  if (item.binary && item.binary.data) {\n    \n    // Získá ID objednávky z předchozích kroků pro název souboru\n    // Upravte 'Update record' na název vašeho Airtable uzlu, pokud se jmenuje jinak\n    const orderId = $('Update record').item.json.fields['ID objednávky'] || 'neznama-objednavka';\n    \n    // Přejmenuje soubor\n    item.binary.data.fileName = `Faktura_${orderId}.pdf`;\n    \n    // Ujistí se, že přípona a typ souboru jsou nastaveny na PDF\n    item.binary.data.fileExtension = 'pdf';\n    item.binary.data.mimeType = 'application/pdf';\n  }\n}\n\nreturn items;"
       },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
       "position": [
-        -48,
-        48
+        2976,
+        -96
       ],
-      "id": "05d0bab3-5569-486a-8cb0-8f4e2ab61d8b",
-      "name": "Edit Fields",
-      "onError": "continueRegularOutput"
+      "id": "d446e5d5-c6f1-425b-a467-d6038f13acf7",
+      "name": "Code in JavaScript"
     }
   ],
   "settings": {
@@ -4371,6 +4323,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-12-29T23:08:17.176Z",
-  "versionId": "546529bc-bb4b-4f1b-ad05-08e941d85696"
+  "updatedAt": "2025-12-30T15:26:52.628Z",
+  "versionId": "9255b44a-6d41-4d23-a08d-1e98aff04975"
 }
