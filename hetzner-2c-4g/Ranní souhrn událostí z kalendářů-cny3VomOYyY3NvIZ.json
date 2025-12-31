@@ -1,0 +1,364 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Pracovní kalendář",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Osobní kalendář",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Hobby kalendář",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pracovní kalendář": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Osobní kalendář": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Hobby kalendář": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Formátování událostí",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formátování událostí": {
+      "main": [
+        [
+          {
+            "node": "Nastavit příjemce",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Nastavit příjemce": {
+      "main": [
+        [
+          {
+            "node": "Poslat email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-31T21:18:37.602Z",
+  "id": "cny3VomOYyY3NvIZ",
+  "isArchived": false,
+  "meta": null,
+  "name": "Ranní souhrn událostí z kalendářů",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 7
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        220,
+        300
+      ],
+      "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "content": "## 🌅 Spouštěč workflow\nWorkflow se spustí každý den v 7:00 ráno a pošle vám přehled všech událostí z vašich kalendářů.",
+        "height": 120,
+        "width": 300,
+        "color": 1
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        220,
+        120
+      ],
+      "id": "note1-2345-6789-abcd-ef1234567890",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "Pracovní",
+          "mode": "list"
+        },
+        "timeMin": "={{ $now.startOf('day').toISO() }}",
+        "timeMax": "={{ $now.endOf('day').toISO() }}",
+        "options": {
+          "singleEvents": true,
+          "orderBy": "startTime"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.1,
+      "position": [
+        480,
+        200
+      ],
+      "id": "b2c3d4e5-f6a7-8901-bcde-f23456789012",
+      "name": "Pracovní kalendář",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "undefined",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "Osobní",
+          "mode": "list"
+        },
+        "timeMin": "={{ $now.startOf('day').toISO() }}",
+        "timeMax": "={{ $now.endOf('day').toISO() }}",
+        "options": {
+          "singleEvents": true,
+          "orderBy": "startTime"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.1,
+      "position": [
+        480,
+        300
+      ],
+      "id": "c3d4e5f6-a789-0123-cdef-345678901234",
+      "name": "Osobní kalendář",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "undefined",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "Hobby",
+          "mode": "list"
+        },
+        "timeMin": "={{ $now.startOf('day').toISO() }}",
+        "timeMax": "={{ $now.endOf('day').toISO() }}",
+        "options": {
+          "singleEvents": true,
+          "orderBy": "startTime"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.1,
+      "position": [
+        480,
+        400
+      ],
+      "id": "d4e5f6a7-8901-2345-def0-456789012345",
+      "name": "Hobby kalendář",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "undefined",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## 📅 Načtení událostí\nTyto tři uzly načtou všechny události z dnešního dne z vašich tří Google kalendářů.\n\n⚠️ **Důležité:** Musíte připojit své Google účty a vybrat správné kalendáře!",
+        "height": 250,
+        "width": 320,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        760,
+        250
+      ],
+      "id": "note2-3456-7890-bcde-f12345678901",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "multiplex",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        720,
+        300
+      ],
+      "id": "e5f6a789-0123-4567-ef01-567890123456",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "jsCode": "const pracovniEvents = $input.item.json.pracovni || [];\nconst osobniEvents = $input.item.json.osobni || [];\nconst hobbyEvents = $input.item.json.hobby || [];\n\nfunction formatTime(dateString) {\n  if (!dateString) return 'Celý den';\n  const date = new Date(dateString);\n  return date.toLocaleTimeString('cs-CZ', { hour: '2-digit', minute: '2-digit' });\n}\n\nfunction formatDate(dateString) {\n  const date = new Date(dateString);\n  return date.toLocaleDateString('cs-CZ', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });\n}\n\nfunction formatEvents(events, calendarName, emoji) {\n  if (events.length === 0) return `<h3>${emoji} ${calendarName}</h3><p style=\"color: #666;\">Žádné události</p>`;\n  \n  let html = `<h3>${emoji} ${calendarName}</h3><ul style=\"list-style-type: none; padding: 0;\">`;\n  \n  events.forEach(event => {\n    const time = formatTime(event.start?.dateTime || event.start?.date);\n    const title = event.summary || 'Bez názvu';\n    const location = event.location ? `<br><small style=\"color: #666;\">📍 ${event.location}</small>` : '';\n    const description = event.description ? `<br><small style=\"color: #888;\">${event.description.substring(0, 100)}${event.description.length > 100 ? '...' : ''}</small>` : '';\n    \n    html += `<li style=\"margin-bottom: 15px; padding: 10px; background-color: #f5f5f5; border-radius: 5px;\">\n      <strong>${time}</strong> - ${title}${location}${description}\n    </li>`;\n  });\n  \n  html += '</ul>';\n  return html;\n}\n\nconst today = formatDate(new Date());\n\nconst emailContent = `\n<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }\n    h2 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }\n    h3 { color: #34495e; margin-top: 25px; }\n    .container { max-width: 600px; margin: 0 auto; padding: 20px; }\n    .header { background-color: #3498db; color: white; padding: 20px; text-align: center; border-radius: 10px 10px 0 0; }\n    .content { background-color: white; padding: 20px; border: 1px solid #ddd; border-radius: 0 0 10px 10px; }\n    .footer { text-align: center; margin-top: 20px; color: #666; font-size: 12px; }\n  </style>\n</head>\n<body>\n  <div class=\"container\">\n    <div class=\"header\">\n      <h1>🌞 Váš denní přehled</h1>\n      <p>${today}</p>\n    </div>\n    <div class=\"content\">\n      ${formatEvents(pracovniEvents, 'Pracovní kalendář', '💼')}\n      ${formatEvents(osobniEvents, 'Osobní kalendář', '👤')}\n      ${formatEvents(hobbyEvents, 'Hobby kalendář', '🎨')}\n    </div>\n    <div class=\"footer\">\n      <p>Přejeme vám produktivní den! 🚀</p>\n    </div>\n  </div>\n</body>\n</html>\n`;\n\nreturn {\n  emailContent,\n  subject: `📅 Dnešní události - ${today}`\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        940,
+        300
+      ],
+      "id": "f6a78901-2345-6789-f012-678901234567",
+      "name": "Formátování událostí"
+    },
+    {
+      "parameters": {
+        "content": "## 🎨 Formátování\nTento kód zpracuje všechny události a vytvoří z nich krásně naformátovaný HTML email s:\n- Rozdělením podle kalendářů\n- Časem a názvem události\n- Místem konání\n- Krátkým popisem",
+        "height": 150,
+        "width": 300,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        140
+      ],
+      "id": "note3-4567-8901-cdef-234567890123",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "send",
+        "sendTo": "{{ $json.to }}",
+        "subject": "={{ $json.subject }}",
+        "message": "={{ $json.emailContent }}",
+        "options": {
+          "attachmentsUi": {}
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1340,
+        300
+      ],
+      "id": "a7890123-4567-8901-a012-789012345678",
+      "name": "Poslat email",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "undefined",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Nastavte svou emailovou adresu\nconst recipientEmail = 'vas-email@gmail.com';\n\nreturn {\n  ...items[0].json,\n  to: recipientEmail\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1140,
+        300
+      ],
+      "id": "b8901234-5678-9012-b123-890123456789",
+      "name": "Nastavit příjemce"
+    },
+    {
+      "parameters": {
+        "content": "## 📧 Odeslání emailu\n⚠️ **Důležité nastavení:**\n1. Připojte svůj Gmail účet\n2. V uzlu \"Nastavit příjemce\" změňte emailovou adresu na vaši vlastní",
+        "height": 140,
+        "width": 300,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1500,
+        200
+      ],
+      "id": "note4-5678-9012-def0-345678901234",
+      "name": "Sticky Note3"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveDataErrorExecution": "all",
+    "errorWorkflow": "",
+    "timezone": "Europe/Prague",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-31T21:18:37.602Z",
+      "createdAt": "2025-12-31T21:18:37.602Z",
+      "role": "workflow:owner",
+      "workflowId": "cny3VomOYyY3NvIZ",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-12-31T21:18:37.602Z",
+  "versionId": "7e435481-05e2-4c95-a3cd-316fb9baaa21"
+}
