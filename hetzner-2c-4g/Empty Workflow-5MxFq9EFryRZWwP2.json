@@ -1,0 +1,51 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {},
+  "createdAt": "2025-12-31T21:07:43.377Z",
+  "id": "5MxFq9EFryRZWwP2",
+  "isArchived": false,
+  "meta": null,
+  "name": "Empty Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## No Request Provided\nPlease provide a description of the workflow you'd like to create."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        220,
+        0
+      ],
+      "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "name": "Instructions"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveDataErrorExecution": "all",
+    "errorWorkflow": "",
+    "timezone": "America/New_York",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-31T21:07:43.377Z",
+      "createdAt": "2025-12-31T21:07:43.377Z",
+      "role": "workflow:owner",
+      "workflowId": "5MxFq9EFryRZWwP2",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-12-31T21:07:43.377Z",
+  "versionId": "24c8556f-0cc0-4839-bfa4-3a16a09e5e40"
+}
