@@ -620,7 +620,7 @@
       "main": [
         [
           {
-            "node": "Send a message",
+            "node": "Merge",
             "type": "main",
             "index": 0
           }
@@ -678,6 +678,11 @@
             "node": "Upload file",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
           }
         ]
       ]
@@ -709,6 +714,17 @@
         [
           {
             "node": "Update PDF Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
             "type": "main",
             "index": 0
           }
@@ -1739,12 +1755,21 @@
     },
     {
       "parameters": {
-        "options": {}
+        "sendTo": "={{ $json.fields['Kupující - Email'] }}",
+        "subject": "=Invoice No.{{ $json.fields['ID objednávky'] }} {{ $json.fields['Název hry'] }}",
+        "message": "=<!DOCTYPE html>\n<html>\n<head>\n<style>\n  body { font-family: Arial, sans-serif; line-height: 1.6; color: #333333; margin: 0; padding: 0; }\n  .container { max-width: 600px; margin: 20px auto; padding: 0; border: 1px solid #e0e0e0; border-radius: 5px; background-color: #ffffff; overflow: hidden; }\n  .header { background-color: #f8f9fa; padding: 20px; text-align: center; border-bottom: 3px solid #007bff; }\n  .content { padding: 30px 20px; }\n  .highlight { color: #007bff; font-weight: bold; }\n  .footer { font-size: 12px; text-align: center; color: #888888; background-color: #f9f9f9; padding: 20px; border-top: 1px solid #eeeeee; }\n  .footer a { color: #888888; text-decoration: none; }\n  .footer strong { color: #555555; }\n</style>\n</head>\n<body>\n\n<div class=\"container\">\n  <div class=\"header\">\n    <h2 style=\"margin:0;\">Thank You for Your Order!</h2>\n  </div>\n\n  <div class=\"content\">\n    <p>Dear <strong>{{ $json[\"Kupující - Jméno a Příjmení\"] }}</strong>,</p>\n\n    <p>We are thrilled that you have chosen to play <strong>{{ $json[\"Název hry\"] }}</strong> with us! This email confirms that we have successfully received your order.</p>\n\n    <h3>📄 Your Invoice</h3>\n    <p>Please find your invoice attached to this email in PDF format.</p>\n\n    <hr style=\"border: 0; border-top: 1px solid #eee; margin: 25px 0;\">\n\n    <h3>🎮 What Happens Next?</h3>\n    <p>You are probably eager to start playing, but don't worry about the details just yet.</p>\n    \n    <p><strong>Look out for another email from us shortly.</strong></p>\n    \n    <p>In that upcoming email, you will receive:</p>\n    <ul>\n      <li>Detailed instructions on how to start the game.</li>\n      <li>Game rules and guidelines.</li>\n      <li>Useful tips and recommendations for the best experience.</li>\n    </ul>\n\n    <p style=\"margin-top: 30px;\">Best regards,<br>\n    <strong>TerraHunt Gaming Platform Team</strong></p>\n  </div>\n\n  <div class=\"footer\">\n    <p>In case of any problems, please do not hesitate to contact us:</p>\n    \n    <p><strong>Z-AGENCY s.r.o.</strong><br>\n    Karlova 1054/38, 614 00 Brno<br>\n    Czech Republic, Europe</p>\n    \n    <p>\n      <a href=\"mailto:info@z-agency.cz\">info@z-agency.cz</a><br>\n      <a href=\"tel:+420542211935\">+420 542 211 935</a>\n    </p>\n\n    <p style=\"margin-top: 20px; font-size: 11px;\">\n      &copy; 2025 Z-Agency. All rights reserved.<br>\n      Order ID: {{ $json[\"ID objednávky\"] }}\n    </p>\n  </div>\n</div>\n\n</body>\n</html>",
+        "options": {
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {}
+            ]
+          }
+        }
       },
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        3472,
+        3648,
         -112
       ],
       "id": "7b8743ae-9bd1-40b2-bd3e-d03d6db41080",
@@ -1765,8 +1790,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3232,
-        256
+        3392,
+        320
       ],
       "typeVersion": 1,
       "id": "7e1ea9e5-bc45-434a-b69f-c8e0dd43d2fd",
@@ -3411,9 +3436,12 @@
         },
         "columns": {
           "mappingMode": "defineBelow",
-          "value": {},
+          "value": {
+            "ID objednávky": "={{ $('Airtable PDF Upload').item.json.fields['ID objednávky'] }}",
+            "Receipt Status": "={{ ($('Update record').item.json.fields['Receipt Status'] || []).concat(['Created DOC', 'Created PDF', 'Saved Airtable', 'Sent to Client']) }}"
+          },
           "matchingColumns": [
-            "id"
+            "ID objednávky"
           ],
           "schema": [
             {
@@ -3424,7 +3452,7 @@
               "display": true,
               "type": "string",
               "readOnly": true,
-              "removed": false
+              "removed": true
             },
             {
               "id": "ID objednávky",
@@ -3457,7 +3485,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Kupující - Telefon",
@@ -3468,7 +3496,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Kupující - Email",
@@ -3479,7 +3507,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Kupující - Adresa",
@@ -3490,7 +3518,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Kupující - Město",
@@ -3501,7 +3529,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Kupující - PSČ",
@@ -3512,7 +3540,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Kupující - Stát",
@@ -3523,7 +3551,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Hráč - Jméno a Příjmení",
@@ -3534,7 +3562,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Hráč - Telefon",
@@ -3545,7 +3573,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Hráč - Email",
@@ -3556,7 +3584,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Název hry",
@@ -3567,7 +3595,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Datum hry",
@@ -3578,7 +3606,7 @@
               "display": true,
               "type": "dateTime",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Start hry",
@@ -3589,7 +3617,7 @@
               "display": true,
               "type": "dateTime",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Délka hry",
@@ -3600,7 +3628,7 @@
               "display": true,
               "type": "number",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Konec hry",
@@ -3611,7 +3639,7 @@
               "display": true,
               "type": "dateTime",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Počet týmů",
@@ -3622,7 +3650,7 @@
               "display": true,
               "type": "number",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Cena za tým",
@@ -3633,7 +3661,7 @@
               "display": true,
               "type": "number",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Celková cena",
@@ -3644,7 +3672,7 @@
               "display": true,
               "type": "number",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Stripe platba",
@@ -3665,7 +3693,7 @@
                 }
               ],
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Last Modified",
@@ -3687,7 +3715,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Brand karty",
@@ -3698,7 +3726,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Poslední 4 čísla",
@@ -3709,7 +3737,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Země vydání",
@@ -3720,7 +3748,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Receipt Status",
@@ -3764,7 +3792,7 @@
               "display": true,
               "type": "array",
               "readOnly": false,
-              "removed": false
+              "removed": true
             }
           ],
           "attemptToConvertTypes": false,
@@ -3775,7 +3803,7 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2.1,
       "position": [
-        3888,
+        3904,
         -112
       ],
       "id": "abb543b4-e4a6-43da-aea3-e2cd051376ba",
@@ -3794,8 +3822,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        3280,
-        400
+        3440,
+        464
       ],
       "id": "5e45822d-f824-4abd-9908-942b0e0fd353",
       "name": "HTTP Post PDF to UOL"
@@ -4188,8 +4216,8 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2.1,
       "position": [
-        3472,
-        400
+        3632,
+        464
       ],
       "id": "66dd28f4-d014-45fb-81ab-6e626cb381c7",
       "name": "Update UOL Status",
@@ -4750,6 +4778,21 @@
           "name": "Google Drive zmidloch@z-agency.cz"
         }
       }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        3488,
+        48
+      ],
+      "id": "8fc7bd2e-1e51-4ef7-93b0-2a4e57de0797",
+      "name": "Merge"
     }
   ],
   "settings": {
@@ -4770,6 +4813,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-12-30T22:54:44.896Z",
-  "versionId": "ca61d739-4fda-4af0-9a43-c13e01e2b244"
+  "updatedAt": "2025-12-30T23:45:22.523Z",
+  "versionId": "701ce7bf-c340-4f49-a286-b67b3ceda7a4"
 }
