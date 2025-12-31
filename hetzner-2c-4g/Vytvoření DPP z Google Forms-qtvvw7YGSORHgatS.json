@@ -1,0 +1,364 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Google Forms Trigger": {
+      "main": [
+        [
+          {
+            "node": "Create DPP from Template",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create DPP from Template": {
+      "main": [
+        [
+          {
+            "node": "Share Document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Share Document": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-31T21:41:30.653Z",
+  "id": "qtvvw7YGSORHgatS",
+  "isArchived": false,
+  "meta": null,
+  "name": "Vytvoření DPP z Google Forms",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "event": "formResponse",
+        "formId": "={{ $json.formId }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleFormsTrigger",
+      "typeVersion": 1,
+      "position": [
+        220,
+        300
+      ],
+      "id": "f8c9a2b1-4e3d-4a5b-9c7e-1d2f3a4b5c6d",
+      "name": "Google Forms Trigger",
+      "credentials": {
+        "googleFormsOAuth2Api": {
+          "id": "googleFormsAuth",
+          "name": "Google Forms account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "name": "=DPP - {{ $('Google Forms Trigger').item.json['Jméno a příjmení'] }} - {{ $today.format('DD.MM.YYYY') }}",
+        "content": "={{ $json.body }}",
+        "options": {
+          "templateId": "{{ $json.templateId }}",
+          "replaceText": {
+            "values": [
+              {
+                "searchText": "{{jmeno_prijmeni}}",
+                "replaceText": "={{ $('Google Forms Trigger').item.json['Jméno a příjmení'] }}"
+              },
+              {
+                "searchText": "{{datum_narozeni}}",
+                "replaceText": "={{ $('Google Forms Trigger').item.json['Datum narození'] }}"
+              },
+              {
+                "searchText": "{{rodne_cislo}}",
+                "replaceText": "={{ $('Google Forms Trigger').item.json['Rodné číslo'] }}"
+              },
+              {
+                "searchText": "{{bydliste}}",
+                "replaceText": "={{ $('Google Forms Trigger').item.json['Adresa bydliště'] }}"
+              },
+              {
+                "searchText": "{{cislo_op}}",
+                "replaceText": "={{ $('Google Forms Trigger').item.json['Číslo OP'] }}"
+              },
+              {
+                "searchText": "{{telefon}}",
+                "replaceText": "={{ $('Google Forms Trigger').item.json['Telefon'] }}"
+              },
+              {
+                "searchText": "{{email}}",
+                "replaceText": "={{ $('Google Forms Trigger').item.json['Email'] }}"
+              },
+              {
+                "searchText": "{{popis_prace}}",
+                "replaceText": "={{ $('Google Forms Trigger').item.json['Popis práce'] }}"
+              },
+              {
+                "searchText": "{{odmena}}",
+                "replaceText": "={{ $('Google Forms Trigger').item.json['Výše odměny'] }}"
+              },
+              {
+                "searchText": "{{datum_od}}",
+                "replaceText": "={{ $('Google Forms Trigger').item.json['Datum zahájení'] }}"
+              },
+              {
+                "searchText": "{{datum_do}}",
+                "replaceText": "={{ $('Google Forms Trigger').item.json['Datum ukončení'] }}"
+              },
+              {
+                "searchText": "{{datum_dnes}}",
+                "replaceText": "={{ $today.format('DD.MM.YYYY') }}"
+              },
+              {
+                "searchText": "{{cislo_uctu}}",
+                "replaceText": "={{ $('Google Forms Trigger').item.json['Číslo účtu'] }}"
+              }
+            ]
+          },
+          "folderId": "{{ $json.folderId }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        460,
+        300
+      ],
+      "id": "a1b2c3d4-5e6f-7a8b-9c0d-1e2f3a4b5c6d",
+      "name": "Create DPP from Template",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "googleDocsAuth",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "drive",
+        "operation": "share",
+        "fileId": "={{ $('Create DPP from Template').item.json.documentId }}",
+        "permissionsUi": {
+          "permissionsValues": [
+            {
+              "email": "={{ $('Google Forms Trigger').item.json['Email'] }}",
+              "role": "reader"
+            }
+          ]
+        },
+        "options": {
+          "sendNotificationEmail": true
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        700,
+        300
+      ],
+      "id": "d4e5f6a7-8b9c-0d1e-2f3a-4b5c6d7e8f9a",
+      "name": "Share Document",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "googleDriveAuth",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "={{ $('Set Config').item.json.senderEmail }}",
+        "toEmail": "={{ $('Google Forms Trigger').item.json['Email'] }}",
+        "subject": "Vaše Dohoda o provedení práce",
+        "emailType": "html",
+        "message": "<p>Dobrý den {{ $('Google Forms Trigger').item.json['Jméno a příjmení'] }},</p>\n<p>děkujeme za vyplnění formuláře. Vaše Dohoda o provedení práce byla úspěšně vytvořena.</p>\n<p>Dokument najdete zde: <a href=\"{{ $('Create DPP from Template').item.json.documentUrl }}\">Otevřít DPP</a></p>\n<p>Dokument Vám byl také sdílen na váš email.</p>\n<p>S pozdravem,<br>{{ $('Set Config').item.json.companyName }}</p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        940,
+        300
+      ],
+      "id": "b5c6d7e8-9f0a-1b2c-3d4e-5f6a7b8c9d0e",
+      "name": "Send Email",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "gmailAuth",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9a8b7c6d-5e4f-3a2b-1c0d-9e8f7a6b5c4d",
+              "name": "templateId",
+              "value": "YOUR_TEMPLATE_DOCUMENT_ID",
+              "type": "string"
+            },
+            {
+              "id": "8b7c6d5e-4f3a-2b1c-0d9e-8f7a6b5c4d3e",
+              "name": "folderId",
+              "value": "YOUR_GOOGLE_DRIVE_FOLDER_ID",
+              "type": "string"
+            },
+            {
+              "id": "7c6d5e4f-3a2b-1c0d-9e8f-7a6b5c4d3e2f",
+              "name": "formId",
+              "value": "YOUR_GOOGLE_FORM_ID",
+              "type": "string"
+            },
+            {
+              "id": "6d5e4f3a-2b1c-0d9e-8f7a-6b5c4d3e2f1a",
+              "name": "senderEmail",
+              "value": "your-email@company.cz",
+              "type": "string"
+            },
+            {
+              "id": "5e4f3a2b-1c0d-9e8f-7a6b-5c4d3e2f1a0b",
+              "name": "companyName",
+              "value": "Vaše společnost s.r.o.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        220,
+        100
+      ],
+      "id": "c6d7e8f9-0a1b-2c3d-4e5f-6a7b8c9d0e1f",
+      "name": "Set Config"
+    },
+    {
+      "parameters": {
+        "content": "## 🔧 NASTAVENÍ\n\nVyplňte hodnoty v uzlu **Set Config**:\n\n1. **templateId** - ID šablony dokumentu v Google Docs\n2. **folderId** - ID složky v Google Drive kam se mají ukládat DPP\n3. **formId** - ID vašeho Google formuláře\n4. **senderEmail** - email odesílatele\n5. **companyName** - název vaší společnosti",
+        "height": 223.39130434782604,
+        "width": 390.4347826086957,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        40
+      ],
+      "id": "f9e8d7c6-5b4a-3291-8f7e-6d5c4b3a2918",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## 📋 PŘIHLAŠOVACÍ ÚDAJE\n\nNezapomeňte nastavit přihlašovací údaje pro:\n\n1. **Google Forms** - pro čtení odpovědí\n2. **Google Docs** - pro vytváření dokumentů\n3. **Google Drive** - pro sdílení souborů\n4. **Gmail** - pro odesílání emailů\n\nVšechny musí být nastaveny se správnými oprávněními!",
+        "height": 223,
+        "width": 390,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        280
+      ],
+      "id": "a8d7c6b5-4e3f-2918-7d6c-5b4a3f2e1807",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## 📝 ŠABLONA DOKUMENTU\n\nVe vaší šabloně v Google Docs použijte tyto placeholdery:\n\n- `{{jmeno_prijmeni}}`\n- `{{datum_narozeni}}`\n- `{{rodne_cislo}}`\n- `{{bydliste}}`\n- `{{cislo_op}}`\n- `{{telefon}}`\n- `{{email}}`\n- `{{popis_prace}}`\n- `{{odmena}}`\n- `{{datum_od}}`\n- `{{datum_do}}`\n- `{{datum_dnes}}`\n- `{{cislo_uctu}}`",
+        "height": 320,
+        "width": 280,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        420,
+        -20
+      ],
+      "id": "d7c6b5a4-3e2f-1807-6c5b-4a3f2e180796",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## 📨 GOOGLE FORMULÁŘ\n\nUjistěte se, že váš formulář obsahuje pole s těmito názvy:\n\n- Jméno a příjmení\n- Datum narození\n- Rodné číslo\n- Adresa bydliště\n- Číslo OP\n- Telefon\n- Email\n- Popis práce\n- Výše odměny\n- Datum zahájení\n- Datum ukončení\n- Číslo účtu",
+        "height": 300,
+        "width": 280,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        140,
+        520
+      ],
+      "id": "c6b5a4e3-2f18-0796-5b4a-3f2e18079685",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## ✅ FINÁLNÍ KROKY\n\n1. **Vytvoření DPP** - vytvoří nový dokument ze šablony\n2. **Sdílení** - sdílí dokument s vyplňovatelem\n3. **Email** - pošle potvrzení s odkazem",
+        "height": 160,
+        "width": 700,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        420,
+        460
+      ],
+      "id": "b5a4e3f2-1807-9685-4a3f-2e18079685b4",
+      "name": "Sticky Note4"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveDataErrorExecution": "all",
+    "errorWorkflow": "",
+    "timezone": "Europe/Prague",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-31T21:41:30.653Z",
+      "createdAt": "2025-12-31T21:41:30.653Z",
+      "role": "workflow:owner",
+      "workflowId": "qtvvw7YGSORHgatS",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-12-31T21:41:30.653Z",
+  "versionId": "c0fe213c-1f1b-4b38-9f67-4ea709e96e5d"
+}
