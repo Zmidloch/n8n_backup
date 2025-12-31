@@ -3826,12 +3826,20 @@
         "url": "https://zagency.ucetnictvi.uol.cz/api/v1/uploaded_documents",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpBasicAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
         "sendBody": true,
         "contentType": "multipart-form-data",
         "bodyParameters": {
           "parameters": [
             {
-              "parameterType": "formBinaryData",
               "name": "file"
             }
           ]
@@ -3874,13 +3882,11 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "Délka hry": 0,
-            "Počet týmů": 0,
-            "Cena za tým": 0,
-            "Celková cena": 0
+            "Receipt Status": "{{ ($('Update record').item.json.fields['Receipt Status'] || []).concat(['Created DOC', 'Created PDF', 'Saved Airtable', 'Sent to Client', 'Uploaded to UOL']) }}",
+            "ID objednávky": "={{ $('Code in JavaScript1').item.json.fields['ID objednávky'] }}"
           },
           "matchingColumns": [
-            "id"
+            "ID objednávky"
           ],
           "schema": [
             {
@@ -3891,7 +3897,7 @@
               "display": true,
               "type": "string",
               "readOnly": true,
-              "removed": false
+              "removed": true
             },
             {
               "id": "ID objednávky",
@@ -3924,7 +3930,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Kupující - Telefon",
@@ -3935,7 +3941,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Kupující - Email",
@@ -3946,7 +3952,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Kupující - Adresa",
@@ -3957,7 +3963,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Kupující - Město",
@@ -3968,7 +3974,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Kupující - PSČ",
@@ -3979,7 +3985,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Kupující - Stát",
@@ -3990,7 +3996,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Hráč - Jméno a Příjmení",
@@ -4001,7 +4007,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Hráč - Telefon",
@@ -4012,7 +4018,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Hráč - Email",
@@ -4023,7 +4029,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Název hry",
@@ -4034,7 +4040,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Datum hry",
@@ -4045,7 +4051,7 @@
               "display": true,
               "type": "dateTime",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Start hry",
@@ -4056,7 +4062,7 @@
               "display": true,
               "type": "dateTime",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Délka hry",
@@ -4067,7 +4073,7 @@
               "display": true,
               "type": "number",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Konec hry",
@@ -4078,7 +4084,7 @@
               "display": true,
               "type": "dateTime",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Počet týmů",
@@ -4089,7 +4095,7 @@
               "display": true,
               "type": "number",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Cena za tým",
@@ -4100,7 +4106,7 @@
               "display": true,
               "type": "number",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Celková cena",
@@ -4111,7 +4117,7 @@
               "display": true,
               "type": "number",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Stripe platba",
@@ -4132,7 +4138,7 @@
                 }
               ],
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Last Modified",
@@ -4154,7 +4160,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Brand karty",
@@ -4165,7 +4171,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Poslední 4 čísla",
@@ -4176,7 +4182,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Země vydání",
@@ -4187,7 +4193,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Receipt Status",
@@ -4231,7 +4237,7 @@
               "display": true,
               "type": "array",
               "readOnly": false,
-              "removed": false
+              "removed": true
             }
           ],
           "attemptToConvertTypes": false,
@@ -4839,6 +4845,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-12-31T14:22:59.652Z",
-  "versionId": "7b90b35f-4b40-49a8-915e-29ddd60adad7"
+  "updatedAt": "2025-12-31T20:19:10.317Z",
+  "versionId": "9cc4df0a-0e99-4d95-a344-a5f88aa74c09"
 }
