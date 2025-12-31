@@ -683,6 +683,11 @@
             "node": "Merge",
             "type": "main",
             "index": 1
+          },
+          {
+            "node": "HTTP Post PDF to UOL",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -3817,6 +3822,20 @@
     },
     {
       "parameters": {
+        "method": "POST",
+        "url": "https://zagency.ucetnictvi.uol.cz/api/v1/uploaded_documents",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "file"
+            }
+          ]
+        },
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -3826,7 +3845,14 @@
         464
       ],
       "id": "5e45822d-f824-4abd-9908-942b0e0fd353",
-      "name": "HTTP Post PDF to UOL"
+      "name": "HTTP Post PDF to UOL",
+      "alwaysOutputData": true,
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "g9sUvJe5xEHSB4fE",
+          "name": "UOL API"
+        }
+      }
     },
     {
       "parameters": {
@@ -4813,6 +4839,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-12-30T23:45:22.523Z",
-  "versionId": "701ce7bf-c340-4f49-a286-b67b3ceda7a4"
+  "updatedAt": "2025-12-31T14:22:59.652Z",
+  "versionId": "7b90b35f-4b40-49a8-915e-29ddd60adad7"
 }
