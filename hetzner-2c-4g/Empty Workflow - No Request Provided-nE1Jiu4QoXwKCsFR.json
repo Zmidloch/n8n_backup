@@ -5,7 +5,7 @@
   "connections": {},
   "createdAt": "2025-12-31T21:04:21.090Z",
   "id": "nE1Jiu4QoXwKCsFR",
-  "isArchived": false,
+  "isArchived": true,
   "meta": null,
   "name": "Empty Workflow - No Request Provided",
   "nodes": [
@@ -46,6 +46,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-12-31T21:04:21.090Z",
-  "versionId": "46c67c03-752d-4edf-9d16-5817afa5760b"
+  "updatedAt": "2026-01-01T12:26:15.886Z",
+  "versionId": "ed047776-2581-40ab-a12e-bde363a9956f"
 }
