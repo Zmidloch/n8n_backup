@@ -942,7 +942,9 @@
   ],
   "settings": {
     "executionOrder": "v1",
-    "availableInMCP": false
+    "availableInMCP": false,
+    "errorWorkflow": "zVAjJgKV17IWzFP7",
+    "callerPolicy": "workflowsFromSameOwner"
   },
   "shared": [
     {
@@ -956,6 +958,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-12-31T22:02:47.462Z",
+  "updatedAt": "2026-01-01T15:00:32.298Z",
   "versionId": "e100fab1-7c91-4818-b165-0b023d04fc89"
 }
