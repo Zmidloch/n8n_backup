@@ -104,7 +104,7 @@
   },
   "createdAt": "2025-12-31T21:16:10.724Z",
   "id": "5J4QRccg2H8P7DAj",
-  "isArchived": false,
+  "isArchived": true,
   "meta": null,
   "name": "Daily Calendar Summary Email",
   "nodes": [
@@ -382,6 +382,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-12-31T21:16:10.724Z",
-  "versionId": "89d4a63a-b7f5-4689-aead-ba754316385c"
+  "updatedAt": "2026-01-01T12:27:49.640Z",
+  "versionId": "033e404b-9f95-4ed0-9002-8cdda7d9465c"
 }
