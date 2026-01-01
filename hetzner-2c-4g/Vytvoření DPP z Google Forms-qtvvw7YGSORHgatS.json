@@ -39,7 +39,7 @@
   },
   "createdAt": "2025-12-31T21:41:30.653Z",
   "id": "qtvvw7YGSORHgatS",
-  "isArchived": false,
+  "isArchived": true,
   "meta": null,
   "name": "Vytvoření DPP z Google Forms",
   "nodes": [
@@ -359,6 +359,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-12-31T21:41:30.653Z",
-  "versionId": "c0fe213c-1f1b-4b38-9f67-4ea709e96e5d"
+  "updatedAt": "2026-01-01T12:28:36.485Z",
+  "versionId": "c2bf87e3-c28f-4f84-aed8-e5321a3d8156"
 }
