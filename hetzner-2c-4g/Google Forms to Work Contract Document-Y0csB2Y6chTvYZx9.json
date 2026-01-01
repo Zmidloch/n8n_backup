@@ -39,7 +39,7 @@
   },
   "createdAt": "2025-12-31T21:27:10.346Z",
   "id": "Y0csB2Y6chTvYZx9",
-  "isArchived": false,
+  "isArchived": true,
   "meta": null,
   "name": "Google Forms to Work Contract Document",
   "nodes": [
@@ -313,6 +313,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-12-31T21:27:10.346Z",
-  "versionId": "0a9d7b48-4748-488f-b89d-e820fc576c37"
+  "updatedAt": "2026-01-01T12:28:22.440Z",
+  "versionId": "345f9b19-ac76-47f4-9a91-6b44787f925a"
 }
