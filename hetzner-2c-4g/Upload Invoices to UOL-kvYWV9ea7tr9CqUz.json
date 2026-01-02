@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-01-02T15:37:13.863Z",
-    "createdAt": "2026-01-02T15:37:11.402Z",
-    "versionId": "c6a438b4-8e74-4a6e-a450-98c8881e283c",
+    "updatedAt": "2026-01-02T20:49:26.542Z",
+    "createdAt": "2026-01-02T20:49:14.749Z",
+    "versionId": "57818bf2-e11f-4290-9fc0-b726ce4bcc27",
     "workflowId": "kvYWV9ea7tr9CqUz",
     "nodes": [
       {
@@ -27,7 +27,8 @@
           "pollTimes": {
             "item": [
               {
-                "mode": "everyMinute"
+                "mode": "everyHour",
+                "minute": 10
               }
             ]
           },
@@ -234,11 +235,11 @@
       }
     },
     "authors": "Jiri Zmidloch",
-    "name": "Version c6a438b4",
+    "name": "Version 57818bf2",
     "description": "",
     "autosaved": false
   },
-  "activeVersionId": "c6a438b4-8e74-4a6e-a450-98c8881e283c",
+  "activeVersionId": "57818bf2-e11f-4290-9fc0-b726ce4bcc27",
   "connections": {
     "Discover a New File in To Upload Folder": {
       "main": [
@@ -326,7 +327,8 @@
         "pollTimes": {
           "item": [
             {
-              "mode": "everyMinute"
+              "mode": "everyHour",
+              "minute": 10
             }
           ]
         },
@@ -493,11 +495,11 @@
   ],
   "staticData": {
     "node:Discover a New File in To Upload Folder": {
-      "lastTimeChecked": "2026-01-02T15:50:10Z"
+      "lastTimeChecked": "2026-01-02T20:49:26Z"
     }
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-01-02T15:37:11.393Z",
-  "versionId": "c6a438b4-8e74-4a6e-a450-98c8881e283c"
+  "updatedAt": "2026-01-02T20:49:14.747Z",
+  "versionId": "57818bf2-e11f-4290-9fc0-b726ce4bcc27"
 }
