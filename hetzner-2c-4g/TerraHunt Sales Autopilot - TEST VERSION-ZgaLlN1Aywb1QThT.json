@@ -1661,6 +1661,9 @@
       ],
       "id": "f02c6c56-3c4d-4fca-baac-a3543370fa3e",
       "name": "HTTP Request",
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
       "credentials": {
         "stripeApi": {
           "id": "0ZpFJqgoU0OQpDBU",
@@ -3852,7 +3855,10 @@
       ],
       "id": "5e45822d-f824-4abd-9908-942b0e0fd353",
       "name": "HTTP Post PDF to UOL",
-      "alwaysOutputData": true,
+      "alwaysOutputData": false,
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
       "credentials": {
         "httpBasicAuth": {
           "id": "g9sUvJe5xEHSB4fE",
@@ -4843,6 +4849,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-01-02T13:47:20.831Z",
-  "versionId": "6e060ab6-a237-4851-a9e9-f980315726e7"
+  "updatedAt": "2026-01-02T19:55:23.343Z",
+  "versionId": "fda35a2e-a9ba-432a-b09f-55dcb8b56abe"
 }
