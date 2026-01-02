@@ -1818,6 +1818,7 @@
     {
       "parameters": {
         "method": "POST",
+        "authentication": "genericCredentialType",
         "sendBody": true,
         "bodyParameters": {
           "parameters": [
@@ -1825,16 +1826,20 @@
               "name": "ID hry - interní název z public.terrahunt.com"
             },
             {
-              "name": "Název eventu - interní název z public.terrahunt.com"
+              "name": "Název eventu - interní název z public.terrahunt.com",
+              "value": "={{ $('Update record').item.json.fields['Název hry'] }}"
             },
             {
-              "name": "Datum a čas - Start eventu - interní název z public.terrahunt.com"
+              "name": "Datum a čas - Start eventu - interní název z public.terrahunt.com",
+              "value": "={{ $('Update record').item.json.fields['Start hry'] }}"
             },
             {
-              "name": "Datum a čas - Konec Eventu - interní název z public.terrahunt.com"
+              "name": "Datum a čas - Konec Eventu - interní název z public.terrahunt.com",
+              "value": "={{ $('Update record').item.json.fields['Konec hry'] }}"
             },
             {
-              "name": "Počet týmů - interní název z public.terrahunt.com"
+              "name": "Počet týmů - interní název z public.terrahunt.com",
+              "value": "={{ $('Update record').item.json.fields['Počet týmů'] }}"
             }
           ]
         },
@@ -3826,21 +3831,14 @@
         "url": "https://zagency.ucetnictvi.uol.cz/api/v1/uploaded_documents",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpBasicAuth",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Accept",
-              "value": "application/json"
-            }
-          ]
-        },
         "sendBody": true,
         "contentType": "multipart-form-data",
         "bodyParameters": {
           "parameters": [
             {
-              "name": "file"
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
             }
           ]
         },
@@ -4845,6 +4843,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-12-31T20:19:10.317Z",
-  "versionId": "9cc4df0a-0e99-4d95-a344-a5f88aa74c09"
+  "updatedAt": "2026-01-02T13:47:20.831Z",
+  "versionId": "6e060ab6-a237-4851-a9e9-f980315726e7"
 }
