@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2025-12-16T14:33:05.947Z",
-    "createdAt": "2025-12-16T14:33:05.947Z",
-    "versionId": "7efe9179-326a-46f8-96ed-db84e3966c11",
+    "updatedAt": "2026-01-04T18:45:58.386Z",
+    "createdAt": "2026-01-04T18:45:55.930Z",
+    "versionId": "3e3530a9-fc97-4b54-b373-cc488f2b87b7",
     "workflowId": "s6ihPwcIpnl1lLMt",
     "nodes": [
       {
@@ -101,29 +101,6 @@
       },
       {
         "parameters": {
-          "url": "=https://app.tabidoo.cloud/api/v2/apps/obchod-1b4y/tables/kontakty/data??filter=email(eq)'{{ $json.body.data.fields.email.href }}'",
-          "authentication": "genericCredentialType",
-          "genericAuthType": "httpHeaderAuth",
-          "options": {}
-        },
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.3,
-        "position": [
-          16,
-          352
-        ],
-        "id": "05839422-6601-4c0a-88b9-6cdd382157c2",
-        "name": "HTTP Request",
-        "credentials": {
-          "httpHeaderAuth": {
-            "id": "wFGIMCQoDGlh0Gtd",
-            "name": "Header Auth DEV-Personalistika"
-          }
-        },
-        "disabled": true
-      },
-      {
-        "parameters": {
           "assignments": {
             "assignments": [
               {
@@ -168,21 +145,6 @@
         ],
         "id": "4d57cc83-7e5b-4437-929e-41fb08e10466",
         "name": "Edit Fields"
-      },
-      {
-        "parameters": {
-          "fieldToSplitOut": "data",
-          "options": {}
-        },
-        "type": "n8n-nodes-base.splitOut",
-        "typeVersion": 1,
-        "position": [
-          224,
-          352
-        ],
-        "id": "fe2646ea-42f2-4727-83e2-99c30fe5e9e4",
-        "name": "Split Out",
-        "disabled": true
       },
       {
         "parameters": {
@@ -295,16 +257,6 @@
       }
     ],
     "connections": {
-      "HTTP Request": {
-        "main": [
-          []
-        ]
-      },
-      "Split Out": {
-        "main": [
-          []
-        ]
-      },
       "Edit Fields": {
         "main": [
           [
@@ -368,22 +320,12 @@
       }
     },
     "authors": "Jiri Zmidloch",
-    "name": null,
-    "description": null,
+    "name": "Version 3e3530a9",
+    "description": "",
     "autosaved": false
   },
-  "activeVersionId": "7efe9179-326a-46f8-96ed-db84e3966c11",
+  "activeVersionId": "3e3530a9-fc97-4b54-b373-cc488f2b87b7",
   "connections": {
-    "HTTP Request": {
-      "main": [
-        []
-      ]
-    },
-    "Split Out": {
-      "main": [
-        []
-      ]
-    },
     "Edit Fields": {
       "main": [
         [
@@ -549,29 +491,6 @@
     },
     {
       "parameters": {
-        "url": "=https://app.tabidoo.cloud/api/v2/apps/obchod-1b4y/tables/kontakty/data??filter=email(eq)'{{ $json.body.data.fields.email.href }}'",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.3,
-      "position": [
-        16,
-        352
-      ],
-      "id": "05839422-6601-4c0a-88b9-6cdd382157c2",
-      "name": "HTTP Request",
-      "credentials": {
-        "httpHeaderAuth": {
-          "id": "wFGIMCQoDGlh0Gtd",
-          "name": "Header Auth DEV-Personalistika"
-        }
-      },
-      "disabled": true
-    },
-    {
-      "parameters": {
         "assignments": {
           "assignments": [
             {
@@ -616,21 +535,6 @@
       ],
       "id": "4d57cc83-7e5b-4437-929e-41fb08e10466",
       "name": "Edit Fields"
-    },
-    {
-      "parameters": {
-        "fieldToSplitOut": "data",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.splitOut",
-      "typeVersion": 1,
-      "position": [
-        224,
-        352
-      ],
-      "id": "fe2646ea-42f2-4727-83e2-99c30fe5e9e4",
-      "name": "Split Out",
-      "disabled": true
     },
     {
       "parameters": {
@@ -761,6 +665,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-12-16T14:33:05.945Z",
-  "versionId": "7efe9179-326a-46f8-96ed-db84e3966c11"
+  "updatedAt": "2026-01-04T18:45:55.922Z",
+  "versionId": "3e3530a9-fc97-4b54-b373-cc488f2b87b7"
 }
