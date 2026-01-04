@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2025-12-24T09:48:17.506Z",
-    "createdAt": "2025-12-23T23:18:34.428Z",
-    "versionId": "87da60c8-0e51-470a-859b-664c947e11cd",
+    "updatedAt": "2026-01-04T23:07:16.186Z",
+    "createdAt": "2026-01-04T23:07:11.952Z",
+    "versionId": "3f755fe4-3d05-4b41-98bc-649de228163e",
     "workflowId": "l2iGkcI0ZJVK9RUS",
     "nodes": [
       {
@@ -1975,6 +1975,9 @@
         ],
         "typeVersion": 1,
         "webhookId": "88916171-eeb8-4e3e-961b-0451a6d397d2",
+        "retryOnFail": true,
+        "waitBetweenTries": 5000,
+        "maxTries": 5,
         "credentials": {
           "githubOAuth2Api": {
             "id": "OnhF3VTeVWgkGdcX",
@@ -3496,11 +3499,11 @@
       }
     },
     "authors": "Jiri Zmidloch",
-    "name": "Version 87da60c8",
+    "name": "Version 3f755fe4",
     "description": "",
     "autosaved": false
   },
-  "activeVersionId": "87da60c8-0e51-470a-859b-664c947e11cd",
+  "activeVersionId": "3f755fe4-3d05-4b41-98bc-649de228163e",
   "connections": {
     "Globals": {
       "main": [
@@ -6490,6 +6493,9 @@
       ],
       "typeVersion": 1,
       "webhookId": "88916171-eeb8-4e3e-961b-0451a6d397d2",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "maxTries": 5,
       "credentials": {
         "githubOAuth2Api": {
           "id": "OnhF3VTeVWgkGdcX",
@@ -7016,12 +7022,12 @@
   "staticData": {
     "node:Schedule Trigger": {
       "recurrenceRules": [
-        12
+        18
       ]
     }
   },
   "tags": [],
   "triggerCount": 3,
-  "updatedAt": "2025-12-23T23:18:34.424Z",
-  "versionId": "87da60c8-0e51-470a-859b-664c947e11cd"
+  "updatedAt": "2026-01-04T23:07:11.948Z",
+  "versionId": "3f755fe4-3d05-4b41-98bc-649de228163e"
 }
