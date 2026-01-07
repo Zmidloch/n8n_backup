@@ -1,0 +1,344 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Create Folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "set_fields": {
+      "main": [
+        [
+          {
+            "node": "Prepare_Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Markdown2": {
+      "main": [
+        [
+          {
+            "node": "set_fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare_Request1": {
+      "main": [
+        [
+          {
+            "node": "CreateGoogleDoc1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "set_doc_md_tools&m": {
+      "main": [
+        [
+          {
+            "node": "Markdown2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Folder": {
+      "main": [
+        [
+          {
+            "node": "set_doc_md_tools&m",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-07T11:41:26.401Z",
+  "id": "PSdNzjluLeM7y5I8",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Dynamic Formatted Google Doc",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        96
+      ],
+      "id": "93c8e8e0-f943-46d8-acc6-8b115965eff8",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://www.googleapis.com/upload/drive/v3/files",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "uploadType",
+              "value": "multipart"
+            },
+            {
+              "name": "supportsAllDrives",
+              "value": "true"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "multipart/related; boundary=divider",
+        "body": "={{ $json.rawData }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1120,
+        96
+      ],
+      "id": "67d92eae-2d1b-448a-a65b-6fee246e054b",
+      "name": "CreateGoogleDoc1",
+      "notesInFlow": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "0y8WKhAVB7SLUFcI",
+          "name": "Google Drive zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e7ee03ac-13e3-4fca-a7bc-57c8fc56dc42",
+              "name": "document_name",
+              "value": "=insert_doc_name",
+              "type": "string"
+            },
+            {
+              "id": "48a07ef2-ae46-4bfc-aa7e-d92a74ef46d6",
+              "name": "html_content",
+              "value": "={{ $json.data }}",
+              "type": "string"
+            },
+            {
+              "id": "22b02fba-ba72-423a-b92f-1191a183a554",
+              "name": "drive_folder_id",
+              "value": "={{ $('Create Folder').item.json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        688,
+        96
+      ],
+      "id": "a2315aee-8f3b-4544-a2cf-4df44e207bbb",
+      "name": "set_fields",
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "mode": "markdownToHtml",
+        "markdown": "={{ $json.md_content }}",
+        "options": {
+          "emoji": true,
+          "tables": true
+        }
+      },
+      "type": "n8n-nodes-base.markdown",
+      "typeVersion": 1,
+      "position": [
+        496,
+        96
+      ],
+      "id": "b651c6ad-e12c-4461-bf2e-156ac6dcd0a3",
+      "name": "Markdown2"
+    },
+    {
+      "parameters": {
+        "jsCode": "const boundary = 'divider';\nconst docName = $input.first().json.document_name;\nconst folderId = $input.first().json.drive_folder_id;\nlet htmlContent = $input.first().json.html_content;\n\n// Replace img tags with centered, constrained versions\nhtmlContent = htmlContent.replace(/<img\\s+[^>]*src=\"([^\"]+)\"[^>]*alt=\"([^\"]*)\"[^>]*\\/?>/gi, \n  '<div style=\"text-align:center;margin:15px 0;\"><img src=\"$1\" alt=\"$2\" width=\"600\" style=\"max-width:600px;height:auto;\" /></div>');\n\nconst metadata = JSON.stringify({\n  name: docName,\n  mimeType: \"application/vnd.google-apps.document\",\n  parents: [folderId]\n});\n\nconst htmlWithStyles = `\n<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"UTF-8\">\n  <style>\n    p, ul, ol, table, h1, h2, h3, h4, h5, h6 {\n      margin-bottom: 10pt;\n    }\n    h2 {\n      margin-top: 20pt;\n    }\n    li {\n       margin-bottom: 2pt;\n    }\n  </style>\n</head>\n<body>\n  ${htmlContent}\n</body>\n</html>\n`;\n\nlet body = `--${boundary}\\r\\n`;\nbody += `Content-Type: application/json; charset=UTF-8\\r\\n`;\nbody += `\\r\\n`;\nbody += `${metadata}\\r\\n`;\nbody += `--${boundary}\\r\\n`;\nbody += `Content-Type: text/html\\r\\n`;\nbody += `\\r\\n`;\nbody += `${htmlWithStyles}\\r\\n`;\nbody += `--${boundary}--\\r\\n`;\n\nreturn {\n  rawData: body \n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        864,
+        96
+      ],
+      "id": "8f4a1355-2107-4aee-8ff4-e07ab37f451c",
+      "name": "Prepare_Request1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "48a07ef2-ae46-4bfc-aa7e-d92a74ef46d6",
+              "name": "md_content",
+              "value": "=pass_in_markdown_string_here",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        320,
+        96
+      ],
+      "id": "4d3cadfa-a45a-48e7-b9f8-9c60f96fe390",
+      "name": "set_doc_md_tools&m",
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "02_TEST",
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "root",
+          "mode": "list",
+          "cachedResultName": "/ (Root folder)",
+          "cachedResultUrl": "https://drive.google.com/drive"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        96,
+        96
+      ],
+      "id": "fd810d34-5814-4e89-8812-4edfffdaa9c1",
+      "name": "Create Folder",
+      "retryOnFail": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "0y8WKhAVB7SLUFcI",
+          "name": "Google Drive zmidloch@z-agency.cz"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "content": "## Convert markdown to html\nReady for formatting",
+        "height": 240,
+        "width": 368,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        272,
+        0
+      ],
+      "id": "06a03847-0b61-45ad-a4a3-b100beac2355",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Set field data \nPrepares request so it's correctly formatted in GDoc",
+        "height": 240,
+        "width": 368,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        656,
+        0
+      ],
+      "id": "04fdfeef-402d-486c-9e1a-6542e51e1287",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Create folder\nConnect to / create new folder to populate the doc inside",
+        "height": 240,
+        "width": 256,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "32dd3767-ddbf-4ff1-bd30-41e43fbb153b",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Create doc\nWith markdown formatted",
+        "height": 240,
+        "width": 256,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        0
+      ],
+      "id": "0e80ef14-281f-4421-8565-fd5ac3f27d56",
+      "name": "Sticky Note3"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-07T11:41:26.401Z",
+      "createdAt": "2026-01-07T11:41:26.401Z",
+      "role": "workflow:owner",
+      "workflowId": "PSdNzjluLeM7y5I8",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-07T11:41:26.401Z",
+  "versionId": "66c12154-ec92-4908-b99e-25f31888b76e"
+}
