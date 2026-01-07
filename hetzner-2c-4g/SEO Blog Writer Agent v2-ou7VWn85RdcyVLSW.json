@@ -40,17 +40,7 @@
       "main": [
         [
           {
-            "node": "Doc: Create Post",
-            "type": "main",
-            "index": 0
-          },
-          {
             "node": "WP: Create Post",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Notion: Create Post",
             "type": "main",
             "index": 0
           }
@@ -59,13 +49,7 @@
     },
     "HTML Body": {
       "main": [
-        [
-          {
-            "node": "Post Meta Agent",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Wikipedia": {
@@ -83,7 +67,7 @@
       "main": [
         [
           {
-            "node": "HTML Body",
+            "node": "Post Meta Agent",
             "type": "main",
             "index": 0
           }
@@ -299,6 +283,11 @@
         [
           {
             "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get row(s) in sheet",
             "type": "main",
             "index": 0
           }
@@ -530,7 +519,7 @@
       "main": [
         [
           {
-            "node": "AI Detect Agent",
+            "node": "HTML Agent",
             "type": "main",
             "index": 0
           }
@@ -802,25 +791,17 @@
       "parameters": {
         "documentId": {
           "__rl": true,
+          "value": "1hUO6WiRcL4mkdDNhCgQ8OU7a1_KTHOePmZZNUGz4dE4",
           "mode": "list",
-          "value": "1s7jDclGGIh7xiLtHYrtcP_OzYeRadEoy7MUXayRJ7IY",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1s7jDclGGIh7xiLtHYrtcP_OzYeRadEoy7MUXayRJ7IY/edit?usp=drivesdk",
-          "cachedResultName": "n8n - SEO Blog Agent v2"
+          "cachedResultName": "SEO Blog Agent v2 | Ai With Sohail",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hUO6WiRcL4mkdDNhCgQ8OU7a1_KTHOePmZZNUGz4dE4/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
-          "mode": "list",
           "value": "gid=0",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1s7jDclGGIh7xiLtHYrtcP_OzYeRadEoy7MUXayRJ7IY/edit#gid=0",
-          "cachedResultName": "Posts"
-        },
-        "filtersUI": {
-          "values": [
-            {
-              "lookupColumn": "Status",
-              "lookupValue": "Pending"
-            }
-          ]
+          "mode": "list",
+          "cachedResultName": "Posts",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hUO6WiRcL4mkdDNhCgQ8OU7a1_KTHOePmZZNUGz4dE4/edit#gid=0"
         },
         "options": {}
       },
@@ -831,7 +812,13 @@
         1152,
         96
       ],
-      "typeVersion": 4.7
+      "typeVersion": 4.7,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "X0gIvAtV706kh5Ga",
+          "name": "Google Sheets zmidloch@z-agency.cz 2"
+        }
+      }
     },
     {
       "parameters": {
@@ -1034,7 +1021,13 @@
         2624,
         1408
       ],
-      "typeVersion": 4.2
+      "typeVersion": 4.2,
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "Z4TXkH77ZjIQtmxF",
+          "name": "Query Auth account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1054,7 +1047,13 @@
         1264,
         800
       ],
-      "typeVersion": 4.2
+      "typeVersion": 4.2,
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "zBYPTqhJcRJXe4RQ",
+          "name": "Perplexity 2"
+        }
+      }
     },
     {
       "parameters": {
@@ -1306,7 +1305,13 @@
         3520,
         1072
       ],
-      "typeVersion": 1
+      "typeVersion": 1,
+      "credentials": {
+        "openRouterApi": {
+          "id": "XpZg3NCm0vRTBA75",
+          "name": "OpenRouter account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1420,7 +1425,7 @@
       "type": "n8n-nodes-base.splitInBatches",
       "position": [
         1344,
-        208
+        256
       ],
       "typeVersion": 3
     },
@@ -1435,7 +1440,13 @@
         720,
         624
       ],
-      "typeVersion": 1
+      "typeVersion": 1,
+      "credentials": {
+        "openRouterApi": {
+          "id": "XpZg3NCm0vRTBA75",
+          "name": "OpenRouter account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1518,7 +1529,13 @@
         2128,
         1632
       ],
-      "typeVersion": 4.2
+      "typeVersion": 4.2,
+      "credentials": {
+        "openRouterApi": {
+          "id": "XpZg3NCm0vRTBA75",
+          "name": "OpenRouter account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1612,7 +1629,7 @@
         "method": "POST",
         "url": "https://app.aidetectplus.com/v1/api/process",
         "authentication": "genericCredentialType",
-        "genericAuthType": "httpBearerAuth",
+        "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "bodyParameters": {
           "parameters": [
@@ -1642,7 +1659,16 @@
         1408
       ],
       "typeVersion": 4.2,
-      "disabled": true
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "JbPARXZ9CNVJylGt",
+          "name": "AI Detect Plus"
+        },
+        "httpHeaderAuth": {
+          "id": "H8HJHQhVfKJS0ljJ",
+          "name": "AI Detect Plus - Header"
+        }
+      }
     },
     {
       "parameters": {
@@ -1686,7 +1712,13 @@
         2016,
         608
       ],
-      "typeVersion": 1
+      "typeVersion": 1,
+      "credentials": {
+        "openRouterApi": {
+          "id": "XpZg3NCm0vRTBA75",
+          "name": "OpenRouter account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1799,7 +1831,13 @@
         1632,
         1824
       ],
-      "typeVersion": 1
+      "typeVersion": 1,
+      "credentials": {
+        "openRouterApi": {
+          "id": "XpZg3NCm0vRTBA75",
+          "name": "OpenRouter account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1844,7 +1882,7 @@
               "id": "622e9f26-e1ed-45e4-9b5f-dee284c0b332",
               "name": "post_title",
               "type": "string",
-              "value": "={{ $('Set Post New Title').item.json.new_title }}"
+              "value": "={{ $json.post_seo_title }}"
             },
             {
               "id": "5d57a024-2076-48f4-85f7-8fe7379a8b5f",
@@ -1862,7 +1900,7 @@
               "id": "6903d004-003d-44ad-8f6f-8c050ebf3cfa",
               "name": "post_body_html",
               "type": "string",
-              "value": "={{ $('HTML Body').item.json.post_html_body }}"
+              "value": "={{ $('HTML Agent').item.json.output }}"
             },
             {
               "id": "53f5fc02-1e98-4f42-b216-48340a41bce3",
@@ -1898,7 +1936,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=Content: {{ $json.response.humanized_text || $('Set Post Humanized').item.json.post_humanized_body }}\n\nYour entire output must strictly adhere to HTML standards and the above instructions, with no extra commentary.",
+        "text": "=Content: {{ $('Post Humanizer Agent').item.json.output }}\nYour entire output must strictly adhere to HTML standards and the above instructions, with no extra commentary.",
         "options": {
           "systemMessage": "Guidelines\nThe system should produce raw HTML output.\n\nNo CSS or inline style attributes.\n\nPreserve document structure and logical hierarchy using appropriate HTML tags: <h1>, <h2>, <h3>, etc. for headings.\n\nUse <b> for bold, <i> for italics, <s> for strikethrough, and <code> for inline code.\n\nMulti-line code blocks must be wrapped in <pre><code> and labeled with language if required.\n\nInsert unordered lists with <ul><li>, ordered lists with <ol><li>.\n\nIndent nested lists with proper nesting of list tags.\n\nRender blockquotes with <blockquote>, using further nested quotes for deeper levels.\n\nConstruct tables with <table>, <thead>, <tbody>, <tr>, <td>, and <th>, using <colgroup> for alignment if needed.\n\nInsert hyperlinks with <a href=\"URL\">text</a>, images with <img src=\"URL\" alt=\"alt text\" />.\n\nInsert horizontal rules with <hr>.\n\nFor task lists, use <input type=\"checkbox\"> inside <li> if supported.\n\nFor line breaks, use <br> for forced breaks.\n\nEscape literal HTML special characters using entities.\n\nIf supported, embed reference-style footnotes with anchor <a> and <sup> elements.\n\nOnly include the raw HTML output with no comments, explanation, or extra narration."
         }
@@ -2091,11 +2129,18 @@
         1104,
         2160
       ],
-      "typeVersion": 4.7
+      "typeVersion": 4.7,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "X0gIvAtV706kh5Ga",
+          "name": "Google Sheets zmidloch@z-agency.cz 2"
+        }
+      }
     },
     {
       "parameters": {
-        "folderId": "1cNGFp0CDKHimWgMPusM41lesHe8anHyE",
+        "driveId": "0ACF8iijM-OnMUk9PVA",
+        "folderId": "default",
         "title": "={{ $json.input_title }}"
       },
       "id": "df7ec6e5-2571-4831-889b-34b5351088e9",
@@ -2105,7 +2150,14 @@
         3120,
         1792
       ],
-      "typeVersion": 2
+      "typeVersion": 2,
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "z7r7DjjMY49jRh08",
+          "name": "Google Docs zmidloch@z-agency.cz"
+        }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -2122,7 +2174,13 @@
         3600,
         1792
       ],
-      "typeVersion": 1
+      "typeVersion": 1,
+      "credentials": {
+        "wordpressApi": {
+          "id": "flqY5YMCvIpv5fpx",
+          "name": "Processgate.ai_propojeni"
+        }
+      }
     },
     {
       "parameters": {
@@ -2145,7 +2203,13 @@
         720,
         2160
       ],
-      "typeVersion": 4.2
+      "typeVersion": 4.2,
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "z7r7DjjMY49jRh08",
+          "name": "Google Docs zmidloch@z-agency.cz"
+        }
+      }
     },
     {
       "parameters": {
@@ -2170,7 +2234,13 @@
         912,
         2160
       ],
-      "typeVersion": 3
+      "typeVersion": 3,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "0y8WKhAVB7SLUFcI",
+          "name": "Google Drive zmidloch@z-agency.cz"
+        }
+      }
     },
     {
       "parameters": {
@@ -2211,7 +2281,13 @@
         2144
       ],
       "executeOnce": true,
-      "typeVersion": 2.2
+      "typeVersion": 2.2,
+      "credentials": {
+        "notionApi": {
+          "id": "CBiyIj88NpgUctcW",
+          "name": "Notion account"
+        }
+      }
     },
     {
       "parameters": {
@@ -2329,6 +2405,12 @@
       "retryOnFail": true,
       "typeVersion": 4.2,
       "waitBetweenTries": 3000,
+      "credentials": {
+        "notionApi": {
+          "id": "CBiyIj88NpgUctcW",
+          "name": "Notion account"
+        }
+      },
       "onError": "continueRegularOutput"
     },
     {
@@ -2410,7 +2492,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://yourwordpress.url/wp-json/wp/v2/media",
+        "url": "https://processgate.ai/wp-json/wp/v2/media",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "wordpressApi",
         "sendHeaders": true,
@@ -2434,12 +2516,20 @@
         3296,
         2144
       ],
-      "typeVersion": 4.2
+      "typeVersion": 4.2,
+      "credentials": {
+        "wordpressApi": {
+          "id": "flqY5YMCvIpv5fpx",
+          "name": "Processgate.ai_propojeni"
+        }
+      }
     },
     {
       "parameters": {
         "method": "POST",
-        "url": "=https://yourwordpress.url/wp-json/wp/v2/posts/{{ $('WP: Create Post').first().json.id }}",
+        "url": "=https://processgate.ai/wp-json/wp/v2/posts/{{ $('WP: Create Post').first().json.id }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "wordpressApi",
         "sendQuery": true,
         "queryParameters": {
           "parameters": [
@@ -2458,7 +2548,13 @@
         3520,
         2144
       ],
-      "typeVersion": 4.2
+      "typeVersion": 4.2,
+      "credentials": {
+        "wordpressApi": {
+          "id": "flqY5YMCvIpv5fpx",
+          "name": "Processgate.ai_propojeni"
+        }
+      }
     },
     {
       "parameters": {
@@ -2511,7 +2607,14 @@
         3360,
         1792
       ],
-      "typeVersion": 2.2
+      "typeVersion": 2.2,
+      "credentials": {
+        "notionApi": {
+          "id": "CBiyIj88NpgUctcW",
+          "name": "Notion account"
+        }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -2543,7 +2646,7 @@
     },
     {
       "parameters": {
-        "sendTo": "your@email.id",
+        "sendTo": "zmidloch@z-agency.cz",
         "subject": "New Blogs Generated",
         "emailType": "text",
         "message": "=Hello,\n\nYour new blog posts have been successfully generated.\nView On Sheet: https://docs.google.com/spreadsheets/d/1s7jDclGGIh7xiLtHYrtcP_OzYeRadEoy7MUXayRJ7IY/view?gid=0#gid=0 \n\nBest regards,\nYour SEO Blog Writer Agent v2",
@@ -2560,8 +2663,8 @@
       "typeVersion": 2.1,
       "credentials": {
         "gmailOAuth2": {
-          "id": "cUMqdo7XCF6noXLb",
-          "name": "Gmail-info@z-agency.cz"
+          "id": "qNSaYVEcaWOf5U3k",
+          "name": "Gmail zmidloch@z-agency.cz"
         }
       }
     },
@@ -2579,11 +2682,47 @@
         0
       ],
       "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1hUO6WiRcL4mkdDNhCgQ8OU7a1_KTHOePmZZNUGz4dE4",
+          "mode": "list",
+          "cachedResultName": "SEO Blog Agent v2 | Ai With Sohail",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hUO6WiRcL4mkdDNhCgQ8OU7a1_KTHOePmZZNUGz4dE4/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Posts",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hUO6WiRcL4mkdDNhCgQ8OU7a1_KTHOePmZZNUGz4dE4/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1344,
+        80
+      ],
+      "id": "46a28816-0170-4006-9b59-0b7c0599594e",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "X0gIvAtV706kh5Ga",
+          "name": "Google Sheets zmidloch@z-agency.cz 2"
+        }
+      }
     }
   ],
   "settings": {
     "executionOrder": "v1",
-    "availableInMCP": false
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "zVAjJgKV17IWzFP7"
   },
   "shared": [
     {
@@ -2594,9 +2733,13 @@
       "projectId": "XqkS7oX8lMj4YbIK"
     }
   ],
-  "staticData": null,
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2026-01-07T16:51:47.399Z",
-  "versionId": "c00de951-1f92-4be7-b97e-f01294d7b2b0"
+  "triggerCount": 1,
+  "updatedAt": "2026-01-07T22:07:55.375Z",
+  "versionId": "fa8cbb8b-907d-4ace-9c2d-807801bb7278"
 }
