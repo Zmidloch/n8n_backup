@@ -1,0 +1,104 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Send an email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send an email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-30T10:01:46.972Z",
+  "id": "RjoZewHiZ2Dj4ZrC",
+  "isArchived": false,
+  "meta": null,
+  "name": "Email Sender - First Workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -96,
+        256
+      ],
+      "id": "9b453e3e-87a3-471d-aa83-7c86b2c1de0e",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "sendTo": "your_email",
+        "subject": "Hello Simon",
+        "emailType": "text",
+        "message": "=Have a great day, today is {{ $now.format('dd-LLL-yyyy') }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        128,
+        256
+      ],
+      "id": "df6026fe-a000-4fae-8a5a-5616cb7660d6",
+      "name": "Send an email",
+      "webhookId": "26588855-6188-4afe-a48d-efedf7984e62"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -96,
+        112
+      ],
+      "id": "5c9305ac-deda-4529-a681-7cc900ba4792",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-30T10:01:46.972Z",
+      "createdAt": "2025-12-30T10:01:46.972Z",
+      "role": "workflow:owner",
+      "workflowId": "RjoZewHiZ2Dj4ZrC",
+      "projectId": "j2KGpH2gt0oq8xIS"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-07T19:33:40.725Z",
+  "versionId": "b1e38685-4048-44de-869f-31d080f59e51"
+}
