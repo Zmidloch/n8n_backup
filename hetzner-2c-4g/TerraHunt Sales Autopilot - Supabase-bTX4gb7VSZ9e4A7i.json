@@ -1104,7 +1104,7 @@
     {
       "parameters": {
         "mode": "raw",
-        "jsonOutput": "={\n  \"nodes\": [\n    {\n      \"parameters\": {\n        \"assignments\": {\n          \"assignments\": [\n            {\n              \"id\": \"start_game_iso\",\n              \"name\": \"Zacatek_Hry\",\n              \"value\": \"{{ $json.body.date_1.split('.').reverse().join('-') }}T{{ $json.body.time_1_hours.toString().padStart(2, '0') }}:{{ $json.body.time_1_minutes.toString().padStart(2, '0') }}:00\",\n              \"type\": \"string\"\n            },\n            {\n              \"id\": \"end_game_iso\",\n              \"name\": \"Konec_Hry\",\n              \"value\": \"{{ (() => { const d = $json.body.date_1.split('.'); const start = new Date(parseInt(d[2]), parseInt(d[1]) - 1, parseInt(d[0]), parseInt($json.body.time_1_hours), parseInt($json.body.time_1_minutes)); const duration = parseFloat(JSON.parse($json.body.select_4)[0].replace(',', '.')); start.setMinutes(start.getMinutes() + (duration * 60)); const pad = (n) => n.toString().padStart(2, '0'); return start.getFullYear() + '-' + pad(start.getMonth() + 1) + '-' + pad(start.getDate()) + 'T' + pad(start.getHours()) + ':' + pad(start.getMinutes()) + ':00'; })() }}\",\n              \"type\": \"string\"\n            },\n            {\n              \"id\": \"duration_formatted\",\n              \"name\": \"Delka_Hry_Format\",\n              \"value\": \"{{ Math.floor(parseFloat(JSON.parse($json.body.select_4)[0].replace(',', '.'))).toString() + ':' + Math.round((parseFloat(JSON.parse($json.body.select_4)[0].replace(',', '.')) % 1) * 60).toString().padStart(2, '0') }}\",\n              \"type\": \"string\"\n            },\n            {\n              \"id\": \"price_num\",\n              \"name\": \"Cena_Cislo\",\n              \"value\": \"{{ $json.body.calculation_1 ? parseFloat($json.body.calculation_1) : 0 }}\",\n              \"type\": \"number\"\n            },\n            {\n              \"id\": \"teams_num\",\n              \"name\": \"Pocet_Tymu_Cislo\",\n              \"value\": \"{{ $json.body.number_1 ? parseInt($json.body.number_1) : 0 }}\",\n              \"type\": \"number\"\n            },\n            {\n              \"id\": \"custom_id\",\n              \"name\": \"TH_ID\",\n              \"value\": \"{{ $json.body.hidden_1 }}\",\n              \"type\": \"string\"\n            }\n          ]\n        },\n        \"options\": {}\n      },\n      \"id\": \"edit-fields-formatted-string\",\n      \"name\": \"Formatovani Dat\",\n      \"type\": \"n8n-nodes-base.set\",\n      \"typeVersion\": 3.4,\n      \"position\": [\n        460,\n        0\n      ]\n    }\n  ]\n}",
+        "jsonOutput": "={\n  \"assignments\": [\n    {\n      \"id\": \"start_game_iso\",\n      \"name\": \"zacatek_hry\",\n      \"value\": \"={{ $json.body.date_1.split('.').reverse().join('-') }}T{{ $json.body.time_1.trim() }}:00\",\n      \"type\": \"string\"\n    },\n    {\n      \"id\": \"duration_minutes\",\n      \"name\": \"delka_hry_minuty\",\n      \"value\": \"{{ parseFloat($json.body.select_4.replace(/[^\\d,]/g, '').replace(',', '.')) * 60 }}\",\n      \"type\": \"number\"\n    },\n    {\n      \"id\": \"end_game_iso\",\n      \"name\": \"konec_hry\",\n      \"value\": \"={{ (() => { const d = new Date($json.body.date_1.split('.').reverse().join('-') + 'T' + $json.body.time_1.trim()); const dur = parseFloat($json.body.select_4.replace(/[^\\d,]/g, '').replace(',', '.')); d.setMinutes(d.getMinutes() + (dur * 60)); return d.toISOString().split('.')[0]; })() }}\",\n      \"type\": \"string\"\n    },\n    {\n      \"id\": \"price_num\",\n      \"name\": \"cena_cislo\",\n      \"value\": \"={{ Number($json.body.calculation_1) }}\",\n      \"type\": \"number\"\n    },\n    {\n      \"id\": \"th_id\",\n      \"name\": \"th_id\",\n      \"value\": \"={{ Number($json.body.hidden_1) }}\",\n      \"type\": \"number\"\n    }\n  ]\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.set",
@@ -4454,6 +4454,34 @@
             {
               "fieldId": "player_name",
               "fieldValue": "={{ $('Wordpress Forminator Webhook').item.json.body.name_2 }}"
+            },
+            {
+              "fieldId": "player_phone",
+              "fieldValue": "={{ $('Wordpress Forminator Webhook').item.json.body.phone_2 }}"
+            },
+            {
+              "fieldId": "player_email",
+              "fieldValue": "={{ $('Wordpress Forminator Webhook').item.json.body.email_2 }}"
+            },
+            {
+              "fieldId": "game_name",
+              "fieldValue": "={{ $('Wordpress Forminator Webhook').item.json.body.form_title }}"
+            },
+            {
+              "fieldId": "game_date",
+              "fieldValue": "={{ $('Wordpress Forminator Webhook').item.json.body.date_1 }}"
+            },
+            {
+              "fieldId": "game_start",
+              "fieldValue": "={{ $json.assignments[0].value }}"
+            },
+            {
+              "fieldId": "duration_min",
+              "fieldValue": "={{ $json.assignments[1].value }}"
+            },
+            {
+              "fieldId": "game_end",
+              "fieldValue": "={{ $json.assignments[2].value }}"
             }
           ]
         }
@@ -4492,6 +4520,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-01-07T23:14:33.887Z",
-  "versionId": "9ee4ce10-3600-400c-933f-469070b28af9"
+  "updatedAt": "2026-01-07T23:57:44.054Z",
+  "versionId": "df66ea8c-bc2c-4024-91d4-d235ad2e9a76"
 }
