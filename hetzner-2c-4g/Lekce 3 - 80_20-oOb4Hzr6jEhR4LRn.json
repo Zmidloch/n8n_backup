@@ -1,0 +1,668 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "ExampleData": {
+      "main": [
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ExampleData2": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IfTrue": {
+      "main": [
+        [
+          {
+            "node": "This route",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "That route",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "IfTrue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "IfTrue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        []
+      ]
+    },
+    "DATA": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        []
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        []
+      ]
+    },
+    "Respond to Webhook": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-08T15:07:57.723Z",
+  "id": "oOb4Hzr6jEhR4LRn",
+  "isArchived": false,
+  "meta": null,
+  "name": "Lekce 3 - 80/20",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "### Conventions\n- **Flow direction and order**: Left to right, top to bottom\n- **Sequential Execution**: By default, n8n executes nodes synchronously (one after another, not in parallel)\n- **Node runs**: Nodes will run once PER INPUT. 5 inputs, 5 runs.\n- **Branching**: Workflows can split into multiple paths using conditional nodes (like If nodes)\n- **Active**: If you want anything external to run -> activate the flow\n",
+        "height": 560,
+        "width": 860
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -48,
+        144
+      ],
+      "id": "a0d2a0cd-6cb4-44e6-b48a-061cc137fffc",
+      "name": "Sticky Note12"
+    },
+    {
+      "parameters": {
+        "content": "## Execution Essentials",
+        "height": 80,
+        "width": 640
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "c7fcbb41-1435-485d-acb8-3245b5e66ac3",
+      "name": "Sticky Note13"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"leads\": [\n    {\n      \"id\": 1,\n      \"firstName\": \"Sarah\",\n      \"lastName\": \"Johnson\",\n      \"email\": \"sarah.johnson@example.com\",\n      \"company\": \"TechSolutions Inc.\",\n      \"phoneNumber\": \"+1-555-123-4567\",\n      \"source\": \"LinkedIn Ad\",\n      \"status\": \"New Lead\",\n      \"interestLevel\": \"High\",\n      \"notes\": \"Interested in automation for their customer service department\",\n      \"dateAdded\": \"2025-04-02T10:30:00Z\"\n    },\n    {\n      \"id\": 2,\n      \"firstName\": \"Michael\",\n      \"lastName\": \"Chen\",\n      \"email\": \"m.chen@example.com\",\n      \"company\": \"Retail Innovations\",\n      \"phoneNumber\": \"+1-555-234-5678\",\n      \"source\": \"Webinar\",\n      \"status\": \"Contacted\",\n      \"interestLevel\": \"Medium\",\n      \"notes\": \"Attended our N8N workflow webinar, requested follow-up\",\n      \"dateAdded\": \"2025-04-05T14:15:00Z\"\n    },\n    {\n      \"id\": 3,\n      \"firstName\": \"Jessica\",\n      \"lastName\": \"Williams\",\n      \"email\": \"jwilliams@example.com\",\n      \"company\": \"Legal Partners LLP\",\n      \"phoneNumber\": \"+1-555-345-6789\",\n      \"source\": \"Referral\",\n      \"status\": \"Meeting Scheduled\",\n      \"interestLevel\": \"High\",\n      \"notes\": \"Referred by Michael Chen, looking for document automation solutions\",\n      \"dateAdded\": \"2025-04-08T09:45:00Z\"\n    },\n    {\n      \"id\": 4,\n      \"firstName\": \"David\",\n      \"lastName\": \"Rodriguez\",\n      \"email\": \"david.r@example.com\",\n      \"company\": \"Freelance Consultant\",\n      \"phoneNumber\": \"+1-555-456-7890\",\n      \"source\": \"YouTube Channel\",\n      \"status\": \"New Lead\",\n      \"interestLevel\": \"Low\",\n      \"notes\": \"Watched tutorial on email automation, signed up for newsletter\",\n      \"dateAdded\": \"2025-04-10T16:20:00Z\"\n    },\n    {\n      \"id\": 5,\n      \"firstName\": \"Emma\",\n      \"lastName\": \"Thompson\",\n      \"email\": \"e.thompson@example.com\",\n      \"company\": \"Healthcare Solutions\",\n      \"phoneNumber\": \"+1-555-567-8901\",\n      \"source\": \"Website Contact Form\",\n      \"status\": \"Qualified Lead\",\n      \"interestLevel\": \"High\",\n      \"notes\": \"Needs patient data workflow automation, budget approved\",\n      \"dateAdded\": \"2025-04-12T11:10:00Z\"\n    }\n  ]\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        112,
+        304
+      ],
+      "id": "745ae274-a490-47aa-95ed-de01561924e5",
+      "name": "ExampleData"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"leads\": [\n    {\n      \"id\": 1,\n      \"firstName\": \"Sarah\",\n      \"lastName\": \"Johnson\",\n      \"email\": \"sarah.johnson@example.com\",\n      \"company\": \"TechSolutions Inc.\",\n      \"phoneNumber\": \"+1-555-123-4567\",\n      \"source\": \"LinkedIn Ad\",\n      \"status\": \"New Lead\",\n      \"interestLevel\": \"High\",\n      \"notes\": \"Interested in automation for their customer service department\",\n      \"dateAdded\": \"2025-04-02T10:30:00Z\"\n    },\n    {\n      \"id\": 2,\n      \"firstName\": \"Michael\",\n      \"lastName\": \"Chen\",\n      \"email\": \"m.chen@example.com\",\n      \"company\": \"Retail Innovations\",\n      \"phoneNumber\": \"+1-555-234-5678\",\n      \"source\": \"Webinar\",\n      \"status\": \"Contacted\",\n      \"interestLevel\": \"Medium\",\n      \"notes\": \"Attended our N8N workflow webinar, requested follow-up\",\n      \"dateAdded\": \"2025-04-05T14:15:00Z\"\n    },\n    {\n      \"id\": 3,\n      \"firstName\": \"Jessica\",\n      \"lastName\": \"Williams\",\n      \"email\": \"jwilliams@example.com\",\n      \"company\": \"Legal Partners LLP\",\n      \"phoneNumber\": \"+1-555-345-6789\",\n      \"source\": \"Referral\",\n      \"status\": \"Meeting Scheduled\",\n      \"interestLevel\": \"High\",\n      \"notes\": \"Referred by Michael Chen, looking for document automation solutions\",\n      \"dateAdded\": \"2025-04-08T09:45:00Z\"\n    },\n    {\n      \"id\": 4,\n      \"firstName\": \"David\",\n      \"lastName\": \"Rodriguez\",\n      \"email\": \"david.r@example.com\",\n      \"company\": \"Freelance Consultant\",\n      \"phoneNumber\": \"+1-555-456-7890\",\n      \"source\": \"YouTube Channel\",\n      \"status\": \"New Lead\",\n      \"interestLevel\": \"Low\",\n      \"notes\": \"Watched tutorial on email automation, signed up for newsletter\",\n      \"dateAdded\": \"2025-04-10T16:20:00Z\"\n    },\n    {\n      \"id\": 5,\n      \"firstName\": \"Emma\",\n      \"lastName\": \"Thompson\",\n      \"email\": \"e.thompson@example.com\",\n      \"company\": \"Healthcare Solutions\",\n      \"phoneNumber\": \"+1-555-567-8901\",\n      \"source\": \"Website Contact Form\",\n      \"status\": \"Qualified Lead\",\n      \"interestLevel\": \"High\",\n      \"notes\": \"Needs patient data workflow automation, budget approved\",\n      \"dateAdded\": \"2025-04-12T11:10:00Z\"\n    }\n  ]\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        128,
+        528
+      ],
+      "id": "70b3e4aa-e295-4b2e-8a82-8a4323b8649c",
+      "name": "ExampleData2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        736,
+        208
+      ],
+      "id": "1ff82bb7-982c-4903-9979-d39ad0b5abce",
+      "name": "This route"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        736,
+        368
+      ],
+      "id": "0d73c9f0-10d4-4360-9330-0656c83eb735",
+      "name": "That route"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a408f1b2-811f-4fa8-8b40-8104bcdfcdd9",
+              "leftValue": "",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        512,
+        304
+      ],
+      "id": "7c3aaff6-a4f6-48ef-be01-cda86babd781",
+      "name": "IfTrue"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        304,
+        528
+      ],
+      "id": "dd1fec9f-fc8d-46dc-973d-57874577bb4b",
+      "name": "Wait",
+      "webhookId": "2215c292-4bec-41ce-8199-8cb1a327103f"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "leads",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        304,
+        304
+      ],
+      "id": "6e438470-22ec-46c5-9102-433423f3a656",
+      "name": "Split Out1"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "99442649-4193-4eba-914c-d7a9b02e21a5"
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1040,
+        288
+      ],
+      "id": "94136e9a-2382-4847-a920-bb543cdd2b6d",
+      "name": "Switch"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -272,
+        2368
+      ],
+      "id": "d6cfcd9f-3e37-4526-bc78-29274d38b700",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "content": "### Core Trigger Nodes\n- **Manual Trigger**: Test and debug your workflows during development\n- **Cron**: Schedule workflows to run at specific times (daily reports, weekly checks)\n- **App event**: Start workflows from external events\n",
+        "height": 420,
+        "width": 860
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -64,
+        944
+      ],
+      "id": "7208f37a-bb66-4a13-923a-63f55c860cf0",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        304,
+        1152
+      ],
+      "id": "ce486ffb-6c40-4d3d-a25f-5efc73b3ef96",
+      "name": "Schedule Trigger",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## Essential Node Categories",
+        "height": 80,
+        "width": 640
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -64,
+        848
+      ],
+      "id": "8d80b002-6c76-49e2-af87-ba411dd550d5",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.microsoftOneDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        608,
+        1152
+      ],
+      "id": "e1eafba6-6bdb-4165-b7b1-a2cdb25a5a81",
+      "name": "Microsoft OneDrive Trigger",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "### Universal Data Processing\n- **Split**: Flatten a data structure\n- **Aggregate**: Merge a data structure (nest)\n- **Set**: Create and modify data fields - the most versatile node\n- **IF**: Add decision-making logic to route information differently\n- **Code**: Custom manipulation for complex transformations\n\n",
+        "height": 420,
+        "width": 860
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -48,
+        1600
+      ],
+      "id": "7c6f6bf4-5204-4fa2-b6c4-5ed4c2bb4db2",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b4df2767-1fc4-4177-b9b8-a76d2ed0f2df",
+              "name": "full name",
+              "value": "={{ $json.firstName }}, {{ $json.lastName }}",
+              "type": "string"
+            },
+            {
+              "id": "9559df9d-670b-40dd-9d2c-1e02a47bc176",
+              "name": "email",
+              "value": "={{ $json.email }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        112,
+        1888
+      ],
+      "id": "e60e40ac-7747-4789-9c9a-3ac0e55fb95c",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "2ebc710a-df13-484b-8fba-a8c773505da8",
+              "leftValue": "={{ $json['full name'] }}",
+              "rightValue": "=Sarah Johnson",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        560,
+        1872
+      ],
+      "id": "cb50e95e-14ee-4973-8139-182a7d38bb2b",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'full name NEW' with fixed formatting\nfor (const item of $input.all()) {\n  // Check if the \"full name\" field exists\n  if (item.json[\"full name\"]) {\n    // Remove the comma and any extra spaces between first name and last name\n    item.json[\"full name NEW\"] = item.json[\"full name\"].replace(/,\\s*/g, \" \").trim();\n  } else {\n    // If \"full name\" doesn't exist, create it from firstName and lastName\n    if (item.json.firstName && item.json.lastName) {\n      item.json[\"full name NEW\"] = `${item.json.firstName} ${item.json.lastName}`;\n    } else {\n      item.json[\"full name NEW\"] = \"\";\n    }\n  }\n}\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        736,
+        1632
+      ],
+      "id": "1f5f926f-3dd6-4ac4-b984-9503119bdd60",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"leads\": [\n    {\n      \"id\": 1,\n      \"firstName\": \"Sarah\",\n      \"lastName\": \"Johnson\",\n      \"email\": \"sarah.johnson@example.com\",\n      \"company\": \"TechSolutions Inc.\",\n      \"phoneNumber\": \"+1-555-123-4567\",\n      \"source\": \"LinkedIn Ad\",\n      \"status\": \"New Lead\",\n      \"interestLevel\": \"High\",\n      \"notes\": \"Interested in automation for their customer service department\",\n      \"dateAdded\": \"2025-04-02T10:30:00Z\"\n    },\n    {\n      \"id\": 2,\n      \"firstName\": \"Michael\",\n      \"lastName\": \"Chen\",\n      \"email\": \"m.chen@example.com\",\n      \"company\": \"Retail Innovations\",\n      \"phoneNumber\": \"+1-555-234-5678\",\n      \"source\": \"Webinar\",\n      \"status\": \"Contacted\",\n      \"interestLevel\": \"Medium\",\n      \"notes\": \"Attended our N8N workflow webinar, requested follow-up\",\n      \"dateAdded\": \"2025-04-05T14:15:00Z\"\n    },\n    {\n      \"id\": 3,\n      \"firstName\": \"Jessica\",\n      \"lastName\": \"Williams\",\n      \"email\": \"jwilliams@example.com\",\n      \"company\": \"Legal Partners LLP\",\n      \"phoneNumber\": \"+1-555-345-6789\",\n      \"source\": \"Referral\",\n      \"status\": \"Meeting Scheduled\",\n      \"interestLevel\": \"High\",\n      \"notes\": \"Referred by Michael Chen, looking for document automation solutions\",\n      \"dateAdded\": \"2025-04-08T09:45:00Z\"\n    },\n    {\n      \"id\": 4,\n      \"firstName\": \"David\",\n      \"lastName\": \"Rodriguez\",\n      \"email\": \"david.r@example.com\",\n      \"company\": \"Freelance Consultant\",\n      \"phoneNumber\": \"+1-555-456-7890\",\n      \"source\": \"YouTube Channel\",\n      \"status\": \"New Lead\",\n      \"interestLevel\": \"Low\",\n      \"notes\": \"Watched tutorial on email automation, signed up for newsletter\",\n      \"dateAdded\": \"2025-04-10T16:20:00Z\"\n    },\n    {\n      \"id\": 5,\n      \"firstName\": \"Emma\",\n      \"lastName\": \"Thompson\",\n      \"email\": \"e.thompson@example.com\",\n      \"company\": \"Healthcare Solutions\",\n      \"phoneNumber\": \"+1-555-567-8901\",\n      \"source\": \"Website Contact Form\",\n      \"status\": \"Qualified Lead\",\n      \"interestLevel\": \"High\",\n      \"notes\": \"Needs patient data workflow automation, budget approved\",\n      \"dateAdded\": \"2025-04-12T11:10:00Z\"\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -240,
+        1760
+      ],
+      "id": "7dc7446b-d532-4d38-ae58-2c8e1d79854b",
+      "name": "DATA"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "leads",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        1760
+      ],
+      "id": "f0c54fcc-2aac-4200-8164-e0189443595e",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "leads",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        176,
+        1760
+      ],
+      "id": "fa8b538a-14cb-4cf6-92ea-b7e639a3c4c3",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "content": "### Connectivity & APIs\n- **HTTP Request**: Connect to any external API or service. GET, POST & Authentication\n- **Webhook Response**: Send data back after processing\n\nhttps://dummyjson.com/docs/products\n\n\n",
+        "height": 420,
+        "width": 860
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -64,
+        2208
+      ],
+      "id": "2268ccea-e120-4302-89e5-5db5b6eddc5f",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.2,
+      "position": [
+        656,
+        2528
+      ],
+      "id": "f83c2d6a-e43d-4377-8b10-7ba8510099a6",
+      "name": "Respond to Webhook",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "url": "https://dummyjson.com/products",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        32,
+        2336
+      ],
+      "id": "08a6ecf4-c186-41b5-806d-d7575bb0e5fd",
+      "name": "HTTP Get"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://dummyjson.com/products/add",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "title",
+              "value": "BMW Pencil"
+            },
+            {
+              "name": "price",
+              "value": "1.50"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        32,
+        2496
+      ],
+      "id": "199b8492-6113-45d6-8a45-6292a29a8bc0",
+      "name": "HTTP Post",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "tRt24Lq7YnhlciiL",
+          "name": "Header Auth account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "440f0895-89e1-454d-903c-d8b61ef21737",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        368,
+        2384
+      ],
+      "id": "349d11f3-9196-4251-a919-73a6cf1255e8",
+      "name": "Webhook1",
+      "webhookId": "440f0895-89e1-454d-903c-d8b61ef21737"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        656,
+        2384
+      ],
+      "id": "7dd64fb7-0556-40f8-98ab-ca239c40f892",
+      "name": "Respond to Webhook1"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-08T15:07:57.723Z",
+      "createdAt": "2026-01-08T15:07:57.723Z",
+      "role": "workflow:owner",
+      "workflowId": "oOb4Hzr6jEhR4LRn",
+      "projectId": "j2KGpH2gt0oq8xIS"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-08T16:48:00.602Z",
+  "versionId": "a6b34f92-f3ab-4873-8c93-1a48d2337224"
+}
