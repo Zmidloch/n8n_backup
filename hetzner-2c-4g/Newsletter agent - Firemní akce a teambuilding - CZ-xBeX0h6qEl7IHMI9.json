@@ -1,0 +1,828 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-01-08T21:12:35.093Z",
+    "createdAt": "2026-01-08T21:12:31.378Z",
+    "versionId": "ac97eddf-3633-4b9e-b64e-a3732918f8ad",
+    "workflowId": "xBeX0h6qEl7IHMI9",
+    "nodes": [
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "weeks",
+                "triggerAtDay": [
+                  1
+                ],
+                "triggerAtHour": 3
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          -96,
+          -64
+        ],
+        "id": "2d0b4ff6-2044-4f44-92f9-efa6180fe616",
+        "name": "Schedule Trigger"
+      },
+      {
+        "parameters": {
+          "query": "firemní akce, organizace eventů  a teambuilding trendy 2026, moderní metody posilování týmové spolupráce a budování obchodních vztahů, networking, psychologie týmové dynamiky",
+          "options": {
+            "topic": "news",
+            "max_results": 5,
+            "time_range": "week"
+          }
+        },
+        "type": "@tavily/n8n-nodes-tavily.tavily",
+        "typeVersion": 1,
+        "position": [
+          128,
+          -64
+        ],
+        "id": "e4071f9f-b5b0-479d-98ed-75b0726fd5b0",
+        "name": "Prvotní průzkum",
+        "credentials": {
+          "tavilyApi": {
+            "id": "KmiWEKpArgJSNmSk",
+            "name": "Tavily account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "model": "openai/gpt-4o",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+        "typeVersion": 1,
+        "position": [
+          848,
+          128
+        ],
+        "id": "cd4789b3-94ac-4fa9-817a-9864ffc7634f",
+        "name": "OpenRouter Chat Model",
+        "credentials": {
+          "openRouterApi": {
+            "id": "XpZg3NCm0vRTBA75",
+            "name": "OpenRouter account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "schemaType": "manual",
+          "inputSchema": "{\n  \"type\": \"object\",\n  \"required\": [\"title\", \"topics\"],\n  \"properties\": {\n    \"title\": {\n      \"type\": \"string\",\n      \"description\": \"Krátký, výstižný a poutavý název newsletteru v češtině.\"\n    },\n    \"topics\": {\n      \"type\": \"array\",\n      \"description\": \"Pole přesně tří témat v češtině.\",\n      \"minItems\": 3,\n      \"maxItems\": 3,\n      \"items\": {\n        \"type\": \"string\"\n      }\n    }\n  },\n  \"additionalProperties\": false\n}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "typeVersion": 1.3,
+        "position": [
+          656,
+          128
+        ],
+        "id": "113ef7c5-b05a-4f39-9fb6-5ecae0b431ec",
+        "name": "Strukturovaný výstup (Plánování)"
+      },
+      {
+        "parameters": {
+          "fieldToSplitOut": "output.topics",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.splitOut",
+        "typeVersion": 1,
+        "position": [
+          608,
+          -64
+        ],
+        "id": "446bf910-0c02-4fad-a040-511319c0c4a3",
+        "name": "Rozdělit témata"
+      },
+      {
+        "parameters": {
+          "query": "=Důkladný průzkum pro téma: {{ $json['output.topics'] }}",
+          "options": {
+            "time_range": "month",
+            "include_raw_content": true
+          }
+        },
+        "type": "@tavily/n8n-nodes-tavily.tavily",
+        "typeVersion": 1,
+        "position": [
+          816,
+          -64
+        ],
+        "id": "ef07cd3b-d3f8-4f6b-b543-591aa9270c02",
+        "name": "Detailní rešerše",
+        "credentials": {
+          "tavilyApi": {
+            "id": "KmiWEKpArgJSNmSk",
+            "name": "Tavily account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=Téma: {{ $json.query }}\n\nPodklady z výzkumu:\n{{ $json.results.map(item => JSON.stringify(item, null, 2)).join('\\n\\n') }}\n",
+          "options": {
+            "systemMessage": "=# Přehled\nJsi profesionální copywriter specializující se na firemní kulturu a event management. Tvým jediným úkolem je napsat jednu samostatnou sekci newsletteru na zadané téma v češtině.\n\n## Instrukce\n- Vždy uveď jasný a lákavý nadpis sekce následovaný samotným textem.\n- Nepiš celkový název newsletteru, úvod ani závěr.\n- Piš v profesionálním, expertním a poutavém tónu (vykej čtenářům).\n- Pokud odkazuješ na fakta, data nebo citáty, musíš citovat zdroje a uvést skutečné klikací URL odkazy.\n- Nevymýšlej si citace – uváděj pouze reálné a ověřitelné zdroje.\n- Udržuj sekci stručnou, dobře strukturovanou a snadno čitelnou."
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 2.2,
+        "position": [
+          944,
+          -64
+        ],
+        "id": "059f7b38-14db-4dd2-a59c-4c8a7b4cfa7e",
+        "name": "Agent pro psaní sekcí"
+      },
+      {
+        "parameters": {
+          "fieldsToAggregate": {
+            "fieldToAggregate": [
+              {
+                "fieldToAggregate": "output"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.aggregate",
+        "typeVersion": 1,
+        "position": [
+          1280,
+          -64
+        ],
+        "id": "8262d385-2f05-4504-8e2f-0e089800d3a1",
+        "name": "Seskupit texty"
+      },
+      {
+        "parameters": {
+          "model": "openai/gpt-4o",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+        "typeVersion": 1,
+        "position": [
+          1024,
+          128
+        ],
+        "id": "d85843dc-23f4-4539-8a37-53169914aae5",
+        "name": "OpenRouter Chat Model1",
+        "credentials": {
+          "openRouterApi": {
+            "id": "XpZg3NCm0vRTBA75",
+            "name": "OpenRouter account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=Název: {{ $('Agent pro plánování').item.json.output.title }}\n\nSekce ke zpracování: {{ $json.output.join(\"\\n\\n\\n\") }}\n",
+          "hasOutputParser": true,
+          "options": {
+            "systemMessage": "=# Přehled\nJsi špičkový šéfredaktor business magazínu. Tvým úkolem je spojit tři dodané sekce do uceleného newsletteru ve formátu HTML v češtině. Přidej k nim celostní úvod a závěr. Udržuj profesionální a kultivovaný tón pro firemní klientelu.\n\n## Cíle\n- Vyladit čtivost, návaznost textu a konzistenci mezi sekcemi.\n- Celkový rozsah textu musí být maximálně 1000 slov. Vyhni se prázdným frázím.\n\n## Struktura (Pouze HTML)\n1) Úvodní odstavec <p>, který zarámuje všechna tři témata a jejich relevanci; uveď dnešní datum: {{ $now.format('dd. MM. yyyy') }}.\n2) Pro každou sekci:\n   - <h2> Ponech nebo mírně uprav původní nadpis.\n   - Upravený text sekce v <p>.\n   - Inline klikací citace u konkrétních tvrzení pomocí <a href=\"...\">Zdroj</a>.\n3) <h3>Zdroje</h3><ul> Jednotný seznam:\n   - Každá položka: <li><a href=\"[URL]\">[Název publikace] – [Název článku]</a></li>\n   - Uveď plné URL, odstraň duplicity a seřaď podle názvu publikace.\n4) Závěrečný odstavec <p> shrnující přínos firemních akcí s výzvou k akci.\n\n## Pravidla formátování\n- Používej pouze základní HTML tagy (<h2>, <h3>, <p>, <ul>, <li>, <a>). Bez CSS.\n\nOutput Format (return only this)\nSubject: [Předmět e-mailu]\n\nContent:\n[HTML body]"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 2.2,
+        "position": [
+          1408,
+          -64
+        ],
+        "id": "767b041f-3b08-493f-859a-c0842864d36a",
+        "name": "Šéfredaktor"
+      },
+      {
+        "parameters": {
+          "schemaType": "manual",
+          "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"subject\": {\n      \"type\": \"string\",\n      \"description\": \"předmět e-mailu\"\n    },\n    \"content\": {\n      \"type\": \"string\",\n      \"description\": \"obsah newsletteru v HTML\"\n    }\n  },\n  \"required\": [\"subject\", \"content\"]\n}\n"
+        },
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "typeVersion": 1.3,
+        "position": [
+          1216,
+          128
+        ],
+        "id": "aeecd05a-33e2-44c8-8f7e-fa5ae5e26deb",
+        "name": "Strukturovaný výstup (Editor)"
+      },
+      {
+        "parameters": {
+          "resource": "draft",
+          "subject": "={{ $json.output.subject }}",
+          "emailType": "html",
+          "message": "={{ $json.output.content }}",
+          "options": {
+            "sendTo": "zmidloch@z-agency.cz"
+          }
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.1,
+        "position": [
+          1760,
+          -64
+        ],
+        "id": "803807d8-5325-466c-90d1-b1755c06652f",
+        "name": "Vytvořit koncept",
+        "webhookId": "631942e2-3370-4f03-a546-94e4a3a87b55",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "cUMqdo7XCF6noXLb",
+            "name": "Gmail-info@z-agency.cz"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "={{ $json.results.map(item => JSON.stringify(item, null, 2)).join('\\n\\n') }}\n",
+          "hasOutputParser": true,
+          "options": {
+            "systemMessage": "=# Přehled\nJsi expert na strategické plánování firemních akcí. Tvým úkolem je na základě výsledků průzkumu navrhnout kreativní název newsletteru a vybrat přesně tři klíčová témata (v češtině), která posilují týmovou spolupráci a partnerské vazby.\n\n## Instrukce\nNewsletter musí působit informativně a celistvě. Témata by měla mít 3–5 slov."
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 2.2,
+        "position": [
+          336,
+          -64
+        ],
+        "id": "b9c360f4-8580-4138-b99d-c9d1f95a05fc",
+        "name": "Agent pro plánování"
+      }
+    ],
+    "connections": {
+      "Schedule Trigger": {
+        "main": [
+          [
+            {
+              "node": "Prvotní průzkum",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Prvotní průzkum": {
+        "main": [
+          [
+            {
+              "node": "Agent pro plánování",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OpenRouter Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Agent pro psaní sekcí",
+              "type": "ai_languageModel",
+              "index": 0
+            },
+            {
+              "node": "Agent pro plánování",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Strukturovaný výstup (Plánování)": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "Agent pro plánování",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Rozdělit témata": {
+        "main": [
+          [
+            {
+              "node": "Detailní rešerše",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Detailní rešerše": {
+        "main": [
+          [
+            {
+              "node": "Agent pro psaní sekcí",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Agent pro psaní sekcí": {
+        "main": [
+          [
+            {
+              "node": "Seskupit texty",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Seskupit texty": {
+        "main": [
+          [
+            {
+              "node": "Šéfredaktor",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OpenRouter Chat Model1": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Šéfredaktor",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Šéfredaktor": {
+        "main": [
+          [
+            {
+              "node": "Vytvořit koncept",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Strukturovaný výstup (Editor)": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "Šéfredaktor",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Agent pro plánování": {
+        "main": [
+          [
+            {
+              "node": "Rozdělit témata",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jiri Zmidloch",
+    "name": "Version ac97eddf",
+    "description": "",
+    "autosaved": false
+  },
+  "activeVersionId": "ac97eddf-3633-4b9e-b64e-a3732918f8ad",
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Prvotní průzkum",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prvotní průzkum": {
+      "main": [
+        [
+          {
+            "node": "Agent pro plánování",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent pro psaní sekcí",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Agent pro plánování",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Strukturovaný výstup (Plánování)": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Agent pro plánování",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rozdělit témata": {
+      "main": [
+        [
+          {
+            "node": "Detailní rešerše",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Detailní rešerše": {
+      "main": [
+        [
+          {
+            "node": "Agent pro psaní sekcí",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent pro psaní sekcí": {
+      "main": [
+        [
+          {
+            "node": "Seskupit texty",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Seskupit texty": {
+      "main": [
+        [
+          {
+            "node": "Šéfredaktor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Šéfredaktor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Šéfredaktor": {
+      "main": [
+        [
+          {
+            "node": "Vytvořit koncept",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Strukturovaný výstup (Editor)": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Šéfredaktor",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent pro plánování": {
+      "main": [
+        [
+          {
+            "node": "Rozdělit témata",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-08T21:04:36.388Z",
+  "id": "xBeX0h6qEl7IHMI9",
+  "isArchived": false,
+  "meta": null,
+  "name": "Newsletter agent - Firemní akce a teambuilding - CZ",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                1
+              ],
+              "triggerAtHour": 3
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -96,
+        -64
+      ],
+      "id": "2d0b4ff6-2044-4f44-92f9-efa6180fe616",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "query": "firemní akce, organizace eventů  a teambuilding trendy 2026, moderní metody posilování týmové spolupráce a budování obchodních vztahů, networking, psychologie týmové dynamiky",
+        "options": {
+          "topic": "news",
+          "max_results": 5,
+          "time_range": "week"
+        }
+      },
+      "type": "@tavily/n8n-nodes-tavily.tavily",
+      "typeVersion": 1,
+      "position": [
+        128,
+        -64
+      ],
+      "id": "e4071f9f-b5b0-479d-98ed-75b0726fd5b0",
+      "name": "Prvotní průzkum",
+      "credentials": {
+        "tavilyApi": {
+          "id": "KmiWEKpArgJSNmSk",
+          "name": "Tavily account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "google/gemini-3-flash-preview",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        848,
+        128
+      ],
+      "id": "cd4789b3-94ac-4fa9-817a-9864ffc7634f",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "XpZg3NCm0vRTBA75",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"required\": [\"title\", \"topics\"],\n  \"properties\": {\n    \"title\": {\n      \"type\": \"string\",\n      \"description\": \"Krátký, výstižný a poutavý název newsletteru v češtině.\"\n    },\n    \"topics\": {\n      \"type\": \"array\",\n      \"description\": \"Pole přesně tří témat v češtině.\",\n      \"minItems\": 3,\n      \"maxItems\": 3,\n      \"items\": {\n        \"type\": \"string\"\n      }\n    }\n  },\n  \"additionalProperties\": false\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        656,
+        128
+      ],
+      "id": "113ef7c5-b05a-4f39-9fb6-5ecae0b431ec",
+      "name": "Strukturovaný výstup (Plánování)"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "output.topics",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        608,
+        -64
+      ],
+      "id": "446bf910-0c02-4fad-a040-511319c0c4a3",
+      "name": "Rozdělit témata"
+    },
+    {
+      "parameters": {
+        "query": "=Důkladný průzkum pro téma: {{ $json['output.topics'] }}",
+        "options": {
+          "time_range": "month",
+          "include_raw_content": true
+        }
+      },
+      "type": "@tavily/n8n-nodes-tavily.tavily",
+      "typeVersion": 1,
+      "position": [
+        816,
+        -64
+      ],
+      "id": "ef07cd3b-d3f8-4f6b-b543-591aa9270c02",
+      "name": "Detailní rešerše",
+      "credentials": {
+        "tavilyApi": {
+          "id": "KmiWEKpArgJSNmSk",
+          "name": "Tavily account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Téma: {{ $json.query }}\n\nPodklady z výzkumu:\n{{ $json.results.map(item => JSON.stringify(item, null, 2)).join('\\n\\n') }}\n",
+        "options": {
+          "systemMessage": "=# Přehled\nJsi profesionální seniorní copywriter se špičkovu češtinou specializující se na firemní kulturu, event management a posiování obchodních vazeb. Tvým jediným úkolem je napsat jednu samostatnou sekci newsletteru na zadané téma v bezvadné a velmi čtivé češtině.\n\n## Instrukce\n- Vždy uveď jasný a lákavý nadpis sekce následovaný samotným textem.\n- Nepiš celkový název newsletteru, úvod ani závěr.\n- Piš v profesionálním, expertním a poutavém tónu (vykej čtenářům).\n- Pokud odkazuješ na fakta, data nebo citáty, musíš citovat zdroje a uvést skutečné klikací URL odkazy.\n- Nevymýšlej si citace – uváděj pouze reálné a ověřitelné zdroje.\n- Udržuj sekci stručnou, dobře strukturovanou a snadno čitelnou."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        944,
+        -64
+      ],
+      "id": "059f7b38-14db-4dd2-a59c-4c8a7b4cfa7e",
+      "name": "Agent pro psaní sekcí"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "output"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        -64
+      ],
+      "id": "8262d385-2f05-4504-8e2f-0e089800d3a1",
+      "name": "Seskupit texty"
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-opus-4.5",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1024,
+        128
+      ],
+      "id": "d85843dc-23f4-4539-8a37-53169914aae5",
+      "name": "OpenRouter Chat Model1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "XpZg3NCm0vRTBA75",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Název: {{ $('Agent pro plánování').item.json.output.title }}\n\nSekce ke zpracování: {{ $json.output.join(\"\\n\\n\\n\") }}\n",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# Přehled\nJsi špičkový seniorní šéfredaktor business magazínu. Tvým úkolem je spojit 5  dodaných sekcí do uceleného newsletteru ve formátu HTML v češtině. Přidej k nim celostní úvod a závěr. Udržuj profesionální a kultivovaný tón pro firemní klientelu.\n\n## Cíle\n- Vyladit čtivost, návaznost textu a konzistenci mezi sekcemi.\n- Celkový rozsah textu musí být maximálně 1000 slov. Vyhni se prázdným frázím.\n\n## Struktura (Pouze HTML)\n1) Úvodní odstavec <p>, který zarámuje všechna tři témata a jejich relevanci; uveď dnešní datum: {{ $now.format('dd. MM. yyyy') }}.\n2) Pro každou sekci:\n   - <h2> Ponech nebo mírně uprav původní nadpis.\n   - Upravený text sekce v <p>.\n   - Inline klikací citace u konkrétních tvrzení pomocí <a href=\"...\">Zdroj</a>.\n3) <h3>Zdroje</h3><ul> Jednotný seznam:\n   - Každá položka: <li><a href=\"[URL]\">[Název publikace] – [Název článku]</a></li>\n   - Uveď plné URL, odstraň duplicity a seřaď podle názvu publikace.\n4) Závěrečný odstavec <p> shrnující přínos firemních akcí s výzvou k akci.\n\n## Pravidla formátování\n- Používej pouze základní HTML tagy (<h2>, <h3>, <p>, <ul>, <li>, <a>). Bez CSS.\n\nOutput Format (return only this)\nSubject: [Předmět e-mailu]\n\nContent:\n[HTML body]"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        1408,
+        -64
+      ],
+      "id": "767b041f-3b08-493f-859a-c0842864d36a",
+      "name": "Šéfredaktor"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"subject\": {\n      \"type\": \"string\",\n      \"description\": \"předmět e-mailu\"\n    },\n    \"content\": {\n      \"type\": \"string\",\n      \"description\": \"obsah newsletteru v HTML\"\n    }\n  },\n  \"required\": [\"subject\", \"content\"]\n}\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1216,
+        128
+      ],
+      "id": "aeecd05a-33e2-44c8-8f7e-fa5ae5e26deb",
+      "name": "Strukturovaný výstup (Editor)"
+    },
+    {
+      "parameters": {
+        "sendTo": "zmidloch@z-agency.cz",
+        "subject": "={{ $json.output.subject }}",
+        "message": "={{ $json.output.content }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1760,
+        -64
+      ],
+      "id": "803807d8-5325-466c-90d1-b1755c06652f",
+      "name": "Vytvořit koncept",
+      "webhookId": "631942e2-3370-4f03-a546-94e4a3a87b55",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "cUMqdo7XCF6noXLb",
+          "name": "Gmail-info@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.results.map(item => JSON.stringify(item, null, 2)).join('\\n\\n') }}\n",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# Přehled\nJsi expert na strategické plánování firemních akcí a seniorní marketingový copywriter. Tvým úkolem je na základě výsledků průzkumu navrhnout kreativní název newsletteru a vybrat přesně 5 klíčových témat (v češtině), která posilují týmovou spolupráci, angažovanost zaměstnanců, firemní rozvoj a partnerské obchodní vazby.\n\n## Instrukce\nNewsletter musí působit informativně a celistvě. Témata by měla mít 3–5 slov."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        336,
+        -64
+      ],
+      "id": "b9c360f4-8580-4138-b99d-c9d1f95a05fc",
+      "name": "Agent pro plánování"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "zVAjJgKV17IWzFP7",
+    "timezone": "Europe/Prague"
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-08T21:04:36.388Z",
+      "createdAt": "2026-01-08T21:04:36.388Z",
+      "role": "workflow:owner",
+      "workflowId": "xBeX0h6qEl7IHMI9",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-01-08T21:37:45.882Z",
+  "versionId": "3a81520f-aa09-4137-b33d-5b4eebd6aa93"
+}
