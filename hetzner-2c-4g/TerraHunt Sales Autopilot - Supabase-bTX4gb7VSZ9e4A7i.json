@@ -3,11 +3,6 @@
   "activeVersion": null,
   "activeVersionId": null,
   "connections": {
-    "Create a record": {
-      "main": [
-        []
-      ]
-    },
     "Data Format for Airtable": {
       "main": [
         [
@@ -41,17 +36,6 @@
         ]
       ]
     },
-    "Update record": {
-      "main": [
-        [
-          {
-            "node": "If",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "If": {
       "main": [
         [
@@ -79,7 +63,7 @@
       "main": [
         [
           {
-            "node": "Update record",
+            "node": "Update a row",
             "type": "main",
             "index": 0
           }
@@ -156,7 +140,7 @@
       "main": [
         [
           {
-            "node": "Update DOC Status",
+            "node": "Invoice Created Status",
             "type": "main",
             "index": 0
           }
@@ -168,17 +152,6 @@
         [
           {
             "node": "Code in JavaScript1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Update DOC Status": {
-      "main": [
-        [
-          {
-            "node": "Download file",
             "type": "main",
             "index": 0
           }
@@ -222,7 +195,7 @@
       "main": [
         [
           {
-            "node": "Update UOL Status",
+            "node": "Invoice UOL Upload Status",
             "type": "main",
             "index": 0
           }
@@ -268,15 +241,9 @@
             "node": "HTTP Post PDF to UOL",
             "type": "main",
             "index": 0
-          }
-        ]
-      ]
-    },
-    "Update PDF Status": {
-      "main": [
-        [
+          },
           {
-            "node": "Airtable PDF Upload",
+            "node": "Invoice Supabase Upload",
             "type": "main",
             "index": 0
           }
@@ -298,7 +265,7 @@
       "main": [
         [
           {
-            "node": "Update PDF Status",
+            "node": "Invoice PDF Status",
             "type": "main",
             "index": 0
           }
@@ -315,6 +282,33 @@
           }
         ]
       ]
+    },
+    "Update a row": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Invoice Created Status": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Invoice PDF Status": {
+      "main": [
+        []
+      ]
     }
   },
   "createdAt": "2026-01-07T22:29:56.631Z",
@@ -325,737 +319,6 @@
   },
   "name": "TerraHunt Sales Autopilot - Supabase",
   "nodes": [
-    {
-      "parameters": {
-        "operation": "create",
-        "base": {
-          "__rl": true,
-          "value": "appRH0mydJXkeEQIJ",
-          "mode": "list",
-          "cachedResultName": "TerraHunt Sales Autopilot ",
-          "cachedResultUrl": "https://airtable.com/appRH0mydJXkeEQIJ"
-        },
-        "table": {
-          "__rl": true,
-          "value": "tblWfEAxc3ARNesff",
-          "mode": "list",
-          "cachedResultName": "Table 1",
-          "cachedResultUrl": "https://airtable.com/appRH0mydJXkeEQIJ/tblWfEAxc3ARNesff"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "Kupující - Jméno a Příjmení": "={{ $('Wordpress Forminator Webhook').item.json.body.name_1 }}",
-            "Kupující - Email": "={{ $('Wordpress Forminator Webhook').item.json.body.confirm_email_1 }}",
-            "Kupující - Telefon": "={{ $('Wordpress Forminator Webhook').item.json.body.phone_1 }}",
-            "Kupující - Město": "={{ $('Wordpress Forminator Webhook').item.json.body.address_1_city }}",
-            "Kupující - Adresa": "={{ $('Wordpress Forminator Webhook').item.json.body.address_1_street_address }}",
-            "Kupující - PSČ": "={{ $('Wordpress Forminator Webhook').item.json.body.address_1_zip }}",
-            "Kupující - Stát": "={{ $('Wordpress Forminator Webhook').item.json.body.address_1_country }}",
-            "Celková cena": "={{ $json.nodes[0].parameters.assignments.assignments[3].value }}",
-            "Cena za tým": "={{ $('Wordpress Forminator Webhook').item.json.body.calculation_2 }}",
-            "Počet týmů": "={{ $json.nodes[0].parameters.assignments.assignments[4].value }}",
-            "Délka hry": "={{ $json.nodes[0].parameters.assignments.assignments[2].value }}",
-            "Hráč - Jméno a Příjmení": "={{ $('Wordpress Forminator Webhook').item.json.body.name_2 }}",
-            "Hráč - Email": "={{ $('Wordpress Forminator Webhook').item.json.body.email_2 }}",
-            "Hráč - Telefon": "={{ $('Wordpress Forminator Webhook').item.json.body.phone_2 }}",
-            "Stripe platba": "Čeká se na platbu",
-            "Datum hry": "={{ $json.nodes[0].parameters.assignments.assignments[0].value }}",
-            "Název hry": "Treasure Hunt Budapest",
-            "ID objednávky": "={{ $('Wordpress Forminator Webhook').item.json.body.form_uid }}",
-            "Start hry": "={{ $json.nodes[0].parameters.assignments.assignments[0].value }}",
-            "Konec hry": "={{ $json.nodes[0].parameters.assignments.assignments[1].value }}",
-            "ID Stripe platby": "={{ $('Wordpress Forminator Webhook').item.json.body.paymentid }}"
-          },
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "ID objednávky",
-              "displayName": "ID objednávky",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Datum a čas objednávky",
-              "displayName": "Datum a čas objednávky",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": true,
-              "removed": false
-            },
-            {
-              "id": "Kupující - Jméno a Příjmení",
-              "displayName": "Kupující - Jméno a Příjmení",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Kupující - Telefon",
-              "displayName": "Kupující - Telefon",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Kupující - Email",
-              "displayName": "Kupující - Email",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Kupující - Adresa",
-              "displayName": "Kupující - Adresa",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Kupující - Město",
-              "displayName": "Kupující - Město",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Kupující - PSČ",
-              "displayName": "Kupující - PSČ",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Kupující - Stát",
-              "displayName": "Kupující - Stát",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Hráč - Jméno a Příjmení",
-              "displayName": "Hráč - Jméno a Příjmení",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Hráč - Telefon",
-              "displayName": "Hráč - Telefon",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Hráč - Email",
-              "displayName": "Hráč - Email",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Název hry",
-              "displayName": "Název hry",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Datum hry",
-              "displayName": "Datum hry",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "dateTime",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Start hry",
-              "displayName": "Start hry",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "dateTime",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Délka hry",
-              "displayName": "Délka hry",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "number",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Konec hry",
-              "displayName": "Konec hry",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "dateTime",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Počet týmů",
-              "displayName": "Počet týmů",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "number",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Cena za tým",
-              "displayName": "Cena za tým",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "number",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Celková cena",
-              "displayName": "Celková cena",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "number",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Stripe platba",
-              "displayName": "Stripe platba",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "options",
-              "options": [
-                {
-                  "name": "Čeká se na platbu",
-                  "value": "Čeká se na platbu"
-                },
-                {
-                  "name": "Zaplaceno",
-                  "value": "Zaplaceno"
-                }
-              ],
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Last Modified",
-              "displayName": "Last Modified",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": true,
-              "removed": false
-            },
-            {
-              "id": "ID Stripe platby",
-              "displayName": "ID Stripe platby",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {
-          "typecast": true
-        }
-      },
-      "type": "n8n-nodes-base.airtable",
-      "typeVersion": 2.1,
-      "position": [
-        768,
-        48
-      ],
-      "id": "0ee50940-367d-425f-a95b-763df25658d2",
-      "name": "Create a record",
-      "credentials": {
-        "airtableTokenApi": {
-          "id": "112UtIzO07XgrN7A",
-          "name": "Airtable - zmidloch@z-agency.cz"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "update",
-        "base": {
-          "__rl": true,
-          "value": "appRH0mydJXkeEQIJ",
-          "mode": "list",
-          "cachedResultName": "TerraHunt Sales Autopilot ",
-          "cachedResultUrl": "https://airtable.com/appRH0mydJXkeEQIJ"
-        },
-        "table": {
-          "__rl": true,
-          "value": "tblWfEAxc3ARNesff",
-          "mode": "list",
-          "cachedResultName": "Table 1",
-          "cachedResultUrl": "https://airtable.com/appRH0mydJXkeEQIJ/tblWfEAxc3ARNesff"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "ID Stripe platby": "={{ $('Stripe Payment Succeeded Webhook').item.json.body.data.object.id }}",
-            "Stripe platba": "Zaplaceno",
-            "Last 4 Digits": "={{ $json.card.last4 }}",
-            "Brand": "={{ $json.card.brand }}",
-            "Country": "={{ $json.card.country }}"
-          },
-          "matchingColumns": [
-            "ID Stripe platby"
-          ],
-          "schema": [
-            {
-              "id": "id",
-              "displayName": "id",
-              "required": false,
-              "defaultMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": true,
-              "removed": false
-            },
-            {
-              "id": "ID objednávky",
-              "displayName": "ID objednávky",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Datum a čas objednávky",
-              "displayName": "Datum a čas objednávky",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": true,
-              "removed": true
-            },
-            {
-              "id": "Kupující - Jméno a Příjmení",
-              "displayName": "Kupující - Jméno a Příjmení",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Kupující - Telefon",
-              "displayName": "Kupující - Telefon",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Kupující - Email",
-              "displayName": "Kupující - Email",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Kupující - Adresa",
-              "displayName": "Kupující - Adresa",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Kupující - Město",
-              "displayName": "Kupující - Město",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Kupující - PSČ",
-              "displayName": "Kupující - PSČ",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Kupující - Stát",
-              "displayName": "Kupující - Stát",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Hráč - Jméno a Příjmení",
-              "displayName": "Hráč - Jméno a Příjmení",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Hráč - Telefon",
-              "displayName": "Hráč - Telefon",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Hráč - Email",
-              "displayName": "Hráč - Email",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Název hry",
-              "displayName": "Název hry",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Datum hry",
-              "displayName": "Datum hry",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "dateTime",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Start hry",
-              "displayName": "Start hry",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "dateTime",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Délka hry",
-              "displayName": "Délka hry",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "number",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Konec hry",
-              "displayName": "Konec hry",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "dateTime",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Počet týmů",
-              "displayName": "Počet týmů",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "number",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Cena za tým",
-              "displayName": "Cena za tým",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "number",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Celková cena",
-              "displayName": "Celková cena",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "number",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Stripe platba",
-              "displayName": "Stripe platba",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "options",
-              "options": [
-                {
-                  "name": "Čeká se na platbu",
-                  "value": "Čeká se na platbu"
-                },
-                {
-                  "name": "Zaplaceno",
-                  "value": "Zaplaceno"
-                }
-              ],
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Last Modified",
-              "displayName": "Last Modified",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": true,
-              "removed": true
-            },
-            {
-              "id": "ID Stripe platby",
-              "displayName": "ID Stripe platby",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Brand",
-              "displayName": "Brand",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Last 4 Digits",
-              "displayName": "Last 4 Digits",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Country",
-              "displayName": "Country",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Receipt Status",
-              "displayName": "Receipt Status",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "array",
-              "options": [
-                {
-                  "name": "Created DOC",
-                  "value": "Created DOC"
-                },
-                {
-                  "name": "Created PDF",
-                  "value": "Created PDF"
-                },
-                {
-                  "name": "Saved Airtable",
-                  "value": "Saved Airtable"
-                },
-                {
-                  "name": "Uploaded to UOL",
-                  "value": "Uploaded to UOL"
-                },
-                {
-                  "name": "Sent to Client",
-                  "value": "Sent to Client"
-                }
-              ],
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Receipt",
-              "displayName": "Receipt",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "array",
-              "readOnly": false,
-              "removed": true
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.airtable",
-      "typeVersion": 2.1,
-      "position": [
-        592,
-        480
-      ],
-      "id": "cee2ad40-64d1-4356-b89b-f1b0f4ef1a8e",
-      "name": "Update record",
-      "credentials": {
-        "airtableTokenApi": {
-          "id": "112UtIzO07XgrN7A",
-          "name": "Airtable - zmidloch@z-agency.cz"
-        }
-      }
-    },
     {
       "parameters": {
         "content": "## Submit Website Form\n**Customer fills out and submits form from website including Stripe payment**\n\n[Test Website Link](https://autopilot.terrahunt.cz/)",
@@ -1104,7 +367,7 @@
     {
       "parameters": {
         "mode": "raw",
-        "jsonOutput": "={\n  \"assignments\": [\n    {\n      \"id\": \"start_game_iso\",\n      \"name\": \"zacatek_hry\",\n      \"value\": \"={{ $json.body.date_1.split('.').reverse().join('-') }}T{{ $json.body.time_1.trim() }}:00\",\n      \"type\": \"string\"\n    },\n    {\n      \"id\": \"duration_minutes\",\n      \"name\": \"delka_hry_minuty\",\n      \"value\": \"{{ parseFloat($json.body.select_4.replace(/[^\\d,]/g, '').replace(',', '.')) * 60 }}\",\n      \"type\": \"number\"\n    },\n    {\n      \"id\": \"end_game_iso\",\n      \"name\": \"konec_hry\",\n      \"value\": \"={{ (() => { const d = new Date($json.body.date_1.split('.').reverse().join('-') + 'T' + $json.body.time_1.trim()); const dur = parseFloat($json.body.select_4.replace(/[^\\d,]/g, '').replace(',', '.')); d.setMinutes(d.getMinutes() + (dur * 60)); return d.toISOString().split('.')[0]; })() }}\",\n      \"type\": \"string\"\n    },\n    {\n      \"id\": \"price_num\",\n      \"name\": \"cena_cislo\",\n      \"value\": \"={{ Number($json.body.calculation_1) }}\",\n      \"type\": \"number\"\n    },\n    {\n      \"id\": \"th_id\",\n      \"name\": \"th_id\",\n      \"value\": \"={{ Number($json.body.hidden_1) }}\",\n      \"type\": \"number\"\n    }\n  ]\n}",
+        "jsonOutput": "={\n  \"assignments\": [\n    {\n      \"id\": \"start_game_iso\",\n      \"name\": \"zacatek_hry\",\n      \"value\": \"={{ $now.setZone($json.body.hidden_2).set({ year: parseInt($json.body.date_1.split('.')[2]), month: parseInt($json.body.date_1.split('.')[1]), day: parseInt($json.body.date_1.split('.')[0]), hour: parseInt($json.body.time_1_hours), minute: parseInt($json.body.time_1_minutes), second: 0, millisecond: 0 }).toISO() }}\",\n      \"type\": \"string\"\n    },\n    {\n      \"id\": \"duration_minutes\",\n      \"name\": \"delka_hry_minuty\",\n      \"value\": \"={{ parseFloat($json.body.radio_1.replace(',', '.')) * 60 }}\",\n      \"type\": \"number\"\n    },\n    {\n      \"id\": \"end_game_iso\",\n      \"name\": \"konec_hry\",\n      \"value\": \"={{ $now.setZone($json.body.hidden_2).set({ year: parseInt($json.body.date_1.split('.')[2]), month: parseInt($json.body.date_1.split('.')[1]), day: parseInt($json.body.date_1.split('.')[0]), hour: parseInt($json.body.time_1_hours), minute: parseInt($json.body.time_1_minutes) }).plus({ minutes: (parseFloat($json.body.radio_1.replace(',', '.')) * 60) }).toISO() }}\",\n      \"type\": \"string\"\n    },\n    {\n      \"id\": \"price_num\",\n      \"name\": \"cena_cislo\",\n      \"value\": \"={{ Number($json.body.calculation_1) }}\",\n      \"type\": \"number\"\n    },\n    {\n      \"id\": \"teams_num\",\n      \"name\": \"pocet_tymu_cislo\",\n      \"value\": \"={{ Number($json.body.number_1) }}\",\n      \"type\": \"number\"\n    },\n    {\n      \"id\": \"th_id\",\n      \"name\": \"th_id\",\n      \"value\": \"={{ Number($json.body.hidden_1) }}\",\n      \"type\": \"number\"\n    }\n  ]\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.set",
@@ -1165,7 +428,7 @@
     },
     {
       "parameters": {
-        "content": "## Stripe-Airtable Pairing\n**If Payment Succeeded** change status of payment in Airtable",
+        "content": "## Stripe-Supabase Pairing\n**If Payment Succeeded** change status of payment in Supabase",
         "height": 336,
         "width": 256
       },
@@ -1190,7 +453,7 @@
           "conditions": [
             {
               "id": "25fd7588-6742-4cc1-8139-954c92709eeb",
-              "leftValue": "={{ $json.fields['ID Stripe platby'] }}",
+              "leftValue": "={{ $json.stripe_payment_id }}",
               "rightValue": "={{ $('Stripe Payment Succeeded Webhook').item.json.body.data.object.id }}",
               "operator": {
                 "type": "string",
@@ -1206,7 +469,7 @@
       "typeVersion": 2.3,
       "position": [
         912,
-        576
+        480
       ],
       "id": "be8710e8-a208-4343-968c-c577a38755c6",
       "name": "If"
@@ -1378,8 +641,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3392,
-        320
+        2624,
+        304
       ],
       "typeVersion": 1,
       "id": "eb6202e5-cd3d-4ff2-8b5c-6ca2770e25e0",
@@ -1615,13 +878,13 @@
           "cachedResultName": "Template_Receipt_Stripe",
           "cachedResultUrl": "https://docs.google.com/document/d/1i80iux_rFtmFcfL88Q2IvYUwew7RZAsLxfc2Y-KAamM/edit?usp=drivesdk"
         },
-        "name": "={{ $json.fields[\"Datum a čas objednávky\"] }}-{{ $json.fields[\"Kupující - Jméno a Příjmení\"] }}-{{ $json.fields['Název hry'] }}-Invoice-{{ $json.fields['ID Stripe platby'] }}",
+        "name": "={{ $json.order_datetime }}-{{ $json.buyer_name }}-{{ $json.game_name }}-INVOICE-{{ $json.stripe_payment_id }}",
         "options": {}
       },
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        1472,
+        1456,
         -128
       ],
       "id": "a35c6a08-d469-48c7-998e-316dc16e0346",
@@ -1659,7 +922,7 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        1632,
+        1584,
         -128
       ],
       "id": "55a32c60-cd70-474b-ad6d-a65ece216070",
@@ -1680,62 +943,62 @@
             {
               "action": "replaceAll",
               "text": " {{client_name}}",
-              "replaceText": "={{ $('If').item.json.fields['Kupující - Jméno a Příjmení'] }}"
+              "replaceText": "={{ $('Update a row').item.json.buyer_name }}"
             },
             {
               "action": "replaceAll",
               "text": " {{client_address}}",
-              "replaceText": "={{ $('If').item.json.fields['Kupující - Adresa'] }} {{ $('If').item.json.fields['Kupující - PSČ'] }} {{ $('If').item.json.fields['Kupující - Město'] }} {{ $('If').item.json.fields['Kupující - Stát'] }}"
+              "replaceText": "={{ $('Update a row').item.json.buyer_address }}, {{ $('Update a row').item.json.buyer_postcode }} {{ $('Update a row').item.json.buyer_city }}, {{ $('Update a row').item.json.buyer_country }}"
             },
             {
               "action": "replaceAll",
               "text": "{{client_email}}",
-              "replaceText": "={{ $('If').item.json.fields['Kupující - Email'] }}"
-            },
-            {
-              "action": "replaceAll",
-              "text": "{{client_phone}}",
-              "replaceText": "={{ $('If').item.json.fields['Kupující - Telefon'] }}"
+              "replaceText": "={{ $('Update a row').item.json.buyer_email }}"
             },
             {
               "action": "replaceAll",
               "text": "{{order_id}}",
-              "replaceText": "={{ $('If').item.json.fields['ID objednávky'] }}"
+              "replaceText": "={{ $('Update a row').item.json.order_id }}"
             },
             {
               "action": "replaceAll",
               "text": "{{date}}",
-              "replaceText": "={{ $('If').item.json.fields['Datum a čas objednávky'] }}"
+              "replaceText": "={{ $('Update a row').item.json.order_datetime }}"
             },
             {
               "action": "replaceAll",
               "text": "{{payment_status}}",
-              "replaceText": "={{ $('If').item.json.fields['Stripe platba'] }}"
+              "replaceText": "={{ $('Update a row').item.json.stripe_paid }}"
             },
             {
               "action": "replaceAll",
               "text": "{{card_brand}}",
-              "replaceText": "={{ $('If').item.json.fields.Brand }}"
+              "replaceText": "={{ $('Update a row').item.json.card_brand }}"
             },
             {
               "action": "replaceAll",
               "text": "{{card_last4}}",
-              "replaceText": "={{ $('If').item.json.fields['Last 4 Digits'] }}"
+              "replaceText": "={{ $('Update a row').item.json.card_last4.toString() }}"
             },
             {
               "action": "replaceAll",
               "text": "{{item_name}}",
-              "replaceText": "={{ $('If').item.json.fields['Název hry'] }}"
+              "replaceText": "={{ $('Update a row').item.json.game_name }}"
             },
             {
               "action": "replaceAll",
               "text": "{{game_date}}",
-              "replaceText": "={{ $('If').item.json.fields['Start hry'] }} - {{ $('If').item.json.fields['Konec hry'] }}"
+              "replaceText": "={{ $('Update a row').item.json.game_start }} - {{ $('Update a row').item.json.game_end }}"
             },
             {
               "action": "replaceAll",
               "text": "{{total_price}}",
-              "replaceText": "={{ $('Update record').item.json.fields['Celková cena'].toString() }}"
+              "replaceText": "={{ $('Update a row').item.json.total_price }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{client_phone}}",
+              "replaceText": "={{ $('Update a row').item.json.buyer_phone }}"
             }
           ]
         }
@@ -1743,7 +1006,7 @@
       "type": "n8n-nodes-base.googleDocs",
       "typeVersion": 2,
       "position": [
-        1792,
+        1744,
         -128
       ],
       "id": "7161e29c-e5cf-4779-aa43-6faf98a7259e",
@@ -1759,11 +1022,11 @@
       "parameters": {
         "content": "## Receipt Creation\n**Google Disc Template File Manipulation  - Duplication of template, moving template to directory, set name, fill up, update Airtable status** \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTemplate:\nhttps://docs.google.com/document/d/1i80iux_rFtmFcfL88Q2IvYUwew7RZAsLxfc2Y-KAamM/edit?usp=sharing",
         "height": 560,
-        "width": 656
+        "width": 704
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1440,
+        1392,
         -336
       ],
       "typeVersion": 1,
@@ -1796,7 +1059,7 @@
         "options": {
           "googleFileConversion": {
             "conversion": {
-              "docsToFormat": "application/pdf"
+              "docsToFormat": "=application/pdf"
             }
           }
         }
@@ -1805,7 +1068,7 @@
       "typeVersion": 3,
       "position": [
         2192,
-        -112
+        -128
       ],
       "id": "23f86cb4-0599-4ad9-8655-28347c87b6ba",
       "name": "Download file",
@@ -1813,404 +1076,6 @@
         "googleDriveOAuth2Api": {
           "id": "0y8WKhAVB7SLUFcI",
           "name": "Google Drive zmidloch@z-agency.cz"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "update",
-        "base": {
-          "__rl": true,
-          "value": "appRH0mydJXkeEQIJ",
-          "mode": "list",
-          "cachedResultName": "TerraHunt - Sales Autopilot ",
-          "cachedResultUrl": "https://airtable.com/appRH0mydJXkeEQIJ"
-        },
-        "table": {
-          "__rl": true,
-          "value": "tblWfEAxc3ARNesff",
-          "mode": "list",
-          "cachedResultName": "Table 1",
-          "cachedResultUrl": "https://airtable.com/appRH0mydJXkeEQIJ/tblWfEAxc3ARNesff"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "id": "={{ $('Update record').item.json.id }}",
-            "Receipt Status": "={{ ($('Update record').item.json.fields['Vase_Pole_Tagy'] || []).concat(['Created DOC']) }}"
-          },
-          "matchingColumns": [
-            "id"
-          ],
-          "schema": [
-            {
-              "id": "id",
-              "displayName": "id",
-              "required": false,
-              "defaultMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": true,
-              "removed": false
-            },
-            {
-              "id": "ID objednávky",
-              "displayName": "ID objednávky",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Datum a čas objednávky",
-              "displayName": "Datum a čas objednávky",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": true,
-              "removed": true
-            },
-            {
-              "id": "Kupující - Jméno a Příjmení",
-              "displayName": "Kupující - Jméno a Příjmení",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Kupující - Telefon",
-              "displayName": "Kupující - Telefon",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Kupující - Email",
-              "displayName": "Kupující - Email",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Kupující - Adresa",
-              "displayName": "Kupující - Adresa",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Kupující - Město",
-              "displayName": "Kupující - Město",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Kupující - PSČ",
-              "displayName": "Kupující - PSČ",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Kupující - Stát",
-              "displayName": "Kupující - Stát",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Hráč - Jméno a Příjmení",
-              "displayName": "Hráč - Jméno a Příjmení",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Hráč - Telefon",
-              "displayName": "Hráč - Telefon",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Hráč - Email",
-              "displayName": "Hráč - Email",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Název hry",
-              "displayName": "Název hry",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Datum hry",
-              "displayName": "Datum hry",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "dateTime",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Start hry",
-              "displayName": "Start hry",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "dateTime",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Délka hry",
-              "displayName": "Délka hry",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "number",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Konec hry",
-              "displayName": "Konec hry",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "dateTime",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Počet týmů",
-              "displayName": "Počet týmů",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "number",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Cena za tým",
-              "displayName": "Cena za tým",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "number",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Celková cena",
-              "displayName": "Celková cena",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "number",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Stripe platba",
-              "displayName": "Stripe platba",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "options",
-              "options": [
-                {
-                  "name": "Čeká se na platbu",
-                  "value": "Čeká se na platbu"
-                },
-                {
-                  "name": "Zaplaceno",
-                  "value": "Zaplaceno"
-                }
-              ],
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Last Modified",
-              "displayName": "Last Modified",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": true,
-              "removed": true
-            },
-            {
-              "id": "ID Stripe platby",
-              "displayName": "ID Stripe platby",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Brand",
-              "displayName": "Brand",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Last 4 Digits",
-              "displayName": "Last 4 Digits",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Country",
-              "displayName": "Country",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Receipt Status",
-              "displayName": "Receipt Status",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "array",
-              "options": [
-                {
-                  "name": "Created DOC",
-                  "value": "Created DOC"
-                },
-                {
-                  "name": "Created PDF",
-                  "value": "Created PDF"
-                },
-                {
-                  "name": "Saved Airtable",
-                  "value": "Saved Airtable"
-                },
-                {
-                  "name": "Uploaded to UOL",
-                  "value": "Uploaded to UOL"
-                },
-                {
-                  "name": "Sent to Client",
-                  "value": "Sent to Client"
-                }
-              ],
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Receipt",
-              "displayName": "Receipt",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "array",
-              "readOnly": false,
-              "removed": true
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.airtable",
-      "typeVersion": 2.1,
-      "position": [
-        1952,
-        -128
-      ],
-      "id": "a5b97198-3efc-47a8-a34f-3273fa5b3dc5",
-      "name": "Update DOC Status",
-      "credentials": {
-        "airtableTokenApi": {
-          "id": "112UtIzO07XgrN7A",
-          "name": "Airtable - zmidloch@z-agency.cz"
         }
       }
     },
@@ -2600,8 +1465,8 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2.1,
       "position": [
-        3008,
-        -112
+        3392,
+        544
       ],
       "id": "7490435d-749d-4c1f-97f7-5758a8442247",
       "name": "Airtable PDF Upload",
@@ -2998,8 +1863,8 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2.1,
       "position": [
-        3184,
-        -112
+        3248,
+        -96
       ],
       "id": "4f9862ab-cc8c-4207-ac82-3813c56c5cee",
       "name": "Update Airtable Upload Status",
@@ -3430,8 +2295,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        3440,
-        464
+        2672,
+        448
       ],
       "id": "8aedc8e9-b4b7-4d86-a20e-d4d99563060b",
       "name": "HTTP Post PDF to UOL",
@@ -3443,404 +2308,6 @@
         "httpBasicAuth": {
           "id": "g9sUvJe5xEHSB4fE",
           "name": "UOL API Z-AGENCY"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "update",
-        "base": {
-          "__rl": true,
-          "value": "appRH0mydJXkeEQIJ",
-          "mode": "list",
-          "cachedResultName": "TerraHunt - Sales Autopilot ",
-          "cachedResultUrl": "https://airtable.com/appRH0mydJXkeEQIJ"
-        },
-        "table": {
-          "__rl": true,
-          "value": "tblWfEAxc3ARNesff",
-          "mode": "list",
-          "cachedResultName": "Table 1",
-          "cachedResultUrl": "https://airtable.com/appRH0mydJXkeEQIJ/tblWfEAxc3ARNesff"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "Receipt Status": "{{ ($('Update record').item.json.fields['Receipt Status'] || []).concat(['Created DOC', 'Created PDF', 'Saved Airtable', 'Sent to Client', 'Uploaded to UOL']) }}",
-            "ID objednávky": "={{ $('Code in JavaScript1').item.json.fields['ID objednávky'] }}"
-          },
-          "matchingColumns": [
-            "ID objednávky"
-          ],
-          "schema": [
-            {
-              "id": "id",
-              "displayName": "id",
-              "required": false,
-              "defaultMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": true,
-              "removed": true
-            },
-            {
-              "id": "ID objednávky",
-              "displayName": "ID objednávky",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Datum a čas objednávky",
-              "displayName": "Datum a čas objednávky",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": true,
-              "removed": true
-            },
-            {
-              "id": "Kupující - Jméno a Příjmení",
-              "displayName": "Kupující - Jméno a Příjmení",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Kupující - Telefon",
-              "displayName": "Kupující - Telefon",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Kupující - Email",
-              "displayName": "Kupující - Email",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Kupující - Adresa",
-              "displayName": "Kupující - Adresa",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Kupující - Město",
-              "displayName": "Kupující - Město",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Kupující - PSČ",
-              "displayName": "Kupující - PSČ",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Kupující - Stát",
-              "displayName": "Kupující - Stát",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Hráč - Jméno a Příjmení",
-              "displayName": "Hráč - Jméno a Příjmení",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Hráč - Telefon",
-              "displayName": "Hráč - Telefon",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Hráč - Email",
-              "displayName": "Hráč - Email",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Název hry",
-              "displayName": "Název hry",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Datum hry",
-              "displayName": "Datum hry",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "dateTime",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Start hry",
-              "displayName": "Start hry",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "dateTime",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Délka hry",
-              "displayName": "Délka hry",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "number",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Konec hry",
-              "displayName": "Konec hry",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "dateTime",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Počet týmů",
-              "displayName": "Počet týmů",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "number",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Cena za tým",
-              "displayName": "Cena za tým",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "number",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Celková cena",
-              "displayName": "Celková cena",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "number",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Stripe platba",
-              "displayName": "Stripe platba",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "options",
-              "options": [
-                {
-                  "name": "Čeká se na platbu",
-                  "value": "Čeká se na platbu"
-                },
-                {
-                  "name": "Zaplaceno",
-                  "value": "Zaplaceno"
-                }
-              ],
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Last Modified",
-              "displayName": "Last Modified",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": true,
-              "removed": true
-            },
-            {
-              "id": "ID Stripe platby",
-              "displayName": "ID Stripe platby",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Brand karty",
-              "displayName": "Brand karty",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Poslední 4 čísla",
-              "displayName": "Poslední 4 čísla",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Země vydání",
-              "displayName": "Země vydání",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Receipt Status",
-              "displayName": "Receipt Status",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "array",
-              "options": [
-                {
-                  "name": "Created DOC",
-                  "value": "Created DOC"
-                },
-                {
-                  "name": "Created PDF",
-                  "value": "Created PDF"
-                },
-                {
-                  "name": "Saved Airtable",
-                  "value": "Saved Airtable"
-                },
-                {
-                  "name": "Uploaded to UOL",
-                  "value": "Uploaded to UOL"
-                },
-                {
-                  "name": "Sent to Client",
-                  "value": "Sent to Client"
-                }
-              ],
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Receipt",
-              "displayName": "Receipt",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "array",
-              "readOnly": false,
-              "removed": true
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.airtable",
-      "typeVersion": 2.1,
-      "position": [
-        3632,
-        464
-      ],
-      "id": "008de439-b538-42f6-9037-84a46f852e65",
-      "name": "Update UOL Status",
-      "credentials": {
-        "airtableTokenApi": {
-          "id": "112UtIzO07XgrN7A",
-          "name": "Airtable - zmidloch@z-agency.cz"
         }
       }
     },
@@ -3905,8 +2372,8 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        1136,
-        400
+        1328,
+        496
       ],
       "id": "9348730b-7c8a-48d8-9c3a-0144b09d8916",
       "name": "Send Error Message",
@@ -3921,418 +2388,20 @@
     {
       "parameters": {
         "mode": "runOnceForEachItem",
-        "jsCode": "const b = item.binary?.data;\nif (!b) throw new Error('Chybí item.binary.data');\n\nb.fileName = `${item.json.fields['Datum a čas objednávky']}-${item.json.fields['Kupující - Jméno a Příjmení']}-${item.json.fields['Název hry']}-Invoice.pdf`;\n\n// volitelně (většinou už máš)\nb.mimeType = 'application/pdf';\n\nreturn item;\n"
+        "jsCode": "const b = item.binary?.data;\nif (!b) {\n\tthrow new Error('Chybí item.binary.data');\n}\n\n// nové jméno souboru podle dat v JSONu\nb.fileName = `${item.json.order_datetime}-${item.json.buyer_name}-${item.json.game_name}-INVOICE-${item.json.stripe_payment_id}.pdf`;\n\n// volitelné – většinou už nastavené z Download file\nb.mimeType = 'application/pdf';\n\nreturn item;\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2336,
-        -112
+        2352,
+        -128
       ],
       "id": "9c178d8b-e3c3-4598-9b68-63607dfbcff9",
       "name": "Code in JavaScript1"
     },
     {
       "parameters": {
-        "operation": "update",
-        "base": {
-          "__rl": true,
-          "value": "appRH0mydJXkeEQIJ",
-          "mode": "list",
-          "cachedResultName": "TerraHunt - Sales Autopilot ",
-          "cachedResultUrl": "https://airtable.com/appRH0mydJXkeEQIJ"
-        },
-        "table": {
-          "__rl": true,
-          "value": "tblWfEAxc3ARNesff",
-          "mode": "list",
-          "cachedResultName": "Table 1",
-          "cachedResultUrl": "https://airtable.com/appRH0mydJXkeEQIJ/tblWfEAxc3ARNesff"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "id": "={{ $('Update record').item.json.id }}",
-            "Receipt Status": "={{ ($('Update record').item.json.fields['Receipt Status'] || []).concat(['Created DOC', 'Created PDF']) }}"
-          },
-          "matchingColumns": [
-            "id"
-          ],
-          "schema": [
-            {
-              "id": "id",
-              "displayName": "id",
-              "required": false,
-              "defaultMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": true,
-              "removed": false
-            },
-            {
-              "id": "ID objednávky",
-              "displayName": "ID objednávky",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Datum a čas objednávky",
-              "displayName": "Datum a čas objednávky",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": true,
-              "removed": true
-            },
-            {
-              "id": "Kupující - Jméno a Příjmení",
-              "displayName": "Kupující - Jméno a Příjmení",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Kupující - Telefon",
-              "displayName": "Kupující - Telefon",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Kupující - Email",
-              "displayName": "Kupující - Email",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Kupující - Adresa",
-              "displayName": "Kupující - Adresa",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Kupující - Město",
-              "displayName": "Kupující - Město",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Kupující - PSČ",
-              "displayName": "Kupující - PSČ",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Kupující - Stát",
-              "displayName": "Kupující - Stát",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Hráč - Jméno a Příjmení",
-              "displayName": "Hráč - Jméno a Příjmení",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Hráč - Telefon",
-              "displayName": "Hráč - Telefon",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Hráč - Email",
-              "displayName": "Hráč - Email",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Název hry",
-              "displayName": "Název hry",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Datum hry",
-              "displayName": "Datum hry",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "dateTime",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Start hry",
-              "displayName": "Start hry",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "dateTime",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Délka hry",
-              "displayName": "Délka hry",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "number",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Konec hry",
-              "displayName": "Konec hry",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "dateTime",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Počet týmů",
-              "displayName": "Počet týmů",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "number",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Cena za tým",
-              "displayName": "Cena za tým",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "number",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Celková cena",
-              "displayName": "Celková cena",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "number",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Stripe platba",
-              "displayName": "Stripe platba",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "options",
-              "options": [
-                {
-                  "name": "Čeká se na platbu",
-                  "value": "Čeká se na platbu"
-                },
-                {
-                  "name": "Zaplaceno",
-                  "value": "Zaplaceno"
-                }
-              ],
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Last Modified",
-              "displayName": "Last Modified",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": true,
-              "removed": true
-            },
-            {
-              "id": "ID Stripe platby",
-              "displayName": "ID Stripe platby",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Brand",
-              "displayName": "Brand",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Last 4 Digits",
-              "displayName": "Last 4 Digits",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Country",
-              "displayName": "Country",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": true
-            },
-            {
-              "id": "Receipt Status",
-              "displayName": "Receipt Status",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "array",
-              "options": [
-                {
-                  "name": "Created DOC",
-                  "value": "Created DOC"
-                },
-                {
-                  "name": "Created PDF",
-                  "value": "Created PDF"
-                },
-                {
-                  "name": "Saved Airtable",
-                  "value": "Saved Airtable"
-                },
-                {
-                  "name": "Uploaded to UOL",
-                  "value": "Uploaded to UOL"
-                },
-                {
-                  "name": "Sent to Client",
-                  "value": "Sent to Client"
-                }
-              ],
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "Receipt",
-              "displayName": "Receipt",
-              "required": false,
-              "defaultMatch": false,
-              "canBeUsedToMatch": true,
-              "display": true,
-              "type": "array",
-              "readOnly": false,
-              "removed": true
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.airtable",
-      "typeVersion": 2.1,
-      "position": [
-        2832,
-        -112
-      ],
-      "id": "d7e38d5c-6038-4320-bdf3-d5eacea046bd",
-      "name": "Update PDF Status",
-      "credentials": {
-        "airtableTokenApi": {
-          "id": "112UtIzO07XgrN7A",
-          "name": "Airtable - zmidloch@z-agency.cz"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "name": "={{ $json.fields[\"Datum a čas objednávky\"] }}-{{ $json.fields[\"Kupující - Jméno a Příjmení\"] }}-{{ $json.fields['Název hry'] }}-Invoice-{{ $json.fields['ID Stripe platby'] }}.pdf",
+        "name": "={{ $('Move file').item.json.name }}.pdf",
         "driveId": {
           "__rl": true,
           "value": "0ABzTOUwe2D1zUk9PVA",
@@ -4352,8 +2421,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        2496,
-        -112
+        2528,
+        -304
       ],
       "id": "6984a812-1151-4042-b634-5e0372caaa49",
       "name": "Upload file",
@@ -4383,8 +2452,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        2672,
-        -112
+        2656,
+        -288
       ],
       "id": "88b80d08-ef77-48ed-b12b-f26e408d5183",
       "name": "Share file",
@@ -4465,7 +2534,7 @@
             },
             {
               "fieldId": "game_name",
-              "fieldValue": "={{ $('Wordpress Forminator Webhook').item.json.body.form_title }}"
+              "fieldValue": "={{ $('Wordpress Forminator Webhook').item.json.body.select_1 }}"
             },
             {
               "fieldId": "game_date",
@@ -4482,6 +2551,26 @@
             {
               "fieldId": "game_end",
               "fieldValue": "={{ $json.assignments[2].value }}"
+            },
+            {
+              "fieldId": "time_zone",
+              "fieldValue": "={{ $('Wordpress Forminator Webhook').item.json.body.hidden_2 }}"
+            },
+            {
+              "fieldId": "teams_count",
+              "fieldValue": "={{ $('Wordpress Forminator Webhook').item.json.body.number_1 }}"
+            },
+            {
+              "fieldId": "team_price",
+              "fieldValue": "={{ $('Wordpress Forminator Webhook').item.json.body.calculation_2 }}"
+            },
+            {
+              "fieldId": "total_price",
+              "fieldValue": "={{ $('Wordpress Forminator Webhook').item.json.body.calculation_1 }}"
+            },
+            {
+              "fieldId": "stripe_payment_id",
+              "fieldValue": "={{ $('Wordpress Forminator Webhook').item.json.body.paymentid }}"
             }
           ]
         }
@@ -4494,6 +2583,203 @@
       ],
       "id": "303599a0-7ae4-46ae-bac3-0e09c317054f",
       "name": "Create a row",
+      "credentials": {
+        "supabaseApi": {
+          "id": "BI8O6iiU4BpDylT5",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Autopilot_Sales",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "stripe_payment_id",
+              "condition": "eq",
+              "keyValue": "={{ $('Stripe Payment Succeeded Webhook').item.json.body.data.object.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "card_brand",
+              "fieldValue": "={{ $json.card.display_brand }}"
+            },
+            {
+              "fieldId": "card_last4",
+              "fieldValue": "={{ $json.card.last4 }}"
+            },
+            {
+              "fieldId": "card_country",
+              "fieldValue": "={{ $json.card.country }}"
+            },
+            {
+              "fieldId": "stripe_paid",
+              "fieldValue": "paid"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        576,
+        480
+      ],
+      "id": "8d23304f-3b60-455e-a7e9-961418fa7ea3",
+      "name": "Update a row",
+      "credentials": {
+        "supabaseApi": {
+          "id": "BI8O6iiU4BpDylT5",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Autopilot_Sales",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "stripe_payment_id",
+              "condition": "eq",
+              "keyValue": "={{ $('Stripe Payment Succeeded Webhook').item.json.body.data.object.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "receipt_created_doc",
+              "fieldValue": "yes"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1936,
+        -128
+      ],
+      "id": "877288ff-0133-4721-8222-7e952b1d419f",
+      "name": "Invoice Created Status",
+      "credentials": {
+        "supabaseApi": {
+          "id": "BI8O6iiU4BpDylT5",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Autopilot_Sales",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "stripe_payment_id",
+              "condition": "eq",
+              "keyValue": "={{ $('Stripe Payment Succeeded Webhook').item.json.body.data.object.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "receipt_UOL_sent",
+              "fieldValue": "yes"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2896,
+        448
+      ],
+      "id": "0c21e228-f3b9-410f-967b-6e0c2fe68a57",
+      "name": "Invoice UOL Upload Status",
+      "credentials": {
+        "supabaseApi": {
+          "id": "BI8O6iiU4BpDylT5",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Autopilot_Sales",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "stripe_payment_id",
+              "condition": "eq",
+              "keyValue": "={{ $('Stripe Payment Succeeded Webhook').item.json.body.data.object.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "receipt_created_pdf",
+              "fieldValue": "yes"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2816,
+        -304
+      ],
+      "id": "c40f8524-f596-426b-8041-68f67e4e9131",
+      "name": "Invoice PDF Status",
+      "credentials": {
+        "supabaseApi": {
+          "id": "BI8O6iiU4BpDylT5",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Autopilot_Sales",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "stripe_payment_id",
+              "condition": "eq",
+              "keyValue": "={{ $('Stripe Payment Succeeded Webhook').item.json.body.data.object.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "receipt",
+              "fieldValue": "=data"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3104,
+        -224
+      ],
+      "id": "3f0c4552-7af5-49ae-b04f-5b1a7b67fd9e",
+      "name": "Invoice Supabase Upload",
       "credentials": {
         "supabaseApi": {
           "id": "BI8O6iiU4BpDylT5",
@@ -4520,6 +2806,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-01-07T23:57:44.054Z",
-  "versionId": "df66ea8c-bc2c-4024-91d4-d235ad2e9a76"
+  "updatedAt": "2026-01-08T11:04:53.807Z",
+  "versionId": "a724a715-7f59-455b-a84d-0c8bce42a37e"
 }
