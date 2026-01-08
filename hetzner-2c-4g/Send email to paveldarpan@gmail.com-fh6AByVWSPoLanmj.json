@@ -76,7 +76,8 @@
         "rule": {
           "interval": [
             {
-              "triggerAtHour": 9
+              "triggerAtHour": 12,
+              "triggerAtMinute": 5
             }
           ]
         }
@@ -105,9 +106,13 @@
       "projectId": "j2KGpH2gt0oq8xIS"
     }
   ],
-  "staticData": null,
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2026-01-07T20:46:19.823Z",
-  "versionId": "09180d66-540f-4d0e-9050-c83fcee5fd38"
+  "triggerCount": 1,
+  "updatedAt": "2026-01-08T11:04:42.539Z",
+  "versionId": "5b4fa084-2615-49fe-9004-4d1c571b5191"
 }
