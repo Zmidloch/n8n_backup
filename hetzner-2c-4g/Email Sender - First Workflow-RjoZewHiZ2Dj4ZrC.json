@@ -29,7 +29,9 @@
   "createdAt": "2025-12-30T10:01:46.972Z",
   "id": "RjoZewHiZ2Dj4ZrC",
   "isArchived": false,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "Email Sender - First Workflow",
   "nodes": [
     {
@@ -61,14 +63,21 @@
       ],
       "id": "df6026fe-a000-4fae-8a5a-5616cb7660d6",
       "name": "Send an email",
-      "webhookId": "26588855-6188-4afe-a48d-efedf7984e62"
+      "webhookId": "26588855-6188-4afe-a48d-efedf7984e62",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "UJuWtj5PUqv9aNYb",
+          "name": "Gmail account - paveldarpan@gmail.com"
+        }
+      }
     },
     {
       "parameters": {
         "rule": {
           "interval": [
             {
-              "triggerAtHour": 9
+              "triggerAtHour": 12,
+              "triggerAtMinute": 1
             }
           ]
         }
@@ -96,9 +105,13 @@
       "projectId": "j2KGpH2gt0oq8xIS"
     }
   ],
-  "staticData": null,
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2026-01-07T19:33:40.725Z",
-  "versionId": "b1e38685-4048-44de-869f-31d080f59e51"
+  "triggerCount": 1,
+  "updatedAt": "2026-01-08T11:03:01.019Z",
+  "versionId": "96e65e3d-b30e-4139-908a-7a4652aba1c5"
 }
