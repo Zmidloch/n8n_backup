@@ -1,0 +1,3597 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Get All Profiles": {
+      "main": [
+        [
+          {
+            "node": "Prepare Platform Configs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Platform Configs": {
+      "main": [
+        [
+          {
+            "node": "Loop Through Platforms",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Through Platforms": {
+      "main": [
+        [
+          {
+            "node": "Collect All Results",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Start Scraper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start Scraper": {
+      "main": [
+        [
+          {
+            "node": "Store Run Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Run Data": {
+      "main": [
+        [
+          {
+            "node": "Initial Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Initial Wait": {
+      "main": [
+        [
+          {
+            "node": "Check Run Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Run Status": {
+      "main": [
+        [
+          {
+            "node": "Is Run Complete?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Run Complete?": {
+      "main": [
+        [
+          {
+            "node": "Get Dataset Items",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait Before Retry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait Before Retry": {
+      "main": [
+        [
+          {
+            "node": "Check Run Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Dataset Items": {
+      "main": [
+        [
+          {
+            "node": "Normalize Posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Posts": {
+      "main": [
+        [
+          {
+            "node": "Batch Posts for DB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Batch Posts for DB": {
+      "main": [
+        [
+          {
+            "node": "Loop Through Platforms",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Needs Transcript?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Needs Transcript?": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Save to Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get TikTok Transcript": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save to Airtable": {
+      "main": [
+        [
+          {
+            "node": "Batch Posts for DB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Save to Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Get TikTok Transcript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop each viral content": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "AI Pattern Analysis (Universal)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upsert Pattern": {
+      "main": [
+        [
+          {
+            "node": "Loop each viral content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Loop each viral content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Pattern Analysis (Universal)": {
+      "main": [
+        [
+          {
+            "node": "Structure Patterns",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Content Virality": {
+      "main": [
+        [
+          {
+            "node": "Search records",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search records": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structure Patterns": {
+      "main": [
+        [
+          {
+            "node": "Update Content Virality",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Pattern Uniqueness Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pattern Uniqueness Check": {
+      "main": [
+        [
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code3": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Upsert Pattern",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop each viral content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Posts": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get All Profiles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Get Posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Key Takeaways AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Set Key Takeaways",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Key Takeaways": {
+      "main": [
+        [
+          {
+            "node": "Outline Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Outline Agent": {
+      "main": [
+        [
+          {
+            "node": "Set Post Outline",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SERPs, Writing, KWs, Insights": {
+      "main": [
+        [
+          {
+            "node": "Set Post KWs and Insights",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Final Edit Agent": {
+      "main": [
+        [
+          {
+            "node": "Set Final Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SerpAPI": {
+      "ai_tool": [
+        [
+          {
+            "node": "SERPs, Writing, KWs, Insights",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [
+          {
+            "node": "Update post titles",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "SERPs, Writing, KWs, Insights",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "SERPs, Writing, KWs, Insights",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get post titles": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Post New Title": {
+      "main": [
+        [
+          {
+            "node": "Key Takeaways AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Post KWs and Insights": {
+      "main": [
+        [
+          {
+            "node": "Refine the Title",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Post Outline": {
+      "main": [
+        [
+          {
+            "node": "Post Content Writer Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Draft Post": {
+      "main": [
+        [
+          {
+            "node": "Post Assembly Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Final Post": {
+      "main": [
+        [
+          {
+            "node": "Post Meta Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Post Folder": {
+      "main": [
+        [
+          {
+            "node": "Create Post Doc",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get post titles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Refine the Title",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SerpAPI1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Post Content Writer Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Refine the Title": {
+      "main": [
+        [
+          {
+            "node": "Set Post New Title",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post Assembly Agent": {
+      "main": [
+        [
+          {
+            "node": "Final Edit Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post Content Writer Agent": {
+      "main": [
+        [
+          {
+            "node": "Set Draft Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post Meta Agent": {
+      "main": [
+        [
+          {
+            "node": "Set Post Metadata",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser2": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Post Meta Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Post Metadata": {
+      "main": [
+        [
+          {
+            "node": "Generate Post Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Post Image": {
+      "main": [
+        [
+          {
+            "node": "Set Post Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Post Image": {
+      "main": [
+        [
+          {
+            "node": "Markdown Final Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Post Doc": {
+      "main": [
+        [
+          {
+            "node": "Update a document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Share Post Doc": {
+      "main": [
+        [
+          {
+            "node": "Set Post Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Post Drive": {
+      "main": [
+        [
+          {
+            "node": "Set Sheet Vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Sheet Vars": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Markdown Final Post": {
+      "main": [
+        [
+          {
+            "node": "Create Post Folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a document": {
+      "main": [
+        [
+          {
+            "node": "Share Post Doc",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "SERPs, Writing, KWs, Insights",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Key Takeaways AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Refine the Title",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model6": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Final Edit Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model5": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Post Assembly Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Post Content Writer Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Outline Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model7": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Post Meta Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-09T18:38:43.367Z",
+  "id": "nNuomNSjWikxVbN9",
+  "isArchived": false,
+  "meta": null,
+  "name": "AI SEO Blog Writer",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appgaortOLSebDF5Q",
+          "mode": "list",
+          "cachedResultName": "Competitor Watcher (August 15, 2025) (August 15, 2025)",
+          "cachedResultUrl": "https://airtable.com/appgaortOLSebDF5Q"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl94YVg8Rh7EynLV",
+          "mode": "list",
+          "cachedResultName": "Competitors",
+          "cachedResultUrl": "https://airtable.com/appgaortOLSebDF5Q/tbl94YVg8Rh7EynLV"
+        },
+        "filterByFormula": "({Active Status} = 'Active')",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        -560,
+        160
+      ],
+      "id": "b67e74b9-a458-4788-9edb-bdea40be0ff9",
+      "name": "Get All Profiles",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable - zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Group profiles by platform based on domain and tracked platforms\nconst allProfiles = $input.all();\nconst platforms = {\n  twitter: [],\n  tiktok: [],\n  linkedin: []\n};\n\nallProfiles.forEach(item => {\n  const profile = item.json;\n  const url = profile.URL;\n  const trackedPlatformIds = profile['Tracked Platforms'] || []; // Array of platform record IDs\n  \n  if (!url || trackedPlatformIds.length === 0) return;\n  \n  // Determine platform based on domain\n  let platform = null;\n  if (url.includes('x.com') || url.includes('twitter.com')) {\n    platform = 'twitter';\n  } else if (url.includes('tiktok.com')) {\n    platform = 'tiktok';\n  } else if (url.includes('linkedin.com')) {\n    platform = 'linkedin';\n  }\n  \n  if (platform && platforms[platform]) {\n    // Extract username from URL\n    let username = '';\n    let fullUrl = url;\n    \n    if (platform === 'twitter') {\n      // For Twitter/X: extract username from x.com/username\n      const urlParts = url.split('/');\n      username = urlParts[urlParts.length - 1] || urlParts[urlParts.length - 2];\n      username = username.replace('@', ''); // Remove @ if present\n    } else if (platform === 'tiktok') {\n      // For TikTok: extract username from tiktok.com/@username\n      const tiktokMatch = url.match(/@([^\\/\\?]+)/);\n      if (tiktokMatch) {\n        username = tiktokMatch[1];\n      } else {\n        // Fallback to last part of URL\n        const urlParts = url.split('/');\n        username = urlParts[urlParts.length - 1] || urlParts[urlParts.length - 2];\n      }\n    } else if (platform === 'linkedin') {\n      // For LinkedIn: extract username from URL like linkedin.com/in/username\n      const linkedinMatch = url.match(/linkedin\\.com\\/in\\/([^\\/\\?]+)/);\n      if (linkedinMatch) {\n        username = linkedinMatch[1];\n      } else {\n        // Fallback to last part of URL\n        const urlParts = url.split('/');\n        username = urlParts[urlParts.length - 1] || urlParts[urlParts.length - 2];\n      }\n      \n      // Ensure full URL starts with https://\n      if (!url.startsWith('http')) {\n        fullUrl = 'https://' + url;\n      } else {\n        fullUrl = url;\n      }\n    }\n    \n    platforms[platform].push({\n      profileId: profile.id,\n      profileName: profile['Competitor Name'],\n      profileUrl: url,\n      username: username, // For LinkedIn, this is just the username part\n      fullUrl: platform === 'linkedin' ? fullUrl : url, // Store full URL for LinkedIn API\n      platform: platform,\n      platformRecordId: trackedPlatformIds[0] // Use the first tracked platform ID (assuming one platform per competitor URL)\n    });\n  }\n});\n\nconsole.log('Grouped profiles:', platforms);\n\n// Create a map of platform names to their record IDs from the profiles\nconst platformRecordIds = {};\nObject.keys(platforms).forEach(platformName => {\n  if (platforms[platformName].length > 0) {\n    // Get the platform record ID from the first profile of this platform type\n    platformRecordIds[platformName] = platforms[platformName][0].platformRecordId;\n  }\n});\n\nconsole.log('Platform record IDs:', platformRecordIds);\n\n// Prepare scraper inputs for each platform\nconst scraperConfigs = [];\n\n// Twitter/X config\nif (platforms.twitter.length > 0) {\n  const twitterHandles = platforms.twitter.map(p => p.username);\n  \n  scraperConfigs.push({\n    platform: 'twitter',\n    platformRecordId: platformRecordIds['twitter'],\n    profiles: platforms.twitter,\n    scraperActor: 'apidojo~twitter-scraper-lite',\n    inputConfig: {\n      maxItems: 200,\n      searchTerms: [],\n      sort: 'Top',\n      twitterHandles: twitterHandles\n    }\n  });\n}\n\n// TikTok config\nif (platforms.tiktok.length > 0) {\n  const tiktokProfiles = platforms.tiktok.map(p => p.username);\n  \n  scraperConfigs.push({\n    platform: 'tiktok',\n    platformRecordId: platformRecordIds['tiktok'],\n    profiles: platforms.tiktok,\n    scraperActor: 'clockworks~tiktok-scraper',\n    inputConfig: {\n      excludePinnedPosts: false,\n      profiles: tiktokProfiles,\n      proxyCountryCode: 'None',\n      resultsPerPage: 2,\n      scrapeRelatedVideos: false,\n      shouldDownloadAvatars: false,\n      shouldDownloadCovers: false,\n      shouldDownloadMusicCovers: false,\n      shouldDownloadSlideshowImages: false,\n      shouldDownloadSubtitles: false,\n      shouldDownloadVideos: true\n    }\n  });\n}\n\n// LinkedIn config  \nif (platforms.linkedin.length > 0) {\n  const linkedinUrls = platforms.linkedin.map(p => p.fullUrl);\n  \n  scraperConfigs.push({\n    platform: 'linkedin',\n    platformRecordId: platformRecordIds['linkedin'],\n    profiles: platforms.linkedin,\n    scraperActor: 'apimaestro~linkedin-batch-profile-posts-scraper',\n    inputConfig: {\n      limit: 10,\n      usernames: linkedinUrls // These are full URLs for the API\n    }\n  });\n}\n\nconsole.log('Scraper configs:', scraperConfigs);\nreturn scraperConfigs;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -368,
+        160
+      ],
+      "id": "2c0930b3-3969-4f0e-870b-e9f4585a2471",
+      "name": "Prepare Platform Configs",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -160,
+        160
+      ],
+      "id": "e66dbbed-e26c-4c6d-8be0-899a599fafd3",
+      "name": "Loop Through Platforms"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.apify.com/v2/acts/{{ $json.scraperActor }}/runs?token=your_token",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.inputConfig) }}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "93f6e28b-d9b1-4449-a401-ae600d8a4bc3",
+      "name": "Start Scraper",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        32,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "run-data",
+              "name": "runData",
+              "value": "={{ { runId: $json.data.defaultDatasetId, platform: $('Loop Through Platforms').item.json.platform, platformRecordId: $('Loop Through Platforms').item.json.platformRecordId,profiles: $('Loop Through Platforms').item.json.profiles, scraperActor: $('Loop Through Platforms').item.json.scraperActor, apiToken: $('Loop Through Platforms').item.json.apiToken } }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        240,
+        160
+      ],
+      "id": "02c488b2-0dcb-4be0-9e68-9f4484a1018a",
+      "name": "Store Run Data"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        432,
+        160
+      ],
+      "id": "6f56c994-e00f-4103-b8df-f137fc485961",
+      "name": "Initial Wait",
+      "webhookId": "9ae6345a-7e7e-4ab1-9852-eda97c4156bc"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.apify.com/v2/acts/{{ $('Store Run Data').item.json.runData.scraperActor}}/runs/last?token=your_token",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "867b548c-7356-4836-b466-24d1e06ee00e",
+      "name": "Check Run Status",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        640,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "status-check",
+              "leftValue": "={{ $json.data.status }}",
+              "rightValue": "SUCCEEDED",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        832,
+        160
+      ],
+      "id": "5207b0cf-55a1-42d9-97d1-76962109b7c4",
+      "name": "Is Run Complete?"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        832,
+        352
+      ],
+      "id": "ca2a36ba-7629-456c-a2e0-db8b319acb0d",
+      "name": "Wait Before Retry",
+      "webhookId": "8594729b-979d-4b1e-856b-fe418b5ccbbd"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.apify.com/v2/datasets/{{ $('Store Run Data').item.json.runData.runId }}/items?token=your_token",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "83e58a6a-9090-46be-8349-da791a1427f0",
+      "name": "Get Dataset Items",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1056,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Universal post normalizer\nconst platform = $('Store Run Data').first().json.runData.platform;\nconst platformRecordId = $('Store Run Data').first().json.runData.platformRecordId;\nconst profiles = $('Store Run Data').first().json.runData.profiles;\nconst posts = $input.all();\n\nconsole.log(\"profiles\", profiles);\nconsole.log(\"platformRecordId\", platformRecordId);\n\n// Create username to profile map for easier lookup\nconst profileMap = {};\nprofiles.forEach(p => {\n  profileMap[p.username.toLowerCase()] = p;\n});\n\n// Helper function to format media for Airtable attachment field\nfunction formatMediaForAirtable(url) {\n  if (!url) return null;\n  return [{\n    url: url\n  }];\n}\n\n// Function to determine media type and get the best URL for Twitter\nfunction getTwitterMediaInfo(post) {\n  // Check extendedEntities first (preferred), then fall back to media array\n  const mediaArray = post.extendedEntities?.media || [];\n  \n  if (mediaArray.length === 0) {\n    return { type: null, url: null, videoUrl: null };\n  }\n  \n  const mediaItem = mediaArray[0]; // Get first media item\n  const mediaType = mediaItem.type; // 'video', 'photo', 'animated_gif'\n  \n  if (mediaType === 'video') {\n    // For videos, use the thumbnail image URL for Airtable display\n    const thumbnailUrl = mediaItem.media_url_https;\n    // Get the best quality MP4 video URL\n    const videoVariants = mediaItem.video_info?.variants || [];\n    const mp4Videos = videoVariants.filter(v => v.content_type === 'video/mp4');\n    const bestVideo = mp4Videos.sort((a, b) => (b.bitrate || 0) - (a.bitrate || 0))[0];\n    \n    return {\n      type: 'Video',\n      url: thumbnailUrl, // Thumbnail for Airtable preview\n      videoUrl: bestVideo?.url || null // Actual video URL\n    };\n  } else if (mediaType === 'photo') {\n    return {\n      type: 'Image',\n      url: mediaItem.media_url_https,\n      videoUrl: null\n    };\n  } else if (mediaType === 'animated_gif') {\n    // For GIFs, we can use the video variant URL for better quality\n    const videoVariants = mediaItem.video_info?.variants || [];\n    const mp4Videos = videoVariants.filter(v => v.content_type === 'video/mp4');\n    const gifVideo = mp4Videos[0]; // Usually just one variant for GIFs\n    \n    return {\n      type: 'GIF',\n      url: gifVideo?.url || mediaItem.media_url_https, // Use video URL if available, fallback to static\n      videoUrl: gifVideo?.url || null\n    };\n  }\n  \n  return { type: null, url: null, videoUrl: null };\n}\n\n// Normalize posts based on platform\nconst normalizedPosts = [];\n\nconsole.log(\"post\", posts);\nposts.forEach(item => {\n  const post = item.json;\n  let normalized = null;\n  \n  try {\n    switch(platform) {\n      case 'twitter':\n        if (post.author?.userName) {\n          const username = post.author.userName.toLowerCase();\n          const profile = profileMap[username];\n          \n          if (profile) {\n            // Get media info using the new function\n            const mediaInfo = getTwitterMediaInfo(post);\n            \n            normalized = {\n              // Field names must match exactly with your Airtable field names\n              \"Competitor\": [profile.profileId], // Array with competitor record ID\n              \"Platform\": [platformRecordId], // Array with platform record ID\n              \"PlatformName\": \"twitter\",\n              \"Content Title\": post.fullText?.substring(0, 100) || '', // First 100 chars as title\n              \"Content\": post.fullText || '',\n              \"Content URL\": post.url || '',\n              \"Media\": formatMediaForAirtable(mediaInfo.url), // Format as attachment array\n              \"Media Type\": mediaInfo.type, // 'Video', 'Image', 'GIF', or null\n              \"Video URL\": mediaInfo.videoUrl || null, // Direct video URL if it's a video/GIF\n              \"Publish Date\": post.createdAt || new Date().toISOString(),\n              \"Views\": post.viewCount || 0,\n              \"Likes\": post.likeCount || 0,\n              \"Comments\": post.replyCount || 0,\n              \"Shares\": post.retweetCount || 0,\n              \"Imported At\": new Date().toISOString()\n            };\n          }\n        }\n        break;\n        \n      case 'tiktok':\n        if (post.authorMeta?.name) {\n          const username = post.authorMeta.name.toLowerCase();\n          const profile = profileMap[username];\n          \n          if (profile) {\n            const mediaUrl = $input.first().json.webVideoUrl;\n            \n            normalized = {\n              \"Competitor\": [profile.profileId],\n              \"Platform\": [platformRecordId],\n              \"PlatformName\": \"tiktok\",\n              \"Content Title\": post.text?.substring(0, 100) || '',\n              \"Content\": post.text || '',\n              \"Content URL\": post.webVideoUrl || '',\n              \"Media\": formatMediaForAirtable($input.first().json.videoMeta.coverUrl), \n              \"Media Type\": 'Video', // Capital 'V' to match Airtable options\n              \"Publish Date\": post.createTimeISO || new Date().toISOString(),\n              \"Views\": post.playCount || 0,\n              \"Likes\": post.diggCount || 0,\n              \"Comments\": post.commentCount || 0,\n              \"Shares\": post.shareCount || 0,\n              \"Imported At\": new Date().toISOString(),\n              \"Needs Script\": true // For transcript fetching\n            };\n          }\n        }\n        break;\n        \n      case 'linkedin':\n        if (post.author?.username) {\n          const username = post.author.username.toLowerCase();\n          const profile = profileMap[username];\n          \n          if (profile) {\n            // Handle media based on type field\n            let mediaUrl = null;\n            let mediaType = null;\n            \n            if (post.media) {\n              // Check the type field to determine media type\n              if (post.media.type === 'image') {\n                // For images, use the main URL or get from images array\n                mediaUrl = post.media.url || (post.media.images && post.media.images[0]?.url);\n                mediaType = 'Image';\n              } else if (post.media.type === 'video') {\n                // For videos, use the video URL (not thumbnail)\n                mediaUrl = post.media.url;\n                mediaType = 'Video';\n              }\n            }\n            // Check for document (PDF, presentations, etc.)\n            else if (post.document) {\n              // Use thumbnail for preview\n              mediaUrl = post.document.thumbnail;\n              mediaType = 'Image'; // Documents show as images (thumbnails) in feed\n            }\n            \n            normalized = {\n              \"Competitor\": [profile.profileId],\n              \"Platform\": [platformRecordId],\n              \"PlatformName\": \"linkedin\",\n              \"Content Title\": post.text?.substring(0, 100) || '',\n              \"Content\": post.text || '',\n              \"Content URL\": post.url || '',\n              \"Media\": formatMediaForAirtable(mediaUrl), // Format as attachment array\n              \"Media Type\": mediaType, // Capitalized to match Airtable options\n              \"Publish Date\": post.posted_at?.date || new Date().toISOString(),\n              \"Views\": 0,\n              \"Likes\": post.stats?.like || 0,\n              \"Comments\": post.stats?.comments || 0,\n              \"Shares\": post.stats?.reposts || 0,\n              \"Imported At\": new Date().toISOString()\n            };\n          }\n        }\n        break;\n    }\n    \n    if (normalized) {\n      normalizedPosts.push(normalized);\n    }\n  } catch (error) {\n    console.error(`Error processing post for ${platform}:`, error);\n  }\n});\n\nconsole.log(`Normalized ${normalizedPosts.length} posts for ${platform}`);\nreturn normalizedPosts;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1232,
+        352
+      ],
+      "id": "f11f6672-0eb2-46ea-98ce-f35d532618b6",
+      "name": "Normalize Posts",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1440,
+        176
+      ],
+      "id": "e76c3c31-4efe-4457-a470-c97384c037a1",
+      "name": "Batch Posts for DB"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "check-platform",
+              "leftValue": "={{ $json.PlatformName }}",
+              "rightValue": "tiktok",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1632,
+        288
+      ],
+      "id": "b463383e-a800-48ff-8daa-51c905e379fe",
+      "name": "Needs Transcript?"
+    },
+    {
+      "parameters": {
+        "url": "https://api.scrapecreators.com/v1/tiktok/video/transcript",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "={{ $json['Content URL'] }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2032,
+        112
+      ],
+      "id": "bde979fd-814a-41f0-882d-79d9e90ef96a",
+      "name": "Get TikTok Transcript",
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "base": {
+          "__rl": true,
+          "value": "appgaortOLSebDF5Q",
+          "mode": "list",
+          "cachedResultName": "Competitor Watcher (August 15, 2025) (August 15, 2025)",
+          "cachedResultUrl": "https://airtable.com/appgaortOLSebDF5Q"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblj9Oz4A8IS2LG87",
+          "mode": "list",
+          "cachedResultName": "Competitor Contents",
+          "cachedResultUrl": "https://airtable.com/appgaortOLSebDF5Q/tblj9Oz4A8IS2LG87"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Content Url": "={{ $('Needs Transcript?').item.json[\"Content URL\"] }}",
+            "Content Title": "={{ $('Needs Transcript?').item.json[\"Content\"] }}",
+            "Publish Date": "={{ $('Needs Transcript?').item.json[\"Publish Date\"] }}",
+            "Platform": "={{ $('Needs Transcript?').item.json.Platform }}",
+            "Competitor": "={{ $('Needs Transcript?').item.json.Competitor }}",
+            "Media": "={{ $('Needs Transcript?').item.json.Media }}",
+            "MediaType": "={{ $('Needs Transcript?').item.json[\"Media Type\"] }}",
+            "Views": "={{ $('Needs Transcript?').item.json.Views }}",
+            "Likes": "={{ $('Needs Transcript?').item.json.Likes }}",
+            "Comments": "={{ $('Needs Transcript?').item.json.Comments }}",
+            "Shares": "={{ $('Needs Transcript?').item.json.Shares }}",
+            "Transcript": "={{ $('Needs Transcript?').item.json.PlatformName === 'tiktok' ? $('Code').item.json.Transcript : '' }}"
+          },
+          "matchingColumns": [
+            "Content Url"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Content Title",
+              "displayName": "Content Title",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Content Url",
+              "displayName": "Content Url",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Publish Date",
+              "displayName": "Publish Date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Platform",
+              "displayName": "Platform",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Competitor",
+              "displayName": "Competitor",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Media",
+              "displayName": "Media",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "MediaType",
+              "displayName": "MediaType",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Image",
+                  "value": "Image"
+                },
+                {
+                  "name": "Images",
+                  "value": "Images"
+                },
+                {
+                  "name": "Video",
+                  "value": "Video"
+                },
+                {
+                  "name": "Text",
+                  "value": "Text"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Views",
+              "displayName": "Views",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Likes",
+              "displayName": "Likes",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Comments",
+              "displayName": "Comments",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Shares",
+              "displayName": "Shares",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Needs Script",
+              "displayName": "Needs Script",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Transcript",
+              "displayName": "Transcript",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Viral Status",
+              "displayName": "Viral Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Viral",
+                  "value": "Viral"
+                },
+                {
+                  "name": "Trending",
+                  "value": "Trending"
+                },
+                {
+                  "name": "Average",
+                  "value": "Average"
+                },
+                {
+                  "name": "Low",
+                  "value": "Low"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Pattern Extracted",
+              "displayName": "Pattern Extracted",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Repurposed Drafts",
+              "displayName": "Repurposed Drafts",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Days Since Published",
+              "displayName": "Days Since Published",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Is Viral or Trending",
+              "displayName": "Is Viral or Trending",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Pattern Count",
+              "displayName": "Pattern Count",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Repurposed Drafts Count",
+              "displayName": "Repurposed Drafts Count",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Performance Metrics Summary (AI)",
+              "displayName": "Performance Metrics Summary (AI)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Repurpose Suggestion (AI)",
+              "displayName": "Repurpose Suggestion (AI)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        2320,
+        320
+      ],
+      "id": "f490ebed-532a-404f-9f2d-653535fffc3e",
+      "name": "Save to Airtable",
+      "alwaysOutputData": true,
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable - zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        32,
+        -32
+      ],
+      "id": "c6d2aec6-2e08-480e-8037-69fb36a185f6",
+      "name": "Collect All Results"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Replace \"Add Transcript\" with a Code node\nconst items = $input.all();\n\nreturn items.map(item => {\n  const transcript = item.json.transcript || '';\n  \n  // Clean WEBVTT format if present\n  let cleanTranscript = transcript;\n  if (transcript.startsWith('WEBVTT')) {\n    // Remove WEBVTT header and timestamps\n    cleanTranscript = transcript\n      .split('\\n')\n      .filter(line => !line.startsWith('WEBVTT') && !line.includes('-->') && line.trim() !== '')\n      .join(' ')\n      .replace(/\\s+/g, ' ')\n      .trim();\n  }\n  \n  return {\n    json: {\n      ...item.json,  // Preserve ALL existing fields\n      Transcript: cleanTranscript  // Add cleaned transcript\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2192,
+        112
+      ],
+      "id": "172e54a0-7105-4252-a785-755817ce8ed4",
+      "name": "Code"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1856,
+        192
+      ],
+      "id": "1d5d26b4-7eb3-4b71-a231-130d96b4b07c",
+      "name": "Wait",
+      "webhookId": "9448f78a-4536-4865-861f-2002efb6a284"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "314705cc-7eee-4b66-b56f-9476ddcf99dc",
+      "name": "Loop each viral content",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -80,
+        832
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "base": {
+          "__rl": true,
+          "value": "appgaortOLSebDF5Q",
+          "mode": "list",
+          "cachedResultName": "Competitor Watcher"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblKCJR4R0F546AKD",
+          "mode": "list",
+          "cachedResultName": "Patterns",
+          "cachedResultUrl": "https://airtable.com/appgaortOLSebDF5Q/tblKCJR4R0F546AKD"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Viral Indicator": "={{ $('Structure Patterns').item.json.is_viral }}",
+            "Pattern Name": "={{ $('Structure Patterns').item.json.pattern_name }}",
+            "Description": "={{ $('Structure Patterns').item.json.description }}",
+            "Competitor Content Sources": "=[\"{{ $('Structure Patterns').item.json.post_id }}\"]",
+            "Platform": "=[\"{{ $('Structure Patterns').item.json.platform }}\"]",
+            "Emotions Evoked": "={{ $('Structure Patterns').item.json.emotions_evoked }}",
+            "Hook Type": "={{ $('Structure Patterns').item.json.hook_type }}",
+            "Hook Example": "={{ $('Structure Patterns').item.json.hook_example }}",
+            "Body Structure": "={{ $('Structure Patterns').item.json.body_structure }}",
+            "CTA Type": "={{ $('Structure Patterns').item.json.cta_type }}",
+            "CTA Example": "={{ $('Structure Patterns').item.json.cta_example }}",
+            "Visual Elements": "={{ $('Structure Patterns').item.json.visual_elements }}",
+            "Performance Summary": "={{ $('Structure Patterns').item.json.viral_factors }}",
+            "Psychological Triggers": "={{ $('Structure Patterns').item.json.psychological_triggers }}",
+            "Viral Factors": "={{ $('Structure Patterns').item.json.viral_factors }}",
+            "Optimization Notes": "={{ $('Structure Patterns').item.json.optimization_notes }}"
+          },
+          "matchingColumns": [
+            "Pattern Name"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Pattern Name",
+              "displayName": "Pattern Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Viral Factors",
+              "displayName": "Viral Factors",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Visual Elements",
+              "displayName": "Visual Elements",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Hook Type",
+              "displayName": "Hook Type",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Hook Example",
+              "displayName": "Hook Example",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Body Structure",
+              "displayName": "Body Structure",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "CTA Type",
+              "displayName": "CTA Type",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "CTA Example",
+              "displayName": "CTA Example",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Emotions Evoked",
+              "displayName": "Emotions Evoked",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Psychological Triggers",
+              "displayName": "Psychological Triggers",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Optimization Notes",
+              "displayName": "Optimization Notes",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Competitor Content Sources",
+              "displayName": "Competitor Content Sources",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Performance Summary",
+              "displayName": "Performance Summary",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Platform",
+              "displayName": "Platform",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Viral Indicator",
+              "displayName": "Viral Indicator",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "# of Viral Contents",
+              "displayName": "# of Viral Contents",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Total Content Sources",
+              "displayName": "Total Content Sources",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Platform Name (Lookup)",
+              "displayName": "Platform Name (Lookup)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Pattern Category",
+              "displayName": "Pattern Category",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Pattern Repurposing Suggestions",
+              "displayName": "Pattern Repurposing Suggestions",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Repurposed Drafts",
+              "displayName": "Repurposed Drafts",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "21e64254-7bac-4818-9596-7b01e013c5f2",
+      "name": "Upsert Pattern",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        1280,
+        1168
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable - zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Pattern Analysis",
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -768,
+        688
+      ],
+      "id": "4b17fb49-5137-47c3-b585-786a1d251af1",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Collect Content\n",
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -736,
+        -16
+      ],
+      "id": "a5225e2c-b0cf-4b30-8895-0333aac6e9ed",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Add Platform and Competitor Names\nconst posts = $input.all();\nconst enrichedPosts = [];\n\nfor (const item of posts) {\n  const post = item.json;\n  \n  // Initialize enriched post with original data\n  let enrichedPost = { ...post };\n  \n  // Extract platform record ID\n  const platformId = Array.isArray(post.Platform) \n    ? post.Platform[0] \n    : post.Platform;\n    \n  // Extract competitor record ID\n  const competitorId = Array.isArray(post.Competitor) \n    ? post.Competitor[0] \n    : post.Competitor;\n  \n  // Set platform name based on ID (you'd need to maintain this mapping)\n  // Or fetch it with another Airtable node\n  const platformMap = {\n    'recuA14LKBGSnQdjs': 'Twitter',\n    'reczTx5Jkw3lk19lk': 'LinkedIn',\n    'recqbyAG8LYGlTLVe': 'TikTok'\n  };\n  \n  enrichedPost.PlatformName = platformMap[platformId] || 'Unknown';\n  enrichedPost.PlatformRecordId = platformId;\n  \n  enrichedPosts.push({ json: enrichedPost });\n}\n\nreturn enrichedPosts;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -240,
+        832
+      ],
+      "id": "f567aff4-90e0-4361-8723-15a91ee52ca3",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "chatModel": "gpt-4.1-mini",
+        "prompt": {
+          "messages": [
+            {
+              "content": "=Analyze this {{ $json.Platform }} post:\n\n**Content:** {{ $json['Content Title'] || 'No content available' }}\n\n**Metrics:**\n- Views: {{ $json.Views || 0 }}\n- Likes: {{ $json.Likes || 0 }}\n- Comments: {{ $json.Comments || 0 }}\n- Shares: {{ $json.Shares || 0 }}\n- Engagement Rate: {{ $json['Engagement Rate'] || ((($json.Likes + $json.Comments + $json.Shares) / $json.Views * 100).toFixed(2)) }}%\n\n**Additional Context:**\n- Category: {{ $json.Category || 'General' }}\n- Posted: {{ $json['Publish Date'] || $json.Date || 'Unknown' }}\n\nIdentify the viral pattern and provide detailed analysis."
+            },
+            {
+              "role": "system",
+              "content": "=You are an expert viral content analyst specializing in social media patterns. Analyze posts from any platform and identify the viral patterns that make them successful.\n\nPLATFORM-SPECIFIC VIRAL THRESHOLDS:\n- Twitter/X: 25,000+ views = viral\n- LinkedIn: 500+ engagements (likes + comments + shares) = viral (use as proxy since views/impressions are often unavailable publicly; alternatively, 50,000+ impressions if accessible)\n- TikTok: 250,000+ views = viral\n- Instagram: 50,000+ views = viral\n\nFor LinkedIn posts without view data:\n- Calculate \"engagement score\" = likes + comments + shares\n- 500+ engagement score = likely viral\n- 100-499 = trending engagement\n- <100 = standard engagement\n\nVIRALITY CONFIDENCE MAPPING (MUST USE EXACTLY THESE VALUES):\n- If metrics exceed platform viral threshold: \"Viral\"\n- If metrics are 50-99% of viral threshold: \"Trending\" \n- If metrics are 10-49% of viral threshold: \"Average\"\n- If metrics are below 10% of viral threshold: \"Low\"\n\nYour analysis should identify:\n1. The core pattern that drives virality\n2. Psychological triggers and emotions\n3. Content structure and format\n4. Platform-specific success factors\n\nReturn a JSON object with this EXACT structure:\n{\n  \"pattern_name\": \"A concise, memorable name for this pattern (e.g., 'Controversy Hook + Data Story')\",\n  \"description\": \"Clear explanation of how this pattern creates virality (2-3 sentences)\",\n  \"hook_type\": \"Type of opening hook (e.g., Question, Statistic, Bold Claim, Story, Challenge, Tutorial, Announcement, Controversy, etc.)\",\n  \"hook_example\": \"The actual opening text/description (first 100-150 characters)\",\n  \"body_structure\": \"How the content is structured (e.g., Thread, List, Narrative, Tutorial Steps, Before/After, etc.)\",\n  \"cta_type\": \"Type of call-to-action (e.g., Follow Ask, Share Request, Comment Prompt, Link Click, Save Reminder, No CTA, etc.)\",\n  \"cta_example\": \"The actual CTA text if present\",\n  \"emotions_evoked\": [\"List primary emotions: Curiosity, FOMO, Anger, Joy, Surprise, Pride, Fear, Inspiration, etc.\"],\n  \"psychological_triggers\": [\"List key triggers: Social Proof, Authority, Scarcity, Reciprocity, Consistency, Liking, Unity, Curiosity Gap, Loss Aversion, etc.\"],\n  \"visual_elements\": [\"List visual/format elements: Images, Videos, Emojis, Charts, Screenshots, Text Overlay, Carousel, etc.\"],\n  \"viral_factors\": \"Explain why this specific post went viral (2-3 key reasons)\",\n  \"optimization_notes\": \"Actionable tips to replicate or improve this pattern\",\n  \"pattern_category\": \"Content category (e.g., Educational, Entertainment, Inspirational, News/Trending, Personal Story, How-to, Opinion, etc.)\",\n  \"platform_specific_insights\": {\n    \"key_success_factor\": \"The #1 reason this worked on this specific platform\",\n    \"audience_alignment\": \"How it matches this platform's audience expectations\",\n    \"algorithm_optimization\": \"How it leverages the platform's algorithm\"\n  },\n  \"metrics_analysis\": {\n    \"engagement_rate\": \"Calculate: (likes + comments + shares) / views * 100\",\n    \"viral_score\": \"Rate 0-100 based on platform threshold\",\n    \"virality_confidence\": \"MUST be exactly one of these four strings: 'Viral', 'Trending', 'Average', 'Low' - NO OTHER VALUES ALLOWED\"\n  }\n}\n\nCRITICAL: The virality_confidence field MUST contain EXACTLY one of these four strings with exact capitalization: \"Viral\", \"Trending\", \"Average\", \"Low\". Any other value will cause system failure."
+            }
+          ]
+        },
+        "options": {},
+        "requestOptions": {}
+      },
+      "id": "2779f4aa-abee-4c9a-9108-4dcaae445ee4",
+      "name": "AI Pattern Analysis (Universal)",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1.1,
+      "position": [
+        144,
+        960
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appgaortOLSebDF5Q",
+          "mode": "list",
+          "cachedResultName": "Competitor Watcher (August 15, 2025) (August 15, 2025)",
+          "cachedResultUrl": "https://airtable.com/appgaortOLSebDF5Q"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblj9Oz4A8IS2LG87",
+          "mode": "list",
+          "cachedResultName": "Competitor Contents",
+          "cachedResultUrl": "https://airtable.com/appgaortOLSebDF5Q/tblj9Oz4A8IS2LG87"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Structure Patterns').item.json.post_id }}",
+            "Viral Status": "={{ $('Structure Patterns').item.json.virality_confidence }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Content Title",
+              "displayName": "Content Title",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Content Url",
+              "displayName": "Content Url",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Publish Date",
+              "displayName": "Publish Date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Platform",
+              "displayName": "Platform",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Competitor",
+              "displayName": "Competitor",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Media",
+              "displayName": "Media",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "MediaType",
+              "displayName": "MediaType",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Image",
+                  "value": "Image"
+                },
+                {
+                  "name": "Images",
+                  "value": "Images"
+                },
+                {
+                  "name": "Video",
+                  "value": "Video"
+                },
+                {
+                  "name": "Text",
+                  "value": "Text"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Views",
+              "displayName": "Views",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Likes",
+              "displayName": "Likes",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Comments",
+              "displayName": "Comments",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Shares",
+              "displayName": "Shares",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Needs Script",
+              "displayName": "Needs Script",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Transcript",
+              "displayName": "Transcript",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Analyzed",
+              "displayName": "Analyzed",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Mine",
+              "displayName": "Mine",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Viral Status",
+              "displayName": "Viral Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Viral",
+                  "value": "Viral"
+                },
+                {
+                  "name": "Trending",
+                  "value": "Trending"
+                },
+                {
+                  "name": "Average",
+                  "value": "Average"
+                },
+                {
+                  "name": "Low",
+                  "value": "Low"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Pattern Extracted",
+              "displayName": "Pattern Extracted",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Repurposed Drafts",
+              "displayName": "Repurposed Drafts",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Days Since Published",
+              "displayName": "Days Since Published",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Is Viral or Trending",
+              "displayName": "Is Viral or Trending",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Pattern Count",
+              "displayName": "Pattern Count",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Repurposed Drafts Count",
+              "displayName": "Repurposed Drafts Count",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Performance Metrics Summary (AI)",
+              "displayName": "Performance Metrics Summary (AI)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Repurpose Suggestion (AI)",
+              "displayName": "Repurpose Suggestion (AI)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        384,
+        880
+      ],
+      "id": "fe052e54-0d92-468b-8bf3-8948ceccf6ac",
+      "name": "Update Content Virality",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable - zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appgaortOLSebDF5Q",
+          "mode": "list",
+          "cachedResultName": "Competitor Watcher (August 15, 2025) (August 15, 2025)",
+          "cachedResultUrl": "https://airtable.com/appgaortOLSebDF5Q"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblKCJR4R0F546AKD",
+          "mode": "list",
+          "cachedResultName": "Patterns",
+          "cachedResultUrl": "https://airtable.com/appgaortOLSebDF5Q/tblKCJR4R0F546AKD"
+        },
+        "filterByFormula": "=({Platform} = '{{ $json.platformName }}')",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        464,
+        1008
+      ],
+      "id": "f33a81cc-fa5f-4053-8af4-a3fbeb1c7d4d",
+      "name": "Search records",
+      "alwaysOutputData": true,
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable - zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Check Pattern Uniqueness",
+        "width": 260,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        464,
+        1168
+      ],
+      "id": "18e6d29f-433d-4b3a-be99-622a6af4175b",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Process and structure the AI analysis with original post data\nconst post = $(\"Loop each viral content\").item.json;\n// Process and structure the AI analysis with original post data\nconst input = $input.item.json;\nlet analysis = {};\nif (input.message?.content) {\n  try {\n    analysis = JSON.parse(input.message.content);\n  } catch (e) {\n    console.log('Failed to parse AI response:', e);\n    analysis = {};\n  }\n}\nconsole.log(\"analysis\", analysis)\n// Calculate additional metrics\nconst views = parseInt(post.Views) || 0;\nconst likes = parseInt(post.Likes) || 0;\nconst comments = parseInt(post.Comments) || 0;\nconst shares = parseInt(post.Shares) || 0;\nconst engagementRate = parseFloat(post['Engagement Rate']) ||\n  ((likes + comments + shares) / views * 100);\n// Calculate viral score based on platform\nlet viralScore = 0;\nlet isViral = false;\nswitch(post.PlatformName) {\n  case 'Twitter':\n    viralScore = Math.min(100, (views / 100000) * 100);\n    isViral = views > 100000;\n    break;\n  case 'LinkedIn':\n    viralScore = Math.min(100, (views / 50000) * 100);\n    isViral = views > 50000;\n    break;\n  case 'TikTok':\n    viralScore = Math.min(100, (views / 1000000) * 100);\n    isViral = views > 1000000;\n    break;\n  case 'Instagram':\n    viralScore = Math.min(100, (views / 200000) * 100);\n    isViral = views > 200000;\n    break;\n  default:\n    viralScore = Math.min(100, (views / 100000) * 100);\n    isViral = views > 100000;\n}\n// Create structured output\nreturn {\n  // Post identification\n  post_id: post['Post ID'] || post.id,\n  platform: post.Platform,\n  platformName: post.PlatformName,\n  account: post.Account,\n  url: post['Post URL'] || post.url,\n  created_date: post['Created Date'],\n \n  // Content data\n  content: post.Content,\n  hashtags: post.Hashtags,\n  category: post.Category || analysis.pattern_category,\n \n  // Raw metrics\n  views: views,\n  likes: likes,\n  comments: comments,\n  shares: shares,\n  engagement_rate: engagementRate.toFixed(2),\n \n  // Pattern analysis from AI\n  pattern_name: analysis.pattern_name || `${post.Platform} Pattern`,\n  description: analysis.description || '',\n  hook_type: analysis.hook_type || 'Unknown',\n  hook_example: analysis.hook_example || post.Content?.substring(0, 100),\n  body_structure: analysis.body_structure || '',\n  cta_type: analysis.cta_type || 'None',\n  cta_example: analysis.cta_example || '',\n \n  // Psychological elements (now as strings)\n  emotions_evoked: Array.isArray(analysis.emotions_evoked)\n    ? analysis.emotions_evoked.join(' / ')\n    : '',\n  psychological_triggers: Array.isArray(analysis.psychological_triggers)\n    ? analysis.psychological_triggers.join(' / ')\n    : '',\n  visual_elements: Array.isArray(analysis.visual_elements)\n    ? analysis.visual_elements.join(' / ')\n    : '',\n \n  // Insights\n  viral_factors: analysis.viral_factors || '',\n  optimization_notes: analysis.optimization_notes || '',\n  pattern_category: analysis.pattern_category || post.Category || 'General',\n \n  // Platform specific\n  platform_insights: analysis.platform_specific_insights || {},\n \n  // Calculated metrics\n  viral_score: viralScore.toFixed(0),\n  is_viral: isViral,\n  virality_confidence: analysis.virality_confidence,\n  share_ratio: ((shares / likes) * 100).toFixed(2),\n  comment_ratio: ((comments / likes) * 100).toFixed(2),\n \n  // Performance tier\n  performance_tier: isViral ? 'Viral' : engagementRate > 10 ? 'High Engagement' : 'Standard',\n \n  // For aggregation\n  pattern_key: `${analysis.hook_type || 'unknown'}-${post.Platform}-${analysis.pattern_category || 'general'}`.toLowerCase().replace(/[^a-z0-9-]/g, '')\n};"
+      },
+      "id": "6b3f1f40-f403-4a58-8028-8c46efc71457",
+      "name": "Structure Patterns",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        304,
+        1008
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Aggregate multiple Airtable records for AI comparison\nconst records = $input.all().map(item => item.json); // Get all input records\n\n// Structure each record into a simplified object for AI\nconst organizedPatterns = records.map(record => ({\n  id: record.id,\n  pattern_name: record[\"Pattern Name\"] || 'Unknown',\n  description: record.Description || '',\n  hook_type: record[\"Hook Type\"] || '',\n  hook_example: record[\"Hook Example\"] || '',\n  body_structure: record[\"Body Structure\"] || '',\n  cta_type: record[\"CTA Type\"] || '',\n  cta_example: record[\"CTA Example\"] || '',\n  emotions_evoked: record[\"Emotions Evoked\"] ? record[\"Emotions Evoked\"].split(' / ').map(e => e.trim()) : [],\n  psychological_triggers: record[\"Psychological Triggers\"] ? record[\"Psychological Triggers\"].split(' / ').map(t => t.trim()) : [],\n  visual_elements: record[\"Visual Elements\"] ? record[\"Visual Elements\"].split(' / ').map(v => v.trim()) : [],\n  viral_factors: record[\"Viral Factors\"] || '',\n  pattern_category: record[\"Pattern Category\"]?.value || record[\"Pattern Category\"] || 'General',\n  platform: record[\"Platform Name (Lookup)\"]?.[0] || 'Unknown'\n}));\n\nconsole.log(\"patterns\", organizedPatterns)\nconst newPattern = $(\"Structure Patterns\").first().json;\nconsole.log(\"new pattern\", newPattern);\nreturn [{\n  json: {\n    new_pattern: newPattern,\n    patterns: organizedPatterns,\n    prompt_summary: `New Pattern:\\n${JSON.stringify(newPattern, null, 2)}\\n\\nExisting Patterns:\\n${JSON.stringify(organizedPatterns, null, 2)}`\n }\n}]"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        624,
+        1008
+      ],
+      "id": "97632f7e-4742-403d-ac51-2a9429a15242",
+      "name": "Code2"
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "chatModel": "gpt-4.1-mini",
+        "prompt": {
+          "messages": [
+            {
+              "role": "system",
+              "content": "=You are a deduplication expert. Given a new pattern and a list of existing patterns, find if any existing one is semantically similar (>80% match in description, hook_type, emotions, triggers). Return the most similar pattern's ID (post_id) if match, else null.\n\n:{{ $json.prompt_summary }}\n\n\nOutput JSON:\n{\n  \"action\": \"update\" or \"create\",\n  \"matching_id\": \"existing post_id if update, else null\",\n  \"similarity_score\": 0-100\n}"
+            }
+          ]
+        },
+        "options": {
+          "temperature": 0.3
+        },
+        "requestOptions": {}
+      },
+      "id": "763cbdff-042d-4c47-a544-ce09d25c0712",
+      "name": "Pattern Uniqueness Check",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1.1,
+      "position": [
+        784,
+        1008
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process the AI response\nconst aiResponse = $input.first().json.message.content; // Get the content string from the AI response\n\n// Parse the JSON (assuming it's already valid JSON without line breaks)\nlet responseData;\ntry {\n  responseData = JSON.parse(aiResponse.replace(/\\n/g, '')); // Remove line breaks and parse\n} catch (e) {\n  console.log('Failed to parse AI response:', e);\n  return [{ should_update: false }]; // Return array with false if parsing fails\n}\n\n// Check if action is \"update\" (return true), else false\nconst shouldCreate = responseData.action === \"create\";\nconst shouldUpdate = responseData.action === \"update\";\n\n// Return an array with the boolean and optionally the matching_id\nreturn [{\n  should_create: shouldCreate,\n  should_update: shouldUpdate,\n  matching_id: responseData.action === \"update\" ? responseData.matching_id : null\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        960,
+        1008
+      ],
+      "id": "6b3b70d2-7fc7-4e35-bdbd-6841a2b1b14c",
+      "name": "Code3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ce0ff913-b05c-4126-99db-fcc563aa7ad7",
+              "leftValue": "={{ $json.should_create }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1136,
+        1008
+      ],
+      "id": "264af7d5-ea70-4c47-9f55-be2fa0238c7c",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appgaortOLSebDF5Q",
+          "mode": "list",
+          "cachedResultName": "Competitor Watcher",
+          "cachedResultUrl": "https://airtable.com/appgaortOLSebDF5Q"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblj9Oz4A8IS2LG87",
+          "mode": "list",
+          "cachedResultName": "Competitor Contents",
+          "cachedResultUrl": "https://airtable.com/appgaortOLSebDF5Q/tblj9Oz4A8IS2LG87"
+        },
+        "filterByFormula": "OR({Analyzed} = BLANK())",
+        "options": {}
+      },
+      "id": "421b072b-f230-4554-9c34-76f524c3b20b",
+      "name": "Get Posts",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        -400,
+        832
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable - zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "094acbf0-2466-44d9-a0c3-e02f9ced4fc2",
+              "name": "Outcome",
+              "value": "Finished",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        144,
+        736
+      ],
+      "id": "306aec1a-abfd-4f80-833d-0883d7c96f57",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 19
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -736,
+        160
+      ],
+      "id": "4ceed453-a1d3-424b-b980-0711e6866802",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -720,
+        832
+      ],
+      "id": "82deb731-0dca-4fef-ab90-06b44f632725",
+      "name": "Schedule Trigger1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "eafbe44d-f811-4660-9f89-0ebe61febdcc",
+              "name": "key_takeaways",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1792,
+        4592
+      ],
+      "id": "071473e3-9612-466f-8d1b-5dd87f1ea4e7",
+      "name": "Set Key Takeaways"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Create Key Takeaways using:\n\n- **Optimized Title**: {{ $('Set Post New Title').item.json.new_title }}\nPrimary Keyword: {{ $('Loop Over Items1').item.json['OG:Keywords'] }}\nTitle: {{ $('Loop Over Items1').item.json['OG:Title'] }}\nSearch intent: {{ $('Set Post KWs and Insights').item.json.search_intent }}\nSemantic analysis: {{ $('Set Post KWs and Insights').item.json.semantic_analysis }}\nSecondary keywords: {{ $('Set Post KWs and Insights').item.json.keywords }}\nWriting style: {{ $('Set Post KWs and Insights').item.json.writing_style }}\nWriting tone: {{ $('Set Post KWs and Insights').item.json.writing_tone }}\nArticle goal: {{ $('Set Post KWs and Insights').item.json.article_goal }}",
+        "options": {
+          "systemMessage": "You are an expert content strategist specializing in crafting structured, insightful, and engaging **key takeaways** for articles. Your goal is to summarize the most important information while ensuring the takeaways are **concise, impactful, and easy to digest**.\n\n### **Your Task:**\n1. **Generate an introductory paragraph** that sets up the key takeaways and provides context for the reader.\n2. **Extract the most valuable takeaways** from the provided data:\n   - **Key concepts** covered in the article.\n   - **Relevant semantic subtopics** that align with the topic.\n   - **Hidden insights** (if applicable) that add unique value.\n3. **Format each takeaway in Markdown** as:\n[Action-driven bolded heading]: Concise explanation inline.\n- The **bolded heading** should be **engaging and impactful** (not generic).  \n- The **explanation should be concise and inline with the heading**.  \n- **No section headers, extra spaces, or dividers**.  \n4. **Ensure takeaways provide substantial knowledge** but are not overwhelming:\n- If the **hidden insight** adds value, incorporate it as a **dedicated takeaway** or **enhance an existing one**.\n- If the **hidden insight does not fit naturally**, exclude it.\n5. **Write an outro paragraph** that smoothly leads into the main body of the article.\n\n### **Formatting & Style Guidelines**\n✅ **Use Markdown for formatting**  \n✅ **Bullet points with inline bolded headings**  \n✅ **No extra section headers, dividers, or spaces**  \n✅ **Use engaging, action-driven takeaway headers** (e.g., \"Beyond fixed rules: AI adapts in real time\" instead of \"A paradigm shift from traditional automation\")  \n✅ **Ensure takeaways are concise yet informative**  \n\n### **Example Inputs & Outputs**\n---\n#### **Input Example**\n**Article Title:** `\"AI Automation for Small Businesses: How to Save Time & Boost Revenue\"`  \n**Primary Keyword:** `\"AI automation for small businesses\"`  \n**Hidden Insight:** `\"Most AI automation content focuses on efficiency, but a major benefit is reducing decision fatigue.\"`  \n**Common Subtopics:** `[\"What is AI automation?\", \"How small businesses can use AI\", \"Best AI tools for automation\"]`\n\n---\n#### **Output Example**\n```markdown\nAI automation is transforming small businesses by optimizing workflows, improving efficiency, and enhancing decision-making. Below are the key takeaways highlighting its potential.\n\n- **AI enables true autonomy through adaptive learning:** Unlike traditional systems, AI learns and evolves over time, reducing human supervision by refining its decision-making processes independently.  \n- **Beyond fixed rules: AI adapts in real time:** Traditional AI follows static rules, whereas AI-driven automation dynamically adjusts to changing environments, solving complex, unsupervised tasks.  \n- **AI agents optimize complex workflows effortlessly:** These intelligent systems manage intricate processes with greater efficiency, improving operations like customer support, supply chain management, and fraud detection.  \n- **Seamless integration into business operations:** AI integrates with existing systems like CRMs and ERP platforms, allowing businesses to modernize workflows without overhauling infrastructure.  \n- **Scalability without added complexity:** AI systems manage process complexity and expand capabilities, enabling businesses to scale efficiently without requiring proportional increases in resources.  \n- **AI minimizes decision fatigue, maximizing human focus:** By handling routine and complex decisions autonomously, AI reduces cognitive load on human teams, allowing them to focus on high-value tasks.  \n- **AI ensures resilience through continuous optimization:** Through machine learning, AI refines its models over time, ensuring consistent performance even in dynamic and unpredictable environments.  \n- **AI innovation transforming industries:** Sectors like manufacturing, healthcare, and finance leverage AI for predictive maintenance, personalized care, and risk assessment.  \n\nAI-driven automation offers a new frontier for workflow innovation by replacing static rule-based automation with intelligent, adaptive systems. In the sections ahead, we’ll explore its core components, industry applications, and strategies for seamless business integration.\n\nOutput Format:\nReturn the final takeaways in Markdown format, structured as:\n\nIntro paragraph\nBullet points with inline bolded headings and concise explanations\nOutro paragraph\n\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        1504,
+        4592
+      ],
+      "id": "dbe1e50e-e0ec-49ad-b565-10d5d319a720",
+      "name": "Key Takeaways AI Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an expert SEO content writer tasked with creating a comprehensive, well-researched blog post. Use the provided data to craft an engaging, authoritative article that ranks well in search engines while delivering exceptional value to readers.\n\nARTICLE SPECIFICATIONS\nPrimary Keyword: {{ $('Loop Over Items1').item.json['OG:Keywords'] }}\nTitle: {{ $('Set Post New Title').item.json.new_title }}\nOriginal Title Reference: {{ $('Loop Over Items1').item.json['OG:Title'] }}\nTarget Word Count: 2,500-3,500 words\nWriting Tone: {{ $('Set Post KWs and Insights').item.json.writing_tone }}\nWriting Style: {{ $('Set Post KWs and Insights').item.json.writing_style }}\n\nSTRATEGIC FOUNDATION\nSearch Intent\n{{ $('Set Post KWs and Insights').item.json.search_intent }}\nSemantic Context\n{{ $('Set Post KWs and Insights').item.json.semantic_analysis }}\nApplication: Use this semantic framework to ensure comprehensive topic coverage and natural keyword integration.\nArticle Goal\n{{ $('Set Post KWs and Insights').item.json.article_goal }}\n\nKEY CONTENT ELEMENTS\nKey Takeaways\n{{ $('Set Key Takeaways').item.json.key_takeaways }}\nIntegration Strategy: These key takeaways should be woven throughout the article and summarized prominently. Consider featuring them in a highlighted box near the introduction or as a summary section.\nIntroduction Content\n{{ $json.introduction }}\nUsage: Use this as the foundation for your introduction, ensuring you expand it to 150-200 words while incorporating the primary keyword naturally in the first 100 words.\n\nSEO KEYWORD STRATEGY\nPrimary Keyword: {{ $('Loop Over Items1').item.json['OG:Keywords'] }}\nRequired Placements:\n\nH1 (title)\nFirst 100 words of introduction\nAt least 2-3 H2 headings\nMeta description\nURL slug\nConclusion\nMaintain 1-2% keyword density throughout\n\nSecondary Keywords (LSI/Semantic)\n{{ $('Set Post KWs and Insights').item.json.keywords }}\nDistribution:\n\nNaturally integrate throughout all sections\nUse in H2 and H3 subheadings where relevant\nInclude in introduction and conclusion\nSprinkle contextually in body paragraphs\nUse variations and long-tail versions\n\n\nCONTENT STRUCTURE\nUse the provided outline as your structural framework, ensuring all sections flow logically and comprehensively cover the topic.\n\nLATEST INDUSTRY CONTEXT (October 2025)\nIncorporate these cutting-edge developments where relevant:\nAI-Powered Field Agents in Airtable\n\nField Agents: AI-enabled fields that automatically retrieve, analyze, or generate data at the cell level\nInternet Search Capability: Field agents can perform web searches and browse URLs (note credit consumption)\nAI-Suggested Records: New feature for linked record fields using AI to suggest related records based on multiple field contexts\nOmni Integration: Airtable's AI assistant can create field agents using natural language requests\n\nSupported File Types\n\nPDF, DOCX, PPTX, XLSX (coming soon), JPG, PNG, WEBP\nAI can reference and analyze these files directly within field agents\n\nFormula Field AI Assistance\n\n\"Generate formula\" button now available in formula field editor\nNatural language formula creation\n\nField Configuration Best Practices\n\nField agents work on intra-linked (same table) and inter-linked (different tables) records\nConnect multiple fields for better AI context and precise suggestions\nBalance internet search usage with credit consumption\n\n\nWRITING INSTRUCTIONS\nIntroduction (150-200 words)\n✅ Must Include:\n\nBuild upon the provided introduction content: {{ $json.introduction }}\nExpand to 150-200 words with compelling hook addressing reader's pain point\nPrimary keyword ({{ $('Loop Over Items1').item.json['OG:Keywords'] }}) in first 100 words (natural placement)\nClear statement of article coverage\nSet reader expectations\nPreview key takeaways naturally\n\nBody Content (Main Sections)\nFor Each Major Section:\n\nStart with engaging H2 heading containing relevant keywords\nLead with main point or benefit\nProvide 2-3 supporting paragraphs with examples\nInclude practical, actionable steps\nUse smooth transitions between sections\nEnsure key takeaways are addressed throughout\n\nContent Enhancement Requirements:\n\n3-4 Real-World Examples: Practical use cases and scenarios\nStep-by-Step Instructions: Clear, numbered steps for complex processes\nCode Snippets: JavaScript examples for Airtable scripting (where relevant)\nVisual Descriptions: Describe what users should see/do (note screenshot placements)\nPro Tips: Insider knowledge and efficiency hacks\nCommon Pitfalls: Warn about frequent mistakes and solutions\n\nTechnical Accuracy Must Include:\n\nLatest Airtable API documentation references\nCorrect field type formats (string, number, array, boolean)\nField naming consistency importance\nTypecast option for automatic data conversion\nRecord ID requirements for updates\n\nLatest Features to Highlight:\n\nField Agent Configuration:\n\nToggle AI-suggested records\nSelect context fields for better suggestions\nManage internet search settings\nCredit consumption considerations\n\n\nAPI Integration Best Practices:\n\nPOST vs PATCH vs PUT methods for different scenarios\nProper JSON structure for field updates\nHandle different field types (linked records, attachments, multiple select)\nError handling and validation\n\n\nScripting Examples:\n\nFetch and transform external JSON data\nCreate batch record updates\nUse map() for data transformation\nImplement loops for multiple record creation\n\n\n\nConclusion (150-200 words)\n✅ Must Include:\n\nSummarize key takeaways: {{ $('Set Key Takeaways').item.json.key_takeaways }}\nReinforce main benefit/transformation\nClear call-to-action\nInspiring or forward-looking statement\nPrimary keyword ({{ $('Loop Over Items1').item.json['OG:Keywords'] }}) - natural placement\n\n\nVOICE & TONE GUIDELINES\nFor {{ $('Set Post KWs and Insights').item.json.writing_tone }} tone:\n❌ Avoid:\n\n\"One must carefully configure the field parameters...\"\n\"The implementation of said features requires...\"\nOverly formal or academic language\nPassive voice constructions\n\n✅ Use:\n\n\"Here's how you can quickly set up your field parameters...\"\n\"Setting this up takes just a few clicks...\"\nActive, conversational language\nDirect, actionable statements\n\nFor {{ $('Set Post KWs and Insights').item.json.writing_style }} style:\n\nUse active voice: \"Configure the field\" NOT \"The field should be configured\"\nChoose concrete words: \"Save 3 hours per week\" NOT \"Save significant time\"\nKeep sentences under 25 words when possible\nBreak complex ideas into digestible chunks\nUse short paragraphs (3-4 sentences maximum)\n\n\nFORMATTING REQUIREMENTS\nUse Markdown:\n\nClear heading hierarchy: H1 → H2 → H3\nBold for key terms and concepts\nItalics for emphasis (use sparingly)\nBullet points for lists\nNumbered lists for sequential steps\nCode blocks for technical examples\n\nParagraph Structure:\n\nMaximum 3-4 sentences per paragraph\nOne main idea per paragraph\nScannable with clear subheadings\n\n\nDELIVERABLES CHECKLIST\nYour output must include:\n1. SEO Elements\n\n SEO-optimized H1 title: {{ $('Set Post New Title').item.json.new_title }}\n Meta description (155-160 characters with primary keyword: {{ $('Loop Over Items1').item.json['OG:Keywords'] }})\n URL slug suggestion\n\n2. Main Article\n\n Complete article following the structural outline\n 2,500-3,500 words\n All sections fully developed with examples\n Code snippets where applicable\n Pro tips and common pitfalls integrated\n Key takeaways clearly presented\n Introduction based on: {{ $json.introduction }}\n\n3. Supplementary Content\n\n FAQ section (4-6 questions with answers)\n Keyword density report summary\n Suggested internal linking opportunities (5-7 suggestions)\n Image placement recommendations with alt text (6-8 images)\n\n4. Quality Assurance\n\n Primary keyword ({{ $('Loop Over Items1').item.json['OG:Keywords'] }}): 1-2% density, appears in title, intro, 2-3 headings, conclusion\n Secondary keywords ({{ $('Set Post KWs and Insights').item.json.keywords }}) naturally distributed throughout\n No keyword stuffing - all integrations feel natural\n Headers follow proper hierarchy (H1 > H2 > H3)\n All technical information accurate and current (October 2025)\n Code examples functional and tested\n Tone ({{ $('Set Post KWs and Insights').item.json.writing_tone }}) and style ({{ $('Set Post KWs and Insights').item.json.writing_style }}) consistent throughout\n Key takeaways prominently featured\n\n\nQUALITY STANDARDS\nContent Quality\n✅ Provides unique insights not found in competitors\n✅ Includes current October 2025 information\n✅ Offers actionable, practical advice\n✅ Uses clear, accessible language aligned with {{ $('Set Post KWs and Insights').item.json.writing_tone }} tone\n✅ Maintains logical flow between sections\n✅ Answers common questions comprehensively\n✅ Key takeaways clearly communicated\nSEO Optimization\n✅ Primary keyword ({{ $('Loop Over Items1').item.json['OG:Keywords'] }}) placement optimized\n✅ Secondary keywords naturally distributed\n✅ Keyword density 1-2%\n✅ Proper header hierarchy\n✅ Internal linking opportunities identified\n✅ Meta description ready\nEngagement Factors\n✅ Compelling, benefit-driven headlines\n✅ Short paragraphs (3-4 sentences max)\n✅ Scannable content with clear subheadings\n✅ Examples and use cases included\n✅ Clear takeaways in each section\n✅ Strong opening hook and closing CTA\nTechnical Accuracy\n✅ All code examples tested and functional\n✅ API endpoints and methods correct\n✅ Field type specifications accurate\n✅ Best practices aligned with Airtable documentation\n✅ No outdated information or deprecated features\n\nCOMPETITIVE DIFFERENTIATION\nWhat makes this article unique:\n\nAddresses search intent: {{ $('Set Post KWs and Insights').item.json.search_intent }}\nSemantic coverage: {{ $('Set Post KWs and Insights').item.json.semantic_analysis }}\nLatest October 2025 feature updates (Field Agents, Omni integration)\nPractical scripting examples with current APIs\nReal-world use case scenarios\nPerformance optimization tips\nTroubleshooting common issues\nClear key takeaways that provide immediate value\n\nAuthority Building:\n\nReference official Airtable documentation\nCite recent updates and release notes\nInclude technical specifications\nDemonstrate deep platform knowledge\nProvide advanced tips for power users\n\n\nSUCCESS CRITERIA\nThis article should achieve:\n\nArticle Goal: {{ $('Set Post KWs and Insights').item.json.article_goal }}\nSearch Rankings: First page for primary keyword ({{ $('Loop Over Items1').item.json['OG:Keywords'] }}) within 3 months\nUser Engagement: Average time on page 4+ minutes\nConversions: Clear path to next action\nAuthority: Backlink-worthy comprehensive resource\nFreshness: Relevant for 6-12 months with minor updates\n\n\nCRITICAL REMINDERS\n\nStay Current: Reflect Airtable's October 2025 capabilities, especially AI Field Agents and Omni integration\nBalance Depth and Accessibility: Technical but understandable for intermediate users, valuable for advanced users\nPrioritize Practical Value: Every section answers \"How does this help me?\" and \"What do I do with this?\"\nNatural SEO: Keywords flow naturally within valuable content—never forced or repetitive\nKey Takeaways Front and Center: Feature the key takeaways prominently and ensure they're addressed throughout\nBuild from Introduction: Use the provided introduction ({{ $json.introduction }}) as your foundation\nAlign with Article Goal: Ensure everything serves the stated article goal",
+        "options": {
+          "systemMessage": "You are an expert content strategist specializing in structuring articles for clarity, engagement, and SEO effectiveness. Your goal is to generate a **detailed, logical outline** that ensures a smooth reading experience and maximizes content relevance.\n\n### **Your Task:**\n1. **Analyze the provided inputs**, including the article title, primary keyword, key takeaways, semantic analysis, secondary keywords, and hidden insights (if applicable).\n2. **Generate an optimized outline** by:\n   - Structuring the article with a **clear hierarchy of sections**.\n   - Aligning with **SEO best practices** and **user intent**.\n   - Ensuring **logical progression** from start to finish.\n   - Incorporating **hidden insights** if they enhance the content.\n   - **Using secondary keywords and semantic elements (common subtopics & related questions) naturally in headings/subheadings** for SEO.\n3. **Ensure the outline includes:**\n   - **Main sections covering key aspects of the topic**\n   - **Logical sub-sections** that break down complex ideas\n4. **The article title, introduction, and conclusion should be used as references but NOT included in the outline.**\n5. **Format the output in Markdown**:\n   - Use `##` for main sections.\n   - Use `###` for subsections.\n   - Avoid unnecessary headings—keep sections focused and purposeful.\n\n### **Formatting & Style Guidelines**\n✅ **Use Markdown formatting.**  \n✅ **Ensure a logical, structured progression from start to finish.**  \n✅ **Incorporate hidden insights if they enhance the outline.**  \n✅ **Use secondary keywords and semantic elements naturally in headings.**  \n✅ **Exclude the article title, introduction, and conclusion from the final outline.**  \n✅ **Use concise but descriptive section explanations.**  \n\n### **Example Inputs & Outputs**\n---\n#### **Input Example**\n**Article Title:** `\"AI Automation for Small Businesses: How to Save Time & Boost Revenue\"`  \n**Primary Keyword:** `\"AI automation for small businesses\"`  \n**Secondary Keywords:** `[\"AI workflow automation\", \"small business AI tools\", \"automating business operations\"]`  \n**Key Takeaways:** `[\"AI automation reduces decision fatigue.\", \"It improves operational efficiency and workflow management.\", \"Small businesses can implement AI affordably.\"]`  \n**Hidden Insight:** `\"Most discussions on AI automation focus on efficiency, but its real impact is on business adaptability—helping companies pivot faster in changing markets.\"`  \n**Semantic Analysis:**  \n- **Common Subtopics:** `[\"What is AI automation?\", \"How small businesses can use AI\", \"Best AI tools for automation\"]`  \n- **Related Questions:** `[\"What are the best AI automation tools for small businesses?\", \"How does AI improve small business efficiency?\"]`  \n\n---\n#### **Output Example** markdown\n## What is AI Automation?  \n### Understanding AI-powered business automation *(Secondary Keyword Applied)*  \n- Definition of AI automation and its key components.  \n- How AI-powered automation differs from traditional workflow automation.  \n\n### Why small businesses need AI workflow automation *(Semantic & SEO Applied)*  \n- How AI helps small businesses optimize time and improve operations.  \n- Examples of industries benefiting from AI-driven efficiency.  \n\n## Key Benefits of AI in Small Business Operations  \n### Reducing decision fatigue in business owners *(Key Takeaway Applied)*  \n- How AI automation minimizes repetitive decision-making.  \n- Freeing up business owners to focus on strategy and innovation.  \n\n### Boosting efficiency with small business AI tools *(Secondary Keyword Applied)*  \n- The role of AI in automating workflows, customer interactions, and task management.  \n- How automation tools improve productivity.  \n\n### Improving business adaptability with AI *(Hidden Insight Applied)*  \n- How AI enables businesses to pivot quickly in response to market changes.  \n- Case studies on AI-driven adaptability.  \n\n## Implementing AI for Small Business Growth  \n### Choosing the best AI automation tools *(Semantic & SEO Applied)*  \n- Factors to consider when selecting AI-powered solutions.  \n- Overview of top AI tools for small businesses.  \n\n### Automating business operations without disrupting workflows *(Secondary Keyword Applied)*  \n- Best practices for integrating AI seamlessly into existing processes.  \n- How to ensure a smooth transition without disrupting operations.  \n\n\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        1952,
+        4592
+      ],
+      "id": "bf69dfaf-15c6-47fd-9713-6b7a4cd67a4a",
+      "name": "Outline Agent"
+    },
+    {
+      "parameters": {
+        "content": "## 2. Content Planning & Creation\n\n",
+        "height": 488,
+        "width": 1916,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        816,
+        4480
+      ],
+      "id": "e42c351a-7370-4661-b47b-4f9ecd19b02e",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Use the given:\nTitle: {{ $json[\"OG:Title\"] }}\nAnd the SERP Results tool to perform research for the primary keyword, {{ $json[\"OG:Keywords\"] }}. \n\nFormat your response as a JSON object:\nIMPORTANT: Do not include extra text, introduction messages, line breaks \\n, or any additional characters.\nJSON Output\n{\n  \"search_intent\": \"<string: informational | transactional | navigational | commercial>\",\n  \"writing_style\": \"<string: concise and professional | engaging and storytelling | data-driven and technical | etc.>\",\n  \"writing_tone\": \"<string: friendly and conversational | formal and authoritative | persuasive and compelling | etc.>\",\n  \"hidden_insight\": \"<string: unique insight if found, otherwise 'No significant insights detected beyond existing content trends.'>\",\n  \"target_audience\": \"<string: who this article is for, e.g., small business owners, tech enthusiasts, marketers, etc.>\",\n  \"goal_of_article\": \"<string: main objective of the article based on search results and insights>\",\n  \"semantic_analysis\": {\n    \"common_subtopics\": [\n      \"<string: subtopic 1>\",\n      \"<string: subtopic 2>\",\n      \"<string: subtopic 3>\"\n    ],\n    \"related_questions\": [\n      \"<string: question 1>\",\n      \"<string: question 2>\",\n      \"<string: question 3>\"\n    ]\n  },\n  \"keywords\": {\n    \"primary_keyword\": \"<string: main focus keyword>\",\n    \"secondary_keywords\": [\n      \"<string: related keyword 1>\",\n      \"<string: related keyword 2>\",\n      \"<string: related keyword 3>\"\n    ],\n    \"semantic_keywords\": [\n      \"<string: semantic keyword 1>\",\n      \"<string: semantic keyword 2>\",\n      \"<string: semantic keyword 3>\"\n    ],\n    \"long_tail_keywords\": [\n      \"<string: long-tail keyword 1>\",\n      \"<string: long-tail keyword 2>\",\n      \"<string: long-tail keyword 3>\"\n    ]\n  }\n}\n\n\nExample JSON Output with Hidden Insight\n{\n  \"search_intent\": \"informational\",\n  \"writing_style\": \"engaging and storytelling\",\n  \"writing_tone\": \"friendly and conversational\",\n  \"hidden_insight\": \"Most content focuses on efficiency and cost savings, but small business owners struggle with decision fatigue. AI automation is not just a time-saver—it helps reduce stress by eliminating repetitive decisions.\",\n  \"target_audience\": \"small business owners, solopreneurs, and startup founders\",\n  \"goal_of_article\": \"Educate small business owners on how AI automation reduces decision fatigue while increasing efficiency and revenue.\",\n  \"semantic_analysis\": {\n    \"common_subtopics\": [\n      \"What is AI automation?\",\n      \"How small businesses can use AI\",\n      \"Best AI tools for business automation\",\n      \"Cost vs. benefit analysis of AI automation\"\n    ],\n    \"related_questions\": [\n      \"How does AI reduce decision fatigue?\",\n      \"What’s the easiest way for small businesses to start using AI?\",\n      \"Is AI automation worth the cost for small businesses?\"\n    ]\n  },\n  \"keywords\": {\n    \"primary_keyword\": \"AI automation for small businesses\",\n    \"secondary_keywords\": [\n      \"AI-powered automation tools\",\n      \"best AI software for small businesses\",\n      \"workflow automation for entrepreneurs\"\n    ],\n    \"semantic_keywords\": [\n      \"business process automation\",\n      \"machine learning in small business\",\n      \"how AI helps efficiency\"\n    ],\n    \"long_tail_keywords\": [\n      \"how can AI help small businesses save time?\",\n      \"best AI automation tools for startups\",\n      \"AI vs manual workflow optimization\"\n    ]\n  }\n}\n\n\nExample JSON Output No Hidden Insight\n{\n  \"search_intent\": \"commercial\",\n  \"writing_style\": \"concise and professional\",\n  \"writing_tone\": \"informative and trustworthy\",\n  \"hidden_insight\": \"No significant insights detected beyond existing content trends.\",\n  \"target_audience\": \"cycling enthusiasts, winter sport athletes, and outdoor adventurers\",\n  \"goal_of_article\": \"Provide an in-depth comparison of the best winter cycling gear and help cyclists choose the right products based on weather conditions.\",\n  \"semantic_analysis\": {\n    \"common_subtopics\": [\n      \"What to look for in winter cycling gear\",\n      \"Top-rated winter cycling jackets and gloves\",\n      \"How to layer clothing for winter rides\",\n      \"Cycling safety tips for cold-weather conditions\"\n    ],\n    \"related_questions\": [\n      \"What is the warmest winter cycling jacket?\",\n      \"Are insulated cycling gloves worth it?\",\n      \"How do I stay warm on long winter bike rides?\"\n    ]\n  },\n  \"keywords\": {\n    \"primary_keyword\": \"best winter gear for cyclists\",\n    \"secondary_keywords\": [\n      \"winter cycling jackets\",\n      \"best gloves for cold weather cycling\",\n      \"waterproof cycling gear\"\n    ],\n    \"semantic_keywords\": [\n      \"insulated bike clothing\",\n      \"cold-weather cycling apparel\",\n      \"bike safety in winter\"\n    ],\n    \"long_tail_keywords\": [\n      \"how to choose winter cycling gloves?\",\n      \"best winter cycling gear for long-distance rides\",\n      \"how to keep hands warm while biking in winter\"\n    ]\n  }\n}\n\n",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are an advanced AI content strategist trained to analyze search results and generate precise writing guidelines for an SEO-optimized blog post. Your goal is to ensure that the article aligns with **search intent**, **semantic relevance**, and **audience expectations** while also uncovering **hidden insights** that may provide a unique angle.\n\n### **Your Task:**\nYou will be given:\n- A **working title**\n- An **article description**\n- A **primary keyword**\n- A **set of search results** (retrieved via the Tavily search results tool)\n\nYour job is to analyze the data and generate **optimized writing guidelines** with the following structured JSON output:\n\n### **1️⃣ Search Intent Detection**  \nDetermine whether the primary intent of the keyword is:  \n- **informational** (learning about a topic)  \n- **transactional** (considering a purchase or service)  \n- **navigational** (finding a specific brand/website)  \n- **commercial** (comparing options before making a decision)  \n\n### **2️⃣ Writing Style & Tone**  \n- Identify the best **writing style** based on search results (e.g., “concise and professional,” “engaging and storytelling,” “data-driven and technical,” etc.).  \n- Identify the **appropriate tone** (e.g., “friendly and conversational,” “formal and authoritative,” “persuasive and compelling,” etc.).  \n\n### **3️⃣ Hidden Insight Extraction**  \n- Analyze **patterns in competitor content** to identify **an insight that is not immediately obvious** but could provide a unique angle.  \n- If no meaningful insight is found, return `\"hidden_insight\": \"No significant insights detected beyond existing content trends.\"`  \n- If an insight is found, clearly explain it.  \n- **Do NOT modify writing style or tone based on the insight**—insights should be separate observations, not tone/style adjustments.  \n\n### **4️⃣ Semantic Analysis (Content Structuring)**  \n- Extract the **common subtopics** frequently covered in top-ranking pages.  \n- Identify **related questions** users ask.  \n\n### **5️⃣ Keyword Extraction**  \n- Categorize keywords based on **how they should be used** later in the workflow.  \n- Format them as follows:  \n  - **Primary Keyword** → The main topic focus.  \n  - **Secondary Keywords** → Variations of the primary keyword that should be used naturally in the content.  \n  - **Semantic Keywords** → Contextually related terms that improve topic relevance.  \n  - **Long-Tail Keywords** → Natural search queries and phrases that match user questions.  \n\n### **Format your response strictly in valid JSON.**\n\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        1488,
+        4112
+      ],
+      "id": "d3d42512-4c54-427f-8bb7-d910f6c5a872",
+      "name": "SERPs, Writing, KWs, Insights",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "content": "## 3. Content Assembly\n\n\n",
+        "height": 424,
+        "width": 1080,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        816,
+        5024
+      ],
+      "id": "d984a5c3-4221-4baa-9497-7d0d60de0ef0",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Perform the final edit on:\n {{ $json.output }}",
+        "options": {
+          "systemMessage": "You are an expert SEO-optimized content final editor.\n\nYour task is to enhance and expand the provided article to near-perfect quality (9.5+/10) while maintaining clarity, logical flow, and readability. The final article should be well-structured, engaging, and adaptable to any topic, including (but not limited to) business, healthcare, technology, education, finance, environmental science, legal, consumer guides, and marketing.\n\n✅ General Refinement Guidelines\n1️⃣ Expand, Don’t Cut\nPreserve all valuable content while adding depth where necessary.\nDo not shorten or remove sections unless redundant or unclear.\nIf something feels incomplete, expand rather than delete it.\n2️⃣ Strengthen Section Transitions for Seamless Flow\nEnsure smooth transitions between sections by adding brief lead-ins before introducing a new concept.\nEach section should naturally build on the previous one—avoiding abrupt shifts.\nImplementation:\nIf a new section introduces a major topic, insert a transition sentence summarizing why the previous section matters.\nExample:\nBefore (Abrupt Shift):\n\"While automation improves efficiency, its true power emerges when integrated with existing systems.\"\nAfter (Smoother Transition):\n\"Efficiency gains are only part of the equation—true business impact comes from seamlessly integrating automation with existing workflows to ensure sustainable improvements.\"\n✅ Ensures smoother flow between ideas.\n\n3️⃣ Diversify Real-World Applications Across More Industries\nDo NOT over-focus on one industry or domain (e.g., AI, tech, or automation).\nWhere applicable, ensure varied examples in fields like:\nHealthcare (diagnostic automation, patient management)\nFinance (risk assessment, fraud detection, portfolio management)\nEducation (personalized learning, curriculum adaptation)\nLegal (contract automation, compliance monitoring)\nMarketing (data-driven campaigns, customer behavior analysis)\nRetail & E-commerce (inventory optimization, demand forecasting)\nConsumer Behavior (product recommendations, pricing strategies)\nEnvironmental Science (climate impact modeling, resource allocation)\nImplementation:\nIf the article lacks industry diversity, add 1–2 additional sector applications.\nExample:\nBefore (Too Narrow):\n\"Predictive analytics is transforming logistics and finance.\"\nAfter (Expanded with More Fields):\n\"Predictive analytics is transforming industries beyond logistics and finance. In healthcare, it enhances diagnostic accuracy; in education, it customizes learning paths; in marketing, it optimizes ad spend by predicting customer behavior.\"\n✅ Expands article relevance to a broader audience.\n\n4️⃣ Strengthen the Conclusion with a Future-Focused Perspective\nAvoid generic wrap-ups—end with a compelling strategic takeaway or challenge.\nEnsure future trends, competitive implications, and thought-provoking insights are included.\nImplementation:\nInstead of simply summarizing, pose a challenge or future opportunity.\nExample:\nBefore (Weak Ending):\n\"The question remains: How will businesses use this technology to redefine operations? The time to act is now.\"\nAfter (More Forward-Thinking):\n\"Looking ahead, businesses that embrace adaptable strategies and data-driven decision-making will lead in an increasingly competitive landscape. Whether through emerging technologies, customer-first innovation, or operational agility, the next era of success will belong to those who can not just adapt—but anticipate change. The real question isn’t if you’ll adopt these advancements—but how effectively you’ll use them to gain a competitive edge.\"\n✅ Leaves the reader with a clear action step or thought-provoking challenge.\n\n\n5️⃣ Expand Instead of Reduce Content\nDO NOT cut content unless it is redundant or weakens clarity.\nIf a section feels too brief or lacks depth, expand it by:\nProviding real-world examples\nAdding practical applications\nElaborating on key insights\nStrengthening data-backed statements\nExample Fix:\nBefore (Overly brief):\n\"Sustainable practices benefit businesses.\"\nAfter (More informative & engaging):\n\"Sustainable practices provide both environmental and financial advantages. Businesses that invest in renewable energy, reduce waste, and optimize resource consumption see long-term cost savings and increased brand loyalty.\"\n\n6. Do not add any commentary on what improvements you made. Just output the refined article.\n7. Do not add dividing lines between sections (\"---\") or any extra spacing or line breaks.\n\nMake every article a 9.5+/10 by refining structure, depth, and industry relevance while keeping it universally applicable across topics."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        1376,
+        5120
+      ],
+      "id": "0b9e294c-53c8-4976-bc66-6d5976a96edd",
+      "name": "Final Edit Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
+      "typeVersion": 1,
+      "position": [
+        1552,
+        4288
+      ],
+      "id": "1f4bc672-4378-44ee-a0ba-12a91d5c9066",
+      "name": "SerpAPI"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1296,
+        4064
+      ],
+      "id": "5c1346c8-505f-42d3-a0b1-a2f6e6f44861",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {
+        "content": "## 5. Blog Publishing",
+        "height": 384,
+        "width": 1648,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        816,
+        5888
+      ],
+      "id": "1be76e52-a55c-47a6-8f50-d9815542ed22",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"title\": \"SEO Research Output\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"search_intent\": {\n      \"type\": \"string\",\n      \"enum\": [\"informational\", \"transactional\", \"navigational\", \"commercial\"]\n    },\n    \"writing_style\": {\n      \"type\": \"string\",\n      \"description\": \"Describes the overall writing style, e.g., engaging and storytelling, data-driven and technical, concise and professional.\"\n    },\n    \"writing_tone\": {\n      \"type\": \"string\",\n      \"description\": \"Defines the tone of the writing, e.g., friendly and conversational, persuasive and compelling, formal and authoritative.\"\n    },\n    \"hidden_insight\": {\n      \"type\": \"string\",\n      \"description\": \"Unique or uncommon insight derived from SERP analysis, or 'No significant insights detected beyond existing content trends.'\"\n    },\n    \"target_audience\": {\n      \"type\": \"string\",\n      \"description\": \"Specifies who the content is meant for, such as marketers, tech enthusiasts, small business owners, etc.\"\n    },\n    \"goal_of_article\": {\n      \"type\": \"string\",\n      \"description\": \"The main objective or purpose of the article based on search intent and SERP analysis.\"\n    },\n    \"semantic_analysis\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"common_subtopics\": {\n          \"type\": \"array\",\n          \"items\": { \"type\": \"string\" },\n          \"minItems\": 1,\n          \"description\": \"List of common subtopics found across top SERP results.\"\n        },\n        \"related_questions\": {\n          \"type\": \"array\",\n          \"items\": { \"type\": \"string\" },\n          \"minItems\": 1,\n          \"description\": \"Common related questions found via SERP or People Also Ask.\"\n        }\n      },\n      \"required\": [\"common_subtopics\", \"related_questions\"]\n    },\n    \"keywords\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"primary_keyword\": {\n          \"type\": \"string\",\n          \"description\": \"The main keyword focus of the article.\"\n        },\n        \"secondary_keywords\": {\n          \"type\": \"array\",\n          \"items\": { \"type\": \"string\" },\n          \"minItems\": 1\n        },\n        \"semantic_keywords\": {\n          \"type\": \"array\",\n          \"items\": { \"type\": \"string\" },\n          \"minItems\": 1\n        },\n        \"long_tail_keywords\": {\n          \"type\": \"array\",\n          \"items\": { \"type\": \"string\" },\n          \"minItems\": 1\n        }\n      },\n      \"required\": [\n        \"primary_keyword\",\n        \"secondary_keywords\",\n        \"semantic_keywords\",\n        \"long_tail_keywords\"\n      ]\n    }\n  },\n  \"required\": [\n    \"search_intent\",\n    \"writing_style\",\n    \"writing_tone\",\n    \"hidden_insight\",\n    \"target_audience\",\n    \"goal_of_article\",\n    \"semantic_analysis\",\n    \"keywords\"\n  ],\n  \"additionalProperties\": false\n}\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1680,
+        4288
+      ],
+      "id": "dbceca42-d720-482a-b2ea-4989d9aa25d5",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1w7vfPU8svocF9a2-R9ziZXt8oYbQCkd2uhc6pGMZtk0",
+          "mode": "list",
+          "cachedResultName": "High-Quality Blog Posts - n8n",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1w7vfPU8svocF9a2-R9ziZXt8oYbQCkd2uhc6pGMZtk0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Posts",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1w7vfPU8svocF9a2-R9ziZXt8oYbQCkd2uhc6pGMZtk0/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "NEW:Title"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1120,
+        4064
+      ],
+      "id": "900bfc59-433b-4f30-8a80-fe0b7bdf1df2",
+      "name": "Get post titles",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "X0gIvAtV706kh5Ga",
+          "name": "Google Sheets zmidloch@z-agency.cz 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1w7vfPU8svocF9a2-R9ziZXt8oYbQCkd2uhc6pGMZtk0",
+          "mode": "list",
+          "cachedResultName": "High-Quality Blog Posts - n8n",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1w7vfPU8svocF9a2-R9ziZXt8oYbQCkd2uhc6pGMZtk0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Posts",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1w7vfPU8svocF9a2-R9ziZXt8oYbQCkd2uhc6pGMZtk0/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "OG:Title"
+          ],
+          "schema": [
+            {
+              "id": "OG:Title",
+              "displayName": "OG:Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "OG:Keywords",
+              "displayName": "OG:Keywords",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "NEW:Title",
+              "displayName": "NEW:Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Article Link",
+              "displayName": "Article Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "SEO:Title",
+              "displayName": "SEO:Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "SEO:Description",
+              "displayName": "SEO:Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "url",
+              "displayName": "url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1472,
+        3936
+      ],
+      "id": "34f58334-d879-44e7-bb53-3cf321a2806d",
+      "name": "Update post titles",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "X0gIvAtV706kh5Ga",
+          "name": "Google Sheets zmidloch@z-agency.cz 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "438738d8-d610-47e3-9ddf-efcfb97d3701",
+              "name": "new_title",
+              "value": "={{ $json.output.revised_title }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1328,
+        4592
+      ],
+      "id": "59dc6191-face-4aa3-a1d6-725b6be75113",
+      "name": "Set Post New Title"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7e444c83-3d2b-4bd3-a23b-6fb5ca68e670",
+              "name": "writing_style",
+              "value": "={{ $json.output.writing_style }}",
+              "type": "string"
+            },
+            {
+              "id": "e16b5d65-587d-49d8-af5d-4ff1930633a8",
+              "name": "writing_tone",
+              "value": "={{ $json.output.writing_tone }}",
+              "type": "string"
+            },
+            {
+              "id": "ab756373-0186-454a-8e98-d5a5f96cba87",
+              "name": "search_intent",
+              "value": "={{ $json.output.search_intent }}",
+              "type": "string"
+            },
+            {
+              "id": "a14b7657-038a-4b08-911d-314336261a0c",
+              "name": "hidden_insight",
+              "value": "={{ $json.output.hidden_insight }}",
+              "type": "string"
+            },
+            {
+              "id": "19ef4221-5a5d-4321-8a07-4e04f5dcaf44",
+              "name": "target_audience",
+              "value": "={{ $json.output.target_audience }}",
+              "type": "string"
+            },
+            {
+              "id": "0ab17e84-4a2e-4df3-b0a3-91e9ce26cb72",
+              "name": "article_goal",
+              "value": "={{ $json.output.goal_of_article }}",
+              "type": "string"
+            },
+            {
+              "id": "84e7f6a4-48b2-43b2-92cc-7e0337311661",
+              "name": "semantic_analysis",
+              "value": "={{ $json.output.semantic_analysis }}",
+              "type": "string"
+            },
+            {
+              "id": "5e943a46-bb03-438d-b6da-2a6ec414f5af",
+              "name": "keywords",
+              "value": "={{ $json.output.keywords }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        896,
+        4592
+      ],
+      "id": "968bfeec-1a63-43f6-ba5d-e10cc8380a8e",
+      "name": "Set Post KWs and Insights"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5b6a40be-b640-4caf-a531-50a45df07be8",
+              "name": "outline",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2240,
+        4592
+      ],
+      "id": "b9494fc8-7fd3-46e0-a453-f7c38f7d7824",
+      "name": "Set Post Outline"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7c282be5-3020-44b9-bf77-61639e3dd763",
+              "name": "main_body",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        928,
+        5120
+      ],
+      "id": "e96eb1cc-edce-41a0-87d9-c5cc2ff846cf",
+      "name": "Set Draft Post"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4d5ae86e-7aec-4a4c-9256-7042d2e32497",
+              "name": "final_post",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1696,
+        5120
+      ],
+      "id": "2fe999e0-8b9b-414b-9f36-4a75fffc5195",
+      "name": "Set Final Post"
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "={{ $('Set Post New Title').item.json.new_title }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1Q4daaJhlyVPGATXHgLYHNorrUO3_L7ie",
+          "mode": "list",
+          "cachedResultName": "High-Quality Blog Posts",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1Q4daaJhlyVPGATXHgLYHNorrUO3_L7ie"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1296,
+        6016
+      ],
+      "id": "d001f241-65a6-458c-9328-a93f666bdc29",
+      "name": "Create Post Folder"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        944,
+        4064
+      ],
+      "id": "62837587-1b3d-4ee8-b172-8e4db4ff7090",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"title\": \"RevisedBlogTitleResponse\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"revised_title\": {\n      \"type\": \"string\",\n      \"description\": \"The improved and SEO-optimized version of the blog post title.\"\n    },\n    \"reasoning\": {\n      \"type\": \"string\",\n      \"description\": \"A brief explanation describing why this revised title was chosen, referencing keywords, search intent, and tone considerations.\"\n    }\n  },\n  \"required\": [\"revised_title\", \"reasoning\"],\n  \"additionalProperties\": false\n}\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1104,
+        4816
+      ],
+      "id": "dcf4d956-9a98-45fe-99ee-e9c939e725b2",
+      "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
+      "typeVersion": 1,
+      "position": [
+        2448,
+        4784
+      ],
+      "id": "a7a2549a-5ee8-4510-9d95-a23c29b01e35",
+      "name": "SerpAPI1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Revise the blog post title. Consider:\nPrimary keywords: {{ $('Loop Over Items1').item.json['OG:Keywords'] }}\nWorking title: {{ $('Loop Over Items1').item.json['OG:Title'] }}\nSearch intent: {{ $('Set Post KWs and Insights').item.json.search_intent }}\nSemantic analysis: {{ $('Set Post KWs and Insights').item.json.semantic_analysis }}\nSecondary keywords: {{ $('Set Post KWs and Insights').item.json.keywords }}\nWriting style: {{ $('Set Post KWs and Insights').item.json.writing_style }}\nWriting tone: {{ $('Set Post KWs and Insights').item.json.writing_tone }}\nArticle goal: {{ $('Set Post KWs and Insights').item.json.article_goal }}\n\n\nOutput only JSON\nIMPORTANT: Do not add extra spaces, extra characters or include any additional text.\n\nOutput only JSON:\n{\n  \"revised_title\": \"string\",\n  \"reasoning\": \"string\"\n}\n",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are an expert in crafting highly engaging, SEO-optimized article titles that drive clicks and rank well in search engines. \n\nYour goal is to refine the **initial working title** into a **clear, compelling, and search-friendly title** that aligns with:\n- **Primary and Secondary Keywords** → Ensure relevance for search engines.\n- **Search Intent** → Match the intent behind the keyword (informational, transactional, navigational, or commercial).\n- **Common Subtopics & Related Questions** → Reflect what users want to learn.\n- **Writing Style & Tone** → Ensure consistency with the article's voice.\n- **Click-Worthiness** → Make the title engaging and appealing for readers.\n\n### **Your Task:**\n1. **Analyze the given input data**, including the working title, primary keyword, and supporting data.\n2. **Refine the title** to be more **SEO-friendly, engaging, and aligned with search intent**.\n3. **Incorporate relevant keywords naturally**, without keyword stuffing.\n4. **Ensure clarity and readability**—avoid overly complex or vague titles.\n5. **Return only the final refined title as a plain text string.**\n\n---\n### **Title Guidelines:**\n- Keep it **between 50-60 characters** (ideal for SEO).\n- Use **power words** or numbers when appropriate (e.g., \"10 Proven Ways,\" \"Ultimate Guide\").\n- Avoid unnecessary words or fluff.\n- Ensure it **reads naturally** and **appeals to human curiosity**.\n\n---\n### **Example Inputs & Outputs:**\n\n#### **Example 1**\n**Working Title:** \"Understanding AI Automation for Businesses\"  \n**Primary Keyword:** \"AI automation for small businesses\"  \n**Search Intent:** Informational  \n**Refined Title Output:** **AI Automation for Small Businesses: How to Save Time & Boost Revenue**\n\n---\n#### **Example 2**\n**Working Title:** \"The Best Winter Gear for Cyclists\"  \n**Primary Keyword:** \"best winter gear for cyclists\"  \n**Search Intent:** Commercial  \n**Refined Title Output:** **Best Winter Cycling Gear: Stay Warm & Ride Safely in Cold Weather**\n\n---\n### **Output Format:**\nReturn the refined title in standard JSON. Do not include triple ''' or extra line breaks or spaces.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        1040,
+        4592
+      ],
+      "id": "04ff6393-2bcc-4c9f-a372-ca043059b65a",
+      "name": "Refine the Title",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Assemble the article from the following components into a single cohesive output formatted in Markdown:\n\n- **Key Takeaways**: {{ $('Set Key Takeaways').item.json.key_takeaways }}\n- **Main Content**: {{ $json.main_body }}\n\n### Output Format:\n- Use `##` for main section headings like Key Takeaways, Introduction, and Conclusion.\n- Use `##` for primary headings (H2s) in the main content.\n- Use `###` for subheadings (H3s) under those primary headings.\n- Format lists as bulleted lists using `-`.\n- Write paragraphs in plain text, separated by line breaks.\n\nExample Output:\n\n## Key Takeaways\n- AI automation reduces costs and improves efficiency for SMBs.\n- Examples show how AI streamlines workflows and enhances customer service.\n- Step-by-step advice helps SMBs adopt AI effectively.\n\n## Introduction\nAI automation is a transformative tool for small businesses, offering improved efficiency, cost reduction, and scalability.\n\n## How Intelligent Process Automation Works\nIntelligent process automation (IPA) isn’t just about speed—it’s about working smarter.\n\n### Reducing Manual Work and Process Errors with Automation\nAutomating manual tasks like payroll processing slashes error rates by up to 90%.\n\n### Boosting Process Efficiency Across Business Functions\nFrom HR to sales, IPA ensures consistency and efficiency.\n\n## Conclusion\nAI automation is a pathway to transforming how small businesses operate and grow. By streamlining workflows, enhancing customer experiences, and enabling smarter decision-making, AI empowers businesses to achieve more with less effort.",
+        "options": {
+          "systemMessage": "You are an expert content assembler. Your task is to take separate elements of an article—key takeaways, introduction, main content (including subheadings), and conclusion—and assemble them into a single cohesive output. The final output should be formatted in Markdown for a CMS blog post field.\n\nGuidelines:\n\n1. Use `##` for section headings (Key Takeaways, Introduction, and Conclusion).\n2. Use `##` for primary headings (H2s) from the main content.\n3. Use `###` for subheadings (H3s) under those primary headings.\n4. Write paragraphs as plain text, separated by line breaks.\n5. Ensure the output is clean and properly formatted in Markdown without unnecessary placeholders like \"Main Content.\"\n6. Do not include triple backticks (''') or any additional spaces or text outside of the conclusion itself.\nEnsure clean and structured formatting without unnecessary dividers or extra line breaks.\n\n\n\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        1088,
+        5120
+      ],
+      "id": "efacce7d-215a-4609-ae66-fa1076ccd61b",
+      "name": "Post Assembly Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an expert content writer with a strong command of clear, structured, and value-driven writing. Your task is to write a high-quality content block based on the inputs provided.\n\n### INPUTS:\n**Block Title:** {{ $('Set Post New Title').item.json.new_title }}\n** Keywords to Include:** {{ $('Get post titles').item.json['OG:Keywords'] }}\n**Outline / Structure to Follow:**  {{ $json.outline }}\n**Key Takeaways (must be reflected in writing):**  {{ $('Set Key Takeaways').item.json.key_takeaways }}\n### SUB-DATA (Use this to guide positioning, depth, and writing style — DO NOT copy directly):\n- **Writing Style:** {{ $('Set Post KWs and Insights').item.json.writing_style }}\n- **Writing Tone:** {{ $('Set Post KWs and Insights').item.json.writing_tone }}\n- **Search Intent:** {{ $('Set Post KWs and Insights').item.json.search_intent }}\n- **Hidden Insight to Highlight:** {{ $('Set Post KWs and Insights').item.json.hidden_insight }}\n- **Target Audience:** {{ $('Set Post KWs and Insights').item.json.target_audience }}\n- **Article Goal:** {{ $('Set Post KWs and Insights').item.json.article_goal }}\n- **Semantic Insights & Related Topics:** {{ $('Set Post KWs and Insights').item.json.semantic_analysis }}\n- **Keyword Strategy & Variations:** {{ $('Set Post KWs and Insights').item.json.keywords }}\n\n\n### INSTRUCTIONS:\n1. Write a well-structured **content block body** that fits the block title and follows the outline strictly.\n2. Incorporate the given keywords **naturally** without keyword stuffing.\n3. Optimize the writing to satisfy the **search intent** and align with the **target audience** and **article goal**.\n4. Infuse the **hidden insight** into the narrative so the piece feels unique and high-authority.\n5. The writing must:\n   - Be original (no copying from the scrubbed data or sub-data).\n   - Be clear, concise, engaging, and written in a professional yet friendly tone.\n   - Provide value, actionable insights, and smooth flow between sections.\n6. Use the SERP scrubbed data only as **supporting reference**, not as direct text.\n7. Ensure the key takeaways are clearly communicated across the block.\n8. Avoid filler, generic language, repetition, and unnecessary fluff.\n9. Add examples, micro-case studies, or short explanations to improve clarity if needed.\n10. Output must be **1–4 paragraphs** (depending on outline length) unless otherwise stated.\n\n### OUTPUT:\nProvide the final **Content Block Body only**, with no preface or explanation.\n",
+        "options": {
+          "systemMessage": "You are an AI writing agent responsible for generating only the main body of an article based on a structured prompt. Your writing must be well-formatted in Markdown, insightful, logically structured, and engaging for the target audience.\n\nGuidelines\n✅ Follow the provided prompt exactly. Ensure adherence to the user-provided outline and structure.\n✅ Format the article in Markdown using:\n\nH2 (##) for main sections\nH3 (###) for subsections\nBullet points (-), numbered lists (1. 2. 3.), and bold formatting (**bold text**) where necessary.\n✅ Ensure smooth transitions between sections.\nEnd sections with a transition sentence that leads into the next topic.\nAvoid abrupt shifts—maintain logical flow.\n✅ Enhance depth with real-world case studies.\nProvide measurable outcomes (e.g., \"A 20% efficiency gain led to $5M in annual savings\").\nDetail implementation challenges, solutions, and business results.\n✅ Balance readability with a mix of paragraphs & lists.\nUse bullet points sparingly—convert them into mini-paragraphs where needed.\nLists should highlight key takeaways, not dominate sections.\n✅ Ensure keyword optimization.\nNaturally integrate primary and secondary keywords within the article.\nAvoid overuse—prioritize readability over keyword stuffing.\n✅ Fact-driven & logically structured.\nAvoid redundant explanations—each section should introduce new insights.\nEnsure distinctions between related topics (e.g., “Managing Complexity” should not repeat “Adaptive Learning”).\n✅ No introduction or conclusion.\nFocus only on the main body sections based on the structured prompt.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        2416,
+        4592
+      ],
+      "id": "b6685dd0-d7ff-4c78-a391-c583e8555a66",
+      "name": "Post Content Writer Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Generate an SEO-optimized meta description for the following article. Ensure it is concise (150–160 characters), engaging, and includes high-impact keywords.\n\n{{ $('Set Final Post').item.json.final_post }}\n\nFormat the output in Markdown as follows:\n\n\nReturn the response in JSON format:\n{\n  \"seo_meta\": {\n    \"title\": \"string\",\n    \"description\": \"string\"\n  }\n}\n\n❌ Do not return anything else besides this JSON output.\n",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are an SEO-optimized Meta Description Generator. Your task is to generate a compelling, keyword-rich meta description for the provided article. The description should be concise, engaging, and optimized for search engines while accurately summarizing the article’s core value.\n\nGuidelines:\n✅ Length: Keep the meta description between 150–160 characters to ensure full visibility in search results.  \n✅ Keyword Optimization: Incorporate primary and secondary keywords naturally, focusing on high-impact phrases relevant to the article.  \n✅ Engagement & Clarity:  \n- Write in an active voice with a clear and compelling hook.  \n- Summarize the key benefit of the article—why should someone read it?  \n- Avoid vague statements—be specific about what the article covers.  \n✅ Call to Action (Optional, but Preferred): Where possible, include a soft CTA to encourage clicks (e.g., “Discover how…”, “Learn the best strategies…”).  \n✅ Formatting:  \nUse Markdown format with an ## Meta Description heading.  \nNo extra spacing or unnecessary formatting—the output should be clean and ready to use.  \n\nExamples:\nBefore (Weak Example):  \n\"This article discusses agentic AI and how it can be used in businesses.\" ❌ Too vague, lacks engagement.\n\nAfter (Optimized Example):  \n## Meta Description  \nUnlock the power of agentic AI automation! Learn how businesses enhance efficiency, decision-making, and scalability with self-evolving AI-driven workflows.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        1072,
+        5584
+      ],
+      "id": "6e236eaa-6fd7-4c56-aaf9-1f3699afebfc",
+      "name": "Post Meta Agent"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"title\": \"SeoMetaSchema\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"seo_meta\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"title\": {\n          \"type\": \"string\",\n          \"description\": \"The SEO-optimized title of the article.\"\n        },\n        \"description\": {\n          \"type\": \"string\",\n          \"description\": \"The SEO-optimized meta description of the article, concise (150-160 characters), engaging, and keyword-rich.\"\n        }\n      },\n      \"required\": [\"title\", \"description\"],\n      \"additionalProperties\": false\n    }\n  },\n  \"required\": [\"seo_meta\"],\n  \"additionalProperties\": false\n}\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1152,
+        5744
+      ],
+      "id": "df81f6fb-a112-4d0f-a273-628b69405728",
+      "name": "Structured Output Parser2"
+    },
+    {
+      "parameters": {
+        "content": "## 4. Content Creation Finalization\n\n",
+        "height": 352,
+        "width": 1104,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        816,
+        5488
+      ],
+      "id": "03194197-3c94-42f7-95e9-1707c502b260",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fb68117e-7039-4cb1-83b2-599cd8edb26c",
+              "name": "title",
+              "value": "={{ $json.output.seo_meta.title }}",
+              "type": "string"
+            },
+            {
+              "id": "fdb707c9-52f4-4e13-bfb7-8fb2a4238e98",
+              "name": "description",
+              "value": "={{ $json.output.seo_meta.description }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1392,
+        5584
+      ],
+      "id": "c186b7e5-ab24-45de-8f28-b03bb67f2e4f",
+      "name": "Set Post Metadata"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "prompt": "=Generate an AI image prompt that visually represents the following article. Ensure the description is detailed, engaging, and optimized for an eye-catching featured image.\n\nTitle: {{ $json.title }}\nDescription: {{ $json.description }}\n",
+        "options": {
+          "dalleQuality": "standard",
+          "size": "1792x1024",
+          "style": "natural",
+          "returnImageUrls": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        1584,
+        5584
+      ],
+      "id": "f451aa42-6a7d-4944-9133-bee393f907bc",
+      "name": "Generate Post Image",
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "99610299-d679-4976-aed5-98653fee7407",
+              "name": "url",
+              "value": "={{ $json.url }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        928,
+        6016
+      ],
+      "id": "ba70fe84-dbb7-408e-8bef-5d8898231cc2",
+      "name": "Set Post Image"
+    },
+    {
+      "parameters": {
+        "folderId": "={{ $json.id }}",
+        "title": "={{ $('Set Post New Title').item.json.new_title }}"
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        1488,
+        6016
+      ],
+      "id": "46270dda-9f0a-43fa-b53b-7cd5539b930d",
+      "name": "Create Post Doc"
+    },
+    {
+      "parameters": {
+        "operation": "share",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.documentId }}",
+          "mode": "id"
+        },
+        "permissionsUi": {
+          "permissionsValues": {
+            "role": "reader",
+            "type": "anyone"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1872,
+        6016
+      ],
+      "id": "427bb535-3ae0-40ea-86e8-9df1ec927819",
+      "name": "Share Post Doc"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b5d2b743-090c-4432-a7e7-c25b2e4bd76f",
+              "name": "url",
+              "value": "=https://docs.google.com/document/d/{{ $('Update a document').item.json.documentId }}/edit",
+              "type": "string"
+            },
+            {
+              "id": "80a98d09-46c0-4008-a255-521a6fc35627",
+              "name": "",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2064,
+        6016
+      ],
+      "id": "e9c77695-8255-40d3-8690-8118ddea4e31",
+      "name": "Set Post Drive"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "62c2e214-dca2-4204-b6c1-c4735ec84e31",
+              "name": "OG:Title",
+              "value": "={{ $('Loop Over Items1').item.json['OG:Title'] }}",
+              "type": "string"
+            },
+            {
+              "id": "cfb65a83-138b-4197-92a8-e970986cc82f",
+              "name": "OG:Keywords",
+              "value": "={{ $('Loop Over Items1').item.json['OG:Keywords'] }}",
+              "type": "string"
+            },
+            {
+              "id": "c1883698-2bbf-4b61-b033-ddab283b7e29",
+              "name": "NEW:Title",
+              "value": "={{ $('Set Post New Title').item.json.new_title }}",
+              "type": "string"
+            },
+            {
+              "id": "59280c34-2899-46c1-b3b1-451400180434",
+              "name": "Article Link",
+              "value": "={{ $json.url }}",
+              "type": "string"
+            },
+            {
+              "id": "4089cebe-7b28-4684-989b-753444133631",
+              "name": "SEO:Title",
+              "value": "={{ $('Set Post Metadata').item.json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "4d87610f-c8d1-4d74-a879-bf3df2404077",
+              "name": "SEO:Description",
+              "value": "={{ $('Set Post Metadata').item.json.description }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2240,
+        6016
+      ],
+      "id": "cd34041b-713e-4e42-be38-cc70d08d2ecd",
+      "name": "Set Sheet Vars"
+    },
+    {
+      "parameters": {
+        "jsCode": "const title = $('Set Post New Title').first().json.new_title\nconst seo_title = $('Set Post Metadata').first().json.title\nconst seo_description = $('Set Post Metadata').first().json.description\nconst image = $('Set Post Image').first().json.url\nconst final_post = $('Set Final Post').first().json.final_post\n\nconst data = `\n## Title: ${title}\n\\n\n*SEO Title:* ${seo_title}\n\\n\n*SEO Description:* ${seo_description}\n\\n\n*Featured Image Link:*\n${image}\n\\n\n*Post Content:*\n${final_post}\n`;\n\n\nreturn {\n  json : {\n    data\n  }\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1104,
+        6016
+      ],
+      "id": "e7d2afac-3b33-421a-a731-b722ac02956c",
+      "name": "Markdown Final Post"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $json.id }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "insert",
+              "text": "={{ $('Markdown Final Post').item.json.data }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        6016
+      ],
+      "id": "44bb4be8-6764-4431-8472-f4f68398fced",
+      "name": "Update a document"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1424,
+        4288
+      ],
+      "id": "f587ff27-76ea-41f4-b5c7-4aa2ce297fcc",
+      "name": "OpenAI Chat Model"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        992,
+        4816
+      ],
+      "id": "ee0cb202-f3a3-4f5a-b4b4-13cce9e3b0de",
+      "name": "OpenAI Chat Model1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1456,
+        4816
+      ],
+      "id": "9973f19e-9dda-465a-bfd6-4a4adb05d58c",
+      "name": "OpenAI Chat Model2"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1920,
+        4816
+      ],
+      "id": "6b0ccb3a-0f96-46e0-b970-d260ab83fdf8",
+      "name": "OpenAI Chat Model3"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        2320,
+        4784
+      ],
+      "id": "891907a0-0705-43d2-82f5-3205a8781c7a",
+      "name": "OpenAI Chat Model4"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1040,
+        5296
+      ],
+      "id": "a86e6c39-3adb-41ca-99d0-743ca39a281e",
+      "name": "OpenAI Chat Model5"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1296,
+        5296
+      ],
+      "id": "64864da9-725d-43b2-ba93-fc9d626fa640",
+      "name": "OpenAI Chat Model6"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1040,
+        5744
+      ],
+      "id": "6d5887b1-88bc-450b-b435-18d02d04fdd3",
+      "name": "OpenAI Chat Model7"
+    },
+    {
+      "parameters": {
+        "content": "## 1. Get researched titles and keywords \n",
+        "height": 592,
+        "width": 1044,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        816,
+        3840
+      ],
+      "id": "bc846c27-cc7a-47c0-b254-fc306d4cb92e",
+      "name": "Sticky Note4"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-09T18:38:43.367Z",
+      "createdAt": "2026-01-09T18:38:43.367Z",
+      "role": "workflow:owner",
+      "workflowId": "nNuomNSjWikxVbN9",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-09T19:49:52.881Z",
+  "versionId": "539b7f51-1d99-4215-8e7b-5fadb3fbd09d"
+}
