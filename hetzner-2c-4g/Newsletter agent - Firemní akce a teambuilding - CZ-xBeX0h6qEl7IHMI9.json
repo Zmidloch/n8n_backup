@@ -512,7 +512,7 @@
       "main": [
         [
           {
-            "node": "Vytvořit koncept",
+            "node": "Code in JavaScript",
             "type": "main",
             "index": 0
           }
@@ -535,6 +535,22 @@
         [
           {
             "node": "Rozdělit témata",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Vytvořit koncept",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request",
             "type": "main",
             "index": 0
           }
@@ -729,7 +745,7 @@
         "text": "=Název: {{ $('Agent pro plánování').item.json.output.title }}\n\nSekce ke zpracování: {{ $json.output.join(\"\\n\\n\\n\") }}\n",
         "hasOutputParser": true,
         "options": {
-          "systemMessage": "=# Přehled\nJsi špičkový seniorní šéfredaktor business magazínu. Tvým úkolem je spojit 5  dodaných sekcí do uceleného newsletteru ve formátu HTML v češtině. Přidej k nim celostní úvod a závěr. Udržuj profesionální a kultivovaný tón pro firemní klientelu.\n\n## Cíle\n- Vyladit čtivost, návaznost textu a konzistenci mezi sekcemi.\n- Celkový rozsah textu musí být maximálně 1000 slov. Vyhni se prázdným frázím.\n\n## Struktura (Pouze HTML)\n1) Úvodní odstavec <p>, který zarámuje všechna tři témata a jejich relevanci; uveď dnešní datum: {{ $now.format('dd. MM. yyyy') }}.\n2) Pro každou sekci:\n   - <h2> Ponech nebo mírně uprav původní nadpis.\n   - Upravený text sekce v <p>.\n   - Inline klikací citace u konkrétních tvrzení pomocí <a href=\"...\">Zdroj</a>.\n3) <h3>Zdroje</h3><ul> Jednotný seznam:\n   - Každá položka: <li><a href=\"[URL]\">[Název publikace] – [Název článku]</a></li>\n   - Uveď plné URL, odstraň duplicity a seřaď podle názvu publikace.\n4) Závěrečný odstavec <p> shrnující přínos firemních akcí s výzvou k akci.\n\n## Pravidla formátování\n- Používej pouze základní HTML tagy (<h2>, <h3>, <p>, <ul>, <li>, <a>). Bez CSS.\n\nOutput Format (return only this)\nSubject: [Předmět e-mailu]\n\nContent:\n[HTML body]"
+          "systemMessage": "=# Přehled\nJsi špičkový seniorní šéfredaktor business magazínu. Tvým úkolem je spojit tři dodané sekce do uceleného newsletteru ve formátu HTML v češtině. Přidej k nim celostní úvod a závěr. Udržuj profesionální a kultivovaný tón pro firemní klientelu.\n\n## Cíle\n- Vyladit čtivost, návaznost textu a konzistenci mezi sekcemi.\n- Celkový rozsah textu musí být maximálně 1000 slov. Vyhni se prázdným frázím.\n\n## Struktura (Pouze HTML)\n1) Úvodní odstavec <p>, který zarámuje všechna pět témat a jejich relevanci; uveď dnešní datum: {{ $now.format('dd. MM. yyyy') }}.\n2) Pro každou sekci:\n   - <h2> Ponech nebo mírně uprav původní nadpis.\n   - Upravený text sekce v <p>.\n   - Inline klikací citace u konkrétních tvrzení pomocí <a href=\"...\">Zdroj</a>.\n3) <h3>Zdroje</h3><ul> Jednotný seznam:\n   - Každá položka: <li><a href=\"[URL]\">[Název publikace] – [Název článku]</a></li>\n   - Uveď plné URL, odstraň duplicity a seřaď podle názvu publikace.\n4) Závěrečný odstavec <p> shrnující přínos firemních akcí s výzvou k akci.\n\n## Pravidla formátování\n- Používej pouze základní HTML tagy (<h2>, <h3>, <p>, <ul>, <li>, <a>). Bez CSS.\n\nOutput Format (return only this)\nSubject: [Předmět e-mailu]\n\nContent:\n{ \"subject\": \"...\", \"content\": \"...\" }"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -767,8 +783,8 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        1760,
-        -64
+        1920,
+        -288
       ],
       "id": "803807d8-5325-466c-90d1-b1755c06652f",
       "name": "Vytvořit koncept",
@@ -797,6 +813,45 @@
       ],
       "id": "b9c360f4-8580-4138-b99d-c9d1f95a05fc",
       "name": "Agent pro plánování"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Tento kód patří do Code nodu v n8n\n// Vstup: items s item.json.output.subject a item.json.output.content\n// Výstup: stejné items, ale content je obalený do HTML šablony ve stylu Z-AGENCY\n\nconst logoUrl = 'https://www.z-agency.cz/Zagency/media/system/img/logo.svg';\n\nfor (let i = 0; i < items.length; i++) {\n  const item = items[i];\n\n  const originalContent =\n    item.json &&\n    item.json.output &&\n    typeof item.json.output.content === 'string'\n      ? item.json.output.content\n      : '';\n\n  const styledContent = `\n<div style=\"font-family: Arial, sans-serif; color: #333; background-color: #FFFFFF; margin:0; padding:0;\">\n  <table align=\"center\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:#f4f4f4; padding: 20px 0;\">\n    <tr>\n      <td>\n        <table align=\"center\" width=\"600\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"background-color:#FFFFFF; border-collapse: collapse;\">\n          <!-- HLAVIČKA S LOGEM -->\n          <tr>\n            <td style=\"padding: 20px; text-align: center; border-bottom: 3px solid #f4b000;\">\n              <a href=\"https://www.z-agency.cz/\" target=\"_blank\" style=\"text-decoration:none;\">\n                <img src=\"${logoUrl}\" alt=\"Z-AGENCY\" style=\"max-width: 200px; height:auto; display:block; margin:0 auto;\">\n              </a>\n            </td>\n          </tr>\n\n          <!-- OBSAH NEWSLETTERU (GENEROVANÝ AI) -->\n          <tr>\n            <td style=\"padding: 24px 24px 16px 24px; color:#333333; font-size:14px; line-height:1.6;\">\n              ${originalContent}\n            </td>\n          </tr>\n\n          <!-- PATIČKA -->\n          <tr>\n            <td style=\"padding: 16px 24px 24px 24px; background-color:#fafafa; border-top: 1px solid #e0e0e0; text-align:center; font-size:12px; color:#777777; line-height:1.4;\">\n              Z-AGENCY s.r.o., Karlova 1054/38, 614 00 Brno, Czech Republic<br>\n              Tel: +420 542 211 935 |\n              Email: <a href=\"mailto:info@z-agency.cz\" style=\"color:#777777; text-decoration:none;\">info@z-agency.cz</a><br><br>\n              <a href=\"https://www.z-agency.cz/\" target=\"_blank\" style=\"color:#f4b000; text-decoration:none; font-weight:bold;\">\n                www.z-agency.cz\n              </a>\n            </td>\n          </tr>\n        </table>\n      </td>\n    </tr>\n  </table>\n</div>`;\n\n  // Přepíšeme jen content, vše ostatní v item.json necháme\n  item.json.output = {\n    ...(item.json.output || {}),\n    content: styledContent,\n  };\n\n  items[i] = item;\n}\n\nreturn items;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1696,
+        -64
+      ],
+      "id": "fb7f516e-c039-44d1-9506-4ebb93daf850",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api2.ecomailapp.cz/campaigns",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"name\": \"={{ 'Newsletter ' + $json.output.subject }}\",\n  \"subject\": \"={{ $json.output.subject }}\",\n  \"from_name\": \"Z-AGENCY\",\n  \"from_email\": \"info@z-agency.cz\",\n  \"reply_to\": \"info@z-agency.cz\",\n  \"list_ids\": [6],\n  \"utm_campaign\": \"={{ $json.output.subject }}\",\n  \"content\": {\n    \"html\": \"={{ $json.output.content }}\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1952,
+        176
+      ],
+      "id": "a816b2b4-e3d5-4553-a752-bf0b448dd50a",
+      "name": "HTTP Request",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "QctUHMHOvvJhmgV2",
+          "name": "Ecomail API"
+        }
+      }
     }
   ],
   "settings": {
@@ -823,6 +878,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-01-08T21:37:45.882Z",
-  "versionId": "3a81520f-aa09-4137-b33d-5b4eebd6aa93"
+  "updatedAt": "2026-01-09T08:19:59.340Z",
+  "versionId": "b9dcea7a-d660-44b3-8d88-8f32093e30bb"
 }
