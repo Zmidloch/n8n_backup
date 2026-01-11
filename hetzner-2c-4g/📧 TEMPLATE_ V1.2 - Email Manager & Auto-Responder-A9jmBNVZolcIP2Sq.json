@@ -1158,16 +1158,16 @@
   "staticData": null,
   "tags": [
     {
-      "updatedAt": "2025-12-22T22:47:26.726Z",
-      "createdAt": "2025-12-22T22:47:26.726Z",
-      "id": "98rdzjHLvbT6u8C1",
-      "name": "AI agent"
-    },
-    {
       "updatedAt": "2025-12-22T22:47:26.752Z",
       "createdAt": "2025-12-22T22:47:26.752Z",
       "id": "TXxnmBf4zpPPVtoG",
       "name": "IN PROGRESS"
+    },
+    {
+      "updatedAt": "2025-12-22T22:47:26.726Z",
+      "createdAt": "2025-12-22T22:47:26.726Z",
+      "id": "98rdzjHLvbT6u8C1",
+      "name": "AI agent"
     }
   ],
   "triggerCount": 0,
