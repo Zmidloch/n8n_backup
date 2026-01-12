@@ -1,0 +1,30 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {},
+  "createdAt": "2026-01-12T22:59:07.778Z",
+  "id": "s5QjOWSR0jqoqpx4kLein",
+  "isArchived": false,
+  "meta": null,
+  "name": "B2B Showcase Event",
+  "nodes": [],
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-12T22:59:07.778Z",
+      "createdAt": "2026-01-12T22:59:07.778Z",
+      "role": "workflow:owner",
+      "workflowId": "s5QjOWSR0jqoqpx4kLein",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-12T22:59:07.778Z",
+  "versionId": "956bb907-7404-4a2f-ae53-991d8f036865"
+}
