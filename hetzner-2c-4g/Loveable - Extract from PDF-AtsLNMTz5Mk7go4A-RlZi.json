@@ -1,0 +1,377 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ApifyActor": {
+      "main": [
+        [
+          {
+            "node": "QualifyLeads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Openrouter": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "QualifyLeads",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "QualifyLeads": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "ApifyActor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "SummarisePDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "SummarisePDF",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SummarisePDF": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-12T10:37:18.831Z",
+  "id": "AtsLNMTz5Mk7go4A-RlZi",
+  "isArchived": false,
+  "meta": null,
+  "name": "Loveable - Extract from PDF",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "b9dc2ffb-c70c-476f-8954-23daa38bbba4",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -400,
+        112
+      ],
+      "id": "f9fda335-4ed8-4266-acf8-0d4089b00b54",
+      "name": "Webhook",
+      "webhookId": "b9dc2ffb-c70c-476f-8954-23daa38bbba4"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        752,
+        112
+      ],
+      "id": "ddf544d1-6383-421a-83b7-40b812bbdcc8",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/dev_fusion~linkedin-profile-scraper/run-sync-get-dataset-items?token={your_token_here}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"profileUrls\": [\n        {{ $json.linkedinUrls }}\n    ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        80,
+        112
+      ],
+      "id": "e119e99b-7984-4e59-9163-202c2f4c6024",
+      "name": "ApifyActor"
+    },
+    {
+      "parameters": {
+        "content": "## Scrape LinkedIn Profiles\n",
+        "height": 280,
+        "width": 260,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "c1c350ac-32ae-4316-9a17-cb244a352360",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Qualify Lead\n",
+        "height": 280,
+        "width": 300,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        288,
+        0
+      ],
+      "id": "8f930bfc-0cdd-4b3c-9ff2-2e36ef8f3c1f",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        304,
+        272
+      ],
+      "id": "70b8deab-d005-4b62-97e0-2f972cf9e6f7",
+      "name": "Openrouter"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a sales lead qualifier specializing in LinkedIn-based lead evaluation. Your task is to assess each lead based on their LinkedIn profile and rank them against the following criteria:\n\nJob Title and Role: Does their role align with the decision-makers or influencers for our product/service?\n\nIndustry and Company Fit: Is their company within our target industries, size, or geographic region?\n\nProfessional Experience and Skills: Do their skills, endorsements, or experience suggest they would benefit from our offering?\n\nFor each criterion, provide a score (e.g., 1-5) along with a brief justification based on the available profile information.\n\n<input>\nProfile info: {{ $json.toJsonString() }}\n\nCriteria to assesss against: {{ $('Webhook').item.json.body.criteria }}\n</input>\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        304,
+        112
+      ],
+      "id": "c243a274-b9d8-4dd5-85f5-8028690deb3f",
+      "name": "QualifyLeads"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "885882ac-b2c9-4c96-8fa7-d53e00185be1",
+              "name": "linkedinUrls",
+              "value": "={{ $json.body.linkedinUrl.split(',').map(url => `\"${url.trim()}\"`).join(',\\n        ') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -176,
+        112
+      ],
+      "id": "7140d9ec-46cc-43dd-86f2-b506b5e10796",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "binaryPropertyName": "file",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        752,
+        688
+      ],
+      "id": "e37d649c-5ef3-43b2-b9d0-2651578a856c",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1056,
+        848
+      ],
+      "id": "7f33e4df-1e73-4c78-8ebc-280ee9277261",
+      "name": "OpenAI Chat Model"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Summarise the incoming PDF data:\n{{ $json.text }}\n\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        1024,
+        688
+      ],
+      "id": "53da0f5e-abab-4ce8-a41a-1c5acfe87457",
+      "name": "SummarisePDF"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "extract-from-pdf",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        448,
+        688
+      ],
+      "id": "021d9982-a323-48bf-a36b-1b1f9070d8f6",
+      "name": "Webhook1",
+      "webhookId": "00e10e95-0a18-4a41-acbd-3676f37f07ff"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1408,
+        688
+      ],
+      "id": "a50a448a-7f69-4931-a63f-35e0c13719b2",
+      "name": "Respond to Webhook1"
+    },
+    {
+      "parameters": {
+        "content": "## Summarise PDF\n",
+        "height": 340,
+        "width": 320,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        992,
+        624
+      ],
+      "id": "ee949a93-0108-4601-b32c-2fa31d82a55b",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Extract from file\n",
+        "height": 340,
+        "width": 320,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        624,
+        624
+      ],
+      "id": "87f9c876-f78e-4d80-a816-247d7c0b5ce8",
+      "name": "Sticky Note3"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-12T10:37:18.831Z",
+      "createdAt": "2026-01-12T10:37:18.831Z",
+      "role": "workflow:owner",
+      "workflowId": "AtsLNMTz5Mk7go4A-RlZi",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-12T10:37:18.831Z",
+  "versionId": "2c17e297-91c5-4899-93dc-a8ad7f382309"
+}
