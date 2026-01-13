@@ -1,17 +1,434 @@
 {
-  "active": false,
-  "activeVersion": null,
-  "activeVersionId": null,
-  "connections": {},
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-01-12T23:18:54.224Z",
+    "createdAt": "2026-01-12T23:18:44.161Z",
+    "versionId": "7804eca5-3c69-4cf7-922f-2485490d0fe0",
+    "workflowId": "s5QjOWSR0jqoqpx4kLein",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "777fcb4d-fa4e-42ff-9495-a544e612e009",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          0,
+          0
+        ],
+        "id": "120cf122-eb3b-4d57-a0b8-6ebfb5c7025c",
+        "name": "Webhook",
+        "webhookId": "777fcb4d-fa4e-42ff-9495-a544e612e009"
+      },
+      {
+        "parameters": {
+          "operation": "create",
+          "base": {
+            "__rl": true,
+            "value": "appguDlqQGvhY2Tso",
+            "mode": "list",
+            "cachedResultName": "B2B Showcase Event",
+            "cachedResultUrl": "https://airtable.com/appguDlqQGvhY2Tso"
+          },
+          "table": {
+            "__rl": true,
+            "value": "tblMNFvxJDWjvb1In",
+            "mode": "list",
+            "cachedResultName": "Table 1",
+            "cachedResultUrl": "https://airtable.com/appguDlqQGvhY2Tso/tblMNFvxJDWjvb1In"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {},
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "GHL ID",
+                "displayName": "GHL ID",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Datum a čas registrace",
+                "displayName": "Datum a čas registrace",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "dateTime",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Název firmy",
+                "displayName": "Název firmy",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Jméno",
+                "displayName": "Jméno",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Pozice ve firmě",
+                "displayName": "Pozice ve firmě",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Telefon",
+                "displayName": "Telefon",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Email",
+                "displayName": "Email",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Počet účastníků",
+                "displayName": "Počet účastníků",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "number",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Poznámka a další členové týmu",
+                "displayName": "Poznámka a další členové týmu",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Status",
+                "displayName": "Status",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "options",
+                "options": [
+                  {
+                    "name": "Registrován",
+                    "value": "Registrován"
+                  },
+                  {
+                    "name": "Informace zaslány",
+                    "value": "Informace zaslány"
+                  },
+                  {
+                    "name": "Poslední připomínka",
+                    "value": "Poslední připomínka"
+                  },
+                  {
+                    "name": "Zúčastnil se",
+                    "value": "Zúčastnil se"
+                  }
+                ],
+                "readOnly": false,
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.airtable",
+        "typeVersion": 2.1,
+        "position": [
+          208,
+          0
+        ],
+        "id": "8f3f46f0-23d1-45fe-a877-86c3f9714a85",
+        "name": "Create a record",
+        "credentials": {
+          "airtableTokenApi": {
+            "id": "112UtIzO07XgrN7A",
+            "name": "Airtable - zmidloch@z-agency.cz"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Create a record",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jiri Zmidloch",
+    "name": "Version 7804eca5",
+    "description": "",
+    "autosaved": false
+  },
+  "activeVersionId": "7804eca5-3c69-4cf7-922f-2485490d0fe0",
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Create a record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "createdAt": "2026-01-12T22:59:07.778Z",
   "id": "s5QjOWSR0jqoqpx4kLein",
   "isArchived": false,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "B2B Showcase Event",
-  "nodes": [],
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "777fcb4d-fa4e-42ff-9495-a544e612e009",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "120cf122-eb3b-4d57-a0b8-6ebfb5c7025c",
+      "name": "Webhook",
+      "webhookId": "777fcb4d-fa4e-42ff-9495-a544e612e009"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appguDlqQGvhY2Tso",
+          "mode": "list",
+          "cachedResultName": "B2B Showcase Event",
+          "cachedResultUrl": "https://airtable.com/appguDlqQGvhY2Tso"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblMNFvxJDWjvb1In",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/appguDlqQGvhY2Tso/tblMNFvxJDWjvb1In"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "GHL ID",
+              "displayName": "GHL ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Datum a čas registrace",
+              "displayName": "Datum a čas registrace",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Název firmy",
+              "displayName": "Název firmy",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Jméno",
+              "displayName": "Jméno",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Pozice ve firmě",
+              "displayName": "Pozice ve firmě",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Telefon",
+              "displayName": "Telefon",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Počet účastníků",
+              "displayName": "Počet účastníků",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Poznámka a další členové týmu",
+              "displayName": "Poznámka a další členové týmu",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Registrován",
+                  "value": "Registrován"
+                },
+                {
+                  "name": "Informace zaslány",
+                  "value": "Informace zaslány"
+                },
+                {
+                  "name": "Poslední připomínka",
+                  "value": "Poslední připomínka"
+                },
+                {
+                  "name": "Zúčastnil se",
+                  "value": "Zúčastnil se"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "8f3f46f0-23d1-45fe-a877-86c3f9714a85",
+      "name": "Create a record",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable - zmidloch@z-agency.cz"
+        }
+      }
+    }
+  ],
   "settings": {
     "executionOrder": "v1",
-    "availableInMCP": false
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "timezone": "Europe/Prague",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "zVAjJgKV17IWzFP7"
   },
   "shared": [
     {
@@ -24,7 +441,7 @@
   ],
   "staticData": null,
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2026-01-12T22:59:07.778Z",
-  "versionId": "956bb907-7404-4a2f-ae53-991d8f036865"
+  "triggerCount": 1,
+  "updatedAt": "2026-01-12T23:19:06.521Z",
+  "versionId": "7804eca5-3c69-4cf7-922f-2485490d0fe0"
 }
