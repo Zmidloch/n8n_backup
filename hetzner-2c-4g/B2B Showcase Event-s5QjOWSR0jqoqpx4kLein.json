@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-01-12T23:18:54.224Z",
-    "createdAt": "2026-01-12T23:18:44.161Z",
-    "versionId": "7804eca5-3c69-4cf7-922f-2485490d0fe0",
+    "updatedAt": "2026-01-13T08:07:40.735Z",
+    "createdAt": "2026-01-13T08:07:36.225Z",
+    "versionId": "d644e80d-a1d5-406e-b08d-6a00350937ea",
     "workflowId": "s5QjOWSR0jqoqpx4kLein",
     "nodes": [
       {
@@ -41,7 +41,18 @@
           },
           "columns": {
             "mappingMode": "defineBelow",
-            "value": {},
+            "value": {
+              "Počet účastníků": "={{ $json.body['Předpokládaná velikost týmu'] }}",
+              "GHL ID": "={{ $json.body.contact_id }}",
+              "Název firmy": "={{ $json.body.first_name }}",
+              "Jméno": "={{ $json.body.last_name }}",
+              "Pozice ve firmě": "={{ $json.body['Pozice ve firmě'] }}",
+              "Email": "={{ $json.body.email }}",
+              "Telefon": "={{ $json.body.phone }}",
+              "Poznámka a další členové týmu": "={{ $json.body['Zde nám můžete napsat dotaz nebo vzkaz'] }}",
+              "Status": "Registrován",
+              "Datum a čas registrace": "={{ $json.body.date_created }}"
+            },
             "matchingColumns": [],
             "schema": [
               {
@@ -181,7 +192,7 @@
         "type": "n8n-nodes-base.airtable",
         "typeVersion": 2.1,
         "position": [
-          208,
+          416,
           0
         ],
         "id": "8f3f46f0-23d1-45fe-a877-86c3f9714a85",
@@ -192,10 +203,34 @@
             "name": "Airtable - zmidloch@z-agency.cz"
           }
         }
+      },
+      {
+        "parameters": {
+          "jsCode": "let items = $input.all(); // Načtení všech položek [cite: 27]\n\nfor (let item of items) {\n  // Cesta k původnímu poli v n8n struktuře [cite: 7, 13]\n  let originalValue = item.json.body[\"Předpokládaná velikost týmu\"];\n  \n  if (originalValue) {\n    // Extrakce čísla (např. \"4 osoby\" -> 4)\n    let onlyNumber = parseInt(originalValue.replace(/[^0-9]/g, ''));\n    \n    // Přepsání původního pole číselnou hodnotou\n    item.json.body[\"Předpokládaná velikost týmu\"] = onlyNumber;\n  }\n}\n\nreturn items; // Vrácení upraveného pole objektů [cite: 12, 38]"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          208,
+          0
+        ],
+        "id": "99f54a37-27e0-47c4-a70a-f517e163058b",
+        "name": "Code in JavaScript"
       }
     ],
     "connections": {
       "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Code in JavaScript",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code in JavaScript": {
         "main": [
           [
             {
@@ -208,13 +243,24 @@
       }
     },
     "authors": "Jiri Zmidloch",
-    "name": "Version 7804eca5",
+    "name": "Version d644e80d",
     "description": "",
     "autosaved": false
   },
-  "activeVersionId": "7804eca5-3c69-4cf7-922f-2485490d0fe0",
+  "activeVersionId": "d644e80d-a1d5-406e-b08d-6a00350937ea",
   "connections": {
     "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
       "main": [
         [
           {
@@ -269,7 +315,18 @@
         },
         "columns": {
           "mappingMode": "defineBelow",
-          "value": {},
+          "value": {
+            "Počet účastníků": "={{ $json.body['Předpokládaná velikost týmu'] }}",
+            "GHL ID": "={{ $json.body.contact_id }}",
+            "Název firmy": "={{ $json.body.first_name }}",
+            "Jméno": "={{ $json.body.last_name }}",
+            "Pozice ve firmě": "={{ $json.body['Pozice ve firmě'] }}",
+            "Email": "={{ $json.body.email }}",
+            "Telefon": "={{ $json.body.phone }}",
+            "Poznámka a další členové týmu": "={{ $json.body['Zde nám můžete napsat dotaz nebo vzkaz'] }}",
+            "Status": "Registrován",
+            "Datum a čas registrace": "={{ $json.body.date_created }}"
+          },
           "matchingColumns": [],
           "schema": [
             {
@@ -409,7 +466,7 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2.1,
       "position": [
-        208,
+        416,
         0
       ],
       "id": "8f3f46f0-23d1-45fe-a877-86c3f9714a85",
@@ -420,6 +477,19 @@
           "name": "Airtable - zmidloch@z-agency.cz"
         }
       }
+    },
+    {
+      "parameters": {
+        "jsCode": "let items = $input.all(); // Načtení všech položek [cite: 27]\n\nfor (let item of items) {\n  // Cesta k původnímu poli v n8n struktuře [cite: 7, 13]\n  let originalValue = item.json.body[\"Předpokládaná velikost týmu\"];\n  \n  if (originalValue) {\n    // Extrakce čísla (např. \"4 osoby\" -> 4)\n    let onlyNumber = parseInt(originalValue.replace(/[^0-9]/g, ''));\n    \n    // Přepsání původního pole číselnou hodnotou\n    item.json.body[\"Předpokládaná velikost týmu\"] = onlyNumber;\n  }\n}\n\nreturn items; // Vrácení upraveného pole objektů [cite: 12, 38]"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "99f54a37-27e0-47c4-a70a-f517e163058b",
+      "name": "Code in JavaScript"
     }
   ],
   "settings": {
@@ -442,6 +512,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-01-12T23:19:06.521Z",
-  "versionId": "7804eca5-3c69-4cf7-922f-2485490d0fe0"
+  "updatedAt": "2026-01-13T08:13:10.575Z",
+  "versionId": "d644e80d-a1d5-406e-b08d-6a00350937ea"
 }
