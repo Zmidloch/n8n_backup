@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2025-12-16T14:35:15.710Z",
-    "createdAt": "2025-12-16T14:35:15.710Z",
-    "versionId": "6085b590-6c4a-4156-aebc-df36f77ada6c",
+    "updatedAt": "2026-01-13T15:52:28.788Z",
+    "createdAt": "2026-01-13T15:52:23.965Z",
+    "versionId": "e021da78-1ce1-4163-a59f-7c4e0b277e7b",
     "workflowId": "PVID8xP0tbMMrWYz",
     "nodes": [
       {
@@ -95,9 +95,7 @@
         "parameters": {
           "pollTimes": {
             "item": [
-              {
-                "mode": "everyMinute"
-              }
+              {}
             ]
           },
           "documentId": {
@@ -715,11 +713,11 @@
       }
     },
     "authors": "Jiri Zmidloch",
-    "name": null,
-    "description": null,
+    "name": "Version e021da78",
+    "description": "",
     "autosaved": false
   },
-  "activeVersionId": "6085b590-6c4a-4156-aebc-df36f77ada6c",
+  "activeVersionId": "e021da78-1ce1-4163-a59f-7c4e0b277e7b",
   "connections": {
     "Google Sheets Trigger": {
       "main": [
@@ -922,9 +920,7 @@
       "parameters": {
         "pollTimes": {
           "item": [
-            {
-              "mode": "everyMinute"
-            }
+            {}
           ]
         },
         "documentId": {
@@ -1463,6 +1459,6 @@
   },
   "tags": [],
   "triggerCount": 2,
-  "updatedAt": "2025-12-16T14:35:15.707Z",
-  "versionId": "6085b590-6c4a-4156-aebc-df36f77ada6c"
+  "updatedAt": "2026-01-13T15:52:23.962Z",
+  "versionId": "e021da78-1ce1-4163-a59f-7c4e0b277e7b"
 }
