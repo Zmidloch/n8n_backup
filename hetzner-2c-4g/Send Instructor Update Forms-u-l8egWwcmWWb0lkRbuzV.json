@@ -1,0 +1,240 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "IF: Send to All?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF: Send to All?": {
+      "main": [
+        [
+          {
+            "node": "Fetch All Instructors",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fetch Selected Instructors",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch All Instructors": {
+      "main": [
+        [
+          {
+            "node": "Generate Prefilled URLs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Selected Instructors": {
+      "main": [
+        [
+          {
+            "node": "Generate Prefilled URLs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Prefilled URLs": {
+      "main": [
+        [
+          {
+            "node": "Send Email (Gmail)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email (Gmail)": {
+      "main": [
+        [
+          {
+            "node": "Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-15T22:22:19.175Z",
+  "id": "u-l8egWwcmWWb0lkRbuzV",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Send Instructor Update Forms",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "send-instructor-update-form",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "74a4e72d-b1e3-4a80-9870-9774e0f4464e",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        -144,
+        112
+      ],
+      "webhookId": "send-instructor-update-form"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.body.sendToAll }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "13da8980-cf5b-4b85-8ae2-0c395cf89465",
+      "name": "IF: Send to All?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        64,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://api.tabidoo.cloud/api/v2/table/{{ $credentials.tabidoo.tableId }}/data",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "tabidooApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": []
+        },
+        "options": {}
+      },
+      "id": "25947f41-aead-449f-a68c-dce750fd7bb2",
+      "name": "Fetch All Instructors",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        256,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://api.tabidoo.cloud/api/v2/table/{{ $credentials.tabidoo.tableId }}/data",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "tabidooApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "filter",
+              "value": "={{ JSON.stringify({ id: { $in: $json.body.instructorIds } }) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b930816b-af77-45f8-968c-5ad3b4e9fe0d",
+      "name": "Fetch Selected Instructors",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        256,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Configuration - UPDATE THESE VALUES\nconst FORM_ID = 'YOUR_GOOGLE_FORM_ID'; // Replace with actual Form ID\nconst FORM_BASE_URL = `https://docs.google.com/forms/d/e/${FORM_ID}/viewform`;\n\n// Entry IDs mapping - UPDATE AFTER CREATING GOOGLE FORM\nconst ENTRY_IDS = {\n  recordId: 'entry.XXXXXXXX',\n  email: 'entry.XXXXXXXX',\n  jmeno: 'entry.XXXXXXXX',\n  prijmeni: 'entry.XXXXXXXX',\n  adresa: 'entry.XXXXXXXX',\n  telefon: 'entry.XXXXXXXX',\n  cisloUctu: 'entry.XXXXXXXX',\n  datumNarozeni: 'entry.XXXXXXXX',\n  rodneCislo: 'entry.XXXXXXXX',\n  zdravotniPojistovna: 'entry.XXXXXXXX',\n  cisloObcanky: 'entry.XXXXXXXX',\n  instruktorske: 'entry.XXXXXXXX',\n  lektorske: 'entry.XXXXXXXX',\n  online: 'entry.XXXXXXXX',\n  specializace: 'entry.XXXXXXXX',\n  jazyky: 'entry.XXXXXXXX',\n  urovenEN: 'entry.XXXXXXXX',\n  urovenENZP: 'entry.XXXXXXXX'\n};\n\n// Field names in Tabidoo - UPDATE IF DIFFERENT\nconst FIELD_NAMES = {\n  jmeno: 'Jméno',\n  email: 'E-mail',\n  telefon: 'Telefon',\n  adresa: 'Adresa trvalého bydliště',\n  cisloUctu: 'Číslo účtu',\n  datumNarozeni: 'Datum narození',\n  rodneCislo: 'Rodné číslo',\n  zdravotniPojistovna: 'Zdravotní pojišťovna',\n  cisloObcanky: 'Číslo občanky nebo pasu',\n  instruktorske: 'Instruktorské zaškolení',\n  lektorske: 'Lektorské zaškolení',\n  online: 'Online zaškolení',\n  specializace: 'Další specializace',\n  jazyky: 'Jazyky',\n  urovenEN: 'Úroveň angličtiny',\n  urovenENZP: 'Úroveň angličtiny pro zeťkové programy'\n};\n\n// Process all instructors\nconst items = $input.all();\nconst results = [];\n\nfor (const item of items) {\n  const instructor = item.json;\n  \n  // Build URL parameters\n  const params = new URLSearchParams();\n  \n  // Add record ID (hidden field)\n  params.append(ENTRY_IDS.recordId, instructor.id || '');\n  \n  // Contact data\n  params.append(ENTRY_IDS.email, instructor[FIELD_NAMES.email] || '');\n  params.append(ENTRY_IDS.jmeno, instructor[FIELD_NAMES.jmeno] || '');\n  params.append(ENTRY_IDS.telefon, instructor[FIELD_NAMES.telefon] || '');\n  params.append(ENTRY_IDS.adresa, instructor[FIELD_NAMES.adresa] || '');\n  params.append(ENTRY_IDS.cisloUctu, instructor[FIELD_NAMES.cisloUctu] || '');\n  \n  // DPP data\n  params.append(ENTRY_IDS.datumNarozeni, instructor[FIELD_NAMES.datumNarozeni] || '');\n  params.append(ENTRY_IDS.rodneCislo, instructor[FIELD_NAMES.rodneCislo] || '');\n  params.append(ENTRY_IDS.zdravotniPojistovna, instructor[FIELD_NAMES.zdravotniPojistovna] || '');\n  params.append(ENTRY_IDS.cisloObcanky, instructor[FIELD_NAMES.cisloObcanky] || '');\n  \n  // Qualifications (tag fields - arrays)\n  if (instructor[FIELD_NAMES.instruktorske] && Array.isArray(instructor[FIELD_NAMES.instruktorske])) {\n    instructor[FIELD_NAMES.instruktorske].forEach(val => {\n      params.append(ENTRY_IDS.instruktorske, val);\n    });\n  }\n  \n  if (instructor[FIELD_NAMES.lektorske] && Array.isArray(instructor[FIELD_NAMES.lektorske])) {\n    instructor[FIELD_NAMES.lektorske].forEach(val => {\n      params.append(ENTRY_IDS.lektorske, val);\n    });\n  }\n  \n  if (instructor[FIELD_NAMES.online] && Array.isArray(instructor[FIELD_NAMES.online])) {\n    instructor[FIELD_NAMES.online].forEach(val => {\n      params.append(ENTRY_IDS.online, val);\n    });\n  }\n  \n  if (instructor[FIELD_NAMES.specializace] && Array.isArray(instructor[FIELD_NAMES.specializace])) {\n    instructor[FIELD_NAMES.specializace].forEach(val => {\n      params.append(ENTRY_IDS.specializace, val);\n    });\n  }\n  \n  // Languages\n  if (instructor[FIELD_NAMES.jazyky] && Array.isArray(instructor[FIELD_NAMES.jazyky])) {\n    instructor[FIELD_NAMES.jazyky].forEach(val => {\n      params.append(ENTRY_IDS.jazyky, val);\n    });\n  }\n  \n  params.append(ENTRY_IDS.urovenEN, instructor[FIELD_NAMES.urovenEN] || '');\n  params.append(ENTRY_IDS.urovenENZP, instructor[FIELD_NAMES.urovenENZP] || '');\n  \n  // Build final prefilled URL\n  const prefilledUrl = `${FORM_BASE_URL}?${params.toString()}`;\n  \n  results.push({\n    json: {\n      email: instructor[FIELD_NAMES.email],\n      name: instructor[FIELD_NAMES.jmeno],\n      prefilledUrl: prefilledUrl,\n      recordId: instructor.id\n    }\n  });\n}\n\nreturn results;"
+      },
+      "id": "f109cb6f-f045-496f-a0f0-7774298fffb0",
+      "name": "Generate Prefilled URLs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        464,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.email }}",
+        "subject": "Aktualizace vašich osobních údajů - Instruktorský tým",
+        "message": "=<p>Dobrý den {{ $json.name }},</p>\n\n<p>Prosíme o aktualizaci vašich osobních údajů v našem systému.</p>\n\n<p>Klikněte na odkaz níže pro vyplnění formuláře. Vaše současné údaje jsou již předvyplněny, stačí je zkontrolovat a případně upravit:</p>\n\n<p><a href=\"{{ $json.prefilledUrl }}\" style=\"display: inline-block; padding: 12px 24px; background-color: #4285F4; color: white; text-decoration: none; border-radius: 4px; margin: 16px 0;\">Vyplnit formulář</a></p>\n\n<p>Nebo zkopírujte tento odkaz do prohlížeče:<br>\n<small>{{ $json.prefilledUrl }}</small></p>\n\n<p>Děkujeme za spolupráci!</p>\n\n<p>--<br>\nInstruktorský tým</p>",
+        "options": {}
+      },
+      "id": "52790f97-e06e-4554-a05a-2ea02828d56f",
+      "name": "Send Email (Gmail)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        656,
+        112
+      ],
+      "webhookId": "753cc803-64a1-4f7b-afcf-f6673d808b77",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "cUMqdo7XCF6noXLb",
+          "name": "Gmail-info@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ {\n  \"success\": true,\n  \"emailsSent\": $items().length,\n  \"instructors\": $items().map(item => ({\n    \"name\": item.json.name,\n    \"email\": item.json.email,\n    \"recordId\": item.json.recordId\n  }))\n} }}",
+        "options": {}
+      },
+      "id": "d08cc0fb-4ef6-430c-a4e8-c2fce50010d7",
+      "name": "Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        864,
+        112
+      ]
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-15T22:22:19.175Z",
+      "createdAt": "2026-01-15T22:22:19.175Z",
+      "role": "workflow:owner",
+      "workflowId": "u-l8egWwcmWWb0lkRbuzV",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-15T22:28:53.163Z",
+  "versionId": "cc06e016-fd60-4591-b67a-e7aaab5d838c"
+}
