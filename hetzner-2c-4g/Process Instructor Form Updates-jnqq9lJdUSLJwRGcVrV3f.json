@@ -1,0 +1,271 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Validate & Transform Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate & Transform Data": {
+      "main": [
+        [
+          {
+            "node": "Update Tabidoo Record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Tabidoo Record": {
+      "main": [
+        [
+          {
+            "node": "IF: Update Successful?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF: Update Successful?": {
+      "main": [
+        [
+          {
+            "node": "Send Confirmation Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Error Alert to Admin",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Confirmation Email": {
+      "main": [
+        [
+          {
+            "node": "Success Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Error Alert to Admin": {
+      "main": [
+        [
+          {
+            "node": "Error Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-15T22:23:54.277Z",
+  "id": "jnqq9lJdUSLJwRGcVrV3f",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Process Instructor Form Updates",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "instructor-update-received",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "268e4959-0280-45c6-8e1f-697b0d51be53",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        -608,
+        80
+      ],
+      "webhookId": "instructor-update-received"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Validate and transform data from Google Forms\nconst data = $json.body;\n\n// Field names in Tabidoo - UPDATE IF DIFFERENT\nconst FIELD_NAMES = {\n  jmeno: 'Jméno',\n  email: 'E-mail',\n  telefon: 'Telefon',\n  adresa: 'Adresa trvalého bydliště',\n  cisloUctu: 'Číslo účtu',\n  datumNarozeni: 'Datum narození',\n  rodneCislo: 'Rodné číslo',\n  zdravotniPojistovna: 'Zdravotní pojišťovna',\n  cisloObcanky: 'Číslo občanky nebo pasu',\n  instruktorske: 'Instruktorské zaškolení',\n  lektorske: 'Lektorské zaškolení',\n  online: 'Online zaškolení',\n  specializace: 'Další specializace',\n  jazyky: 'Jazyky',\n  urovenEN: 'Úroveň angličtiny',\n  urovenENZP: 'Úroveň angličtiny pro zeťkové programy'\n};\n\n// Validations\nif (!data.recordId) {\n  throw new Error('Missing recordId - cannot update instructor without ID');\n}\n\nif (!data.email) {\n  throw new Error('Missing email - required for validation');\n}\n\nconst emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;\nif (!emailRegex.test(data.email)) {\n  throw new Error(`Invalid email format: ${data.email}`);\n}\n\n// Build Tabidoo update payload\nconst tabidooPayload = {};\n\n// Contact data\nif (data.contactData) {\n  if (data.contactData[FIELD_NAMES.jmeno]) {\n    tabidooPayload[FIELD_NAMES.jmeno] = data.contactData[FIELD_NAMES.jmeno];\n  }\n  if (data.contactData[FIELD_NAMES.telefon]) {\n    tabidooPayload[FIELD_NAMES.telefon] = data.contactData[FIELD_NAMES.telefon];\n  }\n  if (data.contactData[FIELD_NAMES.email]) {\n    tabidooPayload[FIELD_NAMES.email] = data.contactData[FIELD_NAMES.email];\n  }\n  if (data.contactData[FIELD_NAMES.adresa]) {\n    tabidooPayload[FIELD_NAMES.adresa] = data.contactData[FIELD_NAMES.adresa];\n  }\n  if (data.contactData[FIELD_NAMES.cisloUctu]) {\n    tabidooPayload[FIELD_NAMES.cisloUctu] = data.contactData[FIELD_NAMES.cisloUctu];\n  }\n}\n\n// DPP data\nif (data.dppData) {\n  if (data.dppData[FIELD_NAMES.datumNarozeni]) {\n    tabidooPayload[FIELD_NAMES.datumNarozeni] = data.dppData[FIELD_NAMES.datumNarozeni];\n  }\n  if (data.dppData[FIELD_NAMES.rodneCislo]) {\n    tabidooPayload[FIELD_NAMES.rodneCislo] = data.dppData[FIELD_NAMES.rodneCislo];\n  }\n  if (data.dppData[FIELD_NAMES.zdravotniPojistovna]) {\n    tabidooPayload[FIELD_NAMES.zdravotniPojistovna] = data.dppData[FIELD_NAMES.zdravotniPojistovna];\n  }\n  if (data.dppData[FIELD_NAMES.cisloObcanky]) {\n    tabidooPayload[FIELD_NAMES.cisloObcanky] = data.dppData[FIELD_NAMES.cisloObcanky];\n  }\n}\n\n// Qualifications (tag fields - must be arrays)\nif (data.qualifications) {\n  if (data.qualifications[FIELD_NAMES.instruktorske]) {\n    tabidooPayload[FIELD_NAMES.instruktorske] = Array.isArray(data.qualifications[FIELD_NAMES.instruktorske]) \n      ? data.qualifications[FIELD_NAMES.instruktorske]\n      : [data.qualifications[FIELD_NAMES.instruktorske]];\n  }\n  if (data.qualifications[FIELD_NAMES.lektorske]) {\n    tabidooPayload[FIELD_NAMES.lektorske] = Array.isArray(data.qualifications[FIELD_NAMES.lektorske])\n      ? data.qualifications[FIELD_NAMES.lektorske]\n      : [data.qualifications[FIELD_NAMES.lektorske]];\n  }\n  if (data.qualifications[FIELD_NAMES.online]) {\n    tabidooPayload[FIELD_NAMES.online] = Array.isArray(data.qualifications[FIELD_NAMES.online])\n      ? data.qualifications[FIELD_NAMES.online]\n      : [data.qualifications[FIELD_NAMES.online]];\n  }\n  if (data.qualifications[FIELD_NAMES.specializace]) {\n    tabidooPayload[FIELD_NAMES.specializace] = Array.isArray(data.qualifications[FIELD_NAMES.specializace])\n      ? data.qualifications[FIELD_NAMES.specializace]\n      : [data.qualifications[FIELD_NAMES.specializace]];\n  }\n}\n\n// Languages\nif (data.languages) {\n  if (data.languages[FIELD_NAMES.jazyky]) {\n    tabidooPayload[FIELD_NAMES.jazyky] = Array.isArray(data.languages[FIELD_NAMES.jazyky])\n      ? data.languages[FIELD_NAMES.jazyky]\n      : [data.languages[FIELD_NAMES.jazyky]];\n  }\n  if (data.languages[FIELD_NAMES.urovenEN]) {\n    tabidooPayload[FIELD_NAMES.urovenEN] = data.languages[FIELD_NAMES.urovenEN];\n  }\n  if (data.languages[FIELD_NAMES.urovenENZP]) {\n    tabidooPayload[FIELD_NAMES.urovenENZP] = data.languages[FIELD_NAMES.urovenENZP];\n  }\n}\n\n// Return formatted data\nreturn {\n  json: {\n    recordId: data.recordId,\n    email: data.email,\n    timestamp: data.timestamp || new Date().toISOString(),\n    updatePayload: tabidooPayload,\n    originalData: data // Keep for logging/debugging\n  }\n};"
+      },
+      "id": "0f34544a-861a-473d-98b6-dd613d33c029",
+      "name": "Validate & Transform Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -416,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.tabidoo.cloud/api/v2/table/{{ $credentials.tabidoo.tableId }}/data/{{ $json.recordId }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "tabidooApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.updatePayload) }}",
+        "options": {
+          "allowUnauthorizedCerts": false,
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "id": "7e2dbf91-ca7f-453c-8db0-99b533707ed2",
+      "name": "Update Tabidoo Record",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -208,
+        80
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.statusCode }}",
+              "operation": "equal",
+              "value2": 200
+            }
+          ]
+        }
+      },
+      "id": "973d34e1-7a88-46d6-8fd2-b7457c90d0f6",
+      "name": "IF: Update Successful?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Validate & Transform Data').item.json.email }}",
+        "subject": "Vaše údaje byly aktualizovány ✓",
+        "message": "=<p>Dobrý den {{ $('Validate & Transform Data').item.json.originalData.contactData['Jméno'] }},</p>\n\n<p>Děkujeme! Vaše osobní údaje byly úspěšně aktualizovány v našem systému.</p>\n\n<p><strong>Datum aktualizace:</strong> {{ $('Validate & Transform Data').item.json.timestamp }}</p>\n\n<p>Pokud máte jakékoliv dotazy, neváhejte nás kontaktovat.</p>\n\n<p>--<br>\nInstruktorský tým</p>",
+        "options": {}
+      },
+      "id": "082042b2-760e-4b0b-af65-db538d35fe93",
+      "name": "Send Confirmation Email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        192,
+        -32
+      ],
+      "webhookId": "c9ef14d7-a270-4799-b100-b5b7c03d4418",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "cUMqdo7XCF6noXLb",
+          "name": "Gmail-info@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "admin@example.com",
+        "subject": "⚠️ Chyba při aktualizaci instruktora",
+        "message": "=<p><strong>Chyba při aktualizaci osobních údajů instruktora</strong></p>\n\n<p><strong>Record ID:</strong> {{ $('Validate & Transform Data').item.json.recordId }}</p>\n<p><strong>Email:</strong> {{ $('Validate & Transform Data').item.json.email }}</p>\n<p><strong>Timestamp:</strong> {{ $('Validate & Transform Data').item.json.timestamp }}</p>\n\n<p><strong>Error Status Code:</strong> {{ $json.statusCode }}</p>\n<p><strong>Error Message:</strong></p>\n<pre>{{ JSON.stringify($json.body, null, 2) }}</pre>\n\n<p><strong>Submitted Data:</strong></p>\n<pre>{{ JSON.stringify($('Validate & Transform Data').item.json.updatePayload, null, 2) }}</pre>\n\n<p>Prosím zkontrolujte Tabidoo API a opravte problém.</p>",
+        "options": {}
+      },
+      "id": "6de53993-2134-432d-8384-de502aaa8aaa",
+      "name": "Send Error Alert to Admin",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        192,
+        176
+      ],
+      "webhookId": "c863d2c8-3d54-4ce4-bc91-304c4ced3fd1",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "cUMqdo7XCF6noXLb",
+          "name": "Gmail-info@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ {\n  \"success\": true,\n  \"recordId\": $('Validate & Transform Data').item.json.recordId,\n  \"email\": $('Validate & Transform Data').item.json.email,\n  \"message\": \"Instructor data updated successfully\"\n} }}",
+        "options": {}
+      },
+      "id": "1d5cd95d-d7ff-498e-afc8-a0c8785bed2f",
+      "name": "Success Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        400,
+        -32
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ {\n  \"success\": false,\n  \"recordId\": $('Validate & Transform Data').item.json.recordId,\n  \"email\": $('Validate & Transform Data').item.json.email,\n  \"error\": \"Failed to update Tabidoo record\",\n  \"statusCode\": $json.statusCode\n} }}",
+        "options": {}
+      },
+      "id": "ef72e802-e7c2-4a1e-b146-55e06aa9ff30",
+      "name": "Error Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        400,
+        176
+      ]
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-15T22:23:54.277Z",
+      "createdAt": "2026-01-15T22:23:54.277Z",
+      "role": "workflow:owner",
+      "workflowId": "jnqq9lJdUSLJwRGcVrV3f",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-15T22:29:28.329Z",
+  "versionId": "84d20804-0e53-4d16-b5c3-430d51db2674"
+}
