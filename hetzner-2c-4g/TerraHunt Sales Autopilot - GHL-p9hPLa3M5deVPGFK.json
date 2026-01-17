@@ -1,0 +1,1659 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Stripe Payment Succeeded Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "HTTP - GET GAMES",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Copy file",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Error Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Update a row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP - GET GAMES": {
+      "main": [
+        [
+          {
+            "node": "HTTP POST EVENT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP POST EVENT": {
+      "main": [
+        [
+          {
+            "node": "HTTP GET EVENT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP GET EVENT": {
+      "main": [
+        [
+          {
+            "node": "Update Event Information",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Event Information": {
+      "main": [
+        [
+          {
+            "node": "Create Personalized Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Copy file": {
+      "main": [
+        [
+          {
+            "node": "Move file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Move file": {
+      "main": [
+        [
+          {
+            "node": "Update a document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a document": {
+      "main": [
+        [
+          {
+            "node": "Invoice Created Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Create .PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Invoice Email Sent Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Post PDF to UOL": {
+      "main": [
+        [
+          {
+            "node": "Invoice UOL Upload Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message to Client - Tutorials & QR": {
+      "main": [
+        [
+          {
+            "node": "Update Event Information1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Personalized Message": {
+      "main": [
+        [
+          {
+            "node": "Message to Client - Tutorials & QR",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a row": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Invoice Created Status": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Invoice Supabase Upload": {
+      "main": [
+        [
+          {
+            "node": "Invoice PDF Supabase Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Invoice PDF Supabase Status": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Invoice UOL Upload Status": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Invoice Email Sent Status": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Order Overview",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create .PDF": {
+      "main": [
+        [
+          {
+            "node": "HTTP Post PDF to UOL",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Invoice Supabase Upload",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GHL Webhook": {
+      "main": [
+        [
+          {
+            "node": "Data Format for Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data Format for Supabase": {
+      "main": [
+        [
+          {
+            "node": "Create a row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-17T21:15:09.421Z",
+  "id": "p9hPLa3M5deVPGFK",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "TerraHunt Sales Autopilot - GHL",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Submit Website Form\n**Customer fills out and submits form from website including Stripe payment**\n\n[Test Website Link](https://autopilot.terrahunt.cz/)",
+        "height": 352,
+        "width": 416
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -176,
+        -352
+      ],
+      "typeVersion": 1,
+      "id": "917ae241-815a-4a74-b86e-44403149c2e4",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Edit Fields\n**Reformatting items from Webhook so that Supabase accepts them**",
+        "height": 352,
+        "width": 304
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        272,
+        -352
+      ],
+      "typeVersion": 1,
+      "id": "01c2a9f7-242d-43dc-9ab5-aaffb322af52",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Supabase Post Created\n**All items are saved for billing, pairing with Stripe, and client game parameters, according to which the event is then launched on the server. \nITEM FOR PAIRING - Payment ID**\n\n[Base link](https://supabase.com/dashboard/project/njjkoyhwklazxfkuqggx/editor/17484?schema=public)",
+        "height": 352,
+        "width": 592
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        624,
+        -352
+      ],
+      "typeVersion": 1,
+      "id": "47d2b241-fca9-40fe-9179-d604d93e107a",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Stripe Payment Succeeded Webhook\n**If Payment Succeeded**  webhook is sent - PAYMENT ID INCLUDED  - need to be paired with Airtable post",
+        "height": 336,
+        "width": 336
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -160,
+        320
+      ],
+      "typeVersion": 1,
+      "id": "9e508051-3f4e-471a-8492-caeae3a8bca5",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "064484ec-92eb-45c8-b7f7-e2a02497dfbf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -48,
+        480
+      ],
+      "id": "bec28e9c-c746-4237-806e-12b06aab1d17",
+      "name": "Stripe Payment Succeeded Webhook",
+      "webhookId": "064484ec-92eb-45c8-b7f7-e2a02497dfbf"
+    },
+    {
+      "parameters": {
+        "content": "## Stripe-Supabase Pairing\n**If Payment Succeeded** change status of payment in Supabase",
+        "height": 336,
+        "width": 256
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        528,
+        320
+      ],
+      "typeVersion": 1,
+      "id": "50b8ddc7-3857-429c-a0a3-e1aa8d684750",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "25fd7588-6742-4cc1-8139-954c92709eeb",
+              "leftValue": "={{ $json.stripe_payment_id }}",
+              "rightValue": "={{ $('Stripe Payment Succeeded Webhook').item.json.body.data.object.id }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        912,
+        480
+      ],
+      "id": "23608a0b-40f0-4439-b325-35aeb807b782",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "content": "## Pairing check\n**If Yes** Continue ! - **If no** Send a message!",
+        "height": 384,
+        "width": 416
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        848,
+        320
+      ],
+      "typeVersion": 1,
+      "id": "6fe2ca63-d80e-4ae1-b848-a3a7e883dcd9",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.stripe.com/v1/payment_methods/{{ $json.body.data.object.payment_method }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "stripeApi",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        272,
+        480
+      ],
+      "id": "a692a1ec-5927-49e8-ba31-1b3ff1cde5a7",
+      "name": "HTTP Request",
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "stripeApi": {
+          "id": "0ZpFJqgoU0OQpDBU",
+          "name": "Stripe account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Additional Card Information\n**Card brand, last 4 digits**  ",
+        "height": 336,
+        "width": 272
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        208,
+        320
+      ],
+      "typeVersion": 1,
+      "id": "79cdfaad-63f8-4f4a-997d-d48da5a48069",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "##  Send Receipt Email",
+        "height": 352,
+        "width": 416
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2608,
+        -720
+      ],
+      "typeVersion": 1,
+      "id": "ee29bcf6-d90b-41fd-9113-f210756058e3",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "content": "## Get Games IDs",
+        "height": 336,
+        "width": 336
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -160,
+        944
+      ],
+      "typeVersion": 1,
+      "id": "671e05ed-97f4-4de6-8bca-1c787be33f45",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "content": "## Create Treasure Hunt Event",
+        "height": 336,
+        "width": 336
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        288,
+        944
+      ],
+      "typeVersion": 1,
+      "id": "622558cb-c4b5-4335-9f72-7039cf3f33bb",
+      "name": "Sticky Note11"
+    },
+    {
+      "parameters": {
+        "content": "## Get Event Information",
+        "height": 336,
+        "width": 336
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        704,
+        944
+      ],
+      "typeVersion": 1,
+      "id": "bf17ee24-5386-483a-bbdd-ec41aa7637c0",
+      "name": "Sticky Note12"
+    },
+    {
+      "parameters": {
+        "content": "##  Personalized Message to Client",
+        "height": 592,
+        "width": 800
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1760,
+        944
+      ],
+      "typeVersion": 1,
+      "id": "aae1dabb-f6fa-4dc1-9ec0-7818f9925565",
+      "name": "Sticky Note13"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.buyer_email }}",
+        "subject": "=Invoice No. {{ $json.order_id }} - {{ $json.game_name }} - {{ $json.game_date }}",
+        "message": "=<!DOCTYPE html>\n<html>\n<head>\n<style>\n  body { font-family: Arial, sans-serif; line-height: 1.6; color: #333333; margin: 0; padding: 0; }\n  .container { max-width: 600px; margin: 20px auto; padding: 0; border: 1px solid #e0e0e0; border-radius: 5px; background-color: #ffffff; overflow: hidden; }\n  .header { background-color: #f8f9fa; padding: 20px; text-align: center; border-bottom: 3px solid #007bff; }\n  .content { padding: 30px 20px; }\n  .highlight { color: #007bff; font-weight: bold; }\n  .footer { font-size: 12px; text-align: center; color: #888888; background-color: #f9f9f9; padding: 20px; border-top: 1px solid #eeeeee; }\n  .footer a { color: #888888; text-decoration: none; }\n  .footer strong { color: #555555; }\n</style>\n</head>\n<body>\n\n<div class=\"container\">\n  <div class=\"header\">\n    <h2 style=\"margin:0;\">Thank You for Your Order!</h2>\n  </div>\n\n  <div class=\"content\">\n    <p>Dear <strong>{{ $json[\"Kupující - Jméno a Příjmení\"] }}</strong>,</p>\n\n    <p>We are thrilled that you have chosen to play <strong>{{ $json[\"Název hry\"] }}</strong> with us! This email confirms that we have successfully received your order.</p>\n\n    <h3>📄 Your Invoice</h3>\n    <p>Please find your invoice attached to this email in PDF format.</p>\n\n    <hr style=\"border: 0; border-top: 1px solid #eee; margin: 25px 0;\">\n\n    <h3>🎮 What Happens Next?</h3>\n    <p>You are probably eager to start playing, but don't worry about the details just yet.</p>\n    \n    <p><strong>Look out for another email from us shortly.</strong></p>\n    \n    <p>In that upcoming email, you will receive:</p>\n    <ul>\n      <li>Detailed instructions on how to start the game.</li>\n      <li>Game rules and guidelines.</li>\n      <li>Useful tips and recommendations for the best experience.</li>\n    </ul>\n\n    <p style=\"margin-top: 30px;\">Best regards,<br>\n    <strong>TerraHunt Gaming Platform Team</strong></p>\n  </div>\n\n  <div class=\"footer\">\n    <p>In case of any problems, please do not hesitate to contact us:</p>\n    \n    <p><strong>Z-AGENCY s.r.o.</strong><br>\n    Karlova 1054/38, 614 00 Brno<br>\n    Czech Republic, Europe</p>\n    \n    <p>\n      <a href=\"mailto:info@z-agency.cz\">info@z-agency.cz</a><br>\n      <a href=\"tel:+420542211935\">+420 542 211 935</a>\n    </p>\n\n    <p style=\"margin-top: 20px; font-size: 11px;\">\n      &copy; 2025 Z-Agency. All rights reserved.<br>\n      Order ID: {{ $json[\"ID objednávky\"] }}\n    </p>\n  </div>\n</div>\n\n</body>\n</html>",
+        "options": {
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {}
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2688,
+        -608
+      ],
+      "id": "98c1fda0-dcee-4729-aaf6-3d2fe18d312a",
+      "name": "Send a message",
+      "webhookId": "e57c9fac-40bc-437d-9214-2865b732bb93",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "cUMqdo7XCF6noXLb",
+          "name": "Gmail-info@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Online Accounting  \n**Upload receipt into UOL**",
+        "height": 304,
+        "width": 384
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2624,
+        288
+      ],
+      "typeVersion": 1,
+      "id": "7ea26c1e-bdba-43ff-b08a-54c38d9bc2cc",
+      "name": "Sticky Note15"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -64,
+        1056
+      ],
+      "id": "130b81e0-e7ad-43a0-b527-256c0df4b8f2",
+      "name": "HTTP - GET GAMES"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "authentication": "genericCredentialType",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "ID hry - interní název z public.terrahunt.com"
+            },
+            {
+              "name": "Název eventu - interní název z public.terrahunt.com",
+              "value": "={{ $('Update record').item.json.fields['Název hry'] }}"
+            },
+            {
+              "name": "Datum a čas - Start eventu - interní název z public.terrahunt.com",
+              "value": "={{ $('Update record').item.json.fields['Start hry'] }}"
+            },
+            {
+              "name": "Datum a čas - Konec Eventu - interní název z public.terrahunt.com",
+              "value": "={{ $('Update record').item.json.fields['Konec hry'] }}"
+            },
+            {
+              "name": "Počet týmů - interní název z public.terrahunt.com",
+              "value": "={{ $('Update record').item.json.fields['Počet týmů'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        384,
+        1056
+      ],
+      "id": "c858fb8f-ce7d-434c-a17f-7f9778b9c9e2",
+      "name": "HTTP POST EVENT"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        784,
+        1056
+      ],
+      "id": "ee099009-6525-48ae-b8c4-d55b87d33506",
+      "name": "HTTP GET EVENT"
+    },
+    {
+      "parameters": {
+        "content": "## Airtable Update Information\n**UPDATE!**\n- Game ID\n- Event ID\n- EVENT Status - Ready to play / Live / Finished\n- Event code\n- QR code",
+        "height": 592,
+        "width": 416
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1232,
+        944
+      ],
+      "typeVersion": 1,
+      "id": "ecdfacae-41e7-45d5-9ded-8ae1e713cf90",
+      "name": "Sticky Note16"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "table": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1344,
+        1216
+      ],
+      "id": "87a8e7ce-b49e-4020-9907-15fda276a0dc",
+      "name": "Update Event Information",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable - zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Accounting Section - Receipt Operations",
+        "height": 112,
+        "width": 1664,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1360,
+        -896
+      ],
+      "typeVersion": 1,
+      "id": "998f1d94-2bfe-4614-a8d2-054c9bc795f7",
+      "name": "Sticky Note18"
+    },
+    {
+      "parameters": {
+        "content": "## TerraHunt Game Server Section",
+        "height": 80,
+        "width": 1200,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -160,
+        832
+      ],
+      "typeVersion": 1,
+      "id": "ca3bf1d7-e946-4d12-99e5-12401567a37c",
+      "name": "Sticky Note19"
+    },
+    {
+      "parameters": {
+        "content": "## Website Section",
+        "height": 80,
+        "width": 1392,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -176,
+        -464
+      ],
+      "typeVersion": 1,
+      "id": "9a8fe0b6-bba0-4298-a261-d92eecfc93dd",
+      "name": "Sticky Note20"
+    },
+    {
+      "parameters": {
+        "content": "## Stripe Section",
+        "height": 80,
+        "width": 1424,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -160,
+        208
+      ],
+      "typeVersion": 1,
+      "id": "d0587ebe-1248-4e09-9673-94aaad67c6b1",
+      "name": "Sticky Note21"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "table": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        2320,
+        1216
+      ],
+      "id": "7d89ad93-543a-4d2c-b68f-72c5669f7345",
+      "name": "Update Event Information1",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable - zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "copy",
+        "fileId": {
+          "__rl": true,
+          "value": "1i80iux_rFtmFcfL88Q2IvYUwew7RZAsLxfc2Y-KAamM",
+          "mode": "list",
+          "cachedResultName": "Template_Receipt_Stripe",
+          "cachedResultUrl": "https://docs.google.com/document/d/1i80iux_rFtmFcfL88Q2IvYUwew7RZAsLxfc2Y-KAamM/edit?usp=drivesdk"
+        },
+        "name": "={{ $json.order_datetime }}-{{ $json.buyer_name }}-{{ $json.game_name }}-INVOICE-{{ $json.stripe_payment_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1456,
+        -128
+      ],
+      "id": "bebafc2a-354c-468d-b3ba-1d11faa77d80",
+      "name": "Copy file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "0y8WKhAVB7SLUFcI",
+          "name": "Google Drive zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "move",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "driveId": {
+          "__rl": true,
+          "value": "0ABzTOUwe2D1zUk9PVA",
+          "mode": "list",
+          "cachedResultName": "12 - Autopilot TerraHUnt",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/0ABzTOUwe2D1zUk9PVA"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1MpW_IzSbwUHNa1Zpa9a-ODiLRXjFdPSW",
+          "mode": "list",
+          "cachedResultName": "2026",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1MpW_IzSbwUHNa1Zpa9a-ODiLRXjFdPSW"
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1584,
+        -128
+      ],
+      "id": "7198a9fb-d004-4802-a0f7-393dc9ab738f",
+      "name": "Move file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "0y8WKhAVB7SLUFcI",
+          "name": "Google Drive zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $json.id }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "replaceAll",
+              "text": " {{client_name}}",
+              "replaceText": "={{ $('Update a row').item.json.buyer_name }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": " {{client_address}}",
+              "replaceText": "={{ $('Update a row').item.json.buyer_address }}, {{ $('Update a row').item.json.buyer_postcode }} {{ $('Update a row').item.json.buyer_city }}, {{ $('Update a row').item.json.buyer_country }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{client_email}}",
+              "replaceText": "={{ $('Update a row').item.json.buyer_email }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{order_id}}",
+              "replaceText": "={{ $('Update a row').item.json.order_id }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{date}}",
+              "replaceText": "={{ $('Update a row').item.json.order_datetime }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{payment_status}}",
+              "replaceText": "={{ $('Update a row').item.json.stripe_paid }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{card_brand}}",
+              "replaceText": "={{ $('Update a row').item.json.card_brand }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{card_last4}}",
+              "replaceText": "={{ $('Update a row').item.json.card_last4.toString() }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{item_name}}",
+              "replaceText": "={{ $('Update a row').item.json.game_name }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{game_date}}",
+              "replaceText": "={{ $('Update a row').item.json.game_start }} - {{ $('Update a row').item.json.game_end }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{total_price}}",
+              "replaceText": "={{ $('Update a row').item.json.total_price }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{client_phone}}",
+              "replaceText": "={{ $('Update a row').item.json.buyer_phone }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        1744,
+        -128
+      ],
+      "id": "4f2e9d00-5205-457e-bb8d-ed6a0d4f3501",
+      "name": "Update a document",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "z7r7DjjMY49jRh08",
+          "name": "Google Docs zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Receipt Creation\n**Google Disc Template File Manipulation  - Duplication of template, moving template to directory, set name, fill up, update Airtable status** \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTemplate:\nhttps://docs.google.com/document/d/1i80iux_rFtmFcfL88Q2IvYUwew7RZAsLxfc2Y-KAamM/edit?usp=sharing",
+        "height": 560,
+        "width": 704
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1392,
+        -336
+      ],
+      "typeVersion": 1,
+      "id": "29b19d49-ea47-4dbe-bb94-fc3e74a8350b",
+      "name": "Sticky Note17"
+    },
+    {
+      "parameters": {
+        "content": "## PDF Receipt Creation and Manipulation\n**Finalize receipt operations** ",
+        "height": 560,
+        "width": 864
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2160,
+        -320
+      ],
+      "typeVersion": 1,
+      "id": "09a7ff9c-1fbc-4a88-8e2c-e346b4e17434",
+      "name": "Sticky Note22"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('Update a document').item.json.documentId }}",
+          "mode": "id"
+        },
+        "options": {
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "=application/pdf"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2192,
+        -128
+      ],
+      "id": "12bea669-84af-44ce-b878-98faabbc7195",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "0y8WKhAVB7SLUFcI",
+          "name": "Google Drive zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://zagency.ucetnictvi.uol.cz/api/v1/uploaded_documents",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2672,
+        432
+      ],
+      "id": "de9ffd89-b927-4653-a0b5-2393484f7f64",
+      "name": "HTTP Post PDF to UOL",
+      "alwaysOutputData": false,
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "g9sUvJe5xEHSB4fE",
+          "name": "UOL API Z-AGENCY"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2096,
+        1216
+      ],
+      "id": "57b9e0db-5b8d-42e9-a659-5ee38e832311",
+      "name": "Message to Client - Tutorials & QR",
+      "webhookId": "87f6b595-4477-4472-8147-4926c11a94d7",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "cUMqdo7XCF6noXLb",
+          "name": "Gmail-info@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Create and Send Instructions to Client",
+        "height": 80,
+        "width": 1872,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1232,
+        816
+      ],
+      "typeVersion": 1,
+      "id": "6ca0894f-fea5-4ba1-99a6-798a71816a89",
+      "name": "Sticky Note23"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1840,
+        1216
+      ],
+      "id": "ac482004-6db5-4039-93f8-5903ea304e27",
+      "name": "Create Personalized Message"
+    },
+    {
+      "parameters": {
+        "sendTo": "zmidloch@z-agency.cz",
+        "subject": "⚠️ ALERT: Neshoda ID platby (Stripe vs Airtable) - {{ $json.fields['ID objednávky'] || 'Bez ID' }}",
+        "message": "=<!DOCTYPE html>\n<html>\n<head>\n<meta charset=\"utf-8\">\n</head>\n<body style=\"margin: 0; padding: 0; background-color: #f4f4f4; font-family: Arial, Helvetica, sans-serif;\">\n\n<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color: #f4f4f4;\">\n    <tr>\n        <td align=\"center\" style=\"padding: 20px;\">\n            \n            <table width=\"600\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); max-width: 600px;\">\n                \n                <tr>\n                    <td style=\"background-color: #D32F2F; padding: 20px; text-align: center; color: #ffffff;\">\n                        <h2 style=\"margin: 0; font-size: 24px; font-weight: bold;\">Chyba párování platby</h2>\n                        <p style=\"margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;\">Automatický report z n8n</p>\n                    </td>\n                </tr>\n\n                <tr>\n                    <td style=\"padding: 30px 30px 10px 30px; color: #333333; font-size: 16px; line-height: 1.5;\">\n                        Dobrý den,\n                        <br><br>\n                        Workflow narazilo na problém při kontrole platby. ID, které přišlo ze Stripe Webhooku, se <strong>neshoduje</strong> s ID, které je uloženo u nalezeného záznamu v Airtable.\n                        <br><br>\n                        Systém proto <strong>neprovedl aktualizaci</strong> záznamu, aby nedošlo k chybě.\n                    </td>\n                </tr>\n\n                <tr>\n                    <td style=\"padding: 10px 30px;\">\n                        <table width=\"100%\" border=\"0\" cellpadding=\"15\" cellspacing=\"0\" style=\"background-color: #fff4e5; border: 1px solid #ffcc80; border-radius: 4px;\">\n                            <tr>\n                                <td style=\"color: #663c00;\">\n                                    <strong style=\"display: block; font-size: 12px; text-transform: uppercase; color: #995c00;\">Nově přijaté ID (Stripe):</strong>\n                                    <code style=\"font-family: Consolas, 'Courier New', monospace; font-size: 16px; color: #2e7d32; background-color: #fff; padding: 2px 5px; border-radius: 3px;\">{{ $('Stripe Payment Succeeded Webhook').item.json.body.data.object.id }}</code>\n                                    \n                                    <br><br>\n                                    \n                                    <strong style=\"display: block; font-size: 12px; text-transform: uppercase; color: #995c00;\">Uložené ID (Airtable):</strong>\n                                    <code style=\"font-family: Consolas, 'Courier New', monospace; font-size: 16px; color: #c62828; background-color: #fff; padding: 2px 5px; border-radius: 3px;\">{{ $json.fields['ID Stripe platby'] }}</code>\n                                </td>\n                            </tr>\n                        </table>\n                    </td>\n                </tr>\n\n                <tr>\n                    <td style=\"padding: 20px 30px;\">\n                        <h3 style=\"margin: 0 0 15px 0; font-size: 16px; border-bottom: 2px solid #eeeeee; padding-bottom: 10px; color: #555555;\">🔍 Kontext záznamu</h3>\n                        \n                        <table width=\"100%\" border=\"0\" cellpadding=\"5\" cellspacing=\"0\" style=\"font-size: 14px; color: #333333;\">\n                            <tr>\n                                <td width=\"140\" style=\"font-weight: bold; color: #777;\">Jméno klienta:</td>\n                                <td>{{ $json.fields['Kupující - Jméno a Příjmení'] || 'Nenalezeno' }}</td>\n                            </tr>\n                            <tr>\n                                <td style=\"font-weight: bold; color: #777;\">Email:</td>\n                                <td>{{ $json.fields['Kupující - Email'] || 'Nenalezeno' }}</td>\n                            </tr>\n                            <tr>\n                                <td style=\"font-weight: bold; color: #777;\">ID Objednávky:</td>\n                                <td>{{ $json.fields['ID objednávky'] || 'Nenalezeno' }}</td>\n                            </tr>\n                            <tr>\n                                <td style=\"font-weight: bold; color: #777;\">Record ID:</td>\n                                <td style=\"font-family: monospace; color: #888;\">{{ $json.id }}</td>\n                            </tr>\n                        </table>\n                    </td>\n                </tr>\n\n                <tr>\n                    <td style=\"background-color: #eeeeee; padding: 15px; text-align: center; color: #888888; font-size: 12px;\">\n                        Toto je automaticky generovaná zpráva z n8n workflow.<br>\n                        Nereagujte na tento email.\n                    </td>\n                </tr>\n\n            </table>\n        </td>\n    </tr>\n</table>\n\n</body>\n</html>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1376,
+        496
+      ],
+      "id": "405d7d3d-7da4-4545-90da-c82d7f6229a5",
+      "name": "Send Error Message",
+      "webhookId": "7c62a89e-3860-440f-91de-36ca9a355297",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "cUMqdo7XCF6noXLb",
+          "name": "Gmail-info@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "stripe_payment_id",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        3216,
+        -128
+      ],
+      "id": "7b9a67c2-cc35-4934-806f-6257de4456c8",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "tableId": "Autopilot_Sales",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "order_id",
+              "fieldValue": "="
+            },
+            {
+              "fieldId": "order_datetime",
+              "fieldValue": "="
+            },
+            {
+              "fieldId": "buyer_name",
+              "fieldValue": "={{ $('GHL Webhook').item.json.body.full_name }}"
+            },
+            {
+              "fieldId": "buyer_phone",
+              "fieldValue": "="
+            },
+            {
+              "fieldId": "buyer_email",
+              "fieldValue": "="
+            },
+            {
+              "fieldId": "buyer_address",
+              "fieldValue": "="
+            },
+            {
+              "fieldId": "buyer_city",
+              "fieldValue": "="
+            },
+            {
+              "fieldId": "buyer_postcode",
+              "fieldValue": "="
+            },
+            {
+              "fieldId": "buyer_country",
+              "fieldValue": "="
+            },
+            {
+              "fieldId": "player_name",
+              "fieldValue": "="
+            },
+            {
+              "fieldId": "player_phone",
+              "fieldValue": "="
+            },
+            {
+              "fieldId": "player_email",
+              "fieldValue": "="
+            },
+            {
+              "fieldId": "game_name",
+              "fieldValue": "="
+            },
+            {
+              "fieldId": "game_date",
+              "fieldValue": "="
+            },
+            {
+              "fieldId": "game_start",
+              "fieldValue": "={{ $json.assignments[0].value }}"
+            },
+            {
+              "fieldId": "duration_min",
+              "fieldValue": "={{ $json.assignments[1].value }}"
+            },
+            {
+              "fieldId": "game_end",
+              "fieldValue": "={{ $json.assignments[2].value }}"
+            },
+            {
+              "fieldId": "time_zone",
+              "fieldValue": "={{ $('GHL Webhook').item.json.body.hidden_2 }}"
+            },
+            {
+              "fieldId": "teams_count",
+              "fieldValue": "={{ $('GHL Webhook').item.json.body.number_1 }}"
+            },
+            {
+              "fieldId": "team_price",
+              "fieldValue": "={{ $('GHL Webhook').item.json.body.calculation_2 }}"
+            },
+            {
+              "fieldId": "total_price",
+              "fieldValue": "={{ $('GHL Webhook').item.json.body.calculation_1 }}"
+            },
+            {
+              "fieldId": "stripe_payment_id",
+              "fieldValue": "={{ $('GHL Webhook').item.json.body.paymentid }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        816,
+        -176
+      ],
+      "id": "06fefdaa-b810-4d0f-8ee9-0b06f694df79",
+      "name": "Create a row",
+      "credentials": {
+        "supabaseApi": {
+          "id": "BI8O6iiU4BpDylT5",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Autopilot_Sales",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "stripe_payment_id",
+              "condition": "eq",
+              "keyValue": "={{ $('Stripe Payment Succeeded Webhook').item.json.body.data.object.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "card_brand",
+              "fieldValue": "={{ $json.card.display_brand }}"
+            },
+            {
+              "fieldId": "card_last4",
+              "fieldValue": "={{ $json.card.last4 }}"
+            },
+            {
+              "fieldId": "card_country",
+              "fieldValue": "={{ $json.card.country }}"
+            },
+            {
+              "fieldId": "stripe_paid",
+              "fieldValue": "paid"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        576,
+        480
+      ],
+      "id": "f8a8f2f2-58af-436a-bf11-f52c3e7156a4",
+      "name": "Update a row",
+      "credentials": {
+        "supabaseApi": {
+          "id": "BI8O6iiU4BpDylT5",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Autopilot_Sales",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "stripe_payment_id",
+              "condition": "eq",
+              "keyValue": "={{ $('Stripe Payment Succeeded Webhook').item.json.body.data.object.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "receipt_created_doc",
+              "fieldValue": "yes"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1936,
+        -128
+      ],
+      "id": "6b1aad95-c94d-4840-8796-d9c9fdb22362",
+      "name": "Invoice Created Status",
+      "credentials": {
+        "supabaseApi": {
+          "id": "BI8O6iiU4BpDylT5",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Autopilot_Sales",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "stripe_payment_id",
+              "condition": "eq",
+              "keyValue": "={{ $('Stripe Payment Succeeded Webhook').item.json.body.data.object.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "receipt_UOL_sent",
+              "fieldValue": "yes"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2864,
+        432
+      ],
+      "id": "73abaf5c-917b-40e3-adb4-73cf47664b5f",
+      "name": "Invoice UOL Upload Status",
+      "credentials": {
+        "supabaseApi": {
+          "id": "BI8O6iiU4BpDylT5",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Autopilot_Sales",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "stripe_payment_id",
+              "condition": "eq",
+              "keyValue": "={{ $('Stripe Payment Succeeded Webhook').item.json.body.data.object.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "receipt",
+              "fieldValue": "=data"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2624,
+        -128
+      ],
+      "id": "c56faedd-ee70-40d4-91ba-455112aa1346",
+      "name": "Invoice Supabase Upload",
+      "credentials": {
+        "supabaseApi": {
+          "id": "BI8O6iiU4BpDylT5",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Autopilot_Sales",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "stripe_payment_id",
+              "condition": "eq",
+              "keyValue": "={{ $('Stripe Payment Succeeded Webhook').item.json.body.data.object.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "receipt_supabase_uploaded",
+              "fieldValue": "yes"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2896,
+        -128
+      ],
+      "id": "53ac51d5-c1b6-425b-8725-f34e78416592",
+      "name": "Invoice PDF Supabase Status",
+      "credentials": {
+        "supabaseApi": {
+          "id": "BI8O6iiU4BpDylT5",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "Autopilot_Sales",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "stripe_payment_id",
+              "condition": "eq",
+              "keyValue": "={{ $('Stripe Payment Succeeded Webhook').item.json.body.data.object.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "receipt_client_sent",
+              "fieldValue": "yes"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2880,
+        -608
+      ],
+      "id": "6c066ef3-0009-4dfa-9ee1-a07e3c8ca177",
+      "name": "Invoice Email Sent Status",
+      "credentials": {
+        "supabaseApi": {
+          "id": "BI8O6iiU4BpDylT5",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "stripe_payment_id",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        3216,
+        80
+      ],
+      "id": "a288e7e9-4a79-4487-ae3e-1689bfc81c0f",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "table": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        3472,
+        80
+      ],
+      "id": "c29f641d-a5f2-4e95-8b67-28a628c395b7",
+      "name": "Order Overview",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable - zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Airtable Dashboard\n**Operation status for Teams**",
+        "height": 624,
+        "width": 576,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3392,
+        -96
+      ],
+      "typeVersion": 1,
+      "id": "01d19b97-9e55-40b7-a1d6-b931375c6d75",
+      "name": "Sticky Note24"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const b = item.binary?.data;\nif (!b) {\n\tthrow new Error('Chybí item.binary.data');\n}\n\n// nové jméno souboru podle dat v JSONu\nb.fileName = `${item.json.order_datetime}-${item.json.buyer_name}-${item.json.game_name}-INVOICE-${item.json.stripe_payment_id}.pdf`;\n\n// volitelné – většinou už nastavené z Download file\nb.mimeType = 'application/pdf';\n\nreturn item;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2352,
+        -128
+      ],
+      "id": "f2d25747-aab4-4efd-b6a1-37eb3067b88c",
+      "name": "Create .PDF"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "544f287a-d6b4-4655-8ad4-0ffb76136177",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -32,
+        -176
+      ],
+      "id": "4df17b18-54c7-4dca-9e7f-74fc3c684ebc",
+      "name": "GHL Webhook",
+      "webhookId": "544f287a-d6b4-4655-8ad4-0ffb76136177"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"assignments\": [\n    {\n      \"id\": \"start_game_iso\",\n      \"name\": \"zacatek_hry\",\n      \"value\": \"={{ $now.setZone($json.body.hidden_2).set({ year: parseInt($json.body.date_1.split('.')[2]), month: parseInt($json.body.date_1.split('.')[1]), day: parseInt($json.body.date_1.split('.')[0]), hour: parseInt($json.body.time_1_hours), minute: parseInt($json.body.time_1_minutes), second: 0, millisecond: 0 }).toISO() }}\",\n      \"type\": \"string\"\n    },\n    {\n      \"id\": \"duration_minutes\",\n      \"name\": \"delka_hry_minuty\",\n      \"value\": \"={{ parseFloat($json.body.radio_1.replace(',', '.')) * 60 }}\",\n      \"type\": \"number\"\n    },\n    {\n      \"id\": \"end_game_iso\",\n      \"name\": \"konec_hry\",\n      \"value\": \"={{ $now.setZone($json.body.hidden_2).set({ year: parseInt($json.body.date_1.split('.')[2]), month: parseInt($json.body.date_1.split('.')[1]), day: parseInt($json.body.date_1.split('.')[0]), hour: parseInt($json.body.time_1_hours), minute: parseInt($json.body.time_1_minutes) }).plus({ minutes: (parseFloat($json.body.radio_1.replace(',', '.')) * 60) }).toISO() }}\",\n      \"type\": \"string\"\n    },\n    {\n      \"id\": \"price_num\",\n      \"name\": \"cena_cislo\",\n      \"value\": \"={{ Number($json.body.calculation_1) }}\",\n      \"type\": \"number\"\n    },\n    {\n      \"id\": \"teams_num\",\n      \"name\": \"pocet_tymu_cislo\",\n      \"value\": \"={{ Number($json.body.number_1) }}\",\n      \"type\": \"number\"\n    },\n    {\n      \"id\": \"th_id\",\n      \"name\": \"th_id\",\n      \"value\": \"={{ Number($json.body.hidden_1) }}\",\n      \"type\": \"number\"\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        368,
+        -176
+      ],
+      "id": "4651f846-e21a-4003-89af-767c81356c33",
+      "name": "Data Format for Supabase"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "errorWorkflow": "zVAjJgKV17IWzFP7",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-17T21:15:09.421Z",
+      "createdAt": "2026-01-17T21:15:09.421Z",
+      "role": "workflow:owner",
+      "workflowId": "p9hPLa3M5deVPGFK",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-01-17T21:33:50.052Z",
+  "versionId": "cc5a9568-af93-42ed-a552-d66e82853bf2"
+}
