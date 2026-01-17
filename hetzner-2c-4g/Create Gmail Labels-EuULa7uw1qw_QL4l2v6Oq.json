@@ -1,0 +1,80 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Define Labels": {
+      "main": [
+        [
+          {
+            "node": "Create Labels in Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-17T12:45:18.905Z",
+  "id": "EuULa7uw1qw_QL4l2v6Oq",
+  "isArchived": false,
+  "meta": null,
+  "name": "Create Gmail Labels",
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": "return [\n  { \"name\": \"Category/Leads\" },\n  { \"name\": \"Category/Support\" },\n  { \"name\": \"Category/Finance\" },\n  { \"name\": \"Category/Partnership\" },\n  { \"name\": \"Category/Admin\" },\n  { \"name\": \"Category/Noise\" },\n  { \"name\": \"Status/Urgent\" },\n  { \"name\": \"Status/To Do\" },\n  { \"name\": \"Status/Review\" },\n  { \"name\": \"Status/Processed\" },\n  { \"name\": \"Type/Credentials\" },\n  { \"name\": \"Type/Legal\" },\n  { \"name\": \"Type/Meeting\" },\n  { \"name\": \"Type/Data\" },\n  { \"name\": \"Type/Documentation\" }\n];"
+      },
+      "id": "ad1fd275-5324-4ed3-9c5c-3e33b4355a54",
+      "name": "Define Labels",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        64,
+        -48
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "label",
+        "operation": "create",
+        "name": "={{ $json.name }}",
+        "options": {}
+      },
+      "id": "4d65096a-5ebf-4a5e-9141-9d308a7f9798",
+      "name": "Create Labels in Gmail",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        288,
+        -48
+      ],
+      "webhookId": "1f8663d5-d521-481a-9d35-cacbe6fbe200",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "KdKS4XoSt52wyAvS",
+          "name": "Gmail info@processgate.ai"
+        }
+      },
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-17T12:45:18.905Z",
+      "createdAt": "2026-01-17T12:45:18.905Z",
+      "role": "workflow:owner",
+      "workflowId": "EuULa7uw1qw_QL4l2v6Oq",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-17T13:02:45.391Z",
+  "versionId": "6a623805-0be5-4fa9-9349-9fddafcaddfc"
+}
