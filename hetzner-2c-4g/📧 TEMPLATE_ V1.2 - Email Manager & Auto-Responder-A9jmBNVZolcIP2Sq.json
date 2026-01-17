@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-01-17T15:47:41.502Z",
-    "createdAt": "2026-01-17T15:47:37.939Z",
-    "versionId": "f8ffc449-b7f0-47d6-b28f-95e9ea666173",
+    "updatedAt": "2026-01-17T20:27:22.160Z",
+    "createdAt": "2026-01-17T20:26:26.582Z",
+    "versionId": "c58a0253-9016-406b-b0da-110178cafb9d",
     "workflowId": "A9jmBNVZolcIP2Sq",
     "nodes": [
       {
@@ -456,7 +456,7 @@
           },
           "folderId": {
             "__rl": true,
-            "value": "https://drive.google.com/drive/u/0/folders/1dNl56Nrck8L9gckJWcdV9Wf0iGQz7-GO",
+            "value": "https://drive.google.com/drive/u/0/folders/1emQG1LZ0-WzzvO1zuS7SHZeSzq2aV8pj",
             "mode": "url"
           },
           "options": {}
@@ -589,7 +589,7 @@
           "filter": {
             "folderId": {
               "__rl": true,
-              "value": "https://drive.google.com/drive/u/0/folders/1dNl56Nrck8L9gckJWcdV9Wf0iGQz7-GO",
+              "value": "https://drive.google.com/drive/u/0/folders/1emQG1LZ0-WzzvO1zuS7SHZeSzq2aV8pj",
               "mode": "url"
             }
           },
@@ -1148,11 +1148,11 @@
       }
     },
     "authors": "Jiri Zmidloch",
-    "name": "Version f8ffc449",
+    "name": "Version c58a0253",
     "description": "",
     "autosaved": false
   },
-  "activeVersionId": "f8ffc449-b7f0-47d6-b28f-95e9ea666173",
+  "activeVersionId": "c58a0253-9016-406b-b0da-110178cafb9d",
   "connections": {
     "Auto-fixing Output Parser2": {
       "ai_outputParser": [
@@ -1887,7 +1887,7 @@
         },
         "folderId": {
           "__rl": true,
-          "value": "https://drive.google.com/drive/u/0/folders/1dNl56Nrck8L9gckJWcdV9Wf0iGQz7-GO",
+          "value": "https://drive.google.com/drive/u/0/folders/1emQG1LZ0-WzzvO1zuS7SHZeSzq2aV8pj",
           "mode": "url"
         },
         "options": {}
@@ -2020,7 +2020,7 @@
         "filter": {
           "folderId": {
             "__rl": true,
-            "value": "https://drive.google.com/drive/u/0/folders/1dNl56Nrck8L9gckJWcdV9Wf0iGQz7-GO",
+            "value": "https://drive.google.com/drive/u/0/folders/1emQG1LZ0-WzzvO1zuS7SHZeSzq2aV8pj",
             "mode": "url"
           }
         },
@@ -2319,10 +2319,10 @@
   ],
   "staticData": {
     "node:ReceiveEmail_Trigger": {
-      "lastTimeChecked": 1768665020,
+      "lastTimeChecked": 1768682318,
       "possibleDuplicates": [
-        "19bcca6834259c5a",
-        "19bcc1a5a8a7c66e"
+        "19bcdae8450f4eea",
+        "19bcca6834259c5a"
       ]
     }
   },
@@ -2341,6 +2341,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2026-01-17T15:47:37.936Z",
-  "versionId": "f8ffc449-b7f0-47d6-b28f-95e9ea666173"
+  "updatedAt": "2026-01-17T20:26:26.580Z",
+  "versionId": "c58a0253-9016-406b-b0da-110178cafb9d"
 }
