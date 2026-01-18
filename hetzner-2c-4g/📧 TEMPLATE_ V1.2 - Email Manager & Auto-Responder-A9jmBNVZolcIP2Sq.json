@@ -2321,23 +2321,22 @@
     "node:ReceiveEmail_Trigger": {
       "lastTimeChecked": 1768682318,
       "possibleDuplicates": [
-        "19bcdae8450f4eea",
-        "19bcca6834259c5a"
+        "19bcdae8450f4eea"
       ]
     }
   },
   "tags": [
     {
-      "updatedAt": "2025-12-22T22:47:26.752Z",
-      "createdAt": "2025-12-22T22:47:26.752Z",
-      "id": "TXxnmBf4zpPPVtoG",
-      "name": "IN PROGRESS"
-    },
-    {
       "updatedAt": "2025-12-22T22:47:26.726Z",
       "createdAt": "2025-12-22T22:47:26.726Z",
       "id": "98rdzjHLvbT6u8C1",
       "name": "AI agent"
+    },
+    {
+      "updatedAt": "2025-12-22T22:47:26.752Z",
+      "createdAt": "2025-12-22T22:47:26.752Z",
+      "id": "TXxnmBf4zpPPVtoG",
+      "name": "IN PROGRESS"
     }
   ],
   "triggerCount": 1,
