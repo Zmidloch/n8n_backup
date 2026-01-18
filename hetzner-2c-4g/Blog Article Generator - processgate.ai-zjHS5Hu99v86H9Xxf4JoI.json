@@ -1,0 +1,2562 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-01-18T21:20:54.167Z",
+    "createdAt": "2026-01-18T21:20:31.002Z",
+    "versionId": "b08c9dac-4564-499f-9e77-29aeab3c65fc",
+    "workflowId": "zjHS5Hu99v86H9Xxf4JoI",
+    "nodes": [
+      {
+        "parameters": {
+          "url": "https://processgate.ai/wp-json/wp/v2/tags",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "wordpressApi",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "per_page",
+                "value": "100"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          6400,
+          8448
+        ],
+        "id": "6dce67a1-c4fa-41f4-a6ec-9f2abe8f17b1",
+        "name": "Get WP Tags1",
+        "credentials": {
+          "wordpressApi": {
+            "id": "flqY5YMCvIpv5fpx",
+            "name": "Processgate.ai_propojeni"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "content": "# Blog Article Generator pro processgate.ai\n\n**Dvě startovní větve:**\n- **VĚTEV A (Automatická)**: Schedule 2x týdně → AI vybere téma z aktuálních trendů\n- **VĚTEV B (Manuální)**: Webový formulář → zadáš název článku, klíčová slova, délku\n\n**Nové funkce:**\n- Wikipedia tool pro fact-checking\n- Verifikační agent proti halucinacím\n\n**Společná část:**\nResearch (Tavily + Wikipedia) → Keywords/Categories → Blog Draft → Verifikace → WordPress (draft) → Imagen obrázek → Gmail notifikace",
+          "height": 280,
+          "width": 600,
+          "color": 6
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          4304,
+          7360
+        ],
+        "typeVersion": 1,
+        "id": "d12fcd90-e32a-4d6f-af2d-87314c1a5e50",
+        "name": "Info"
+      },
+      {
+        "parameters": {
+          "content": "## VĚTEV A: Automatická\nSchedule trigger → Tavily research → AI vybere téma",
+          "height": 480,
+          "width": 1184,
+          "color": 4
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          4304,
+          7760
+        ],
+        "typeVersion": 1,
+        "id": "7b137611-fd32-4413-a38a-f5fd4159f7c0",
+        "name": "Branch A Note"
+      },
+      {
+        "parameters": {
+          "content": "## VĚTEV B: Manuální\nWebový formulář → zadání názvu článku, klíčových slov a délky → research",
+          "height": 480,
+          "width": 1072,
+          "color": 5
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          4304,
+          8320
+        ],
+        "typeVersion": 1,
+        "id": "96a6236f-d2de-417b-b890-c6e60e4d6798",
+        "name": "Branch B Note"
+      },
+      {
+        "parameters": {
+          "content": "## Společná část\nMerge → Research (Tavily + Wikipedia) → Keywords → Blog Draft → VERIFIKACE → WordPress → Image → Email",
+          "height": 640,
+          "width": 2208,
+          "color": 3
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          5872,
+          7760
+        ],
+        "typeVersion": 1,
+        "id": "3a6df0d2-7e13-44be-81b5-2d268d8132c7",
+        "name": "Common Part Note"
+      },
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "weeks",
+                "triggerAtDay": [
+                  1,
+                  4
+                ],
+                "triggerAtHour": 8
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          4384,
+          7920
+        ],
+        "id": "51887f9d-d4a4-49b7-9d8c-9c9eb1289254",
+        "name": "Schedule Trigger (2x týdně)"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          4592,
+          7920
+        ],
+        "id": "ee9e0f1b-ab36-4608-a06f-87adbe11ee0e",
+        "name": "Set Topics & Keywords"
+      },
+      {
+        "parameters": {
+          "query": "={{ $json.topics.split(', ').map(t => t + ' 2025').join(' OR ') }}",
+          "options": {
+            "topic": "news",
+            "max_results": 5,
+            "time_range": "week"
+          }
+        },
+        "type": "@tavily/n8n-nodes-tavily.tavily",
+        "typeVersion": 1,
+        "position": [
+          4784,
+          7920
+        ],
+        "id": "432d03ad-21d4-448f-a8df-6a6bcbc35723",
+        "name": "Fetch AI Headlines",
+        "credentials": {
+          "tavilyApi": {
+            "id": "KmiWEKpArgJSNmSk",
+            "name": "Tavily account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=Zde jsou aktuální novinky z oblasti AI a automatizace:\n\n{{ $json.results.map((r, i) => `${i+1}. ${r.title}\\n   ${r.content}\\n   Zdroj: ${r.url}`).join('\\n\\n') }}\n\nNa základě těchto novinek vyber JEDNO téma, které bude nejzajímavější pro české publikum zaměřené na malé a střední firmy. Téma by mělo být praktické a aktuální.\n\nVrať JSON s těmito poli:\n- title: český název článku (jasný, konkrétní, bez clickbaitu)\n- angle: úhel pohledu / hlavní myšlenka článku\n- searchQuery: anglický vyhledávací dotaz pro další research\n- wikipediaTerms: pole 2-3 anglických termínů pro vyhledání na Wikipedii (pro ověření faktů)",
+          "hasOutputParser": true,
+          "needsFallback": true,
+          "options": {
+            "systemMessage": "Jsi expert na obsahovou strategii pro tech blogy. Vybíráš témata, která jsou relevantní pro české podnikatele a manažery zajímající se o AI a automatizaci. Odpovídej POUZE validním JSON objektem."
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 3,
+        "position": [
+          4992,
+          7920
+        ],
+        "id": "7745c748-3d99-4f95-a582-7a2b7e9dcd04",
+        "name": "TopicIdeation"
+      },
+      {
+        "parameters": {
+          "model": "anthropic/claude-sonnet-4",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+        "typeVersion": 1,
+        "position": [
+          4832,
+          8128
+        ],
+        "id": "a6236683-8425-473f-935b-5102471887ae",
+        "name": "OpenRouter (Claude)",
+        "credentials": {
+          "openRouterApi": {
+            "id": "XpZg3NCm0vRTBA75",
+            "name": "OpenRouter account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "modelName": "models/gemini-2.0-flash",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          4960,
+          8128
+        ],
+        "id": "39b0b62a-1f6b-4eb0-89cd-1ead35e86ef2",
+        "name": "Gemini Fallback",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "O18dqBggPBVuy0CJ",
+            "name": "Google Gemini(PaLM) Api account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "schemaType": "manual",
+          "inputSchema": "{\n  \"type\": \"object\",\n  \"required\": [\"title\", \"angle\", \"searchQuery\", \"wikipediaTerms\"],\n  \"properties\": {\n    \"title\": { \"type\": \"string\", \"description\": \"Český název článku\" },\n    \"angle\": { \"type\": \"string\", \"description\": \"Úhel pohledu článku\" },\n    \"searchQuery\": { \"type\": \"string\", \"description\": \"Anglický vyhledávací dotaz\" },\n    \"wikipediaTerms\": { \"type\": \"array\", \"items\": { \"type\": \"string\" }, \"description\": \"Termíny pro Wikipedia lookup\" }\n  }\n}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "typeVersion": 1.3,
+        "position": [
+          5184,
+          8128
+        ],
+        "id": "9bc63c53-9970-41a4-b083-153edc619ce2",
+        "name": "Topic Parser"
+      },
+      {
+        "parameters": {
+          "jsCode": "let mergeData;\ntry {\n  mergeData = $('TopicIdeation').item.json.output;\n} catch (e) {\n  mergeData = { title: \"\", angle: \"\", searchQuery: \"\", wikipediaTerms: [] };\n}\n\nconst originalData = $('Set Topics & Keywords').item.json;\n\nreturn {\n  json: {\n    source: 'automatic',\n    topic: mergeData.title,\n    angle: mergeData.angle,\n    searchQuery: mergeData.searchQuery,\n    wikipediaTerms: mergeData.wikipediaTerms || [],\n    keywords: (originalData.keywords || \"\").split(', '),\n    targetLength: originalData.targetLength\n  }\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          5328,
+          7920
+        ],
+        "id": "a196c764-0c9a-4c78-a4df-ced80da95ffb",
+        "name": "Prepare for Merge (A)"
+      },
+      {
+        "parameters": {
+          "formTitle": "Nový blogový článek",
+          "formDescription": "Zadejte informace pro vygenerování článku na processgate.ai",
+          "formFields": {
+            "values": [
+              {
+                "fieldLabel": "Název článku",
+                "placeholder": "např. Využití n8n a Airtable při onboardingu zaměstnanců",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Klíčová slova",
+                "placeholder": "n8n, Airtable, onboarding, HR automatizace",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Délka článku (znaky)",
+                "fieldType": "number",
+                "placeholder": "4500"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.formTrigger",
+        "typeVersion": 2.2,
+        "position": [
+          4384,
+          8480
+        ],
+        "id": "1d5e5a1f-9443-4876-a46a-84af7a719d29",
+        "name": "Formulář pro nový článek",
+        "webhookId": "fc0837c0-18a0-4a03-b56a-f5745144dd96"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Extrakce dat z formuláře a příprava pro research\nconst formData = $input.item.json;\n\n// Extrakce klíčových slov pro Wikipedia lookup\nconst keywords = (formData['Klíčová slova'] || \"\").split(',').map(k => k.trim());\n\nconst translations = {\n  'automatizace': 'automation',\n  'umělá inteligence': 'artificial intelligence',\n  'AI': 'artificial intelligence',\n  'produktivita': 'productivity',\n  'workflow': 'workflow',\n  'n8n': 'n8n',\n  'integrace': 'system integration',\n  'API': 'API',\n  'onboarding': 'onboarding',\n  'HR': 'human resources'\n};\n\nconst wikipediaTerms = keywords.slice(0, 3).map(k => {\n  return translations[k.toLowerCase()] || k;\n});\n\nreturn {\n  json: {\n    source: 'manual',\n    topic: formData['Název článku'],\n    angle: 'Zadáno uživatelem přes formulář',\n    searchQuery: formData['Název článku'],\n    wikipediaTerms: wikipediaTerms,\n    keywords: keywords,\n    targetLength: formData['Délka článku (znaky)'] || 4500\n  }\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          4592,
+          8480
+        ],
+        "id": "a1a5bc42-6427-4f6a-bf1b-1bc42394d0f7",
+        "name": "Process Form Data"
+      },
+      {
+        "parameters": {
+          "query": "={{ $json.topic }}",
+          "options": {
+            "max_results": 5,
+            "time_range": "month",
+            "include_raw_content": true
+          }
+        },
+        "type": "@tavily/n8n-nodes-tavily.tavily",
+        "typeVersion": 1,
+        "position": [
+          4784,
+          8480
+        ],
+        "id": "71b3e508-819d-430c-92db-fba871ecfe93",
+        "name": "Research Manual Topic",
+        "credentials": {
+          "tavilyApi": {
+            "id": "KmiWEKpArgJSNmSk",
+            "name": "Tavily account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Připravit data pro merge z manuální větve\nconst processedData = $('Process Form Data').item.json;\nconst researchData = $input.item.json;\n\nreturn {\n  json: {\n    ...processedData,\n    initialResearch: researchData.results\n  }\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          4992,
+          8480
+        ],
+        "id": "a008e488-7388-4bec-a13e-598243298b8d",
+        "name": "Prepare for Merge (B)"
+      },
+      {
+        "parameters": {
+          "query": "={{ $json.searchQuery || $json.topic }}",
+          "options": {
+            "max_results": 5,
+            "include_raw_content": true
+          }
+        },
+        "type": "@tavily/n8n-nodes-tavily.tavily",
+        "typeVersion": 1,
+        "position": [
+          6080,
+          8016
+        ],
+        "id": "b20c522d-db0d-40bd-bdb5-0d539cf29914",
+        "name": "Deep Research (Tavily)",
+        "credentials": {
+          "tavilyApi": {
+            "id": "KmiWEKpArgJSNmSk",
+            "name": "Tavily account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "let mergeData;\ntry {\n  mergeData = $('Prepare for Merge (A)').item.json;\n} catch (e) {\n  mergeData = $('Prepare for Merge (B)').item.json;\n}\n\nconst tavilyData = $input.item.json;\nconst terms = mergeData.wikipediaTerms || [];\n\nif (terms.length === 0) {\n  return [{\n    json: {\n      term: mergeData.topic || \"Artificial Intelligence\",\n      mergeData: mergeData,\n      tavilyResults: tavilyData.results\n    }\n  }];\n}\n\nreturn terms.map(term => ({\n  json: {\n    term: term,\n    mergeData: mergeData,\n    tavilyResults: tavilyData.results\n  }\n}));"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          6240,
+          8016
+        ],
+        "id": "00a25fb4-9d48-4f32-9a8f-b0ac661174cb",
+        "name": "Prepare Wiki Terms"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 3,
+        "position": [
+          6464,
+          8016
+        ],
+        "id": "495aed6b-30a4-4886-aef9-73232bb61beb",
+        "name": "Split Wikipedia Terms"
+      },
+      {
+        "parameters": {
+          "url": "=https://en.wikipedia.org/api/rest_v1/page/summary/{{ encodeURIComponent($json.term) }}",
+          "options": {
+            "response": {
+              "response": {
+                "neverError": true
+              }
+            }
+          }
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          6672,
+          8192
+        ],
+        "id": "77f51e94-8c16-413b-a0fe-c930ab73bfae",
+        "name": "Wikipedia Lookup"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Agregace Wikipedia dat\nconst allItems = $input.all();\nconst firstItem = $('Prepare Wiki Terms').first();\nconst mergeData = firstItem.json.mergeData;\nconst tavilyResults = firstItem.json.tavilyResults;\n\nconst wikiData = allItems\n  .filter(item => item.json.extract)\n  .map(item => ({\n    title: item.json.title,\n    summary: item.json.extract,\n    url: item.json.content_urls?.desktop?.page || ''\n  }));\n\nreturn {\n  json: {\n    ...mergeData,\n    tavilyResearch: tavilyResults,\n    wikipediaData: wikiData\n  }\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          6768,
+          7920
+        ],
+        "id": "439fd6b3-fa57-4e9f-9dc7-396c00b31e60",
+        "name": "Aggregate Research Data"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=Téma článku: {{ $json.topic }}\nÚhel pohledu: {{ $json.angle }}\nVstupní klíčová slova: {{ $json.keywords.join(', ') }}\n\n## Tavily Research:\n{{ $json.tavilyResearch.map(r => `- ${r.title}: ${r.content}`).join('\\n') }}\n\n## Wikipedia Data (ověřené fakty):\n{{ $json.wikipediaData.map(w => `### ${w.title}\\n${w.summary}`).join('\\n\\n') }}\n\nNa základě těchto informací vytvoř:\n1. Seznam 5-8 SEO klíčových slov v ČEŠTINĚ (relevantní pro článek)\n2. Navrhni 1-3 ČESKÉ kategorie z tohoto seznamu: Umělá inteligence, Automatizace, Digitální transformace, Produktivita, Nástroje a technologie, Případové studie, Novinky z oboru\n3. Navrhni 3-5 ČESKÝCH tagů (konkrétní, relevantní pro téma)\n\nVrať POUZE validní JSON.",
+          "hasOutputParser": true,
+          "needsFallback": true,
+          "options": {
+            "systemMessage": "Jsi SEO specialista pro české tech blogy. Vytváříš klíčová slova a taxonomie v češtině. Odpovídej POUZE validním JSON objektem."
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 3,
+        "position": [
+          7024,
+          7920
+        ],
+        "id": "0e651b39-6a35-4560-a93c-ab9e071a4ed8",
+        "name": "KeywordStrategy"
+      },
+      {
+        "parameters": {
+          "model": "anthropic/claude-sonnet-4",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+        "typeVersion": 1,
+        "position": [
+          6944,
+          8144
+        ],
+        "id": "2439d563-71c3-46fa-ba05-71e3b44ceba0",
+        "name": "OpenRouter (Keywords)",
+        "credentials": {
+          "openRouterApi": {
+            "id": "XpZg3NCm0vRTBA75",
+            "name": "OpenRouter account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "schemaType": "manual",
+          "inputSchema": "{\n  \"type\": \"object\",\n  \"required\": [\"keywords\", \"categories\", \"tags\"],\n  \"properties\": {\n    \"keywords\": { \"type\": \"array\", \"items\": { \"type\": \"string\" }, \"description\": \"SEO klíčová slova v češtině\" },\n    \"categories\": { \"type\": \"array\", \"items\": { \"type\": \"string\" }, \"description\": \"WordPress kategorie\" },\n    \"tags\": { \"type\": \"array\", \"items\": { \"type\": \"string\" }, \"description\": \"WordPress tagy\" }\n  }\n}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "typeVersion": 1.3,
+        "position": [
+          7168,
+          8144
+        ],
+        "id": "ef9f634e-1922-48ec-8033-2669bb355f1e",
+        "name": "Keywords Parser"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=# ZADÁNÍ ČLÁNKU\n\n**Téma (název článku):** {{ $('Aggregate Research Data').item.json.topic }}\n**Úhel pohledu:** {{ $('Aggregate Research Data').item.json.angle }}\n**Cílová délka:** {{ $('Aggregate Research Data').item.json.targetLength }} znaků\n**SEO klíčová slova:** {{ $json.output.keywords.join(', ') }}\n\n# RESEARCH DATA (Tavily)\n\n{{ $('Aggregate Research Data').item.json.tavilyResearch.map(r => `## ${r.title}\\n${r.content}\\n\\nZdroj: ${r.url}`).join('\\n\\n---\\n\\n') }}\n\n# OVĚŘENÉ FAKTY (Wikipedia)\n\nTyto informace jsou ověřené a můžeš je použít jako základ pro faktická tvrzení:\n\n{{ $('Aggregate Research Data').item.json.wikipediaData.map(w => `## ${w.title}\\n${w.summary}\\n\\nZdroj: ${w.url}`).join('\\n\\n---\\n\\n') }}\n\n# INSTRUKCE\n\nNapiš blogový článek na zadané téma. Článek bude publikován na processgate.ai - český blog o AI a automatizaci pro malé a střední firmy.\n\n**DŮLEŽITÉ PRO FAKTICKOU SPRÁVNOST:**\n- Používej POUZE informace z poskytnutých zdrojů (Tavily research a Wikipedia)\n- Pokud uvádíš statistiky nebo čísla, musí pocházet ze zdrojů\n- Pokud si nejsi jistý faktem, raději ho neuváděj\n- Cituj zdroje přirozeně v textu\n\nVrať JSON s těmito poli:\n- title: finální název článku (může být upraven oproti zadání)\n- content: HTML obsah článku (použij p, h2, ul, li, strong, a tagy)\n- excerpt: krátký perex (max 160 znaků) pro SEO\n- slug: URL slug (malá písmena, pomlčky, bez diakritiky)\n- imageQuery: anglický popis pro vygenerování featured image (tech/AI styl)\n- factualClaims: pole klíčových faktických tvrzení v článku (pro pozdější verifikaci)",
+          "hasOutputParser": true,
+          "needsFallback": true,
+          "options": {
+            "systemMessage": "Jsi zkušený český technologický novinář a copywriter specializující se na AI, automatizaci a digitální transformaci pro malé a střední firmy."
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 3,
+        "position": [
+          7408,
+          7920
+        ],
+        "id": "6109e04c-c6b8-4577-a38f-f7fab431f0b8",
+        "name": "BlogDraft"
+      },
+      {
+        "parameters": {
+          "model": "anthropic/claude-sonnet-4",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+        "typeVersion": 1,
+        "position": [
+          7392,
+          8128
+        ],
+        "id": "adbcb409-7484-4379-b6c1-0158c72ad777",
+        "name": "OpenRouter (Blog)",
+        "credentials": {
+          "openRouterApi": {
+            "id": "XpZg3NCm0vRTBA75",
+            "name": "OpenRouter account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "schemaType": "manual",
+          "inputSchema": "{\n  \"type\": \"object\",\n  \"required\": [\"title\", \"content\", \"excerpt\", \"slug\", \"imageQuery\", \"factualClaims\"],\n  \"properties\": {\n    \"title\": { \"type\": \"string\", \"description\": \"Název článku\" },\n    \"content\": { \"type\": \"string\", \"description\": \"HTML obsah článku\" },\n    \"excerpt\": { \"type\": \"string\", \"description\": \"Krátký perex pro SEO\" },\n    \"slug\": { \"type\": \"string\", \"description\": \"URL slug\" },\n    \"imageQuery\": { \"type\": \"string\", \"description\": \"Popis pro generování obrázku\" },\n    \"factualClaims\": { \"type\": \"array\", \"items\": { \"type\": \"string\" }, \"description\": \"Klíčová faktická tvrzení k verifikaci\" }\n  }\n}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "typeVersion": 1.3,
+        "position": [
+          7600,
+          8144
+        ],
+        "id": "fc288b3d-956b-4f1b-b5df-1c8811c23857",
+        "name": "Blog Parser"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=# VERIFIKACE ČLÁNKU\n\nZkontroluj následující článek a jeho faktická tvrzení.\n\n## ČLÁNEK:\n**Název:** {{ $json.output.title }}\n\n**Obsah:**\n{{ $json.output.content }}\n\n## FAKTICKÁ TVRZENÍ K OVĚŘENÍ:\n{{ $json.output.factualClaims.map((c, i) => `${i+1}. ${c}`).join('\\n') }}\n\n## DOSTUPNÉ ZDROJE PRO OVĚŘENÍ:\n\n### Tavily Research:\n{{ $('Aggregate Research Data').item.json.tavilyResearch.map(r => `- ${r.title}: ${r.content}`).join('\\n') }}\n\n### Wikipedia Data:\n{{ $('Aggregate Research Data').item.json.wikipediaData.map(w => `- ${w.title}: ${w.summary}`).join('\\n') }}\n\n## ÚKOL:\n\n1. Zkontroluj každé faktické tvrzení proti dostupným zdrojům\n2. Označ problematická tvrzení, která nelze ověřit\n3. Navrhni konkrétní opravy pro neověřitelná tvrzení\n\nVrať JSON s výsledkem verifikace.",
+          "hasOutputParser": true,
+          "needsFallback": true,
+          "options": {
+            "systemMessage": "Jsi přísný fact-checker pro technologický blog. Tvým úkolem je identifikovat potenciální halucinace AI a neověřitelná tvrzení."
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 3,
+        "position": [
+          7792,
+          7920
+        ],
+        "id": "3ab75afe-63e1-4c0c-bd2a-048c9ca838d4",
+        "name": "Verification Agent"
+      },
+      {
+        "parameters": {
+          "model": "anthropic/claude-sonnet-4",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+        "typeVersion": 1,
+        "position": [
+          7760,
+          8144
+        ],
+        "id": "99977033-0aac-477c-9b23-dfb8073384c3",
+        "name": "OpenRouter (Verify)",
+        "credentials": {
+          "openRouterApi": {
+            "id": "XpZg3NCm0vRTBA75",
+            "name": "OpenRouter account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "schemaType": "manual",
+          "inputSchema": "{\n  \"type\": \"object\",\n  \"required\": [\"verified\", \"issues\", \"correctedContent\"],\n  \"properties\": {\n    \"verified\": { \"type\": \"boolean\", \"description\": \"True pokud článek prošel verifikací\" },\n    \"issues\": { \"type\": \"array\", \"items\": { \"type\": \"string\" }, \"description\": \"Seznam nalezených problémů\" },\n    \"correctedContent\": { \"type\": \"string\", \"description\": \"Opravený HTML obsah článku\" },\n    \"verificationNotes\": { \"type\": \"string\", \"description\": \"Poznámky k verifikaci\" }\n  }\n}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "typeVersion": 1.3,
+        "position": [
+          7984,
+          8144
+        ],
+        "id": "9db92570-71b4-4884-b51b-2d29f75f8691",
+        "name": "Verify Parser"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Příprava finálních dat\nconst blogData = $('BlogDraft').item.json.output;\nconst verifyData = $json.output;\nconst keywordData = $('KeywordStrategy').item.json.output;\nconst mergeData = $('Aggregate Research Data').item.json;\n\nconst finalContent = verifyData.correctedContent || blogData.content;\n\nreturn {\n  json: {\n    title: blogData.title,\n    content: finalContent,\n    excerpt: blogData.excerpt,\n    slug: blogData.slug,\n    imageQuery: blogData.imageQuery,\n    categories: keywordData.categories || [],\n    tags: keywordData.tags || [],\n    source: mergeData.source,\n    targetLength: mergeData.targetLength,\n    verified: verifyData.verified,\n    verificationIssues: verifyData.issues,\n    verificationNotes: verifyData.verificationNotes\n  }\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          6032,
+          8768
+        ],
+        "id": "3d7f896e-f7d5-46f1-a772-08f598ad0ded",
+        "name": "Prepare Final Data"
+      },
+      {
+        "parameters": {
+          "title": "={{ $json.title }}",
+          "additionalFields": {
+            "content": "={{ $json.content }}",
+            "slug": "={{ $json.slug }}",
+            "status": "draft"
+          }
+        },
+        "type": "n8n-nodes-base.wordpress",
+        "typeVersion": 1,
+        "position": [
+          6224,
+          8768
+        ],
+        "id": "fc773146-4ffa-45e4-b417-7c5af0ef42e2",
+        "name": "Create WordPress Post",
+        "credentials": {
+          "wordpressApi": {
+            "id": "flqY5YMCvIpv5fpx",
+            "name": "Processgate.ai_propojeni"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "url": "https://processgate.ai/wp-json/wp/v2/categories",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "wordpressApi",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "per_page",
+                "value": "100"
+              },
+              {
+                "name": "lang",
+                "value": "cs"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          6400,
+          8608
+        ],
+        "id": "2e2d06a6-5fd0-4c4c-b859-6aab9a68735a",
+        "name": "Get WP Categories",
+        "credentials": {
+          "wordpressApi": {
+            "id": "flqY5YMCvIpv5fpx",
+            "name": "Processgate.ai_propojeni"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Mapování textových názvů na ID z WordPressu\nconst wpCategories = $('Get WP Categories').all().map(i => i.json);\nconst wpTags = $('Get WP Tags1').all().map(i => i.json);\nconst aiData = $('Prepare Final Data').item.json;\nconst postId = $('Create WordPress Post').item.json.id;\n\n// Pomocná funkce pro vyhledání shody\nconst findId = (name, list) => {\n  const match = list.find(item => \n    item.name.toLowerCase() === name.toLowerCase() || \n    name.toLowerCase().includes(item.name.toLowerCase())\n  );\n  return match ? match.id : null;\n};\n\n// Namapovat kategorie\nconst categoryIds = aiData.categories\n  .map(cat => findId(cat, wpCategories))\n  .filter(id => id !== null);\n\n// Fallback na Uncategorized (ID 1), pokud nic nenalezeno\nif (categoryIds.length === 0) categoryIds.push(1);\n\n// Namapovat tagy\nconst tagIds = aiData.tags\n  .map(tag => findId(tag, wpTags))\n  .filter(id => id !== null);\n\nreturn {\n  json: {\n    postId: postId,\n    categoryIds: categoryIds,\n    tagIds: tagIds\n  }\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          6592,
+          8608
+        ],
+        "id": "55941a5d-9ee8-42e0-97eb-3f0938eb6fd5",
+        "name": "Map Categories"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "=https://processgate.ai/wp-json/wp/v2/posts/{{ $json.postId }}",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "wordpressApi",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"categories\": {{ JSON.stringify($json.categoryIds) }},\n  \"tags\": {{ JSON.stringify($json.tagIds) }}\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          6800,
+          8608
+        ],
+        "id": "46637d2a-32a8-4224-824e-ca4d4877a047",
+        "name": "Assign Categories & Tags",
+        "credentials": {
+          "wordpressApi": {
+            "id": "flqY5YMCvIpv5fpx",
+            "name": "Processgate.ai_propojeni"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "googlePalmApi",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"instances\": [\n    { \"prompt\": \"{{ $('Prepare Final Data').item.json.imageQuery }}, professional, modern tech style, no text, 16:9\" }\n  ],\n  \"parameters\": { \"sampleCount\": 1, \"aspectRatio\": \"16:9\" }\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          6400,
+          8928
+        ],
+        "id": "e08a3f71-3c3b-40a2-9b92-c281ff3c2216",
+        "name": "Generate Image (Imagen)",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "O18dqBggPBVuy0CJ",
+            "name": "Google Gemini(PaLM) Api account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const response = $input.item.json;\nlet imageBase64 = '';\nif (response.predictions && response.predictions[0]) {\n  imageBase64 = response.predictions[0].bytesBase64Encoded;\n}\n\nreturn {\n  json: {\n    postId: $('Create WordPress Post').item.json.id,\n    imageBase64: imageBase64,\n    filename: `${$('Prepare Final Data').item.json.slug}-featured.png`\n  }\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          6592,
+          8928
+        ],
+        "id": "a914144b-0792-42de-bd6f-5d19e934b692",
+        "name": "Process Image Response"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://processgate.ai/wp-json/wp/v2/media",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "wordpressApi",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Content-Disposition",
+                "value": "=attachment; filename=\"{{ $json.filename }}\""
+              },
+              {
+                "name": "Content-Type",
+                "value": "image/png"
+              }
+            ]
+          },
+          "sendBody": true,
+          "contentType": "raw",
+          "body": "={{ Buffer.from($json.imageBase64, 'base64') }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          6800,
+          8928
+        ],
+        "id": "bd7ff618-5478-4c1d-88ea-75cf1ee7648d",
+        "name": "Upload to WordPress Media",
+        "credentials": {
+          "wordpressApi": {
+            "id": "flqY5YMCvIpv5fpx",
+            "name": "Processgate.ai_propojeni"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "=https://processgate.ai/wp-json/wp/v2/posts/{{ $('Process Image Response').item.json.postId }}",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "wordpressApi",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={ \"featured_media\": {{ $json.id }} }",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          6992,
+          8928
+        ],
+        "id": "08c9e73b-9574-4c93-afd4-236306acfd05",
+        "name": "Set Featured Image",
+        "credentials": {
+          "wordpressApi": {
+            "id": "flqY5YMCvIpv5fpx",
+            "name": "Processgate.ai_propojeni"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const postData = $('Create WordPress Post').item.json;\nconst finalData = $('Prepare Final Data').item.json;\nconst adminUrl = `https://processgate.ai/wp-admin/post.php?post=${postData.id}&action=edit`;\n\nreturn {\n  json: {\n    subject: `${finalData.verified ? '✅' : '⚠️'} Nový článek k review: ${finalData.title}`,\n    postTitle: finalData.title,\n    postExcerpt: finalData.excerpt,\n    adminUrl: adminUrl,\n    categories: finalData.categories.join(', '),\n    tags: finalData.tags.join(', '),\n    source: finalData.source === 'automatic' ? 'Automaticky vygenerováno' : 'Manuálně zadáno',\n    actualLength: finalData.content.length,\n    verified: finalData.verified,\n    verificationNotes: finalData.verificationNotes\n  }\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          6992,
+          8768
+        ],
+        "id": "1f060540-6a6a-420e-a14a-9f96d7faca8f",
+        "name": "Prepare Email Data"
+      },
+      {
+        "parameters": {
+          "resource": "draft",
+          "subject": "={{ $json.subject }}",
+          "emailType": "html",
+          "message": "=<h2>{{ $json.postTitle }}</h2><p><strong>Perex:</strong> {{ $json.postExcerpt }}</p><hr><p><a href=\"{{ $json.adminUrl }}\">Otevřít článek</a></p>",
+          "options": {
+            "sendTo": "jirka@processgate.ai"
+          }
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.1,
+        "position": [
+          7200,
+          8768
+        ],
+        "id": "9904c964-46eb-4616-9ba6-aa5523a12b2b",
+        "name": "Send Email Notification",
+        "webhookId": "972552e7-1ae8-474e-9079-4847428b2aeb",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "qNSaYVEcaWOf5U3k",
+            "name": "Gmail zmidloch@z-agency.cz"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Get WP Tags1": {
+        "main": [
+          [
+            {
+              "node": "Map Categories",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Schedule Trigger (2x týdně)": {
+        "main": [
+          [
+            {
+              "node": "Set Topics & Keywords",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set Topics & Keywords": {
+        "main": [
+          [
+            {
+              "node": "Fetch AI Headlines",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Fetch AI Headlines": {
+        "main": [
+          [
+            {
+              "node": "TopicIdeation",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "TopicIdeation": {
+        "main": [
+          [
+            {
+              "node": "Prepare for Merge (A)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OpenRouter (Claude)": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "TopicIdeation",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Gemini Fallback": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "TopicIdeation",
+              "type": "ai_languageModel",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Topic Parser": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "TopicIdeation",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Prepare for Merge (A)": {
+        "main": [
+          [
+            {
+              "node": "Deep Research (Tavily)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Formulář pro nový článek": {
+        "main": [
+          [
+            {
+              "node": "Process Form Data",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Process Form Data": {
+        "main": [
+          [
+            {
+              "node": "Research Manual Topic",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Research Manual Topic": {
+        "main": [
+          [
+            {
+              "node": "Prepare for Merge (B)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Prepare for Merge (B)": {
+        "main": [
+          [
+            {
+              "node": "Deep Research (Tavily)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Deep Research (Tavily)": {
+        "main": [
+          [
+            {
+              "node": "Prepare Wiki Terms",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Prepare Wiki Terms": {
+        "main": [
+          [
+            {
+              "node": "Split Wikipedia Terms",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Split Wikipedia Terms": {
+        "main": [
+          [
+            {
+              "node": "Wikipedia Lookup",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Aggregate Research Data",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wikipedia Lookup": {
+        "main": [
+          [
+            {
+              "node": "Split Wikipedia Terms",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Aggregate Research Data": {
+        "main": [
+          [
+            {
+              "node": "KeywordStrategy",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "KeywordStrategy": {
+        "main": [
+          [
+            {
+              "node": "BlogDraft",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OpenRouter (Keywords)": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "KeywordStrategy",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Keywords Parser": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "KeywordStrategy",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "BlogDraft": {
+        "main": [
+          [
+            {
+              "node": "Verification Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OpenRouter (Blog)": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "BlogDraft",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Blog Parser": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "BlogDraft",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Verification Agent": {
+        "main": [
+          [
+            {
+              "node": "Prepare Final Data",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OpenRouter (Verify)": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Verification Agent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Verify Parser": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "Verification Agent",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Prepare Final Data": {
+        "main": [
+          [
+            {
+              "node": "Create WordPress Post",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create WordPress Post": {
+        "main": [
+          [
+            {
+              "node": "Get WP Categories",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Get WP Tags1",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Generate Image (Imagen)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get WP Categories": {
+        "main": [
+          [
+            {
+              "node": "Map Categories",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Map Categories": {
+        "main": [
+          [
+            {
+              "node": "Assign Categories & Tags",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Assign Categories & Tags": {
+        "main": [
+          [
+            {
+              "node": "Prepare Email Data",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Generate Image (Imagen)": {
+        "main": [
+          [
+            {
+              "node": "Process Image Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Process Image Response": {
+        "main": [
+          [
+            {
+              "node": "Upload to WordPress Media",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Upload to WordPress Media": {
+        "main": [
+          [
+            {
+              "node": "Set Featured Image",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jiri Zmidloch",
+    "name": "Version b08c9dac",
+    "description": "",
+    "autosaved": false
+  },
+  "activeVersionId": "b08c9dac-4564-499f-9e77-29aeab3c65fc",
+  "connections": {
+    "Prepare Email Data1": {
+      "main": [
+        [
+          {
+            "node": "Send Email Notification1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload to WordPress Media1": {
+      "main": [
+        [
+          {
+            "node": "Set Featured Image1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Image Response1": {
+      "main": [
+        [
+          {
+            "node": "Upload to WordPress Media1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Image (Imagen)1": {
+      "main": [
+        [
+          {
+            "node": "Process Image Response1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assign Categories & Tags1": {
+      "main": [
+        [
+          {
+            "node": "Prepare Email Data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Map Categories1": {
+      "main": [
+        [
+          {
+            "node": "Assign Categories & Tags1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get WP Categories1": {
+      "main": [
+        [
+          {
+            "node": "Map Categories1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create WordPress Post1": {
+      "main": [
+        [
+          {
+            "node": "Generate Image (Imagen)1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get WP Categories1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Final Data1": {
+      "main": [
+        [
+          {
+            "node": "Create WordPress Post1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Blog Fallback5": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Verification Agent1",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Verify Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Verification Agent1",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter (Verify)1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Verification Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verification Agent1": {
+      "main": [
+        [
+          {
+            "node": "Prepare Final Data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Blog Fallback4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "BlogDraft1",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Blog Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "BlogDraft1",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter (Blog)1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "BlogDraft1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BlogDraft1": {
+      "main": [
+        [
+          {
+            "node": "Verification Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Blog Fallback3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "KeywordStrategy1",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Keywords Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "KeywordStrategy1",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter (Keywords)1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "KeywordStrategy1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "KeywordStrategy1": {
+      "main": [
+        [
+          {
+            "node": "BlogDraft1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Research Data1": {
+      "main": [
+        [
+          {
+            "node": "KeywordStrategy1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wikipedia Lookup1": {
+      "main": [
+        [
+          {
+            "node": "Split Wikipedia Terms1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Wikipedia Terms1": {
+      "main": [
+        [
+          {
+            "node": "Wikipedia Lookup1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Aggregate Research Data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Wiki Terms1": {
+      "main": [
+        [
+          {
+            "node": "Split Wikipedia Terms1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Deep Research (Tavily)1": {
+      "main": [
+        [
+          {
+            "node": "Prepare Wiki Terms1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare for Merge (B)1": {
+      "main": [
+        [
+          {
+            "node": "Deep Research (Tavily)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Research Manual Topic1": {
+      "main": [
+        [
+          {
+            "node": "Prepare for Merge (B)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Form Data1": {
+      "main": [
+        [
+          {
+            "node": "Research Manual Topic1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formulář pro nový článek1": {
+      "main": [
+        [
+          {
+            "node": "Process Form Data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare for Merge (A)1": {
+      "main": [
+        [
+          {
+            "node": "Deep Research (Tavily)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Fallback1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "TopicIdeation1",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Topic Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "TopicIdeation1",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter (Claude)1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "TopicIdeation1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TopicIdeation1": {
+      "main": [
+        [
+          {
+            "node": "Prepare for Merge (A)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch AI Headlines1": {
+      "main": [
+        [
+          {
+            "node": "TopicIdeation1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Topics & Keywords1": {
+      "main": [
+        [
+          {
+            "node": "Fetch AI Headlines1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger (2x týdně)1": {
+      "main": [
+        [
+          {
+            "node": "Set Topics & Keywords1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-18T20:21:36.707Z",
+  "id": "zjHS5Hu99v86H9Xxf4JoI",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Blog Article Generator - processgate.ai",
+  "nodes": [
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        7232,
+        5008
+      ],
+      "id": "108f1495-a0d7-426f-9858-df11dbafe282",
+      "name": "Gemini Blog Fallback5",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "O18dqBggPBVuy0CJ",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        6864,
+        5024
+      ],
+      "id": "f0aba60c-e0bd-4139-8e4f-d1695190d3ca",
+      "name": "Gemini Blog Fallback4",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "O18dqBggPBVuy0CJ",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        6416,
+        4992
+      ],
+      "id": "92c43091-f14d-483a-a1bd-59d463e89d65",
+      "name": "Gemini Blog Fallback3",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "O18dqBggPBVuy0CJ",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "={{ $json.subject }}",
+        "emailType": "html",
+        "message": "=<h2>{{ $json.postTitle }}</h2><p><strong>Perex:</strong> {{ $json.postExcerpt }}</p><hr><p><a href=\"{{ $json.adminUrl }}\">Otevřít článek</a></p>",
+        "options": {
+          "sendTo": "jirka@processgate.ai"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        6560,
+        5504
+      ],
+      "id": "55eb412f-a9d4-4482-b8db-604b7e626e93",
+      "name": "Send Email Notification1",
+      "webhookId": "fee5264b-bf20-4929-b199-5aa023beda88",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "qNSaYVEcaWOf5U3k",
+          "name": "Gmail zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const postData = $('Create WordPress Post1').item.json;\nconst finalData = $('Prepare Final Data1').item.json;\nconst adminUrl = `https://processgate.ai/wp-admin/post.php?post=${postData.id}&action=edit`;\n\nreturn {\n  json: {\n    subject: `${finalData.verified ? '✅' : '⚠️'} Nový článek k review: ${finalData.title}`,\n    postTitle: finalData.title,\n    postExcerpt: finalData.excerpt,\n    adminUrl: adminUrl,\n    categories: finalData.categories.join(', '),\n    tags: finalData.tags.join(', '),\n    source: finalData.source === 'automatic' ? 'Automaticky vygenerováno' : 'Manuálně zadáno',\n    actualLength: finalData.content.length,\n    verified: finalData.verified,\n    verificationNotes: finalData.verificationNotes\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6352,
+        5504
+      ],
+      "id": "ffd1c5e1-372a-47e9-8a8c-49cc5be9ac88",
+      "name": "Prepare Email Data1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://processgate.ai/wp-json/wp/v2/posts/{{ $('Process Image Response1').item.json.postId }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "wordpressApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={ \"featured_media\": {{ $json.id }} }",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        6352,
+        5664
+      ],
+      "id": "aa82d198-0e52-4638-b16e-e10ae7cbe575",
+      "name": "Set Featured Image1",
+      "credentials": {
+        "wordpressApi": {
+          "id": "flqY5YMCvIpv5fpx",
+          "name": "Processgate.ai_propojeni"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://processgate.ai/wp-json/wp/v2/media",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "wordpressApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Disposition",
+              "value": "=attachment; filename=\"{{ $json.filename }}\""
+            },
+            {
+              "name": "Content-Type",
+              "value": "image/png"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "body": "={{ Buffer.from($json.imageBase64, 'base64') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        6160,
+        5664
+      ],
+      "id": "f938e70e-0639-44e6-90f2-b4724fcd01d2",
+      "name": "Upload to WordPress Media1",
+      "credentials": {
+        "wordpressApi": {
+          "id": "flqY5YMCvIpv5fpx",
+          "name": "Processgate.ai_propojeni"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const response = $input.item.json;\nlet imageBase64 = '';\nif (response.predictions && response.predictions[0]) {\n  imageBase64 = response.predictions[0].bytesBase64Encoded;\n}\n\nreturn {\n  json: {\n    postId: $('Create WordPress Post1').item.json.id,\n    imageBase64: imageBase64,\n    filename: `${$('Prepare Final Data1').item.json.slug}-featured.png`\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5952,
+        5664
+      ],
+      "id": "30596116-5408-442f-ba9b-2a50142f0a0b",
+      "name": "Process Image Response1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googlePalmApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"instances\": [\n    { \"prompt\": \"{{ $('Prepare Final Data1').item.json.imageQuery }}, professional, modern tech style, no text, 16:9\" }\n  ],\n  \"parameters\": { \"sampleCount\": 1, \"aspectRatio\": \"16:9\" }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        5760,
+        5664
+      ],
+      "id": "1d2659fb-1fdd-4883-bd04-ff1ccacbd859",
+      "name": "Generate Image (Imagen)1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "O18dqBggPBVuy0CJ",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://processgate.ai/wp-json/wp/v2/posts/{{ $json.postId }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "wordpressApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"categories\": {{ JSON.stringify($json.categoryIds) }},\n  \"tags\": {{ JSON.stringify($json.tags) }}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        6160,
+        5344
+      ],
+      "id": "87f45cf3-798c-445f-827b-96f05eed1934",
+      "name": "Assign Categories & Tags1",
+      "credentials": {
+        "wordpressApi": {
+          "id": "flqY5YMCvIpv5fpx",
+          "name": "Processgate.ai_propojeni"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const wpCategories = $input.item.json;\nconst aiCategories = $('Prepare Final Data1').item.json.categories;\nconst postId = $('Create WordPress Post1').item.json.id;\n\nconst categories = Array.isArray(wpCategories) ? wpCategories : [];\nconst categoryIds = [];\n\nfor (const aiCat of aiCategories) {\n  const match = categories.find(wpCat => \n    wpCat.name.toLowerCase().includes(aiCat.toLowerCase()) ||\n    aiCat.toLowerCase().includes(wpCat.name.toLowerCase())\n  );\n  if (match) {\n    categoryIds.push(match.id);\n  }\n}\n\nif (categoryIds.length === 0) {\n  categoryIds.push(1);\n}\n\nreturn {\n  json: {\n    postId: postId,\n    categoryIds: categoryIds,\n    tags: $('Prepare Final Data1').item.json.tags\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5952,
+        5344
+      ],
+      "id": "e41a9513-cc6b-47b4-8b52-319ac198d273",
+      "name": "Map Categories1"
+    },
+    {
+      "parameters": {
+        "url": "https://processgate.ai/wp-json/wp/v2/categories",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "wordpressApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "per_page",
+              "value": "100"
+            },
+            {
+              "name": "lang",
+              "value": "cs"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        5760,
+        5344
+      ],
+      "id": "8f05b806-d153-462d-9a78-894ae94984f1",
+      "name": "Get WP Categories1",
+      "credentials": {
+        "wordpressApi": {
+          "id": "flqY5YMCvIpv5fpx",
+          "name": "Processgate.ai_propojeni"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "title": "={{ $json.title }}",
+        "additionalFields": {
+          "content": "={{ $json.content }}",
+          "slug": "={{ $json.slug }}",
+          "status": "draft"
+        }
+      },
+      "type": "n8n-nodes-base.wordpress",
+      "typeVersion": 1,
+      "position": [
+        5584,
+        5504
+      ],
+      "id": "c881c58e-e4b8-4843-b86a-420826cd19c5",
+      "name": "Create WordPress Post1",
+      "credentials": {
+        "wordpressApi": {
+          "id": "flqY5YMCvIpv5fpx",
+          "name": "Processgate.ai_propojeni"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const blogData = $('BlogDraft1').item.json.output;\nconst verifyData = $json.output;\nconst keywordData = $('KeywordStrategy1').item.json.output;\nconst mergeData = $('Aggregate Research Data1').item.json;\n\nconst finalContent = verifyData.correctedContent || blogData.content;\n\nreturn {\n  json: {\n    title: blogData.title,\n    content: finalContent,\n    excerpt: blogData.excerpt,\n    slug: blogData.slug,\n    imageQuery: blogData.imageQuery,\n    categories: keywordData.categories,\n    tags: keywordData.tags,\n    keywords: keywordData.keywords,\n    source: mergeData.source,\n    targetLength: mergeData.targetLength,\n    verified: verifyData.verified,\n    verificationIssues: verifyData.issues,\n    verificationNotes: verifyData.verificationNotes\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5392,
+        5504
+      ],
+      "id": "62de503d-2685-46f7-85d3-5ea405afac34",
+      "name": "Prepare Final Data1"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"required\": [\"verified\", \"issues\", \"correctedContent\"],\n  \"properties\": {\n    \"verified\": { \"type\": \"boolean\", \"description\": \"True pokud článek prošel verifikací\" },\n    \"issues\": { \"type\": \"array\", \"items\": { \"type\": \"string\" }, \"description\": \"Seznam nalezených problémů\" },\n    \"correctedContent\": { \"type\": \"string\", \"description\": \"Opravený HTML obsah článku\" },\n    \"verificationNotes\": { \"type\": \"string\", \"description\": \"Poznámky k verifikaci\" }\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        7344,
+        4880
+      ],
+      "id": "b2377856-6fa9-4819-bf61-c8d83aa32147",
+      "name": "Verify Parser1"
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-sonnet-4",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        7120,
+        4880
+      ],
+      "id": "f322e814-7a2e-424b-aa75-4e694fe7a922",
+      "name": "OpenRouter (Verify)1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "XpZg3NCm0vRTBA75",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=# VERIFIKACE ČLÁNKU\n\nZkontroluj následující článek a jeho faktická tvrzení.\n\n## ČLÁNEK:\n**Název:** {{ $json.output.title }}\n\n**Obsah:**\n{{ $json.output.content }}\n\n## FAKTICKÁ TVRZENÍ K OVĚŘENÍ:\n{{ $json.output.factualClaims.map((c, i) => `${i+1}. ${c}`).join('\\n') }}\n\n## DOSTUPNÉ ZDROJE PRO OVĚŘENÍ:\n\n### Tavily Research:\n{{ $('Aggregate Research Data1').item.json.tavilyResearch.map(r => `- ${r.title}: ${r.content}`).join('\\n') }}\n\n### Wikipedia Data:\n{{ $('Aggregate Research Data1').item.json.wikipediaData.map(w => `- ${w.title}: ${w.summary}`).join('\\n') }}\n\n## ÚKOL:\n\n1. Zkontroluj každé faktické tvrzení proti dostupným zdrojům\n2. Označ problematická tvrzení, která nelze ověřit\n3. Navrhni konkrétní opravy pro neověřitelná tvrzení\n\nVrať JSON s výsledkem verifikace.",
+        "hasOutputParser": true,
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "Jsi přísný fact-checker pro technologický blog. Tvým úkolem je identifikovat potenciální halucinace AI a neověřitelná tvrzení."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        7152,
+        4656
+      ],
+      "id": "9a0fbe0b-6474-43bd-946a-29184d282006",
+      "name": "Verification Agent1"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"required\": [\"title\", \"content\", \"excerpt\", \"slug\", \"imageQuery\", \"factualClaims\"],\n  \"properties\": {\n    \"title\": { \"type\": \"string\", \"description\": \"Název článku\" },\n    \"content\": { \"type\": \"string\", \"description\": \"HTML obsah článku\" },\n    \"excerpt\": { \"type\": \"string\", \"description\": \"Krátký perex pro SEO\" },\n    \"slug\": { \"type\": \"string\", \"description\": \"URL slug\" },\n    \"imageQuery\": { \"type\": \"string\", \"description\": \"Popis pro generování obrázku\" },\n    \"factualClaims\": { \"type\": \"array\", \"items\": { \"type\": \"string\" }, \"description\": \"Klíčová faktická tvrzení k verifikaci\" }\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        6960,
+        4880
+      ],
+      "id": "6ecfd286-6bda-4fe1-89be-bf2052f9d9e6",
+      "name": "Blog Parser1"
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-sonnet-4",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        6752,
+        4864
+      ],
+      "id": "cfdeb185-6826-4399-92d2-2fd737c1aa48",
+      "name": "OpenRouter (Blog)1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "XpZg3NCm0vRTBA75",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=# ZADÁNÍ ČLÁNKU\n\n**Téma (název článku):** {{ $('Aggregate Research Data1').item.json.topic }}\n**Úhel pohledu:** {{ $('Aggregate Research Data1').item.json.angle }}\n**Cílová délka:** {{ $('Aggregate Research Data1').item.json.targetLength }} znaků\n**SEO klíčová slova:** {{ $json.output.keywords.join(', ') }}\n\n# RESEARCH DATA (Tavily)\n\n{{ $('Aggregate Research Data1').item.json.tavilyResearch.map(r => `## ${r.title}\\n${r.content}\\n\\nZdroj: ${r.url}`).join('\\n\\n---\\n\\n') }}\n\n# OVĚŘENÉ FAKTY (Wikipedia)\n\nTyto informace jsou ověřené a můžeš je použít jako základ pro faktická tvrzení:\n\n{{ $('Aggregate Research Data1').item.json.wikipediaData.map(w => `## ${w.title}\\n${w.summary}\\n\\nZdroj: ${w.url}`).join('\\n\\n---\\n\\n') }}\n\n# INSTRUKCE\n\nNapiš blogový článek na zadané téma. Článek bude publikován na processgate.ai - český blog o AI a automatizaci pro malé a střední firmy.\n\n**DŮLEŽITÉ PRO FAKTICKOU SPRÁVNOST:**\n- Používej POUZE informace z poskytnutých zdrojů (Tavily research a Wikipedia)\n- Pokud uvádíš statistiky nebo čísla, musí pocházet ze zdrojů\n- Pokud si nejsi jistý faktem, raději ho neuváděj\n- Cituj zdroje přirozeně v textu\n\nVrať JSON s těmito poli:\n- title: finální název článku (může být upraven oproti zadání)\n- content: HTML obsah článku (použij p, h2, ul, li, strong, a tagy)\n- excerpt: krátký perex (max 160 znaků) pro SEO\n- slug: URL slug (malá písmena, pomlčky, bez diakritiky)\n- imageQuery: anglický popis pro vygenerování featured image (tech/AI styl)\n- factualClaims: pole klíčových faktických tvrzení v článku (pro pozdější verifikaci)",
+        "hasOutputParser": true,
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "Jsi zkušený český technologický novinář a copywriter specializující se na AI, automatizaci a digitální transformaci pro malé a střední firmy."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        6768,
+        4656
+      ],
+      "id": "53bd53d9-0328-4ce7-b9f0-ea04629beacc",
+      "name": "BlogDraft1"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"required\": [\"keywords\", \"categories\", \"tags\"],\n  \"properties\": {\n    \"keywords\": { \"type\": \"array\", \"items\": { \"type\": \"string\" }, \"description\": \"SEO klíčová slova v češtině\" },\n    \"categories\": { \"type\": \"array\", \"items\": { \"type\": \"string\" }, \"description\": \"WordPress kategorie\" },\n    \"tags\": { \"type\": \"array\", \"items\": { \"type\": \"string\" }, \"description\": \"WordPress tagy\" }\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        6528,
+        4880
+      ],
+      "id": "a04cd35d-2e5d-409a-9eaa-8ea7e7201166",
+      "name": "Keywords Parser1"
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-sonnet-4",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        6304,
+        4880
+      ],
+      "id": "e73ec6ee-7b7c-4fe5-b3e4-11b2470c2c89",
+      "name": "OpenRouter (Keywords)1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "XpZg3NCm0vRTBA75",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Téma článku: {{ $json.topic }}\nÚhel pohledu: {{ $json.angle }}\nVstupní klíčová slova: {{ $json.keywords.join(', ') }}\n\n## Tavily Research:\n{{ $json.tavilyResearch.map(r => `- ${r.title}: ${r.content}`).join('\\n') }}\n\n## Wikipedia Data (ověřené fakty):\n{{ $json.wikipediaData.map(w => `### ${w.title}\\n${w.summary}`).join('\\n\\n') }}\n\nNa základě těchto informací vytvoř:\n1. Seznam 5-8 SEO klíčových slov v ČEŠTINĚ (relevantní pro článek)\n2. Navrhni 1-3 ČESKÉ kategorie z tohoto seznamu: Umělá inteligence, Automatizace, Digitální transformace, Produktivita, Nástroje a technologie, Případové studie, Novinky z oboru\n3. Navrhni 3-5 ČESKÝCH tagů (konkrétní, relevantní pro téma)\n\nVrať POUZE validní JSON.",
+        "hasOutputParser": true,
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "Jsi SEO specialista pro české tech blogy. Vytváříš klíčová slova a taxonomie v češtině. Odpovídej POUZE validním JSON objektem."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        6384,
+        4656
+      ],
+      "id": "4501b438-23bb-4f3d-81af-0c15a0a331ef",
+      "name": "KeywordStrategy1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Agregace Wikipedia dat\nconst allItems = $input.all();\nconst firstItem = $('Prepare Wiki Terms1').first();\nconst mergeData = firstItem.json.mergeData;\nconst tavilyResults = firstItem.json.tavilyResults;\n\nconst wikiData = allItems\n  .filter(item => item.json.extract)\n  .map(item => ({\n    title: item.json.title,\n    summary: item.json.extract,\n    url: item.json.content_urls?.desktop?.page || ''\n  }));\n\nreturn {\n  json: {\n    ...mergeData,\n    tavilyResearch: tavilyResults,\n    wikipediaData: wikiData\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6128,
+        4656
+      ],
+      "id": "48ecd0ac-4ec3-4312-a0d6-d3b60ec708ed",
+      "name": "Aggregate Research Data1"
+    },
+    {
+      "parameters": {
+        "url": "=https://en.wikipedia.org/api/rest_v1/page/summary/{{ encodeURIComponent($json.term) }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        6032,
+        4928
+      ],
+      "id": "fd9c4702-866b-49df-850c-9492f5b8d06e",
+      "name": "Wikipedia Lookup1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        5824,
+        4752
+      ],
+      "id": "f31b6186-2a48-404d-b76b-4de81bd04c5c",
+      "name": "Split Wikipedia Terms1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1. Zjistíme, která větev běžela, abychom věděli, odkud brát wikipediaTerms\nlet mergeData;\n\ntry {\n  // Zkusíme vzít data z automatické větve\n  mergeData = $('Prepare for Merge (A)').item.json;\n} catch (e) {\n  try {\n    // Pokud větev A neběžela, zkusíme manuální větev B\n    mergeData = $('Prepare for Merge (B)').item.json;\n  } catch (e2) {\n    // Fallback, pokud by náhodou neběžela ani jedna (např. při špatném testování)\n    mergeData = { wikipediaTerms: [] };\n  }\n}\n\n// 2. Výsledky z Tavily (přímý vstup tohoto uzlu)\nconst tavilyData = $input.item.json;\n\n// 3. Vytáhneme termíny\nconst terms = mergeData.wikipediaTerms || [];\n\n// 4. Pokud nejsou žádné termíny, vytvoříme jednu položku s tématem, aby se research nezastavil\nif (terms.length === 0) {\n  return [{\n    json: {\n      term: mergeData.topic || \"AI Automation\",\n      mergeData: mergeData,\n      tavilyResults: tavilyData.results || []\n    }\n  }];\n}\n\n// 5. Rozmnožíme pro uzel \"Split In Batches\"\nreturn terms.map(term => ({\n  json: {\n    term: term,\n    mergeData: mergeData,\n    tavilyResults: tavilyData.results || []\n  }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5600,
+        4752
+      ],
+      "id": "fb1a1275-1851-46ea-b3d2-7e587e1f5c3f",
+      "name": "Prepare Wiki Terms1"
+    },
+    {
+      "parameters": {
+        "query": "={{ $json.searchQuery || $json.topic }}",
+        "options": {
+          "max_results": 5,
+          "include_raw_content": true
+        }
+      },
+      "type": "@tavily/n8n-nodes-tavily.tavily",
+      "typeVersion": 1,
+      "position": [
+        5440,
+        4752
+      ],
+      "id": "5d90bc68-6766-4d7b-9233-99e4a0bdea6b",
+      "name": "Deep Research (Tavily)1",
+      "credentials": {
+        "tavilyApi": {
+          "id": "KmiWEKpArgJSNmSk",
+          "name": "Tavily account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Připravit data pro merge z manuální větve\nconst processedData = $('Process Form Data1').item.json;\nconst researchData = $input.item.json;\n\nreturn {\n  json: {\n    ...processedData,\n    initialResearch: researchData.results\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4352,
+        5216
+      ],
+      "id": "64bc3f12-5be0-4b91-a06a-ce0d8af695fc",
+      "name": "Prepare for Merge (B)1"
+    },
+    {
+      "parameters": {
+        "query": "={{ $json.topic }}",
+        "options": {
+          "max_results": 5,
+          "time_range": "month",
+          "include_raw_content": true
+        }
+      },
+      "type": "@tavily/n8n-nodes-tavily.tavily",
+      "typeVersion": 1,
+      "position": [
+        4144,
+        5216
+      ],
+      "id": "be227125-9e3d-4388-a07a-dc17b41d6496",
+      "name": "Research Manual Topic1",
+      "credentials": {
+        "tavilyApi": {
+          "id": "KmiWEKpArgJSNmSk",
+          "name": "Tavily account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extrakce dat z formuláře a příprava pro research\nconst formData = $input.item.json;\n\n// Extrakce klíčových slov pro Wikipedia lookup\nconst keywords = formData['Klíčová slova'].split(',').map(k => k.trim());\n\n// Vytvoření Wikipedia termínů z klíčových slov (anglické verze)\nconst translations = {\n  'automatizace': 'automation',\n  'umělá inteligence': 'artificial intelligence',\n  'AI': 'artificial intelligence',\n  'produktivita': 'productivity',\n  'workflow': 'workflow',\n  'n8n': 'n8n',\n  'integrace': 'system integration',\n  'API': 'API',\n  'onboarding': 'onboarding',\n  'HR': 'human resources'\n};\n\nconst wikipediaTerms = keywords.slice(0, 3).map(k => {\n  return translations[k.toLowerCase()] || k;\n});\n\nreturn {\n  json: {\n    source: 'manual',\n    topic: formData['Název článku'],\n    angle: 'Zadáno uživatelem přes formulář',\n    searchQuery: formData['Název článku'],\n    wikipediaTerms: wikipediaTerms,\n    keywords: keywords,\n    targetLength: formData['Délka článku (znaky)'] || 4500\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3952,
+        5216
+      ],
+      "id": "b4d2b01f-b70c-4b9e-9469-df250dc7575e",
+      "name": "Process Form Data1"
+    },
+    {
+      "parameters": {
+        "formTitle": "Nový blogový článek",
+        "formDescription": "Zadejte informace pro vygenerování článku na processgate.ai",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Název článku",
+              "placeholder": "např. Využití n8n a Airtable při onboardingu zaměstnanců",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Klíčová slova",
+              "placeholder": "n8n, Airtable, onboarding, HR automatizace",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Délka článku (znaky)",
+              "fieldType": "number",
+              "placeholder": "4500"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        3744,
+        5216
+      ],
+      "id": "d01055e3-90c1-4d77-af26-7dc18d01ac2b",
+      "name": "Formulář pro nový článek1",
+      "webhookId": "2ac1416a-10ce-41de-9d47-2e38ffe569bd"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Připravit data pro merge z automatické větve\nconst topicData = $('TopicIdeation1').item.json.output;\nconst originalData = $('Set Topics & Keywords1').item.json;\n\nreturn {\n  json: {\n    source: 'automatic',\n    topic: topicData.title,\n    angle: topicData.angle,\n    searchQuery: topicData.searchQuery,\n    wikipediaTerms: topicData.wikipediaTerms || [],\n    keywords: (originalData.keywords || \"\").split(', '),\n    targetLength: originalData.targetLength\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4688,
+        4656
+      ],
+      "id": "ec5a3758-faf9-4ba0-8233-d497d0f0c72a",
+      "name": "Prepare for Merge (A)1"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"required\": [\"title\", \"angle\", \"searchQuery\", \"wikipediaTerms\"],\n  \"properties\": {\n    \"title\": { \"type\": \"string\", \"description\": \"Český název článku\" },\n    \"angle\": { \"type\": \"string\", \"description\": \"Úhel pohledu článku\" },\n    \"searchQuery\": { \"type\": \"string\", \"description\": \"Anglický vyhledávací dotaz\" },\n    \"wikipediaTerms\": { \"type\": \"array\", \"items\": { \"type\": \"string\" }, \"description\": \"Termíny pro Wikipedia lookup\" }\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        4544,
+        4864
+      ],
+      "id": "22d3f67c-f098-4e98-bc5c-352eede5ed11",
+      "name": "Topic Parser1"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        4320,
+        4864
+      ],
+      "id": "8449c0bf-98c3-4bca-abd2-13b060bf41b0",
+      "name": "Gemini Fallback1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "O18dqBggPBVuy0CJ",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-sonnet-4",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        4192,
+        4864
+      ],
+      "id": "7053e957-d629-4f5f-a614-ac748898cc75",
+      "name": "OpenRouter (Claude)1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "XpZg3NCm0vRTBA75",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Zde jsou aktuální novinky z oblasti AI a automatizace:\n\n{{ $json.results.map((r, i) => `${i+1}. ${r.title}\\n   ${r.content}\\n   Zdroj: ${r.url}`).join('\\n\\n') }}\n\nNa základě těchto novinek vyber JEDNO téma, které bude nejzajímavější pro české publikum zaměřené na malé a střední firmy. Téma by mělo být praktické a aktuální.\n\nVrať JSON s těmito poli:\n- title: český název článku (jasný, konkrétní, bez clickbaitu)\n- angle: úhel pohledu / hlavní myšlenka článku\n- searchQuery: anglický vyhledávací dotaz pro další research\n- wikipediaTerms: pole 2-3 anglických termínů pro vyhledání na Wikipedii (pro ověření faktů)",
+        "hasOutputParser": true,
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "Jsi expert na obsahovou strategii pro tech blogy. Vybíráš témata, která jsou relevantní pro české podnikatele a manažery zajímající se o AI a automatizaci. Odpovídej POUZE validním JSON objektem."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        4352,
+        4656
+      ],
+      "id": "d1e0e7c7-fdf5-444e-8e26-68c1908a80a1",
+      "name": "TopicIdeation1"
+    },
+    {
+      "parameters": {
+        "query": "={{ $json.topics.split(', ').map(t => t + ' 2025').join(' OR ') }}",
+        "options": {
+          "topic": "news",
+          "max_results": 5,
+          "time_range": "week"
+        }
+      },
+      "type": "@tavily/n8n-nodes-tavily.tavily",
+      "typeVersion": 1,
+      "position": [
+        4144,
+        4656
+      ],
+      "id": "a06736ab-9f39-4b23-a25d-2057bd954846",
+      "name": "Fetch AI Headlines1",
+      "credentials": {
+        "tavilyApi": {
+          "id": "KmiWEKpArgJSNmSk",
+          "name": "Tavily account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3952,
+        4656
+      ],
+      "id": "f11740d8-a5cc-4b6b-b1ff-30e7660bcb45",
+      "name": "Set Topics & Keywords1"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                1,
+                4
+              ],
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        3744,
+        4656
+      ],
+      "id": "5a5ad594-91e7-442f-ac33-5e8f11c9b365",
+      "name": "Schedule Trigger (2x týdně)1"
+    },
+    {
+      "parameters": {
+        "content": "## Společná část\nMerge → Research (Tavily + Wikipedia) → Keywords → Blog Draft → VERIFIKACE → WordPress → Image → Email",
+        "height": 640,
+        "width": 2208,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        5232,
+        4496
+      ],
+      "typeVersion": 1,
+      "id": "56c70e5f-b9c2-45a3-b52d-21487d5b2972",
+      "name": "Common Part Note1"
+    },
+    {
+      "parameters": {
+        "content": "## VĚTEV B: Manuální\nWebový formulář → zadání názvu článku, klíčových slov a délky → research",
+        "height": 480,
+        "width": 1072,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3664,
+        5056
+      ],
+      "typeVersion": 1,
+      "id": "1df7decd-7e45-4946-81a0-1b1b3cd6f5da",
+      "name": "Branch B Note1"
+    },
+    {
+      "parameters": {
+        "content": "## VĚTEV A: Automatická\nSchedule trigger → Tavily research → AI vybere téma",
+        "height": 480,
+        "width": 1184,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3664,
+        4496
+      ],
+      "typeVersion": 1,
+      "id": "10a3a62d-6f00-4c48-9a92-12a38f98df92",
+      "name": "Branch A Note1"
+    },
+    {
+      "parameters": {
+        "content": "# Blog Article Generator pro processgate.ai\n\n**Dvě startovní větve:**\n- **VĚTEV A (Automatická)**: Schedule 2x týdně → AI vybere téma z aktuálních trendů\n- **VĚTEV B (Manuální)**: Webový formulář → zadáš název článku, klíčová slova, délku\n\n**Nové funkce:**\n- Wikipedia tool pro fact-checking\n- Verifikační agent proti halucinacím\n\n**Společná část:**\nResearch (Tavily + Wikipedia) → Keywords/Categories → Blog Draft → Verifikace → WordPress (draft) → Imagen obrázek → Gmail notifikace",
+        "height": 280,
+        "width": 600,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3664,
+        4096
+      ],
+      "typeVersion": 1,
+      "id": "2950b727-b567-4be9-97c4-ccb57e15ea3a",
+      "name": "Info1"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "zVAjJgKV17IWzFP7"
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-18T20:21:36.707Z",
+      "createdAt": "2026-01-18T20:21:36.707Z",
+      "role": "workflow:owner",
+      "workflowId": "zjHS5Hu99v86H9Xxf4JoI",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2025-11-25T10:02:49.590Z",
+      "createdAt": "2025-11-25T10:02:49.590Z",
+      "id": "iu8EkneS24SJyD0c",
+      "name": "AI"
+    }
+  ],
+  "triggerCount": 2,
+  "updatedAt": "2026-01-18T21:24:18.774Z",
+  "versionId": "9ac7a9f8-7c6f-4042-8e4d-d67254434ae3"
+}
