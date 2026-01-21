@@ -295,9 +295,9 @@
         ],
         [
           {
-            "node": "Merge Content",
+            "node": "Save Draft & Set Humanizing",
             "type": "main",
-            "index": 1
+            "index": 0
           }
         ]
       ]
@@ -328,7 +328,7 @@
       "main": [
         [
           {
-            "node": "Merge Content",
+            "node": "Save Draft & Set Humanizing",
             "type": "main",
             "index": 0
           }
@@ -337,13 +337,7 @@
     },
     "Merge Content": {
       "main": [
-        [
-          {
-            "node": "Save Draft & Set Humanizing",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Fetch Article for Humanizing": {
@@ -416,7 +410,7 @@
       "main": [
         [
           {
-            "node": "Generate Image (Imagen 3.0)",
+            "node": "Generate an image",
             "type": "main",
             "index": 0
           }
@@ -425,13 +419,7 @@
     },
     "Generate Image (Imagen 3.0)": {
       "main": [
-        [
-          {
-            "node": "Process Image Response",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Process Image Response": {
@@ -746,7 +734,13 @@
     },
     "Content Parser": {
       "ai_outputParser": [
-        []
+        [
+          {
+            "node": "Content Writer Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
       ]
     },
     "Save Draft & Set Humanizing": {
@@ -775,6 +769,28 @@
         [
           {
             "node": "Word Count Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verification Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Verification Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate an image": {
+      "main": [
+        [
+          {
+            "node": "Process Image Response",
             "type": "main",
             "index": 0
           }
@@ -924,7 +940,7 @@
               "outputKey": "Writing"
             },
             {
-              "value2": "Writting",
+              "value2": "Humanizing",
               "outputKey": "Humanizing"
             },
             {
@@ -2044,16 +2060,15 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        2320,
+        2304,
         912
       ],
       "id": "af74975c-14a6-4934-9e55-0de15887c34d",
-      "name": "Content Parser",
-      "disabled": true
+      "name": "Content Parser"
     },
     {
       "parameters": {
-        "jsCode": "// Word count check\n// Oprava: Hledáme content buď v .output.content nebo přímo v .content\nconst contentData = $json.output || $json; \nconst content = contentData.content || '';\n\nconst trimmed = content.replace(/<[^>]*>/g, ' ').trim();\nconst wordCount = trimmed.split(/\\s+/).filter(Boolean).length;\nconst charCount = content.length;\nconst limit = parseInt($('Parse Article Data').first().json.targetLength) || 2000;\n\nreturn {\n  json: {\n    ...contentData, // Zachováme původní data (title, slug atd.)\n    wordCount,\n    charCount,\n    wordLimitOver: wordCount > limit * 1.2, // 20% tolerance\n    limit,\n    // Ujistěte se, že tyto odkazy na předchozí uzly jsou platné\n    articleId: $('Parse Article Data').first().json.articleId,\n    categories: $('Keyword Strategy Agent').first().json.output?.categories || [],\n    tags: $('Keyword Strategy Agent').first().json.output?.tags || []\n  }\n};"
+        "jsCode": "// 1. Získání výstupu z AI (Content Writer Agent)\nlet contentData = $json.output || $json;\n\n// Ošetření: Pokud AI vrátí text (string) místo JSONu, zkusíme ho opravit\nif (typeof contentData === 'string') {\n  try {\n    const cleanJson = contentData.replace(/```json|```/g, '').trim();\n    contentData = JSON.parse(cleanJson);\n  } catch (e) {\n    // Pokud selže parsování, vytvoříme objekt ručně\n    contentData = { content: contentData, title: 'Vygenerováno (chyba parsování)' };\n  }\n}\n\n// 2. Bezpečné získání Target Length z Airtable (z uzlu 'Parse Article Data')\n// Používáme $items(), což je spolehlivější způsob, jak sáhnout na dřívější uzel\nlet targetLimit = 2000; // Defaultní hodnota\ntry {\n  // Najdeme data z uzlu Parse Article Data\n  const parseDataNode = $items('Parse Article Data');\n  if (parseDataNode && parseDataNode.length > 0) {\n    const rawLimit = parseDataNode[0].json.targetLength;\n    targetLimit = parseInt(rawLimit);\n    \n    // Pokud v Airtable nebylo číslo, vrátíme se k defaultu\n    if (isNaN(targetLimit)) targetLimit = 2000;\n  }\n} catch (error) {\n  console.log('Nepodařilo se načíst Target Length z předchozího kroku, používám 2000.');\n}\n\n// 3. Spočítání slov\nconst content = contentData.content || '';\n// Odstraníme HTML tagy pro přesnější počítání slov\nconst textOnly = content.replace(/<[^>]*>/g, ' ').replace(/\\s+/g, ' ').trim();\nconst wordCount = textOnly.split(' ').length;\n\n// 4. Logika limitu (Tolerance 10-20% je běžná, aby se článek hned nekrátil kvůli pár slovům)\n// Pokud chcete být striktní, změňte 1.2 na 1.05 nebo 1.0\nconst isOverLimit = wordCount > (targetLimit * 1.15); \n\nreturn {\n  json: {\n    ...contentData, // Předáme dál titul, slug, excerpt atd.\n    wordCount: wordCount,\n    limit: targetLimit,\n    wordLimitOver: isOverLimit,\n    // Zajistíme ID pro další kroky\n    articleId: $items('Parse Article Data')[0].json.articleId\n  }\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -2076,11 +2091,12 @@
           "conditions": [
             {
               "id": "word-limit-check",
-              "leftValue": "={ $json.wordLimitOver }}",
+              "leftValue": "={{ $json.wordLimitOver }}",
               "rightValue": "=true",
               "operator": {
-                "type": "string",
-                "operation": "equals"
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
               }
             }
           ],
@@ -2116,7 +2132,7 @@
     },
     {
       "parameters": {
-        "model": "anthropic/claude-opus-4-5-20251101",
+        "model": "anthropic/claude-sonnet-4.5",
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
@@ -2152,11 +2168,12 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        3248,
-        704
+        3344,
+        496
       ],
       "id": "dda82c09-ea2c-46f5-83d3-3cd50607abe9",
-      "name": "Merge Content"
+      "name": "Merge Content",
+      "disabled": true
     },
     {
       "parameters": {
@@ -2174,9 +2191,9 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "id": "={{ $('Airtable Status Change').item.json.id }}",
+            "id": "={{ $json.articleId }}",
             "Status": "Humanizing",
-            "Content": "={{ $('Content Writer Agent').item.json.output }}"
+            "Content": "={{ $json.content }}"
           },
           "matchingColumns": [
             "id"
@@ -2488,8 +2505,8 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2,
       "position": [
-        3440,
-        704
+        3232,
+        720
       ],
       "id": "9fb718bf-1b03-499f-9e27-35b8e039d3cc",
       "name": "Save Draft & Set Humanizing",
@@ -2504,13 +2521,13 @@
       "parameters": {
         "base": {
           "__rl": true,
-          "mode": "id",
-          "value": "={{ $vars.AIRTABLE_BASE_ID }}"
+          "value": "=https://airtable.com/appNKJUeljGoHYjQf/tbljRtFFKlUXYAO6M/viwCXaxhEJzyyFE8z",
+          "mode": "url"
         },
         "table": {
           "__rl": true,
-          "mode": "id",
-          "value": "={{ $vars.AIRTABLE_ARTICLES_TABLE }}"
+          "value": "https://airtable.com/appNKJUeljGoHYjQf/tbljRtFFKlUXYAO6M/viwCXaxhEJzyyFE8z",
+          "mode": "url"
         },
         "id": "={{ $('Airtable Status Change').item.json.id }}",
         "options": {}
@@ -2533,7 +2550,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=Transform the following AI-generated Czech content into natural, engaging human writing.\n\n## CONTENT TO HUMANIZE:\n{{ $json.fields.Content }}\n\n---\n\n## RULES:\n1. Vary sentence length - mix short punchy sentences with longer flowing ones\n2. Use active voice predominantly\n3. Remove repetitive phrasing\n4. Add conversational elements where appropriate\n5. Preserve all technical accuracy\n6. Keep HTML formatting intact (<p>, <h2>, <h3>, <ul>, <li>, <strong>, <a>)\n7. Do not add new information\n8. Maintain Czech language quality\n\n## BANNED PATTERNS:\n- Generic AI phrases\n- Overly formal constructions\n- Passive voice where active works better\n- Repetitive sentence structures\n\nReturn ONLY the humanized HTML content.",
+        "text": "=Transform the following AI-generated Czech content into natural, engaging human writing.\n\n## CONTENT TO HUMANIZE:\n{{ $json.Content }}\n\n---\n\n## RULES:\n1. Vary sentence length - mix short punchy sentences with longer flowing ones\n2. Use active voice predominantly\n3. Remove repetitive phrasing\n4. Add conversational elements where appropriate\n5. Preserve all technical accuracy\n6. Keep HTML formatting intact (<p>, <h2>, <h3>, <ul>, <li>, <strong>, <a>)\n7. Do not add new information\n8. Maintain Czech language quality\n\n## BANNED PATTERNS:\n- Generic AI phrases\n- Overly formal constructions\n- Passive voice where active works better\n- Repetitive sentence structures\n\nReturn ONLY the humanized HTML content.",
         "options": {
           "systemMessage": "You are an expert humanizer transforming AI-generated Czech content into natural, engaging human writing. Preserve meaning and formatting while making the text sound authentically human-written."
         }
@@ -2549,7 +2566,7 @@
     },
     {
       "parameters": {
-        "model": "anthropic/claude-opus-4-5-20251101",
+        "model": "anthropic/claude-opus-4.5",
         "options": {
           "temperature": 0.6
         }
@@ -2571,7 +2588,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Prepare data for verification\nconst article = $('Fetch Article for Humanizing').first().json;\nconst humanizedContent = $json.output;\nconst researchData = JSON.parse(article.fields['Research Data'] || '{}');\n\nreturn {\n  json: {\n    articleId: article.id,\n    title: article.fields.Title,\n    humanizedContent: humanizedContent,\n    originalContent: article.fields.Content,\n    research: researchData,\n    excerpt: article.fields.Excerpt,\n    slug: article.fields.Slug,\n    imagePrompt: article.fields['Image Prompt'],\n    categories: article.fields.Categories,\n    tags: article.fields.Tags\n  }\n};"
+        "jsCode": "// Prepare data for verification - UNIVERZÁLNÍ VERZE\n\nlet articleData = {};\nlet sourceNode = \"\";\n\n// 1. Zkusíme zjistit, jestli jsme ve větvi WRITING (právě jsme dopsali článek)\ntry {\n    const writingNode = $items(\"Save Draft & Set Humanizing\");\n    if (writingNode && writingNode.length > 0) {\n        const item = writingNode[0].json;\n        // Data z \"Save Draft\" jsou obvykle plochá (bez .fields)\n        articleData = {\n            id: item.id,\n            Title: item.Title || item.fields?.Title,\n            Content: item.Content || item.fields?.Content,\n            ResearchData: item[\"Research Data\"] || item.fields?.[\"Research Data\"],\n            Excerpt: item.Excerpt || item.fields?.Excerpt,\n            Slug: item.Slug || item.fields?.Slug,\n            // POZOR: Writer agent vrací \"imageQuery\", ale Airtable má \"Image Prompt\"\n            // Zde sjednocujeme názvy, aby to další uzly našly\n            ImagePrompt: item[\"Image Prompt\"] || item.imageQuery || item.fields?.[\"Image Prompt\"],\n            Categories: item.Categories || item.fields?.Categories,\n            Tags: item.Tags || item.fields?.Tags\n        };\n        sourceNode = \"Writing Branch\";\n    }\n} catch (e) {}\n\n// 2. Pokud data nemáme, zkusíme větev HUMANIZING (článek už byl hotový)\nif (!articleData.id) {\n    try {\n        const humanizingNode = $items(\"Fetch Article for Humanizing\");\n        if (humanizingNode && humanizingNode.length > 0) {\n            const item = humanizingNode[0].json;\n            // Data z \"Fetch\" jsou obvykle uvnitř .fields\n            articleData = {\n                id: item.id,\n                Title: item.fields.Title,\n                Content: item.fields.Content,\n                ResearchData: item.fields[\"Research Data\"],\n                Excerpt: item.fields.Excerpt,\n                Slug: item.fields.Slug,\n                ImagePrompt: item.fields[\"Image Prompt\"],\n                Categories: item.fields.Categories,\n                Tags: item.fields.Tags\n            };\n            sourceNode = \"Humanizing Branch\";\n        }\n    } catch (e) {}\n}\n\n// 3. Bezpečné parsování Research Data\nlet researchDataObj = {};\ntry {\n    if (articleData.ResearchData) {\n        researchDataObj = typeof articleData.ResearchData === 'object' \n            ? articleData.ResearchData \n            : JSON.parse(articleData.ResearchData);\n    }\n} catch (e) {\n    console.log(\"Warning: Research Data parsing failed.\");\n}\n\n// 4. Získání aktuálního obsahu (z předchozího kroku v n8n - Humanizer Agent)\n// Může to být output z agenta nebo content z airtable\nconst currentInput = $json.output || $json.humanizedContent || $json.content || articleData.Content;\n\nreturn {\n  json: {\n    articleId: articleData.id,\n    title: articleData.Title,\n    // Toto je ten nejdůležitější obsah, se kterým se pracuje dál\n    humanizedContent: currentInput, \n    originalContent: articleData.Content,\n    research: researchDataObj,\n    excerpt: articleData.Excerpt,\n    slug: articleData.Slug,\n    // Sjednocení názvu pro generátor obrázků\n    imagePrompt: articleData.ImagePrompt, \n    categories: articleData.Categories,\n    tags: articleData.Tags,\n    _debugSource: sourceNode\n  }\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -2586,6 +2603,7 @@
       "parameters": {
         "promptType": "define",
         "text": "=Verify the factual accuracy of the following article against research sources.\n\n## ARTICLE CONTENT:\n{{ $json.humanizedContent }}\n\n## RESEARCH SOURCES:\n\n### Tavily Research:\n{{ $json.research.rawData?.tavily?.results?.map(r => `- ${r.title}: ${r.content}`).join('\\n') || 'No data' }}\n\n### Wikipedia Facts:\n{{ $json.research.rawData?.wikipedia?.map(w => `- ${w.title}: ${w.summary}`).join('\\n') || 'No data' }}\n\n### Perplexity Research:\n{{ $json.research.rawData?.perplexity?.substring(0, 3000) || 'No data' }}\n\n---\n\n## TASK:\n1. Identify factual claims in the article\n2. Check each claim against provided sources\n3. Flag claims that cannot be verified\n4. Suggest specific corrections for problematic claims\n\nReturn JSON:\n{\n  \"verified\": true/false,\n  \"issues\": [\"issue1\", \"issue2\"],\n  \"correctedContent\": \"HTML content with corrections (or original if no issues)\",\n  \"verificationNotes\": \"Summary of verification process\"\n}",
+        "hasOutputParser": true,
         "options": {
           "systemMessage": "You are a strict fact-checker for a technology blog. Identify potential AI hallucinations and unverifiable claims. Be critical but constructive - suggest specific corrections. If the article is factually sound, return verified: true."
         }
@@ -2601,7 +2619,7 @@
     },
     {
       "parameters": {
-        "model": "anthropic/claude-opus-4-5-20251101",
+        "model": "anthropic/claude-opus-4.5",
         "options": {
           "temperature": 0.2
         }
@@ -2637,7 +2655,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Prepare final content data\nconst verificationOutput = $json.output;\nconst prepData = $('Prepare for Verification').first().json;\n\n// Use corrected content if there were issues, otherwise use humanized\nconst finalContent = verificationOutput.correctedContent || prepData.humanizedContent;\n\nreturn {\n  json: {\n    articleId: prepData.articleId,\n    title: prepData.title,\n    content: finalContent,\n    excerpt: prepData.excerpt,\n    slug: prepData.slug,\n    imagePrompt: prepData.imagePrompt,\n    categories: prepData.categories,\n    tags: prepData.tags,\n    verified: verificationOutput.verified,\n    verificationIssues: verificationOutput.issues,\n    verificationNotes: verificationOutput.verificationNotes\n  }\n};"
+        "jsCode": "// Prepare final content data\n\n// Získání výstupu z verifikace (Verification Agent)\nconst verificationOutput = $json.output || $json;\n\n// Získání původních dat z přípravné fáze (Prepare for Verification)\nlet prepData = {};\ntry {\n    const prevNode = $items(\"Prepare for Verification\");\n    if (prevNode && prevNode.length > 0) {\n        prepData = prevNode[0].json;\n    }\n} catch (e) {\n    console.log(\"Error loading prep data\");\n}\n\n// Použijeme opravený obsah, pokud existuje, jinak humanizovaný\nconst finalContent = verificationOutput.correctedContent || prepData.humanizedContent;\n\n// Získání Image Promptu - buď z verifikace, nebo z původních dat\nconst finalImagePrompt = verificationOutput.imagePrompt || prepData.imagePrompt || \"\";\n\nreturn {\n  json: {\n    articleId: prepData.articleId,\n    title: prepData.title,\n    content: finalContent,\n    excerpt: prepData.excerpt,\n    slug: prepData.slug,\n    imagePrompt: finalImagePrompt,\n    categories: prepData.categories,\n    tags: prepData.tags,\n    verified: verificationOutput.verified || false,\n    verificationIssues: verificationOutput.issues || [],\n    verificationNotes: verificationOutput.verificationNotes || \"\"\n  }\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -2664,11 +2682,17 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        1728,
-        1520
+        1760,
+        1952
       ],
       "id": "1faf766c-6392-4717-967b-5680c12ccb55",
-      "name": "Generate Image (Imagen 3.0)"
+      "name": "Generate Image (Imagen 3.0)",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uLXCpqN3fa4ZXZmj",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
     },
     {
       "parameters": {
@@ -2749,7 +2773,13 @@
         1408
       ],
       "id": "8ec19bc8-e9ff-4d4c-bffd-9596c1e6fa45",
-      "name": "Upload Image to WordPress"
+      "name": "Upload Image to WordPress",
+      "credentials": {
+        "wordpressApi": {
+          "id": "flqY5YMCvIpv5fpx",
+          "name": "Processgate.ai_propojeni"
+        }
+      }
     },
     {
       "parameters": {
@@ -3351,8 +3381,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 1.7,
       "position": [
-        2096,
-        464
+        2032,
+        1104
       ],
       "id": "33763a8c-86e4-4f66-a574-73dafa83b4c6",
       "name": "Content Writer Agent - old",
@@ -3376,6 +3406,33 @@
       ],
       "id": "5d7143e0-b9d4-405d-bb51-ee25fd1fa221",
       "name": "Content Writer Agent"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-3-pro-image-preview",
+          "mode": "list",
+          "cachedResultName": "models/gemini-3-pro-image-preview (Nano Banana Pro)"
+        },
+        "prompt": "={\n  \"instances\": [\n    {\n      \"prompt\": \"{{ $json.imagePrompt.replace(/[\\r\\n]+/g, ' ').replace(/\"/g, '\\\\\"') }}, professional, modern tech style, no text, high quality, 16:9 aspect ratio, clean design, business appropriate\"\n    }\n  ],\n  \"parameters\": {\n    \"sampleCount\": 1,\n    \"aspectRatio\": \"16:9\"\n  }\n}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        1760,
+        1520
+      ],
+      "id": "3122c7af-7d48-43b3-b470-7fccaa209c60",
+      "name": "Generate an image",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uLXCpqN3fa4ZXZmj",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
     }
   ],
   "settings": {
@@ -3394,6 +3451,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2026-01-20T23:13:07.139Z",
-  "versionId": "515cd857-96d1-4979-99ec-a274245ca50c"
+  "updatedAt": "2026-01-21T00:38:10.443Z",
+  "versionId": "57672e46-57a2-40a1-ad11-f06479447a28"
 }
