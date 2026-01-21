@@ -335,11 +335,6 @@
         ]
       ]
     },
-    "Merge Content": {
-      "main": [
-        []
-      ]
-    },
     "Fetch Article for Humanizing": {
       "main": [
         [
@@ -417,11 +412,6 @@
         ]
       ]
     },
-    "Generate Image (Imagen 3.0)": {
-      "main": [
-        []
-      ]
-    },
     "Process Image Response": {
       "main": [
         [
@@ -466,7 +456,7 @@
       "main": [
         [
           {
-            "node": "Merge Image Branches",
+            "node": "Save Final & Set Review",
             "type": "main",
             "index": 0
           }
@@ -474,17 +464,6 @@
       ]
     },
     "No Image Passthrough": {
-      "main": [
-        [
-          {
-            "node": "Merge Image Branches",
-            "type": "main",
-            "index": 1
-          }
-        ]
-      ]
-    },
-    "Merge Image Branches": {
       "main": [
         [
           {
@@ -588,9 +567,9 @@
         ],
         [
           {
-            "node": "Merge Publish Branches",
+            "node": "Prepare Final WP Data",
             "type": "main",
-            "index": 1
+            "index": 0
           }
         ]
       ]
@@ -618,17 +597,6 @@
       ]
     },
     "Set Featured Image": {
-      "main": [
-        [
-          {
-            "node": "Merge Publish Branches",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Merge Publish Branches": {
       "main": [
         [
           {
@@ -670,11 +638,6 @@
             "index": 0
           }
         ]
-      ]
-    },
-    "Research Synthesis Agent - old": {
-      "main": [
-        []
       ]
     },
     "Google Gemini Chat Model": {
@@ -759,11 +722,6 @@
         ]
       ]
     },
-    "Content Writer Agent - old": {
-      "main": [
-        []
-      ]
-    },
     "Content Writer Agent": {
       "main": [
         [
@@ -791,6 +749,293 @@
         [
           {
             "node": "Process Image Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare for Humanizing": {
+      "main": [
+        [
+          {
+            "node": "Humanizer Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude (Humanizer)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Humanizer Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude (Verification)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Verification Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Article for Humanizing1": {
+      "main": [
+        [
+          {
+            "node": "Prepare for Humanizing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Humanizer Agent1": {
+      "main": [
+        [
+          {
+            "node": "Prepare for Verification1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare for Verification1": {
+      "main": [
+        [
+          {
+            "node": "Verification Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verification Agent1": {
+      "main": [
+        [
+          {
+            "node": "Prepare Final Content1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verification Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Verification Agent1",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Final Content1": {
+      "main": [
+        [
+          {
+            "node": "Save Final & Set Review1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Final & Set Review1": {
+      "main": [
+        [
+          {
+            "node": "Send Review Notification1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare WP Data": {
+      "main": [
+        [
+          {
+            "node": "Create WordPress Post1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Article for Publishing1": {
+      "main": [
+        [
+          {
+            "node": "Set Status: Publishing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Status: Publishing1": {
+      "main": [
+        [
+          {
+            "node": "Prepare WP Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create WordPress Post1": {
+      "main": [
+        [
+          {
+            "node": "Get WP Categories1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get WP Tags1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get WP Categories1": {
+      "main": [
+        [
+          {
+            "node": "Map Categories & Tags1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get WP Tags1": {
+      "main": [
+        [
+          {
+            "node": "Map Categories & Tags1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Map Categories & Tags1": {
+      "main": [
+        [
+          {
+            "node": "Assign Categories & Tags1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assign Categories & Tags1": {
+      "main": [
+        [
+          {
+            "node": "Prepare Final WP Data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Final WP Data1": {
+      "main": [
+        [
+          {
+            "node": "Update Published Status1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Published Status1": {
+      "main": [
+        [
+          {
+            "node": "Prepare Image Generation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Image Response2": {
+      "main": [
+        [
+          {
+            "node": "Has Image?2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has Image?2": {
+      "main": [
+        [
+          {
+            "node": "Upload Image to WordPress2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Image Passthrough1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Image to WordPress2": {
+      "main": [
+        [
+          {
+            "node": "Set Image Data2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate an image1": {
+      "main": [
+        [
+          {
+            "node": "Process Image Response2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Image Generation": {
+      "main": [
+        [
+          {
+            "node": "Generate an image1",
             "type": "main",
             "index": 0
           }
@@ -944,7 +1189,7 @@
               "outputKey": "Humanizing"
             },
             {
-              "value2": "Humanizing",
+              "value2": "Approved",
               "outputKey": "Publishing"
             }
           ]
@@ -2164,18 +2409,6 @@
       "name": "Merge Compressed"
     },
     {
-      "parameters": {},
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3.1,
-      "position": [
-        3344,
-        496
-      ],
-      "id": "dda82c09-ea2c-46f5-83d3-3cd50607abe9",
-      "name": "Merge Content",
-      "disabled": true
-    },
-    {
       "parameters": {
         "operation": "update",
         "base": {
@@ -2193,7 +2426,10 @@
           "value": {
             "id": "={{ $json.articleId }}",
             "Status": "Humanizing",
-            "Content": "={{ $json.content }}"
+            "Content": "={{ $json.content }}",
+            "Excerpt": "={{ $('Content Writer Agent').item.json.output.excerpt }}",
+            "Slug": "={{ $('Content Writer Agent').item.json.output.slug }}",
+            "Image Prompt": "={{ $('Content Writer Agent').item.json.output.imageQuery }}"
           },
           "matchingColumns": [
             "id"
@@ -2229,7 +2465,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": true
+              "removed": false
             },
             {
               "id": "Status",
@@ -2411,7 +2647,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": true
+              "removed": false
             },
             {
               "id": "Image Prompt",
@@ -2422,7 +2658,7 @@
               "display": true,
               "type": "string",
               "readOnly": false,
-              "removed": true
+              "removed": false
             },
             {
               "id": "Featured Image URL",
@@ -2668,35 +2904,7 @@
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "googlePalmApi",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n  \"instances\": [\n    {\n      \"prompt\": \"{{ $json.imagePrompt.replace(/[\\r\\n]+/g, ' ').replace(/\"/g, '\\\\\"') }}, professional, modern tech style, no text, high quality, 16:9 aspect ratio, clean design, business appropriate\"\n    }\n  ],\n  \"parameters\": {\n    \"sampleCount\": 1,\n    \"aspectRatio\": \"16:9\"\n  }\n}",
-        "options": {
-          "timeout": 60000
-        }
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.3,
-      "position": [
-        1760,
-        1952
-      ],
-      "id": "1faf766c-6392-4717-967b-5680c12ccb55",
-      "name": "Generate Image (Imagen 3.0)",
-      "credentials": {
-        "googlePalmApi": {
-          "id": "uLXCpqN3fa4ZXZmj",
-          "name": "Google Gemini(PaLM) Api account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "jsCode": "// Extract base64 image from Imagen response\nconst response = $input.first().json;\nconst prepData = $('Prepare Final Content').first().json;\n\nlet imageBase64 = '';\nlet hasImage = false;\n\nif (response.predictions && response.predictions[0]) {\n  imageBase64 = response.predictions[0].bytesBase64Encoded;\n  hasImage = true;\n}\n\nreturn {\n  json: {\n    ...prepData,\n    imageBase64: imageBase64,\n    hasImage: hasImage,\n    filename: `${prepData.slug}-featured.png`\n  }\n};"
+        "jsCode": "// Extract image from Gemini Imagen response and prepare for WordPress upload\nconst prepData = $('Prepare Final Content').first().json;\nconst inputItem = $input.first();\n\nlet hasImage = false;\nlet imageBase64 = '';\n\n// Kontrola binárních dat z Gemini\nif (inputItem.binary && inputItem.binary.data) {\n  hasImage = true;\n  // Uložíme base64 pro případ potřeby\n  imageBase64 = inputItem.binary.data.data || '';\n}\n\n// Vytvoříme slug pro filename\nconst slug = prepData.slug || 'article';\nconst filename = `${slug}-featured.png`;\n\n// Vrátíme JSON data A binární data\nreturn {\n  json: {\n    ...prepData,\n    hasImage: hasImage,\n    filename: filename,\n    imageBase64: imageBase64\n  },\n  // KRITICKÉ: Předáváme binární data dál pod klíčem 'data'\n  binary: inputItem.binary ? {\n    data: inputItem.binary.data\n  } : undefined\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -2760,8 +2968,8 @@
           ]
         },
         "sendBody": true,
-        "contentType": "raw",
-        "body": "={{ Buffer.from($json.imageBase64, 'base64') }}",
+        "contentType": "binaryData",
+        "inputDataFieldName": "data",
         "options": {
           "timeout": 30000
         }
@@ -2802,56 +3010,342 @@
       "typeVersion": 2,
       "position": [
         2608,
-        1696
+        1600
       ],
       "id": "2c4a89b8-01b6-4a78-8b0f-9a96997404ff",
       "name": "No Image Passthrough"
     },
     {
       "parameters": {
-        "mode": "combine",
-        "combineBy": "combineByPosition",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3.1,
-      "position": [
-        2832,
-        1568
-      ],
-      "id": "3093fb0f-cb51-47a0-bad4-d97de40a4d88",
-      "name": "Merge Image Branches"
-    },
-    {
-      "parameters": {
         "operation": "update",
         "base": {
           "__rl": true,
-          "mode": "id",
-          "value": "={{ $vars.AIRTABLE_BASE_ID }}"
+          "value": "=https://airtable.com/appNKJUeljGoHYjQf/tbljRtFFKlUXYAO6M/viwCXaxhEJzyyFE8z?blocks=hide",
+          "mode": "url"
         },
         "table": {
           "__rl": true,
-          "mode": "id",
-          "value": "={{ $vars.AIRTABLE_ARTICLES_TABLE }}"
+          "value": "https://airtable.com/appNKJUeljGoHYjQf/tbljRtFFKlUXYAO6M/viwCXaxhEJzyyFE8z?blocks=hide",
+          "mode": "url"
         },
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "Status": "Review",
-            "Content": "={{ $json.content }}",
-            "Featured Image URL": "={{ $json.wpMediaUrl }}",
-            "Verification Status": "={{ $json.verified ? 'Passed' : 'Issues Found' }}",
-            "Verification Notes": "={{ $json.verificationNotes }}"
-          }
+            "id": "={{ $('Airtable Status Change').item.json.id }}",
+            "Status": "Review"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Slug",
+              "displayName": "Slug",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "New",
+                  "value": "New"
+                },
+                {
+                  "name": "Researching",
+                  "value": "Researching"
+                },
+                {
+                  "name": "Writing",
+                  "value": "Writing"
+                },
+                {
+                  "name": "Humanizing",
+                  "value": "Humanizing"
+                },
+                {
+                  "name": "Review",
+                  "value": "Review"
+                },
+                {
+                  "name": "Approved",
+                  "value": "Approved"
+                },
+                {
+                  "name": "Publishing",
+                  "value": "Publishing"
+                },
+                {
+                  "name": "Published",
+                  "value": "Published"
+                },
+                {
+                  "name": "Failed",
+                  "value": "Failed"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Priority",
+              "displayName": "Priority",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Target Length",
+              "displayName": "Target Length",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Primary Keywords",
+              "displayName": "Primary Keywords",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Secondary Keywords",
+              "displayName": "Secondary Keywords",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Categories",
+              "displayName": "Categories",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Tags",
+              "displayName": "Tags",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "options": [
+                {
+                  "name": "AI",
+                  "value": "AI"
+                },
+                {
+                  "name": "SMB",
+                  "value": "SMB"
+                },
+                {
+                  "name": "transformace",
+                  "value": "transformace"
+                },
+                {
+                  "name": "marketing",
+                  "value": "marketing"
+                },
+                {
+                  "name": "nástroje",
+                  "value": "nástroje"
+                },
+                {
+                  "name": "automatizace",
+                  "value": "automatizace"
+                },
+                {
+                  "name": "case study",
+                  "value": "case study"
+                },
+                {
+                  "name": "výroba",
+                  "value": "výroba"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Research Data",
+              "displayName": "Research Data",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Content",
+              "displayName": "Content",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Excerpt",
+              "displayName": "Excerpt",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Image Prompt",
+              "displayName": "Image Prompt",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Featured Image URL",
+              "displayName": "Featured Image URL",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "WordPress Post ID",
+              "displayName": "WordPress Post ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "WordPress URL",
+              "displayName": "WordPress URL",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Verification Status",
+              "displayName": "Verification Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Pending",
+                  "value": "Pending"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Verification Notes",
+              "displayName": "Verification Notes",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Error Log",
+              "displayName": "Error Log",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
         },
         "options": {}
       },
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2,
       "position": [
-        3040,
-        1568
+        2832,
+        1504
       ],
       "id": "8e547583-6cc0-46c7-b3da-02f16c20ff4e",
       "name": "Save Final & Set Review",
@@ -2865,15 +3359,15 @@
     {
       "parameters": {
         "sendTo": "zmidloch@z-agency.cz",
-        "subject": "={{ $json.verified ? '✅' : '⚠️' }} New article for review: {{ $json.title }}",
-        "message": "=<h2>{{ $json.title }}</h2>\n\n<p><strong>Excerpt:</strong> {{ $json.excerpt }}</p>\n\n<p><strong>Verification Status:</strong> {{ $json.verified ? 'Passed' : 'Issues Found' }}</p>\n<p><strong>Notes:</strong> {{ $json.verificationNotes }}</p>\n\n{{ $json.verificationIssues?.length > 0 ? '<h3>Issues Found:</h3><ul>' + $json.verificationIssues.map(i => '<li>' + i + '</li>').join('') + '</ul>' : '' }}\n\n<hr>\n\n<p>Please review the article in Airtable and set status to \"Approved\" when ready to publish.</p>\n\n<p style=\"color: #666; font-size: 12px;\">This email was automatically generated by the Blog Article Generator workflow.</p>",
+        "subject": "={{ $json.verified ? '✅' : '⚠️' }} New article for review: {{ $json.fields.Title }}",
+        "message": "=<h2>{{ $json.fields.Title }}</h2>\n\n<p><strong>Excerpt:</strong> {{ $json.excerpt || 'N/A' }}</p>\n\n<p><strong>Verification Status:</strong> {{ $json.verified ? 'Passed' : 'Issues Found' }}</p>\n<p><strong>Notes:</strong> {{ $json.verificationNotes || 'No notes' }}</p>\n\n{{ $json.verificationIssues && $json.verificationIssues.length > 0 ? '<h3>Issues Found:</h3><ul>' + $json.verificationIssues.map(i => '<li>' + i + '</li>').join('') + '</ul>' : '' }}\n\n<p><strong>Featured Image:</strong> {{ $json.wpMediaUrl ? '<a href=\"' + $json.wpMediaUrl + '\">View Image</a>' : 'No image' }}</p>\n\n<hr>\n\n<p>Please review the article in Airtable and set status to \"Approved\" when ready to publish.</p>\n\n<p style=\"color: #666; font-size: 12px;\">This email was automatically generated by the Blog Article Generator workflow.</p>\nOpravený subject:",
         "options": {}
       },
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        3248,
-        1568
+        3088,
+        1504
       ],
       "id": "81e6a7e2-516f-4220-a9f4-cd717c55e89f",
       "name": "Send Review Notification",
@@ -2889,13 +3383,13 @@
       "parameters": {
         "base": {
           "__rl": true,
-          "mode": "id",
-          "value": "={{ $vars.AIRTABLE_BASE_ID }}"
+          "value": "=https://airtable.com/appNKJUeljGoHYjQf/tbljRtFFKlUXYAO6M/viwCXaxhEJzyyFE8z?blocks=hide",
+          "mode": "url"
         },
         "table": {
           "__rl": true,
-          "mode": "id",
-          "value": "={{ $vars.AIRTABLE_ARTICLES_TABLE }}"
+          "value": "https://airtable.com/appNKJUeljGoHYjQf/tbljRtFFKlUXYAO6M/viwCXaxhEJzyyFE8z?blocks=hide",
+          "mode": "url"
         },
         "id": "={{ $('Airtable Status Change').item.json.id }}",
         "options": {}
@@ -2920,19 +3414,324 @@
         "operation": "update",
         "base": {
           "__rl": true,
-          "mode": "id",
-          "value": "={{ $vars.AIRTABLE_BASE_ID }}"
+          "value": "=https://airtable.com/appNKJUeljGoHYjQf/tbljRtFFKlUXYAO6M/viwCXaxhEJzyyFE8z?blocks=hide",
+          "mode": "url"
         },
         "table": {
           "__rl": true,
-          "mode": "id",
-          "value": "={{ $vars.AIRTABLE_ARTICLES_TABLE }}"
+          "value": "https://airtable.com/appNKJUeljGoHYjQf/tbljRtFFKlUXYAO6M/viwCXaxhEJzyyFE8z?blocks=hide",
+          "mode": "url"
         },
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
+            "id": "={{ $json.id }}",
             "Status": "Publishing"
-          }
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Slug",
+              "displayName": "Slug",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "New",
+                  "value": "New"
+                },
+                {
+                  "name": "Researching",
+                  "value": "Researching"
+                },
+                {
+                  "name": "Writing",
+                  "value": "Writing"
+                },
+                {
+                  "name": "Humanizing",
+                  "value": "Humanizing"
+                },
+                {
+                  "name": "Review",
+                  "value": "Review"
+                },
+                {
+                  "name": "Approved",
+                  "value": "Approved"
+                },
+                {
+                  "name": "Publishing",
+                  "value": "Publishing"
+                },
+                {
+                  "name": "Published",
+                  "value": "Published"
+                },
+                {
+                  "name": "Failed",
+                  "value": "Failed"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Priority",
+              "displayName": "Priority",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Target Length",
+              "displayName": "Target Length",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Primary Keywords",
+              "displayName": "Primary Keywords",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Secondary Keywords",
+              "displayName": "Secondary Keywords",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Categories",
+              "displayName": "Categories",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Tags",
+              "displayName": "Tags",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "options": [
+                {
+                  "name": "AI",
+                  "value": "AI"
+                },
+                {
+                  "name": "SMB",
+                  "value": "SMB"
+                },
+                {
+                  "name": "transformace",
+                  "value": "transformace"
+                },
+                {
+                  "name": "marketing",
+                  "value": "marketing"
+                },
+                {
+                  "name": "nástroje",
+                  "value": "nástroje"
+                },
+                {
+                  "name": "automatizace",
+                  "value": "automatizace"
+                },
+                {
+                  "name": "case study",
+                  "value": "case study"
+                },
+                {
+                  "name": "výroba",
+                  "value": "výroba"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Research Data",
+              "displayName": "Research Data",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Content",
+              "displayName": "Content",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Excerpt",
+              "displayName": "Excerpt",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Image Prompt",
+              "displayName": "Image Prompt",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Featured Image URL",
+              "displayName": "Featured Image URL",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "WordPress Post ID",
+              "displayName": "WordPress Post ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "WordPress URL",
+              "displayName": "WordPress URL",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Verification Status",
+              "displayName": "Verification Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Pending",
+                  "value": "Pending"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Verification Notes",
+              "displayName": "Verification Notes",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Error Log",
+              "displayName": "Error Log",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
         },
         "options": {}
       },
@@ -2953,10 +3752,10 @@
     },
     {
       "parameters": {
-        "title": "={{ $('Fetch Article for Publishing').item.json.fields.Title }}",
+        "title": "={{ $json.fields.Title }}",
         "additionalFields": {
-          "content": "={{ $('Fetch Article for Publishing').item.json.fields.Content }}",
-          "slug": "={{ $('Fetch Article for Publishing').item.json.fields.Slug }}",
+          "content": "={{ $json.fields.Content }}",
+          "slug": "={{ $json.fields.Slug }}",
           "status": "draft"
         }
       },
@@ -3039,7 +3838,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Map AI categories and tags to WordPress IDs\nconst allInputs = $input.all();\n\n// Get categories and tags from inputs\nlet wpCategories = [];\nlet wpTags = [];\n\nfor (const item of allInputs) {\n  if (Array.isArray(item.json)) {\n    // Check if it's categories or tags based on content\n    if (item.json[0]?.taxonomy === 'category' || item.json[0]?.parent !== undefined) {\n      wpCategories = item.json;\n    } else {\n      wpTags = item.json;\n    }\n  }\n}\n\n// If still empty, try to get from specific nodes\nif (wpCategories.length === 0) {\n  try {\n    const catData = $('Get WP Categories').all();\n    wpCategories = catData.flatMap(d => Array.isArray(d.json) ? d.json : [d.json]);\n  } catch (e) {}\n}\n\nif (wpTags.length === 0) {\n  try {\n    const tagData = $('Get WP Tags').all();\n    wpTags = tagData.flatMap(d => Array.isArray(d.json) ? d.json : [d.json]);\n  } catch (e) {}\n}\n\n// Get article data\nconst articleData = $('Fetch Article for Publishing').first().json;\nconst aiCategories = articleData.fields.Categories || [];\nconst aiTagsString = articleData.fields.Tags || '';\nconst aiTags = aiTagsString.split(',').map(t => t.trim()).filter(t => t);\nconst postId = $('Create WordPress Post').first().json.id;\n\n// Map category names to IDs\nconst categoryIds = [];\nfor (const aiCat of aiCategories) {\n  const match = wpCategories.find(wpCat =>\n    wpCat.name?.toLowerCase().includes(aiCat.toLowerCase()) ||\n    aiCat.toLowerCase().includes(wpCat.name?.toLowerCase())\n  );\n  if (match) {\n    categoryIds.push(match.id);\n  }\n}\n\n// If no category found, use default\nif (categoryIds.length === 0) {\n  categoryIds.push(1); // Uncategorized\n}\n\n// Map tag names to IDs\nconst tagIds = [];\nfor (const aiTag of aiTags) {\n  const match = wpTags.find(wpTag =>\n    wpTag.name?.toLowerCase() === aiTag.toLowerCase() ||\n    wpTag.slug?.toLowerCase() === aiTag.toLowerCase().replace(/\\s+/g, '-')\n  );\n  if (match) {\n    tagIds.push(match.id);\n  }\n}\n\nreturn {\n  json: {\n    postId: postId,\n    categoryIds: categoryIds,\n    tagIds: tagIds,\n    articleId: articleData.id,\n    featuredImageUrl: articleData.fields['Featured Image URL'] || ''\n  }\n};"
+        "jsCode": "// Map AI categories and tags to WordPress IDs\nconst allInputs = $input.all();\n\n// Get categories and tags from inputs\nlet wpCategories = [];\nlet wpTags = [];\n\nfor (const item of allInputs) {\n  if (Array.isArray(item.json)) {\n    if (item.json[0]?.taxonomy === 'category' || item.json[0]?.parent !== undefined) {\n      wpCategories = item.json;\n    } else {\n      wpTags = item.json;\n    }\n  }\n}\n\n// Fallback - get from specific nodes\nif (wpCategories.length === 0) {\n  try {\n    const catData = $('Get WP Categories').all();\n    wpCategories = catData.flatMap(d => Array.isArray(d.json) ? d.json : [d.json]);\n  } catch (e) {}\n}\n\nif (wpTags.length === 0) {\n  try {\n    const tagData = $('Get WP Tags').all();\n    wpTags = tagData.flatMap(d => Array.isArray(d.json) ? d.json : [d.json]);\n  } catch (e) {}\n}\n\n// Get article data - OPRAVA: data mohou být s nebo bez .fields\nconst rawArticleData = $('Fetch Article for Publishing').first().json;\n\n// Detekce struktury dat\nconst articleData = rawArticleData.fields ? rawArticleData.fields : rawArticleData;\n\n// Parse categories - může být string nebo array\nlet aiCategories = [];\nif (typeof articleData.Categories === 'string') {\n  aiCategories = articleData.Categories.split(',').map(c => c.trim()).filter(c => c);\n} else if (Array.isArray(articleData.Categories)) {\n  aiCategories = articleData.Categories;\n}\n\n// Parse tags - může být string nebo array\nlet aiTags = [];\nif (typeof articleData.Tags === 'string') {\n  aiTags = articleData.Tags.split(',').map(t => t.trim()).filter(t => t);\n} else if (Array.isArray(articleData.Tags)) {\n  aiTags = articleData.Tags;\n}\n\nconst postId = $('Create WordPress Post').first().json.id;\n\n// Map category names to IDs\nconst categoryIds = [];\nfor (const aiCat of aiCategories) {\n  const match = wpCategories.find(wpCat =>\n    wpCat.name?.toLowerCase().includes(aiCat.toLowerCase()) ||\n    aiCat.toLowerCase().includes(wpCat.name?.toLowerCase()) ||\n    wpCat.slug?.toLowerCase() === aiCat.toLowerCase().replace(/\\s+/g, '-')\n  );\n  if (match) {\n    categoryIds.push(match.id);\n  }\n}\n\n// Default category if none found\nif (categoryIds.length === 0) {\n  categoryIds.push(1);\n}\n\n// Map tag names to IDs\nconst tagIds = [];\nfor (const aiTag of aiTags) {\n  const match = wpTags.find(wpTag =>\n    wpTag.name?.toLowerCase() === aiTag.toLowerCase() ||\n    wpTag.slug?.toLowerCase() === aiTag.toLowerCase().replace(/\\s+/g, '-')\n  );\n  if (match) {\n    tagIds.push(match.id);\n  }\n}\n\nreturn {\n  json: {\n    postId: postId,\n    categoryIds: categoryIds,\n    tagIds: tagIds,\n    articleId: rawArticleData.id,\n    featuredImageUrl: articleData['Featured Image URL'] || ''\n  }\n};\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -3068,7 +3867,13 @@
         2416
       ],
       "id": "d607eb42-f552-4b22-bb87-cf9b2b8d14f4",
-      "name": "Assign Categories & Tags"
+      "name": "Assign Categories & Tags",
+      "credentials": {
+        "wordpressApi": {
+          "id": "flqY5YMCvIpv5fpx",
+          "name": "Processgate.ai_propojeni"
+        }
+      }
     },
     {
       "parameters": {
@@ -3190,22 +3995,7 @@
     },
     {
       "parameters": {
-        "mode": "combine",
-        "combineBy": "combineByPosition",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3.1,
-      "position": [
-        2656,
-        2496
-      ],
-      "id": "b8fd0f4e-1f8c-4f8f-9c15-717e504681e8",
-      "name": "Merge Publish Branches"
-    },
-    {
-      "parameters": {
-        "jsCode": "// Prepare final WordPress data\nconst articleData = $('Fetch Article for Publishing').first().json;\nconst postData = $('Create WordPress Post').first().json;\n\nreturn {\n  json: {\n    articleId: articleData.id,\n    title: articleData.fields.Title,\n    wpPostId: postData.id,\n    wpUrl: postData.link || `https://processgate.ai/?p=${postData.id}`\n  }\n};"
+        "jsCode": "// Prepare final WordPress data\nconst rawArticleData = $('Fetch Article for Publishing').first().json;\nconst postData = $('Create WordPress Post').first().json;\n\n// Detekce struktury dat - s nebo bez .fields\nconst articleData = rawArticleData.fields ? rawArticleData.fields : rawArticleData;\n\nreturn {\n  json: {\n    articleId: rawArticleData.id,\n    title: articleData.Title,\n    wpPostId: postData.id,\n    wpUrl: postData.link || `https://processgate.ai/?p=${postData.id}`\n  }\n};\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -3221,21 +4011,324 @@
         "operation": "update",
         "base": {
           "__rl": true,
-          "mode": "id",
-          "value": "={{ $vars.AIRTABLE_BASE_ID }}"
+          "value": "=https://airtable.com/appNKJUeljGoHYjQf/tbljRtFFKlUXYAO6M/viwCXaxhEJzyyFE8z?blocks=hide",
+          "mode": "url"
         },
         "table": {
           "__rl": true,
-          "mode": "id",
-          "value": "={{ $vars.AIRTABLE_ARTICLES_TABLE }}"
+          "value": "https://airtable.com/appNKJUeljGoHYjQf/tbljRtFFKlUXYAO6M/viwCXaxhEJzyyFE8z?blocks=hide",
+          "mode": "url"
         },
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "Status": "Published",
-            "WordPress Post ID": "={{ $json.wpPostId }}",
-            "WordPress URL": "={{ $json.wpUrl }}"
-          }
+            "id": "={{ $json.articleId }}",
+            "Status": "Published"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Slug",
+              "displayName": "Slug",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "New",
+                  "value": "New"
+                },
+                {
+                  "name": "Researching",
+                  "value": "Researching"
+                },
+                {
+                  "name": "Writing",
+                  "value": "Writing"
+                },
+                {
+                  "name": "Humanizing",
+                  "value": "Humanizing"
+                },
+                {
+                  "name": "Review",
+                  "value": "Review"
+                },
+                {
+                  "name": "Approved",
+                  "value": "Approved"
+                },
+                {
+                  "name": "Publishing",
+                  "value": "Publishing"
+                },
+                {
+                  "name": "Published",
+                  "value": "Published"
+                },
+                {
+                  "name": "Failed",
+                  "value": "Failed"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Priority",
+              "displayName": "Priority",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Target Length",
+              "displayName": "Target Length",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Primary Keywords",
+              "displayName": "Primary Keywords",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Secondary Keywords",
+              "displayName": "Secondary Keywords",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Categories",
+              "displayName": "Categories",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Tags",
+              "displayName": "Tags",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "options": [
+                {
+                  "name": "AI",
+                  "value": "AI"
+                },
+                {
+                  "name": "SMB",
+                  "value": "SMB"
+                },
+                {
+                  "name": "transformace",
+                  "value": "transformace"
+                },
+                {
+                  "name": "marketing",
+                  "value": "marketing"
+                },
+                {
+                  "name": "nástroje",
+                  "value": "nástroje"
+                },
+                {
+                  "name": "automatizace",
+                  "value": "automatizace"
+                },
+                {
+                  "name": "case study",
+                  "value": "case study"
+                },
+                {
+                  "name": "výroba",
+                  "value": "výroba"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Research Data",
+              "displayName": "Research Data",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Content",
+              "displayName": "Content",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Excerpt",
+              "displayName": "Excerpt",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Image Prompt",
+              "displayName": "Image Prompt",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Featured Image URL",
+              "displayName": "Featured Image URL",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "WordPress Post ID",
+              "displayName": "WordPress Post ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "WordPress URL",
+              "displayName": "WordPress URL",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Verification Status",
+              "displayName": "Verification Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Pending",
+                  "value": "Pending"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Verification Notes",
+              "displayName": "Verification Notes",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Error Log",
+              "displayName": "Error Log",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
         },
         "options": {}
       },
@@ -3257,8 +4350,8 @@
     {
       "parameters": {
         "sendTo": "zmidloch@z-agency.cz",
-        "subject": "=✅ Article Published: {{ $json.title }}",
-        "message": "=<h2>{{ $json.title }}</h2>\n\n<p>The article has been successfully published to WordPress as a draft.</p>\n\n<p><strong>WordPress Post ID:</strong> {{ $json.wpPostId }}</p>\n<p><strong>URL:</strong> <a href=\"{{ $json.wpUrl }}\">{{ $json.wpUrl }}</a></p>\n\n<hr>\n\n<p><a href=\"https://processgate.ai/wp-admin/post.php?post={{ $json.wpPostId }}&action=edit\" style=\"background: #0073aa; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px;\">Open in WordPress Admin</a></p>\n\n<p style=\"color: #666; font-size: 12px;\">This email was automatically generated by the Blog Article Generator workflow.</p>",
+        "subject": "=✅ Article Published:{{ $json.fields.Title }}",
+        "message": "=<h2>{{ $json.fields.Title }}</h2>\n\n<p>The article has been successfully published to WordPress as a draft.</p>\n\n<p><strong>WordPress Post ID:</strong> {{ $json.wpPostId }}</p>\n<p><strong>URL:</strong> <a href=\"{{ $json.wpUrl }}\">{{ $json.wpUrl }}</a></p>\n\n<hr>\n\n<p><a href=\"https://processgate.ai/wp-admin/post.php?post={{ $json.wpPostId }}&action=edit\" style=\"background: #0073aa; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px;\">Open in WordPress Admin</a></p>\n\n<p style=\"color: #666; font-size: 12px;\">This email was automatically generated by the Blog Article Generator workflow.</p>",
         "options": {}
       },
       "type": "n8n-nodes-base.gmail",
@@ -3287,28 +4380,11 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        3504,
-        2304
+        3632,
+        2336
       ],
       "id": "9d63c85c-01b5-4c11-8e58-af4ff05f6043",
       "name": "End Note"
-    },
-    {
-      "parameters": {
-        "promptType": "define",
-        "text": "=Analyze the following research data and provide a synthesis for blog article writing.\n\n## ARTICLE TOPIC\n{{ $json.articleTitle }}\n\n## PRIMARY KEYWORDS\n{{ $json.primaryKeywords }}\n\n## TAVILY WEB RESEARCH\n{{ $json.tavily.results.map(r => `### ${r.title}\\n${r.content}\\nSource: ${r.url}`).join('\\n\\n') }}\n\n## PERPLEXITY DEEP RESEARCH\n{{ $json.perplexity }}\n\n## WIKIPEDIA VERIFIED FACTS\n{{ $json.wikipedia.map(w => `### ${w.title}\\n${w.summary}\\nSource: ${w.url}`).join('\\n\\n') }}\n\n---\n\nProvide a JSON synthesis with the following structure:\n{\n  \"search_intent\": \"informational|transactional|commercial|navigational\",\n  \"writing_style\": \"description of recommended style\",\n  \"writing_tone\": \"description of recommended tone\",\n  \"target_audience\": \"who is this for\",\n  \"article_goal\": \"main objective\",\n  \"hidden_insights\": [\"unique angles not covered by competitors\"],\n  \"semantic_analysis\": {\n    \"common_subtopics\": [\"topic1\", \"topic2\"],\n    \"related_questions\": [\"question1\", \"question2\"]\n  },\n  \"keywords\": {\n    \"primary\": \"main keyword\",\n    \"secondary\": [\"kw1\", \"kw2\"],\n    \"semantic\": [\"sem1\", \"sem2\"],\n    \"long_tail\": [\"long tail 1\", \"long tail 2\"]\n  },\n  \"key_facts\": [\"verified fact 1\", \"verified fact 2\"]\n}\n\nRespond ONLY with valid JSON.",
-        "options": {
-          "systemMessage": "You are an expert content strategist analyzing research data for a Czech technology blog about AI and automation. Synthesize the provided research into actionable writing guidelines. Focus on practical insights for Czech small and medium businesses. Always respond with valid JSON only."
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 1.7,
-      "position": [
-        3376,
-        -240
-      ],
-      "id": "88300878-5dac-46b5-9a69-9a812c9405b0",
-      "name": "Research Synthesis Agent - old"
     },
     {
       "parameters": {
@@ -3374,25 +4450,6 @@
         "promptType": "define",
         "text": "=Write a complete blog article based on the following specifications.\n\n## TITLE\n{{ $('Title Refinement Agent').item.json.output.revisedTitle }}\n\n## OUTLINE\n{{ $json.output }}\n\n## KEY TAKEAWAYS\n{{ $('Key Takeaways Agent').item.json.output }}\n\n## SEO KEYWORDS (must include naturally)\n{{ $('Keyword Strategy Agent').item.json.output.seoKeywords.join(', ') }}\n\n## RESEARCH DATA\n\n### Tavily Sources:\n{{ $('Parse Article Data').item.json.research.rawData?.tavily?.results?.map(r => `- ${r.title}: ${r.content}`).join('\\n') || 'No Tavily data' }}\n\n### Wikipedia Verified Facts:\n{{ $('Parse Article Data').item.json.research.rawData?.wikipedia?.map(w => `- ${w.title}: ${w.summary}`).join('\\n') || 'No Wikipedia data' }}\n\n## TARGET LENGTH\n{{ $('Parse Article Data').item.json.targetLength }} words\n\n---\n\n## INSTRUCTIONS\n\n1. Follow the outline EXACTLY\n2. Write the COMPLETE article in CZECH\n3. Use HTML formatting: <p>, <h2>, <h3>, <ul>, <li>, <strong>, <a>\n4. DO NOT use <h1> (title is separate)\n5. Include SEO keywords naturally (1-2% density)\n6. Use ONLY facts from provided research sources\n7. NEVER invent statistics or data\n8. Write like a human journalist, not AI\n9. Vary sentence length\n10. Add practical examples where relevant\n\nReturn JSON:\n{\n  \"title\": \"Final Czech title\",\n  \"content\": \"Full HTML article content\",\n  \"excerpt\": \"SEO meta description (max 160 chars)\",\n  \"slug\": \"url-friendly-slug\",\n  \"imageQuery\": \"English description for image generation\"\n}",
         "hasOutputParser": true,
-        "options": {
-          "systemMessage": "Jsi zkuseny cesky technologicky novinar a copywriter specializujici se na AI, automatizaci a digitalni transformaci pro male a stredni podniky.\n\nZAKAZANE FRAZE (nikdy nepouzivej):\n- \"V dnesni dobe\"\n- \"V rychle se menicim svete\"\n- \"Je dulezite poznamenat\"\n- \"Neni zadnym tajemstvi\"\n- \"Pojdme se podivat\"\n- \"Jak jiste vite\"\n- \"Neni prekvapenim\"\n\nPRAVIDLA:\n- Pis ve vyborne cestine, vyhybej se zbytecnym anglicismum\n- Stridej delku vet - kratke s delsimi\n- Pouzivej konkretni priklady, cisla a fakta\n- Pis jako clovek, ne jako AI\n- Vyhybej se pasivnimu rodu\n- NIKDY nevymyslej statistiky - pouzivej pouze dodane zdroje\n\nFORMAT: HTML tagy (p, h2, h3, ul, li, strong, a), bez h1\nOdpovez POUZE platnym JSON objektem."
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 1.7,
-      "position": [
-        2032,
-        1104
-      ],
-      "id": "33763a8c-86e4-4f66-a574-73dafa83b4c6",
-      "name": "Content Writer Agent - old",
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "promptType": "define",
-        "text": "=Write a complete blog article based on the following specifications.\n\n## TITLE\n{{ $('Title Refinement Agent').item.json.output.revisedTitle }}\n\n## OUTLINE\n{{ $json.output }}\n\n## KEY TAKEAWAYS\n{{ $('Key Takeaways Agent').item.json.output }}\n\n## SEO KEYWORDS (must include naturally)\n{{ $('Keyword Strategy Agent').item.json.output.seoKeywords.join(', ') }}\n\n## RESEARCH DATA\n\n### Tavily Sources:\n{{ $('Parse Article Data').item.json.research.rawData?.tavily?.results?.map(r => `- ${r.title}: ${r.content}`).join('\\n') || 'No Tavily data' }}\n\n### Wikipedia Verified Facts:\n{{ $('Parse Article Data').item.json.research.rawData?.wikipedia?.map(w => `- ${w.title}: ${w.summary}`).join('\\n') || 'No Wikipedia data' }}\n\n## TARGET LENGTH\n{{ $('Parse Article Data').item.json.targetLength }} words\n\n---\n\n## INSTRUCTIONS\n\n1. Follow the outline EXACTLY\n2. Write the COMPLETE article in CZECH\n3. Use HTML formatting: <p>, <h2>, <h3>, <ul>, <li>, <strong>, <a>\n4. DO NOT use <h1> (title is separate)\n5. Include SEO keywords naturally (1-2% density)\n6. Use ONLY facts from provided research sources\n7. NEVER invent statistics or data\n8. Write like a human journalist, not AI\n9. Vary sentence length\n10. Add practical examples where relevant\n\nReturn JSON:\n{\n  \"title\": \"Final Czech title\",\n  \"content\": \"Full HTML article content\",\n  \"excerpt\": \"SEO meta description (max 160 chars)\",\n  \"slug\": \"url-friendly-slug\",\n  \"imageQuery\": \"English description for image generation\"\n}",
-        "hasOutputParser": true,
         "needsFallback": true,
         "options": {
           "systemMessage": "Jsi zkuseny cesky technologicky novinar a copywriter specializujici se na AI, automatizaci a digitalni transformaci pro male a stredni podniky.\n\nZAKAZANE FRAZE (nikdy nepouzivej):\n- \"V dnesni dobe\"\n- \"V rychle se menicim svete\"\n- \"Je dulezite poznamenat\"\n- \"Neni zadnym tajemstvi\"\n- \"Pojdme se podivat\"\n- \"Jak jiste vite\"\n- \"Neni prekvapenim\"\n\nPRAVIDLA:\n- Pis ve vyborne cestine, vyhybej se zbytecnym anglicismum\n- Stridej delku vet - kratke s delsimi\n- Pouzivej konkretni priklady, cisla a fakta\n- Pis jako clovek, ne jako AI\n- Vyhybej se pasivnimu rodu\n- NIKDY nevymyslej statistiky - pouzivej pouze dodane zdroje\n\nFORMAT: HTML tagy (p, h2, h3, ul, li, strong, a), bez h1\nOdpovez POUZE platnym JSON objektem."
@@ -3433,6 +4490,706 @@
           "name": "Google Gemini(PaLM) Api account"
         }
       }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepare article data for humanization\nconst rawData = $input.first().json;\nconst article = rawData.fields ? rawData.fields : rawData;\n\nreturn {\n  json: {\n    articleId: rawData.id,\n    title: article.Title,\n    content: article.Content || '',\n    excerpt: article.Excerpt || '',\n    slug: article.Slug || '',\n    categories: article.Categories || '',\n    tags: article.Tags || []\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4048,
+        1536
+      ],
+      "id": "fab0e406-a6b5-4c25-8523-0d29f5acb1e2",
+      "name": "Prepare for Humanizing"
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-sonnet-4.5",
+        "options": {
+          "temperature": 0.6
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        4256,
+        1760
+      ],
+      "id": "9aea0f5f-5a89-4898-802d-e0675379bc61",
+      "name": "Claude (Humanizer)",
+      "credentials": {
+        "openRouterApi": {
+          "id": "XpZg3NCm0vRTBA75",
+          "name": "OpenRouter Z-AGENCY 2026"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-sonnet-4.5",
+        "options": {
+          "temperature": 0.2
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        4736,
+        1760
+      ],
+      "id": "93723a8c-93d3-4f4b-a85d-4cc3b7922ef3",
+      "name": "Claude (Verification)",
+      "credentials": {
+        "openRouterApi": {
+          "id": "XpZg3NCm0vRTBA75",
+          "name": "OpenRouter Z-AGENCY 2026"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## BRANCH 3: Humanization & Verification\n\nTriggers when Status = 'Humanizing'\n\n1. Fetch article from Airtable\n2. Humanizer Agent (natural Czech style)\n3. Verification Agent (fact-check)\n4. Save content to Airtable\n5. Update status to 'Review'\n6. Send notification email",
+        "height": 280,
+        "width": 720,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3792,
+        1184
+      ],
+      "id": "4a20c9ca-58b1-4950-98f8-8dc831367071",
+      "name": "Humanization Branch Note1"
+    },
+    {
+      "parameters": {
+        "base": {
+          "__rl": true,
+          "mode": "url",
+          "value": "https://airtable.com/appNKJUeljGoHYjQf/tbljRtFFKlUXYAO6M/viwCXaxhEJzyyFE8z"
+        },
+        "table": {
+          "__rl": true,
+          "value": "https://airtable.com/appNKJUeljGoHYjQf/tbljRtFFKlUXYAO6M/viwCXaxhEJzyyFE8z",
+          "mode": "url"
+        },
+        "id": "={{ $('Airtable Status Change').item.json.id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        3840,
+        1536
+      ],
+      "id": "8c319965-bc63-47d4-ab20-c676a2b9c4fb",
+      "name": "Fetch Article for Humanizing1",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable - zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Humanize the following article content to make it sound more natural and engaging in Czech.\n\n## TITLE\n{{ $json.title }}\n\n## CONTENT\n{{ $json.content }}\n\n---\n\nGuidelines:\n- Make the text flow naturally as if written by a native Czech speaker\n- Avoid robotic or overly formal language\n- Keep the factual accuracy intact\n- Maintain the structure (headings, lists)\n- Add transitional phrases where needed\n- Use varied sentence lengths\n- Keep technical terms accurate\n\nReturn the humanized content in HTML format (same structure as input).",
+        "options": {
+          "systemMessage": "You are an expert Czech copywriter who specializes in making AI-generated content sound natural and human. You maintain accuracy while improving readability and engagement."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        4256,
+        1536
+      ],
+      "id": "71df9546-8c77-4b2d-b87f-15fa28096b88",
+      "name": "Humanizer Agent1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepare humanized content for verification\nconst prepData = $('Prepare for Humanizing').first().json;\nconst humanizedContent = $input.first().json.output || $input.first().json.text || '';\n\nreturn {\n  json: {\n    ...prepData,\n    humanizedContent: humanizedContent\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4560,
+        1536
+      ],
+      "id": "f5bbe3d6-5c6d-4c51-9790-bf7b72a9a1ec",
+      "name": "Prepare for Verification1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Verify the following article for factual accuracy and identify any claims that need sources.\n\n## TITLE\n{{ $json.title }}\n\n## CONTENT\n{{ $json.humanizedContent }}\n\n---\n\nCheck for:\n1. Factual claims that need verification\n2. Statistics or numbers that should have sources\n3. Outdated information\n4. Potential inaccuracies\n5. Missing context\n\nReturn JSON:\n{\n  \"verified\": true/false,\n  \"verificationNotes\": \"Summary of verification\",\n  \"verificationIssues\": [\"issue1\", \"issue2\"]\n}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are a fact-checker for Czech technology articles. Identify claims that need verification and flag potential inaccuracies. Be thorough but practical."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        4752,
+        1536
+      ],
+      "id": "b8520fc3-17ce-4bf6-a9d2-20fe16fab14d",
+      "name": "Verification Agent1"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"required\": [\"verified\", \"verificationNotes\"],\n  \"properties\": {\n    \"verified\": { \"type\": \"boolean\" },\n    \"verificationNotes\": { \"type\": \"string\" },\n    \"verificationIssues\": { \"type\": \"array\", \"items\": { \"type\": \"string\" } }\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        4896,
+        1760
+      ],
+      "id": "465fcc16-0701-43b7-b31e-80b1d96f6595",
+      "name": "Verification Parser1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepare final data for saving\nconst prepData = $('Prepare for Verification1').first().json;\nconst verificationOutput = $input.first().json.output || $input.first().json;\n\nreturn {\n  json: {\n    articleId: prepData.articleId,\n    title: prepData.title,\n    content: prepData.humanizedContent,\n    excerpt: prepData.excerpt,\n    slug: prepData.slug,\n    verified: verificationOutput.verified || false,\n    verificationNotes: verificationOutput.verificationNotes || '',\n    verificationIssues: verificationOutput.verificationIssues || []\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5120,
+        1536
+      ],
+      "id": "649278ba-9769-4949-80d2-729bdfb0675f",
+      "name": "Prepare Final Content1"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "mode": "url",
+          "value": "https://airtable.com/appNKJUeljGoHYjQf/tbljRtFFKlUXYAO6M/viwCXaxhEJzyyFE8z"
+        },
+        "table": {
+          "__rl": true,
+          "value": "https://airtable.com/appNKJUeljGoHYjQf/tbljRtFFKlUXYAO6M/viwCXaxhEJzyyFE8z",
+          "mode": "url"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $json.articleId }}",
+            "Status": "Review",
+            "Content": "={{ $json.content }}",
+            "Verification Status": "={{ $json.verified ? 'Passed' : 'Issues Found' }}",
+            "Verification Notes": "={{ $json.verificationNotes }}"
+          },
+          "matchingColumns": [
+            "id"
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        5328,
+        1536
+      ],
+      "id": "8d977891-3461-4f96-ba96-0c01499ea1e2",
+      "name": "Save Final & Set Review1",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable - zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "zmidloch@z-agency.cz",
+        "subject": "={{ $json.verified ? '✅' : '⚠️' }} New article for review: {{ $json.title }}",
+        "message": "=<h2>{{ $json.title }}</h2>\n\n<p><strong>Excerpt:</strong> {{ $json.excerpt || 'N/A' }}</p>\n\n<p><strong>Verification Status:</strong> {{ $json.verified ? 'Passed' : 'Issues Found' }}</p>\n<p><strong>Notes:</strong> {{ $json.verificationNotes || 'No notes' }}</p>\n\n{{ $json.verificationIssues && $json.verificationIssues.length > 0 ? '<h3>Issues Found:</h3><ul>' + $json.verificationIssues.map(i => '<li>' + i + '</li>').join('') + '</ul>' : '' }}\n\n<hr>\n\n<p>Please review the article in Airtable and set status to \"Approved\" when ready to publish.</p>\n\n<p style=\"color: #666; font-size: 12px;\">This email was automatically generated by the Blog Article Generator workflow.</p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        5520,
+        1536
+      ],
+      "id": "bc587896-3530-4f37-878e-25a9eb17bac4",
+      "name": "Send Review Notification1",
+      "webhookId": "1f24e0c9-98ca-4c2f-8815-26dea658036e",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "qNSaYVEcaWOf5U3k",
+          "name": "Gmail zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepare article data for WordPress\nconst rawData = $('Fetch Article for Publishing1').first().json;\nconst article = rawData.fields ? rawData.fields : rawData;\n\nreturn {\n  json: {\n    articleId: rawData.id,\n    title: article.Title,\n    content: article.Content || '',\n    excerpt: article.Excerpt || '',\n    slug: article.Slug || '',\n    categories: article.Categories || '',\n    tags: article.Tags || [],\n    imagePrompt: article['Image Prompt'] || `Professional blog header image for article about: ${article.Title}`\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1200,
+        3856
+      ],
+      "id": "05a35809-8f40-4e55-8576-7bcb690e7325",
+      "name": "Prepare WP Data"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepare image generation prompt\nconst prepData = $('Prepare WP Data').first().json;\nconst wpPost = $input.first().json;\n\nreturn {\n  json: {\n    ...prepData,\n    wpPostId: wpPost.id,\n    wpPostLink: wpPost.link,\n    imagePrompt: prepData.imagePrompt\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2800,
+        3824
+      ],
+      "id": "4a98e815-3a67-4172-b9eb-de196852db41",
+      "name": "Prepare Image Generation"
+    },
+    {
+      "parameters": {
+        "content": "## BRANCH 4: WordPress Publishing\n\nTriggers when Status = 'Approved'\n\n1. Fetch article from Airtable\n2. Set status to 'Publishing'\n3. Create WordPress draft post\n4. Generate featured image (Gemini Imagen)\n5. Upload image to WordPress Media\n6. Set featured image on post\n7. Get & assign categories and tags\n8. Update Airtable with WP data\n9. Update status to 'Published'\n10. Send success notification",
+        "height": 360,
+        "width": 736,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        768,
+        3456
+      ],
+      "id": "1126c556-5cc8-4d89-a6a1-71ec58b3ada1",
+      "name": "Publishing Branch Note1"
+    },
+    {
+      "parameters": {
+        "base": {
+          "__rl": true,
+          "value": "https://airtable.com/appNKJUeljGoHYjQf/tbljRtFFKlUXYAO6M/viwCXaxhEJzyyFE8z",
+          "mode": "url"
+        },
+        "table": {
+          "__rl": true,
+          "value": "https://airtable.com/appNKJUeljGoHYjQf/tbljRtFFKlUXYAO6M/viwCXaxhEJzyyFE8z",
+          "mode": "url"
+        },
+        "id": "={{ $('Airtable Status Change').item.json.id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        784,
+        3856
+      ],
+      "id": "c7271c46-10d7-4cee-a83d-3d5e3f1cf27e",
+      "name": "Fetch Article for Publishing1",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable - zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "https://airtable.com/appNKJUeljGoHYjQf/tbljRtFFKlUXYAO6M/viwCXaxhEJzyyFE8z",
+          "mode": "url"
+        },
+        "table": {
+          "__rl": true,
+          "value": "https://airtable.com/appNKJUeljGoHYjQf/tbljRtFFKlUXYAO6M/viwCXaxhEJzyyFE8z",
+          "mode": "url"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $json.id }}",
+            "Status": "Publishing"
+          },
+          "matchingColumns": [
+            "id"
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        992,
+        3856
+      ],
+      "id": "f7a2eb7e-881d-49e2-b32a-033a1a1ec8b0",
+      "name": "Set Status: Publishing1",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable - zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "title": "={{ $json.title }}",
+        "additionalFields": {
+          "content": "={{ $json.content }}",
+          "slug": "={{ $json.slug }}",
+          "status": "draft"
+        }
+      },
+      "type": "n8n-nodes-base.wordpress",
+      "typeVersion": 1,
+      "position": [
+        1408,
+        3856
+      ],
+      "id": "f11bee1b-2c10-4184-b1b6-7c782b1128ec",
+      "name": "Create WordPress Post1",
+      "credentials": {
+        "wordpressApi": {
+          "id": "flqY5YMCvIpv5fpx",
+          "name": "Processgate.ai_propojeni"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://processgate.ai/wp-json/wp/v2/categories",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "wordpressApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "per_page",
+              "value": "100"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1712,
+        3744
+      ],
+      "id": "51562bca-67b8-48cb-a04e-7cbc8be0ca76",
+      "name": "Get WP Categories1",
+      "credentials": {
+        "wordpressApi": {
+          "id": "flqY5YMCvIpv5fpx",
+          "name": "Processgate.ai_propojeni"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://processgate.ai/wp-json/wp/v2/tags",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "wordpressApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "per_page",
+              "value": "100"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1712,
+        3952
+      ],
+      "id": "280bd4ab-f1f2-4398-bf9b-5305abddff59",
+      "name": "Get WP Tags1",
+      "credentials": {
+        "wordpressApi": {
+          "id": "flqY5YMCvIpv5fpx",
+          "name": "Processgate.ai_propojeni"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Map AI categories and tags to WordPress IDs\nconst allInputs = $input.all();\n\nlet wpCategories = [];\nlet wpTags = [];\n\nfor (const item of allInputs) {\n  if (Array.isArray(item.json)) {\n    if (item.json[0]?.taxonomy === 'category' || item.json[0]?.parent !== undefined) {\n      wpCategories = item.json;\n    } else {\n      wpTags = item.json;\n    }\n  }\n}\n\n// Fallback\nif (wpCategories.length === 0) {\n  try {\n    const catData = $('Get WP Categories1').all();\n    wpCategories = catData.flatMap(d => Array.isArray(d.json) ? d.json : [d.json]);\n  } catch (e) {}\n}\n\nif (wpTags.length === 0) {\n  try {\n    const tagData = $('Get WP Tags1').all();\n    wpTags = tagData.flatMap(d => Array.isArray(d.json) ? d.json : [d.json]);\n  } catch (e) {}\n}\n\n// Get article data\nconst imageData = $('Set Image Data1').first().json;\n\n// Parse categories\nlet aiCategories = [];\nif (typeof imageData.categories === 'string') {\n  aiCategories = imageData.categories.split(',').map(c => c.trim()).filter(c => c);\n} else if (Array.isArray(imageData.categories)) {\n  aiCategories = imageData.categories;\n}\n\n// Parse tags\nlet aiTags = [];\nif (typeof imageData.tags === 'string') {\n  aiTags = imageData.tags.split(',').map(t => t.trim()).filter(t => t);\n} else if (Array.isArray(imageData.tags)) {\n  aiTags = imageData.tags;\n}\n\n// Map category names to IDs\nconst categoryIds = [];\nfor (const aiCat of aiCategories) {\n  const match = wpCategories.find(wpCat =>\n    wpCat.name?.toLowerCase().includes(aiCat.toLowerCase()) ||\n    aiCat.toLowerCase().includes(wpCat.name?.toLowerCase()) ||\n    wpCat.slug?.toLowerCase() === aiCat.toLowerCase().replace(/\\s+/g, '-')\n  );\n  if (match) categoryIds.push(match.id);\n}\nif (categoryIds.length === 0) categoryIds.push(1);\n\n// Map tag names to IDs\nconst tagIds = [];\nfor (const aiTag of aiTags) {\n  const match = wpTags.find(wpTag =>\n    wpTag.name?.toLowerCase() === aiTag.toLowerCase() ||\n    wpTag.slug?.toLowerCase() === aiTag.toLowerCase().replace(/\\s+/g, '-')\n  );\n  if (match) tagIds.push(match.id);\n}\n\nreturn {\n  json: {\n    ...imageData,\n    categoryIds: categoryIds,\n    tagIds: tagIds\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1920,
+        3824
+      ],
+      "id": "33432030-0a56-4ca9-aa03-6c8af116c028",
+      "name": "Map Categories & Tags1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://processgate.ai/wp-json/wp/v2/posts/{{ $json.wpPostId }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "wordpressApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"categories\": {{ JSON.stringify($json.categoryIds) }},\n  \"tags\": {{ JSON.stringify($json.tagIds) }}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2128,
+        3824
+      ],
+      "id": "4f3eb0c5-c73f-4877-9e5d-a0b56a259c41",
+      "name": "Assign Categories & Tags1",
+      "credentials": {
+        "wordpressApi": {
+          "id": "flqY5YMCvIpv5fpx",
+          "name": "Processgate.ai_propojeni"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepare final data for Airtable update\nconst mapData = $('Map Categories & Tags1').first().json;\n\nreturn {\n  json: {\n    articleId: mapData.articleId,\n    title: mapData.title,\n    wpPostId: mapData.wpPostId,\n    wpUrl: mapData.wpPostLink || `https://processgate.ai/?p=${mapData.wpPostId}`,\n    wpMediaUrl: mapData.wpMediaUrl || ''\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2336,
+        3824
+      ],
+      "id": "47a42cdf-8de9-4784-84f2-45981b73e2fa",
+      "name": "Prepare Final WP Data1"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "mode": "url",
+          "value": "https://airtable.com/appNKJUeljGoHYjQf/tbljRtFFKlUXYAO6M/viwCXaxhEJzyyFE8z"
+        },
+        "table": {
+          "__rl": true,
+          "value": "https://airtable.com/appNKJUeljGoHYjQf/tbljRtFFKlUXYAO6M/viwCXaxhEJzyyFE8z",
+          "mode": "url"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $json.articleId }}",
+            "Status": "Published",
+            "WordPress Post ID": "={{ $json.wpPostId }}",
+            "WordPress URL": "={{ $json.wpUrl }}",
+            "Featured Image URL": "={{ $json.wpMediaUrl }}"
+          },
+          "matchingColumns": [
+            "id"
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        2544,
+        3824
+      ],
+      "id": "a5b33464-b5f9-4914-aa7d-30cc5b79b942",
+      "name": "Update Published Status1",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable - zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "zmidloch@z-agency.cz",
+        "subject": "=✅ Article Published: {{ $json.title }}",
+        "message": "=<h2>{{ $json.title }}</h2>\n\n<p>The article has been successfully published to WordPress as a draft.</p>\n\n<p><strong>WordPress Post ID:</strong> {{ $json.wpPostId }}</p>\n<p><strong>URL:</strong> <a href=\"{{ $json.wpUrl }}\">{{ $json.wpUrl }}</a></p>\n\n{{ $json.wpMediaUrl ? '<p><strong>Featured Image:</strong> <a href=\"' + $json.wpMediaUrl + '\">View Image</a></p>' : '' }}\n\n<hr>\n\n<p><a href=\"https://processgate.ai/wp-admin/post.php?post={{ $json.wpPostId }}&action=edit\" style=\"background: #0073aa; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px;\">Open in WordPress Admin</a></p>\n\n<p style=\"color: #666; font-size: 12px;\">This email was automatically generated by the Blog Article Generator workflow.</p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        4256,
+        3776
+      ],
+      "id": "974734d4-e43e-47ab-8e28-a1a2f7a53e2b",
+      "name": "Send Published Notification1",
+      "webhookId": "ed04287a-794d-436b-847f-38af158abf0c",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "qNSaYVEcaWOf5U3k",
+          "name": "Gmail zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract image from Gemini Imagen response and prepare for WordPress upload\nconst prepData = $('Prepare Final Content').first().json;\nconst inputItem = $input.first();\n\nlet hasImage = false;\nlet imageBase64 = '';\n\n// Kontrola binárních dat z Gemini\nif (inputItem.binary && inputItem.binary.data) {\n  hasImage = true;\n  // Uložíme base64 pro případ potřeby\n  imageBase64 = inputItem.binary.data.data || '';\n}\n\n// Vytvoříme slug pro filename\nconst slug = prepData.slug || 'article';\nconst filename = `${slug}-featured.png`;\n\n// Vrátíme JSON data A binární data\nreturn {\n  json: {\n    ...prepData,\n    hasImage: hasImage,\n    filename: filename,\n    imageBase64: imageBase64\n  },\n  // KRITICKÉ: Předáváme binární data dál pod klíčem 'data'\n  binary: inputItem.binary ? {\n    data: inputItem.binary.data\n  } : undefined\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3344,
+        3824
+      ],
+      "id": "a0efbd02-4385-436d-9375-b85261c35405",
+      "name": "Process Image Response2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "has-image-check",
+              "leftValue": "={{ $json.hasImage }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3568,
+        3888
+      ],
+      "id": "f71710a9-ccc7-4534-b9a2-7d687553379c",
+      "name": "Has Image?2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://processgate.ai/wp-json/wp/v2/media",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "wordpressApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Disposition",
+              "value": "=attachment; filename=\"{{ $json.filename }}\""
+            },
+            {
+              "name": "Content-Type",
+              "value": "image/png"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "data",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        3776,
+        3712
+      ],
+      "id": "6dbb5370-7b7b-40fb-bb35-46034badd4a0",
+      "name": "Upload Image to WordPress2",
+      "credentials": {
+        "wordpressApi": {
+          "id": "flqY5YMCvIpv5fpx",
+          "name": "Processgate.ai_propojeni"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepare data after image upload\nconst uploadResponse = $input.first().json;\nconst prepData = $('Process Image Response2').first().json;\n\nreturn {\n  json: {\n    ...prepData,\n    wpMediaId: uploadResponse.id,\n    wpMediaUrl: uploadResponse.source_url || uploadResponse.guid?.rendered || ''\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3984,
+        3712
+      ],
+      "id": "fae6a6c5-edab-4b09-8276-9d5a5f5ffee5",
+      "name": "Set Image Data2"
+    },
+    {
+      "parameters": {
+        "jsCode": "// No image available - pass through data\nconst prepData = $('Process Image Response2').first().json;\n\nreturn {\n  json: {\n    ...prepData,\n    wpMediaId: null,\n    wpMediaUrl: ''\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3984,
+        3904
+      ],
+      "id": "8e2b728a-9200-451e-b81c-b1e43048da65",
+      "name": "No Image Passthrough1"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-3-pro-image-preview",
+          "mode": "list",
+          "cachedResultName": "models/gemini-3-pro-image-preview (Nano Banana Pro)"
+        },
+        "prompt": "={\n  \"instances\": [\n    {\n      \"prompt\": \"{{ $json.imagePrompt.replace(/[\\r\\n]+/g, ' ').replace(/\"/g, '\\\\\"') }}, professional, modern tech style, no text, high quality, 16:9 aspect ratio, clean design, business appropriate\"\n    }\n  ],\n  \"parameters\": {\n    \"sampleCount\": 1,\n    \"aspectRatio\": \"16:9\"\n  }\n}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        3136,
+        3824
+      ],
+      "id": "0bb184a6-0da4-4129-a582-a075fdb7b036",
+      "name": "Generate an image1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uLXCpqN3fa4ZXZmj",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
     }
   ],
   "settings": {
@@ -3451,6 +5208,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2026-01-21T00:38:10.443Z",
-  "versionId": "57672e46-57a2-40a1-ad11-f06479447a28"
+  "updatedAt": "2026-01-21T09:29:19.036Z",
+  "versionId": "8bf83c5f-5da0-431b-b5f9-fa8cace82a51"
 }
