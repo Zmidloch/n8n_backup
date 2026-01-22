@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2025-12-26T23:19:13.709Z",
-    "createdAt": "2025-12-26T23:19:09.737Z",
-    "versionId": "2988ad7f-630f-4681-a35c-98d6c3972390",
+    "updatedAt": "2026-01-22T09:41:27.289Z",
+    "createdAt": "2026-01-22T09:41:23.693Z",
+    "versionId": "50edfc75-9a89-471c-8132-6510348429ef",
     "workflowId": "nIXfhKHUN0xJidAX",
     "nodes": [
       {
@@ -357,26 +357,6 @@
         ],
         "id": "2e87a56f-029c-46cd-9b87-ccd104489c9f",
         "name": "AI Agent"
-      },
-      {
-        "parameters": {
-          "modelName": "models/gemini-3-pro-preview",
-          "options": {}
-        },
-        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
-        "typeVersion": 1,
-        "position": [
-          1072,
-          304
-        ],
-        "id": "842f4830-0145-4397-be22-5dcf8113a15c",
-        "name": "Google Gemini Chat Model",
-        "credentials": {
-          "googlePalmApi": {
-            "id": "O18dqBggPBVuy0CJ",
-            "name": "Google Gemini(PaLM) Api account"
-          }
-        }
       },
       {
         "parameters": {
@@ -843,6 +823,26 @@
         ],
         "id": "3d8b5ca1-5412-413a-8206-e3f0fac4a8ac",
         "name": "Loop Over Items"
+      },
+      {
+        "parameters": {
+          "modelName": "models/gemini-flash-latest",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          1088,
+          288
+        ],
+        "id": "2cf8f2ed-1984-4ea3-a7aa-a010e171b945",
+        "name": "Google Gemini Chat Model",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "uLXCpqN3fa4ZXZmj",
+            "name": "Google Gemini(PaLM) Api account"
+          }
+        }
       }
     ],
     "connections": {
@@ -930,17 +930,6 @@
             {
               "node": "Code in JavaScript",
               "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Google Gemini Chat Model": {
-        "ai_languageModel": [
-          [
-            {
-              "node": "AI Agent",
-              "type": "ai_languageModel",
               "index": 0
             }
           ]
@@ -1078,14 +1067,25 @@
             }
           ]
         ]
+      },
+      "Google Gemini Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
       }
     },
     "authors": "Jiri Zmidloch",
-    "name": "Version 2988ad7f",
+    "name": "Version 50edfc75",
     "description": "",
     "autosaved": false
   },
-  "activeVersionId": "2988ad7f-630f-4681-a35c-98d6c3972390",
+  "activeVersionId": "50edfc75-9a89-471c-8132-6510348429ef",
   "connections": {
     "Webhook": {
       "main": [
@@ -1171,17 +1171,6 @@
           {
             "node": "Code in JavaScript",
             "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Google Gemini Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_languageModel",
             "index": 0
           }
         ]
@@ -1315,6 +1304,17 @@
           {
             "node": "Loop Over Items",
             "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
             "index": 0
           }
         ]
@@ -1680,26 +1680,6 @@
       ],
       "id": "2e87a56f-029c-46cd-9b87-ccd104489c9f",
       "name": "AI Agent"
-    },
-    {
-      "parameters": {
-        "modelName": "models/gemini-3-pro-preview",
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
-      "typeVersion": 1,
-      "position": [
-        1072,
-        304
-      ],
-      "id": "842f4830-0145-4397-be22-5dcf8113a15c",
-      "name": "Google Gemini Chat Model",
-      "credentials": {
-        "googlePalmApi": {
-          "id": "O18dqBggPBVuy0CJ",
-          "name": "Google Gemini(PaLM) Api account"
-        }
-      }
     },
     {
       "parameters": {
@@ -2166,6 +2146,26 @@
       ],
       "id": "3d8b5ca1-5412-413a-8206-e3f0fac4a8ac",
       "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-flash-latest",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1088,
+        288
+      ],
+      "id": "2cf8f2ed-1984-4ea3-a7aa-a010e171b945",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uLXCpqN3fa4ZXZmj",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
     }
   ],
   "settings": {
@@ -2187,11 +2187,11 @@
   ],
   "staticData": {
     "node:Airtable Trigger": {
-      "lastTimeChecked": "2026-01-18T01:04:24Z"
+      "lastTimeChecked": "2026-01-22T09:42:50Z"
     }
   },
   "tags": [],
   "triggerCount": 2,
-  "updatedAt": "2025-12-26T23:19:09.733Z",
-  "versionId": "2988ad7f-630f-4681-a35c-98d6c3972390"
+  "updatedAt": "2026-01-22T09:41:23.690Z",
+  "versionId": "50edfc75-9a89-471c-8132-6510348429ef"
 }
