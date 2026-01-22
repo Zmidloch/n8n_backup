@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-01-22T10:36:28.141Z",
-    "createdAt": "2026-01-22T10:35:29.519Z",
-    "versionId": "ffb6a1f7-060f-4311-be1a-f76d885570b8",
+    "updatedAt": "2026-01-22T12:05:07.892Z",
+    "createdAt": "2026-01-22T12:05:02.561Z",
+    "versionId": "81e7e53f-ab33-4dde-8567-78be22cf8bf4",
     "workflowId": "B6cxcvx9nWZAO1jmMz-Wb",
     "nodes": [
       {
@@ -16,8 +16,8 @@
         "type": "n8n-nodes-base.stickyNote",
         "typeVersion": 1,
         "position": [
-          -736,
-          -144
+          -16,
+          -96
         ],
         "id": "2ee82656-9fb7-4022-9561-29780b74d64e",
         "name": "Workflow Info"
@@ -25,15 +25,15 @@
       {
         "parameters": {
           "content": "## BRANCH 1: Research Pipeline\n\nTriggers when Status = 'New'\n\n1. Update status to 'Researching'\n2. Tavily search for topic\n3. Perplexity deep research\n4. Wikipedia lookup for key terms\n5. AI synthesis of research data\n6. Save to Airtable\n7. Update status to 'Writing'",
-          "height": 296,
+          "height": 280,
           "width": 496,
           "color": 4
         },
         "type": "n8n-nodes-base.stickyNote",
         "typeVersion": 1,
         "position": [
-          272,
-          -400
+          768,
+          -288
         ],
         "id": "5dc30c60-0106-47fc-a6f7-ac5dd02e5449",
         "name": "Research Branch Note"
@@ -41,15 +41,15 @@
       {
         "parameters": {
           "content": "## BRANCH 2: Content Generation\n\nTriggers when Status = 'Writing'\n\n1. Keyword Strategy Agent\n2. Title Refinement Agent\n3. Key Takeaways Agent\n4. Outline Agent\n5. Content Writer Agent (Czech)\n6. Word count check\n7. Save draft to Airtable\n8. Update status to 'Humanizing'",
-          "height": 344,
+          "height": 312,
           "width": 736,
           "color": 5
         },
         "type": "n8n-nodes-base.stickyNote",
         "typeVersion": 1,
         "position": [
-          416,
-          288
+          1104,
+          192
         ],
         "id": "01cde18e-ee06-4378-9d5c-a07738b44cc4",
         "name": "Content Branch Note"
@@ -80,8 +80,8 @@
         "type": "n8n-nodes-base.airtableTrigger",
         "typeVersion": 1,
         "position": [
-          -224,
-          144
+          496,
+          192
         ],
         "id": "1e0dc062-13e6-4f3b-be4c-867ceebd12f5",
         "name": "Airtable Status Change",
@@ -121,8 +121,8 @@
         "type": "n8n-nodes-base.switch",
         "typeVersion": 2,
         "position": [
-          -16,
-          112
+          704,
+          160
         ],
         "id": "d187b84b-94d8-4ec2-8d0c-5b02d40e40bf",
         "name": "Route by Status"
@@ -456,8 +456,8 @@
         "type": "n8n-nodes-base.airtable",
         "typeVersion": 2,
         "position": [
-          288,
-          -32
+          1008,
+          16
         ],
         "id": "0c1de2b9-06e2-43cb-8582-55e279c2947f",
         "name": "Set Status: Researching",
@@ -480,8 +480,8 @@
         "type": "@tavily/n8n-nodes-tavily.tavily",
         "typeVersion": 1,
         "position": [
-          544,
-          -32
+          1264,
+          16
         ],
         "id": "7bf1d52a-606c-447d-9df0-c8d1985f8d8c",
         "name": "Tavily Research",
@@ -508,8 +508,8 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.3,
         "position": [
-          784,
-          -32
+          1504,
+          16
         ],
         "id": "42562a2d-3a01-41f5-8d7f-7cc1289ecd49",
         "name": "Perplexity Deep Research",
@@ -527,8 +527,8 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          1024,
-          -32
+          1744,
+          16
         ],
         "id": "663230fd-ecad-4b38-9677-30d6b920c126",
         "name": "Prepare Wikipedia Terms"
@@ -540,8 +540,8 @@
         "type": "n8n-nodes-base.splitInBatches",
         "typeVersion": 3,
         "position": [
-          1264,
-          -32
+          1984,
+          16
         ],
         "id": "0aeaead4-6bdf-44fd-9e81-7886357e2939",
         "name": "Loop Wiki Terms"
@@ -561,8 +561,8 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.3,
         "position": [
-          1504,
-          48
+          2224,
+          96
         ],
         "id": "c315023b-2ad2-40b0-b7aa-f945c24e1543",
         "name": "Wikipedia Lookup"
@@ -574,8 +574,8 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          1696,
-          -48
+          2416,
+          0
         ],
         "id": "e400b0c5-ccda-4e16-9bd3-05ca5230005c",
         "name": "Aggregate Research Data"
@@ -588,8 +588,8 @@
         "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
         "typeVersion": 1.3,
         "position": [
-          2160,
-          160
+          2880,
+          208
         ],
         "id": "252af9e2-5e2b-4e9f-ab59-623bee85cb99",
         "name": "Research Parser"
@@ -601,8 +601,8 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          2352,
-          -48
+          3072,
+          0
         ],
         "id": "adc24d46-9625-49d8-88d1-78536ec1a1c4",
         "name": "Prepare Research for Save"
@@ -937,8 +937,8 @@
         "type": "n8n-nodes-base.airtable",
         "typeVersion": 2,
         "position": [
-          2560,
-          -48
+          3280,
+          0
         ],
         "id": "8ca74c5b-2bd8-4afb-bf9e-13dcd5a0a752",
         "name": "Save Research & Set Writing",
@@ -968,8 +968,8 @@
         "type": "n8n-nodes-base.airtable",
         "typeVersion": 2,
         "position": [
-          400,
-          704
+          1296,
+          544
         ],
         "id": "42890d6e-1a5e-42e3-973d-1f96ef851a5f",
         "name": "Fetch Article for Writing",
@@ -987,8 +987,8 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          576,
-          704
+          1472,
+          544
         ],
         "id": "b1006d7a-31ca-442b-862f-b5419ff022a8",
         "name": "Parse Article Data"
@@ -1001,8 +1001,8 @@
         "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
         "typeVersion": 1.3,
         "position": [
-          928,
-          944
+          1824,
+          784
         ],
         "id": "f27aad95-63df-4a44-9c17-fa847f550082",
         "name": "Keywords Parser"
@@ -1015,8 +1015,8 @@
         "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
         "typeVersion": 1.3,
         "position": [
-          1360,
-          944
+          2256,
+          784
         ],
         "id": "87ab8ea4-6974-4694-ad81-5ba44795a117",
         "name": "Title Parser"
@@ -1029,8 +1029,8 @@
         "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
         "typeVersion": 1.3,
         "position": [
-          2448,
-          944
+          3344,
+          784
         ],
         "id": "af74975c-14a6-4934-9e55-0de15887c34d",
         "name": "Content Parser"
@@ -1042,8 +1042,8 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          2624,
-          704
+          3520,
+          544
         ],
         "id": "516973fc-5845-45f1-9262-80cc419334e4",
         "name": "Word Count Check"
@@ -1076,8 +1076,8 @@
         "type": "n8n-nodes-base.if",
         "typeVersion": 2.2,
         "position": [
-          2800,
-          704
+          3696,
+          544
         ],
         "id": "8cc5ed23-e90d-4cd0-8df0-118bc62e46fa",
         "name": "Over Word Limit?"
@@ -1089,8 +1089,8 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          3280,
-          848
+          4176,
+          688
         ],
         "id": "b10e4256-b874-4676-ab0e-7aef9b00a528",
         "name": "Merge Compressed"
@@ -1428,8 +1428,8 @@
         "type": "n8n-nodes-base.airtable",
         "typeVersion": 2,
         "position": [
-          3472,
-          720
+          4368,
+          560
         ],
         "id": "9fb718bf-1b03-499f-9e27-35b8e039d3cc",
         "name": "Save Draft & Set Humanizing",
@@ -1453,8 +1453,8 @@
         "type": "@n8n/n8n-nodes-langchain.agent",
         "typeVersion": 3.1,
         "position": [
-          1952,
-          -48
+          2672,
+          0
         ],
         "id": "e5881b62-3502-4cf7-b25e-cd096abcd6f7",
         "name": "Research Synthesis Agent"
@@ -1475,8 +1475,8 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
         "typeVersion": 1,
         "position": [
-          1968,
-          160
+          2688,
+          208
         ],
         "id": "5001870e-408d-4cc4-95e4-65ce234fb597",
         "name": "Google Gemini Chat Model",
@@ -1495,8 +1495,8 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
         "typeVersion": 1,
         "position": [
-          2304,
-          944
+          3200,
+          784
         ],
         "id": "50299783-2ca6-41cb-9036-423eb6a13a7a",
         "name": "Google Gemini Chat Model1",
@@ -1524,8 +1524,8 @@
         "type": "@n8n/n8n-nodes-langchain.agent",
         "typeVersion": 3.1,
         "position": [
-          2256,
-          704
+          3152,
+          544
         ],
         "id": "5d7143e0-b9d4-405d-bb51-ee25fd1fa221",
         "name": "Content Writer Agent"
@@ -1537,8 +1537,8 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          816,
-          1552
+          1712,
+          1248
         ],
         "id": "fab0e406-a6b5-4c25-8523-0d29f5acb1e2",
         "name": "Prepare for Humanizing"
@@ -1553,8 +1553,8 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
         "typeVersion": 1,
         "position": [
-          864,
-          1760
+          1760,
+          1456
         ],
         "id": "9aea0f5f-5a89-4898-802d-e0675379bc61",
         "name": "Claude (Humanizer)",
@@ -1578,8 +1578,8 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
         "typeVersion": 1,
         "position": [
-          1344,
-          1760
+          2240,
+          1456
         ],
         "id": "93723a8c-93d3-4f4b-a85d-4cc3b7922ef3",
         "name": "Claude (Verification)",
@@ -1603,8 +1603,8 @@
         "type": "n8n-nodes-base.stickyNote",
         "typeVersion": 1,
         "position": [
-          560,
-          1200
+          1296,
+          944
         ],
         "id": "4a20c9ca-58b1-4950-98f8-8dc831367071",
         "name": "Humanization Branch Note1"
@@ -1616,8 +1616,8 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          928,
-          2336
+          1712,
+          1888
         ],
         "id": "05a35809-8f40-4e55-8576-7bcb690e7325",
         "name": "Prepare WP Data"
@@ -1629,8 +1629,8 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          2912,
-          2336
+          3696,
+          1888
         ],
         "id": "4a98e815-3a67-4172-b9eb-de196852db41",
         "name": "Prepare Image Generation"
@@ -1645,8 +1645,8 @@
         "type": "n8n-nodes-base.stickyNote",
         "typeVersion": 1,
         "position": [
-          544,
-          1936
+          800,
+          1488
         ],
         "id": "1126c556-5cc8-4d89-a6a1-71ec58b3ada1",
         "name": "Publishing Branch Note1"
@@ -1663,8 +1663,8 @@
         "type": "n8n-nodes-base.gmail",
         "typeVersion": 2.1,
         "position": [
-          4512,
-          2320
+          5296,
+          1872
         ],
         "id": "974734d4-e43e-47ab-8e28-a1a2f7a53e2b",
         "name": "Send Published Notification1",
@@ -1683,8 +1683,8 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          4064,
-          2576
+          4848,
+          2128
         ],
         "id": "8e2b728a-9200-451e-b81c-b1e43048da65",
         "name": "No Image Passthrough1"
@@ -1699,8 +1699,8 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
         "typeVersion": 1,
         "position": [
-          1808,
-          160
+          2528,
+          208
         ],
         "id": "ead49473-96f4-4f3d-afb3-c6f1ae11e41c",
         "name": "Claude 4.5 Sonet (Research)",
@@ -1724,8 +1724,8 @@
         "type": "@n8n/n8n-nodes-langchain.agent",
         "typeVersion": 3.1,
         "position": [
-          720,
-          704
+          1616,
+          544
         ],
         "id": "3c29c3e5-5937-48df-8d11-d140eeab96d4",
         "name": "Keyword Strategy Agent"
@@ -1738,8 +1738,8 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
         "typeVersion": 1,
         "position": [
-          768,
-          944
+          1664,
+          784
         ],
         "id": "e5b6d691-3756-4ccf-9a9b-369c8e8eba16",
         "name": "Google Gemini Chat Model2",
@@ -1760,8 +1760,8 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
         "typeVersion": 1,
         "position": [
-          608,
-          944
+          1504,
+          784
         ],
         "id": "014d53e7-5b44-4b31-91b7-21ace576fb1a",
         "name": "Claude 4.5 Sonet (Keywords)",
@@ -1785,8 +1785,8 @@
         "type": "@n8n/n8n-nodes-langchain.agent",
         "typeVersion": 3.1,
         "position": [
-          1120,
-          704
+          2016,
+          544
         ],
         "id": "ad4be71c-f70f-43b4-8e1f-58b4c950e2c1",
         "name": "Title Refinement Agent"
@@ -1799,8 +1799,8 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
         "typeVersion": 1,
         "position": [
-          1216,
-          944
+          2112,
+          784
         ],
         "id": "a8825e15-598c-4755-88ea-41d5d8b2e022",
         "name": "Google Gemini Chat Model3",
@@ -1823,8 +1823,8 @@
         "type": "@n8n/n8n-nodes-langchain.agent",
         "typeVersion": 3.1,
         "position": [
-          1536,
-          704
+          2432,
+          544
         ],
         "id": "41ef7eb0-9402-45b0-8a2e-59b4cc78062f",
         "name": "Key Takeaways Agent"
@@ -1837,8 +1837,8 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
         "typeVersion": 1,
         "position": [
-          1504,
-          944
+          2400,
+          784
         ],
         "id": "261b70b3-3ac9-4d44-9ebb-e5b0a748f704",
         "name": "Claude 4.5 Sonet (Takeaways)",
@@ -1863,8 +1863,8 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
         "typeVersion": 1,
         "position": [
-          1072,
-          944
+          1968,
+          784
         ],
         "id": "c15f7382-e24a-4c24-90b9-262c53d2a4db",
         "name": "Claude 4.5 Sonet (Title)",
@@ -1883,8 +1883,8 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
         "typeVersion": 1,
         "position": [
-          1664,
-          944
+          2560,
+          784
         ],
         "id": "6f0b62f8-2851-4676-9cd6-8e26f9882b10",
         "name": "Google Gemini Chat Model4",
@@ -1907,8 +1907,8 @@
         "type": "@n8n/n8n-nodes-langchain.agent",
         "typeVersion": 3.1,
         "position": [
-          1888,
-          704
+          2784,
+          544
         ],
         "id": "a86de01e-9e30-4713-96b5-3f8e81c0a3a5",
         "name": "Outline Agent"
@@ -1921,8 +1921,8 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
         "typeVersion": 1,
         "position": [
-          1824,
-          944
+          2720,
+          784
         ],
         "id": "9c2d8b34-f3c3-488f-8d87-2abf1352e731",
         "name": "Claude 4.5 Sonet (Outline)",
@@ -1941,8 +1941,8 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
         "typeVersion": 1,
         "position": [
-          1984,
-          944
+          2880,
+          784
         ],
         "id": "51d57d7a-b611-491a-8d76-ed0ecfeaaa29",
         "name": "Google Gemini Chat Model5",
@@ -1955,7 +1955,7 @@
       },
       {
         "parameters": {
-          "model": "anthropic/claude-sonnet-4.5",
+          "model": "anthropic/claude-opus-4.5",
           "options": {
             "temperature": 0.7,
             "timeout": 500000
@@ -1964,8 +1964,8 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
         "typeVersion": 1,
         "position": [
-          2144,
-          944
+          3040,
+          784
         ],
         "id": "2e844d40-51dc-485c-8434-7078963fc0d0",
         "name": "Calude 4.5 Sonet (Writer)",
@@ -1991,8 +1991,8 @@
         "type": "@n8n/n8n-nodes-langchain.agent",
         "typeVersion": 3.1,
         "position": [
-          2992,
-          848
+          3888,
+          688
         ],
         "id": "61298a35-8c84-47e7-ad52-591f1cc5a410",
         "name": "Compression Agent"
@@ -2005,8 +2005,8 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
         "typeVersion": 1,
         "position": [
-          3024,
-          1056
+          3920,
+          896
         ],
         "id": "40de078a-1d0e-495e-b78a-99390eb75c95",
         "name": "Google Gemini Chat Model6",
@@ -2031,8 +2031,8 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
         "typeVersion": 1,
         "position": [
-          2848,
-          1056
+          3744,
+          896
         ],
         "id": "1d759de3-0692-4878-a6ad-ce13dc0325da",
         "name": "Claude 4.5 Sonet (Compress)",
@@ -2058,8 +2058,8 @@
         "type": "@n8n/n8n-nodes-langchain.agent",
         "typeVersion": 3.1,
         "position": [
-          992,
-          1552
+          1888,
+          1248
         ],
         "id": "30f28311-88a9-4b4b-81ff-ae3bbad81ab0",
         "name": "Humanizer Agent"
@@ -2072,8 +2072,8 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
         "typeVersion": 1,
         "position": [
-          1040,
-          1760
+          1936,
+          1456
         ],
         "id": "08cd8227-6b79-449a-8cd7-c99edecc250d",
         "name": "Google Gemini Chat Model7",
@@ -2097,8 +2097,8 @@
         "type": "@n8n/n8n-nodes-langchain.agent",
         "typeVersion": 3.1,
         "position": [
-          1504,
-          1552
+          2400,
+          1248
         ],
         "id": "e000f87d-142f-477a-8e89-4345c51edef2",
         "name": "Verification Agent"
@@ -2111,8 +2111,8 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
         "typeVersion": 1,
         "position": [
-          1536,
-          1760
+          2432,
+          1456
         ],
         "id": "8853294c-6f6c-441b-ab95-b13ba0872ce0",
         "name": "Google Gemini Chat Model8",
@@ -2131,8 +2131,8 @@
         "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
         "typeVersion": 1.3,
         "position": [
-          1712,
-          1760
+          2608,
+          1456
         ],
         "id": "465fcc16-0701-43b7-b31e-80b1d96f6595",
         "name": "Verification Parser"
@@ -2144,8 +2144,8 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          1888,
-          1552
+          2784,
+          1248
         ],
         "id": "649278ba-9769-4949-80d2-729bdfb0675f",
         "name": "Prepare Final Content"
@@ -2157,8 +2157,8 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          1280,
-          1552
+          2176,
+          1248
         ],
         "id": "f5bbe3d6-5c6d-4c51-9790-bf7b72a9a1ec",
         "name": "Prepare for Verification"
@@ -2181,8 +2181,8 @@
         "type": "n8n-nodes-base.airtable",
         "typeVersion": 2,
         "position": [
-          608,
-          1552
+          1504,
+          1248
         ],
         "id": "8c319965-bc63-47d4-ab20-c676a2b9c4fb",
         "name": "Fetch Article for Humanizing",
@@ -2205,8 +2205,8 @@
         "type": "n8n-nodes-base.gmail",
         "typeVersion": 2.1,
         "position": [
-          2304,
-          1552
+          3200,
+          1248
         ],
         "id": "bc587896-3530-4f37-878e-25a9eb17bac4",
         "name": "Send Review Notification",
@@ -2557,8 +2557,8 @@
         "type": "n8n-nodes-base.airtable",
         "typeVersion": 2,
         "position": [
-          2096,
-          1552
+          2992,
+          1248
         ],
         "id": "8d977891-3461-4f96-ba96-0c01499ea1e2",
         "name": "Save Final & Set Review",
@@ -2587,8 +2587,8 @@
         "type": "n8n-nodes-base.airtable",
         "typeVersion": 2,
         "position": [
-          560,
-          2336
+          1344,
+          1888
         ],
         "id": "c7271c46-10d7-4cee-a83d-3d5e3f1cf27e",
         "name": "Fetch Article for Publishing",
@@ -2935,8 +2935,8 @@
         "type": "n8n-nodes-base.airtable",
         "typeVersion": 2,
         "position": [
-          736,
-          2336
+          1520,
+          1888
         ],
         "id": "f7a2eb7e-881d-49e2-b32a-033a1a1ec8b0",
         "name": "Set Status: Publishing",
@@ -2970,8 +2970,8 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.3,
         "position": [
-          1360,
-          2336
+          2144,
+          1888
         ],
         "id": "51562bca-67b8-48cb-a04e-7cbc8be0ca76",
         "name": "Get WP Categories",
@@ -3005,8 +3005,8 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.3,
         "position": [
-          1552,
-          2336
+          2336,
+          1888
         ],
         "id": "280bd4ab-f1f2-4398-bf9b-5305abddff59",
         "name": "Get WP Tags",
@@ -3323,8 +3323,8 @@
         "type": "n8n-nodes-base.airtable",
         "typeVersion": 2,
         "position": [
-          2704,
-          2336
+          3488,
+          1888
         ],
         "id": "a5b33464-b5f9-4914-aa7d-30cc5b79b942",
         "name": "Update Published Status",
@@ -3342,8 +3342,8 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          1760,
-          2336
+          2544,
+          1888
         ],
         "id": "ae2bbedc-260f-4bcf-b989-e4a5a409fb2c",
         "name": "Prepare Context for AI"
@@ -3358,8 +3358,8 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
         "typeVersion": 1,
         "position": [
-          1840,
-          2560
+          2624,
+          2112
         ],
         "id": "7d5c0b60-3b8e-4d5a-8c5b-5ab5f5a3c3c2",
         "name": "Claude 4.5 (Taxonomy)",
@@ -3378,8 +3378,8 @@
         "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
         "typeVersion": 1.3,
         "position": [
-          2208,
-          2560
+          2992,
+          2112
         ],
         "id": "a2ce660a-a793-4bfe-a619-b5c0728beea1",
         "name": "Taxonomy Parser"
@@ -3391,8 +3391,8 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          2496,
-          2336
+          3280,
+          1888
         ],
         "id": "2d897fa4-a8cf-4165-bf0a-4164505d3077",
         "name": "Prepare Final WP Data"
@@ -3410,8 +3410,8 @@
         "type": "@n8n/n8n-nodes-langchain.agent",
         "typeVersion": 3.1,
         "position": [
-          1920,
-          2336
+          2704,
+          1888
         ],
         "id": "a5b661be-8894-4e92-8694-e27938482acc",
         "name": "Taxonomy Classifier Agent"
@@ -3424,8 +3424,8 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
         "typeVersion": 1,
         "position": [
-          2000,
-          2560
+          2784,
+          2112
         ],
         "id": "789b8938-ea14-4993-812e-2eae7dc07d9c",
         "name": "Google Gemini Chat Model9",
@@ -3450,8 +3450,8 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.3,
         "position": [
-          2288,
-          2336
+          3072,
+          1888
         ],
         "id": "0de96a80-fe83-4907-85bc-167c44ec76a1",
         "name": "Assign Categories & Tags",
@@ -3476,8 +3476,8 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.3,
         "position": [
-          1152,
-          2336
+          1936,
+          1888
         ],
         "id": "79c791f4-662e-4a29-9dd6-2248dc28385b",
         "name": "Create WordPress Post",
@@ -3503,8 +3503,8 @@
         "type": "@n8n/n8n-nodes-langchain.googleGemini",
         "typeVersion": 1.1,
         "position": [
-          3104,
-          2336
+          3888,
+          1888
         ],
         "id": "0bb184a6-0da4-4129-a582-a075fdb7b036",
         "name": "Generate an image",
@@ -3522,8 +3522,8 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          3312,
-          2336
+          4096,
+          1888
         ],
         "id": "a0efbd02-4385-436d-9375-b85261c35405",
         "name": "Process Image Response"
@@ -3555,8 +3555,8 @@
         "type": "n8n-nodes-base.if",
         "typeVersion": 2.2,
         "position": [
-          3520,
-          2336
+          4304,
+          1888
         ],
         "id": "f71710a9-ccc7-4534-b9a2-7d687553379c",
         "name": "Has Image?"
@@ -3590,8 +3590,8 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.3,
         "position": [
-          3872,
-          2320
+          4656,
+          1872
         ],
         "id": "6dbb5370-7b7b-40fb-bb35-46034badd4a0",
         "name": "Upload Image to WordPress",
@@ -3609,8 +3609,8 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          4064,
-          2320
+          4848,
+          1872
         ],
         "id": "fae6a6c5-edab-4b09-8276-9d5a5f5ffee5",
         "name": "Set Image Data"
@@ -3630,8 +3630,8 @@
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.3,
         "position": [
-          4256,
-          2320
+          5040,
+          1872
         ],
         "id": "da9e4807-d273-4e9d-b7f5-7573771e65f2",
         "credentials": {
@@ -4506,11 +4506,11 @@
       }
     },
     "authors": "Jiri Zmidloch",
-    "name": "Version ffb6a1f7",
+    "name": "Version 81e7e53f",
     "description": "",
     "autosaved": false
   },
-  "activeVersionId": "ffb6a1f7-060f-4311-be1a-f76d885570b8",
+  "activeVersionId": "81e7e53f-ab33-4dde-8567-78be22cf8bf4",
   "connections": {
     "Airtable Status Change": {
       "main": [
@@ -5392,8 +5392,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -736,
-        -144
+        -16,
+        -96
       ],
       "id": "2ee82656-9fb7-4022-9561-29780b74d64e",
       "name": "Workflow Info"
@@ -5401,15 +5401,15 @@
     {
       "parameters": {
         "content": "## BRANCH 1: Research Pipeline\n\nTriggers when Status = 'New'\n\n1. Update status to 'Researching'\n2. Tavily search for topic\n3. Perplexity deep research\n4. Wikipedia lookup for key terms\n5. AI synthesis of research data\n6. Save to Airtable\n7. Update status to 'Writing'",
-        "height": 296,
+        "height": 280,
         "width": 496,
         "color": 4
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        272,
-        -400
+        768,
+        -288
       ],
       "id": "5dc30c60-0106-47fc-a6f7-ac5dd02e5449",
       "name": "Research Branch Note"
@@ -5417,15 +5417,15 @@
     {
       "parameters": {
         "content": "## BRANCH 2: Content Generation\n\nTriggers when Status = 'Writing'\n\n1. Keyword Strategy Agent\n2. Title Refinement Agent\n3. Key Takeaways Agent\n4. Outline Agent\n5. Content Writer Agent (Czech)\n6. Word count check\n7. Save draft to Airtable\n8. Update status to 'Humanizing'",
-        "height": 344,
+        "height": 312,
         "width": 736,
         "color": 5
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        416,
-        288
+        1104,
+        192
       ],
       "id": "01cde18e-ee06-4378-9d5c-a07738b44cc4",
       "name": "Content Branch Note"
@@ -5456,8 +5456,8 @@
       "type": "n8n-nodes-base.airtableTrigger",
       "typeVersion": 1,
       "position": [
-        -224,
-        144
+        496,
+        192
       ],
       "id": "1e0dc062-13e6-4f3b-be4c-867ceebd12f5",
       "name": "Airtable Status Change",
@@ -5497,8 +5497,8 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 2,
       "position": [
-        -16,
-        112
+        704,
+        160
       ],
       "id": "d187b84b-94d8-4ec2-8d0c-5b02d40e40bf",
       "name": "Route by Status"
@@ -5832,8 +5832,8 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2,
       "position": [
-        288,
-        -32
+        1008,
+        16
       ],
       "id": "0c1de2b9-06e2-43cb-8582-55e279c2947f",
       "name": "Set Status: Researching",
@@ -5856,8 +5856,8 @@
       "type": "@tavily/n8n-nodes-tavily.tavily",
       "typeVersion": 1,
       "position": [
-        544,
-        -32
+        1264,
+        16
       ],
       "id": "7bf1d52a-606c-447d-9df0-c8d1985f8d8c",
       "name": "Tavily Research",
@@ -5884,8 +5884,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        784,
-        -32
+        1504,
+        16
       ],
       "id": "42562a2d-3a01-41f5-8d7f-7cc1289ecd49",
       "name": "Perplexity Deep Research",
@@ -5903,8 +5903,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1024,
-        -32
+        1744,
+        16
       ],
       "id": "663230fd-ecad-4b38-9677-30d6b920c126",
       "name": "Prepare Wikipedia Terms"
@@ -5916,8 +5916,8 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        1264,
-        -32
+        1984,
+        16
       ],
       "id": "0aeaead4-6bdf-44fd-9e81-7886357e2939",
       "name": "Loop Wiki Terms"
@@ -5937,8 +5937,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        1504,
-        48
+        2224,
+        96
       ],
       "id": "c315023b-2ad2-40b0-b7aa-f945c24e1543",
       "name": "Wikipedia Lookup"
@@ -5950,8 +5950,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1696,
-        -48
+        2416,
+        0
       ],
       "id": "e400b0c5-ccda-4e16-9bd3-05ca5230005c",
       "name": "Aggregate Research Data"
@@ -5964,8 +5964,8 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        2160,
-        160
+        2880,
+        208
       ],
       "id": "252af9e2-5e2b-4e9f-ab59-623bee85cb99",
       "name": "Research Parser"
@@ -5977,8 +5977,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2352,
-        -48
+        3072,
+        0
       ],
       "id": "adc24d46-9625-49d8-88d1-78536ec1a1c4",
       "name": "Prepare Research for Save"
@@ -6313,8 +6313,8 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2,
       "position": [
-        2560,
-        -48
+        3280,
+        0
       ],
       "id": "8ca74c5b-2bd8-4afb-bf9e-13dcd5a0a752",
       "name": "Save Research & Set Writing",
@@ -6344,8 +6344,8 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2,
       "position": [
-        400,
-        704
+        1296,
+        544
       ],
       "id": "42890d6e-1a5e-42e3-973d-1f96ef851a5f",
       "name": "Fetch Article for Writing",
@@ -6363,8 +6363,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        576,
-        704
+        1472,
+        544
       ],
       "id": "b1006d7a-31ca-442b-862f-b5419ff022a8",
       "name": "Parse Article Data"
@@ -6377,8 +6377,8 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        928,
-        944
+        1824,
+        784
       ],
       "id": "f27aad95-63df-4a44-9c17-fa847f550082",
       "name": "Keywords Parser"
@@ -6391,8 +6391,8 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        1360,
-        944
+        2256,
+        784
       ],
       "id": "87ab8ea4-6974-4694-ad81-5ba44795a117",
       "name": "Title Parser"
@@ -6405,8 +6405,8 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        2448,
-        944
+        3344,
+        784
       ],
       "id": "af74975c-14a6-4934-9e55-0de15887c34d",
       "name": "Content Parser"
@@ -6418,8 +6418,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2624,
-        704
+        3520,
+        544
       ],
       "id": "516973fc-5845-45f1-9262-80cc419334e4",
       "name": "Word Count Check"
@@ -6452,8 +6452,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2800,
-        704
+        3696,
+        544
       ],
       "id": "8cc5ed23-e90d-4cd0-8df0-118bc62e46fa",
       "name": "Over Word Limit?"
@@ -6465,8 +6465,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3280,
-        848
+        4176,
+        688
       ],
       "id": "b10e4256-b874-4676-ab0e-7aef9b00a528",
       "name": "Merge Compressed"
@@ -6804,8 +6804,8 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2,
       "position": [
-        3472,
-        720
+        4368,
+        560
       ],
       "id": "9fb718bf-1b03-499f-9e27-35b8e039d3cc",
       "name": "Save Draft & Set Humanizing",
@@ -6829,8 +6829,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        1952,
-        -48
+        2672,
+        0
       ],
       "id": "e5881b62-3502-4cf7-b25e-cd096abcd6f7",
       "name": "Research Synthesis Agent"
@@ -6851,8 +6851,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        1968,
-        160
+        2688,
+        208
       ],
       "id": "5001870e-408d-4cc4-95e4-65ce234fb597",
       "name": "Google Gemini Chat Model",
@@ -6871,8 +6871,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        2304,
-        944
+        3200,
+        784
       ],
       "id": "50299783-2ca6-41cb-9036-423eb6a13a7a",
       "name": "Google Gemini Chat Model1",
@@ -6900,8 +6900,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        2256,
-        704
+        3152,
+        544
       ],
       "id": "5d7143e0-b9d4-405d-bb51-ee25fd1fa221",
       "name": "Content Writer Agent"
@@ -6913,8 +6913,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        816,
-        1552
+        1712,
+        1248
       ],
       "id": "fab0e406-a6b5-4c25-8523-0d29f5acb1e2",
       "name": "Prepare for Humanizing"
@@ -6929,8 +6929,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
       "typeVersion": 1,
       "position": [
-        864,
-        1760
+        1760,
+        1456
       ],
       "id": "9aea0f5f-5a89-4898-802d-e0675379bc61",
       "name": "Claude (Humanizer)",
@@ -6954,8 +6954,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
       "typeVersion": 1,
       "position": [
-        1344,
-        1760
+        2240,
+        1456
       ],
       "id": "93723a8c-93d3-4f4b-a85d-4cc3b7922ef3",
       "name": "Claude (Verification)",
@@ -6979,8 +6979,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        560,
-        1200
+        1296,
+        944
       ],
       "id": "4a20c9ca-58b1-4950-98f8-8dc831367071",
       "name": "Humanization Branch Note1"
@@ -6992,8 +6992,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        928,
-        2336
+        1712,
+        1888
       ],
       "id": "05a35809-8f40-4e55-8576-7bcb690e7325",
       "name": "Prepare WP Data"
@@ -7005,8 +7005,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2912,
-        2336
+        3696,
+        1888
       ],
       "id": "4a98e815-3a67-4172-b9eb-de196852db41",
       "name": "Prepare Image Generation"
@@ -7021,8 +7021,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        544,
-        1936
+        800,
+        1488
       ],
       "id": "1126c556-5cc8-4d89-a6a1-71ec58b3ada1",
       "name": "Publishing Branch Note1"
@@ -7039,8 +7039,8 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        4512,
-        2320
+        5296,
+        1872
       ],
       "id": "974734d4-e43e-47ab-8e28-a1a2f7a53e2b",
       "name": "Send Published Notification1",
@@ -7059,8 +7059,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        4064,
-        2576
+        4848,
+        2128
       ],
       "id": "8e2b728a-9200-451e-b81c-b1e43048da65",
       "name": "No Image Passthrough1"
@@ -7075,8 +7075,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
       "typeVersion": 1,
       "position": [
-        1808,
-        160
+        2528,
+        208
       ],
       "id": "ead49473-96f4-4f3d-afb3-c6f1ae11e41c",
       "name": "Claude 4.5 Sonet (Research)",
@@ -7100,8 +7100,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        720,
-        704
+        1616,
+        544
       ],
       "id": "3c29c3e5-5937-48df-8d11-d140eeab96d4",
       "name": "Keyword Strategy Agent"
@@ -7114,8 +7114,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        768,
-        944
+        1664,
+        784
       ],
       "id": "e5b6d691-3756-4ccf-9a9b-369c8e8eba16",
       "name": "Google Gemini Chat Model2",
@@ -7136,8 +7136,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
       "typeVersion": 1,
       "position": [
-        608,
-        944
+        1504,
+        784
       ],
       "id": "014d53e7-5b44-4b31-91b7-21ace576fb1a",
       "name": "Claude 4.5 Sonet (Keywords)",
@@ -7161,8 +7161,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        1120,
-        704
+        2016,
+        544
       ],
       "id": "ad4be71c-f70f-43b4-8e1f-58b4c950e2c1",
       "name": "Title Refinement Agent"
@@ -7175,8 +7175,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        1216,
-        944
+        2112,
+        784
       ],
       "id": "a8825e15-598c-4755-88ea-41d5d8b2e022",
       "name": "Google Gemini Chat Model3",
@@ -7199,8 +7199,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        1536,
-        704
+        2432,
+        544
       ],
       "id": "41ef7eb0-9402-45b0-8a2e-59b4cc78062f",
       "name": "Key Takeaways Agent"
@@ -7213,8 +7213,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
       "typeVersion": 1,
       "position": [
-        1504,
-        944
+        2400,
+        784
       ],
       "id": "261b70b3-3ac9-4d44-9ebb-e5b0a748f704",
       "name": "Claude 4.5 Sonet (Takeaways)",
@@ -7239,8 +7239,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
       "typeVersion": 1,
       "position": [
-        1072,
-        944
+        1968,
+        784
       ],
       "id": "c15f7382-e24a-4c24-90b9-262c53d2a4db",
       "name": "Claude 4.5 Sonet (Title)",
@@ -7259,8 +7259,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        1664,
-        944
+        2560,
+        784
       ],
       "id": "6f0b62f8-2851-4676-9cd6-8e26f9882b10",
       "name": "Google Gemini Chat Model4",
@@ -7283,8 +7283,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        1888,
-        704
+        2784,
+        544
       ],
       "id": "a86de01e-9e30-4713-96b5-3f8e81c0a3a5",
       "name": "Outline Agent"
@@ -7297,8 +7297,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
       "typeVersion": 1,
       "position": [
-        1824,
-        944
+        2720,
+        784
       ],
       "id": "9c2d8b34-f3c3-488f-8d87-2abf1352e731",
       "name": "Claude 4.5 Sonet (Outline)",
@@ -7317,8 +7317,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        1984,
-        944
+        2880,
+        784
       ],
       "id": "51d57d7a-b611-491a-8d76-ed0ecfeaaa29",
       "name": "Google Gemini Chat Model5",
@@ -7331,7 +7331,7 @@
     },
     {
       "parameters": {
-        "model": "anthropic/claude-sonnet-4.5",
+        "model": "anthropic/claude-opus-4.5",
         "options": {
           "temperature": 0.7,
           "timeout": 500000
@@ -7340,8 +7340,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
       "typeVersion": 1,
       "position": [
-        2144,
-        944
+        3040,
+        784
       ],
       "id": "2e844d40-51dc-485c-8434-7078963fc0d0",
       "name": "Calude 4.5 Sonet (Writer)",
@@ -7367,8 +7367,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        2992,
-        848
+        3888,
+        688
       ],
       "id": "61298a35-8c84-47e7-ad52-591f1cc5a410",
       "name": "Compression Agent"
@@ -7381,8 +7381,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        3024,
-        1056
+        3920,
+        896
       ],
       "id": "40de078a-1d0e-495e-b78a-99390eb75c95",
       "name": "Google Gemini Chat Model6",
@@ -7407,8 +7407,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
       "typeVersion": 1,
       "position": [
-        2848,
-        1056
+        3744,
+        896
       ],
       "id": "1d759de3-0692-4878-a6ad-ce13dc0325da",
       "name": "Claude 4.5 Sonet (Compress)",
@@ -7434,8 +7434,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        992,
-        1552
+        1888,
+        1248
       ],
       "id": "30f28311-88a9-4b4b-81ff-ae3bbad81ab0",
       "name": "Humanizer Agent"
@@ -7448,8 +7448,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        1040,
-        1760
+        1936,
+        1456
       ],
       "id": "08cd8227-6b79-449a-8cd7-c99edecc250d",
       "name": "Google Gemini Chat Model7",
@@ -7473,8 +7473,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        1504,
-        1552
+        2400,
+        1248
       ],
       "id": "e000f87d-142f-477a-8e89-4345c51edef2",
       "name": "Verification Agent"
@@ -7487,8 +7487,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        1536,
-        1760
+        2432,
+        1456
       ],
       "id": "8853294c-6f6c-441b-ab95-b13ba0872ce0",
       "name": "Google Gemini Chat Model8",
@@ -7507,8 +7507,8 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        1712,
-        1760
+        2608,
+        1456
       ],
       "id": "465fcc16-0701-43b7-b31e-80b1d96f6595",
       "name": "Verification Parser"
@@ -7520,8 +7520,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1888,
-        1552
+        2784,
+        1248
       ],
       "id": "649278ba-9769-4949-80d2-729bdfb0675f",
       "name": "Prepare Final Content"
@@ -7533,8 +7533,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1280,
-        1552
+        2176,
+        1248
       ],
       "id": "f5bbe3d6-5c6d-4c51-9790-bf7b72a9a1ec",
       "name": "Prepare for Verification"
@@ -7557,8 +7557,8 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2,
       "position": [
-        608,
-        1552
+        1504,
+        1248
       ],
       "id": "8c319965-bc63-47d4-ab20-c676a2b9c4fb",
       "name": "Fetch Article for Humanizing",
@@ -7581,8 +7581,8 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        2304,
-        1552
+        3200,
+        1248
       ],
       "id": "bc587896-3530-4f37-878e-25a9eb17bac4",
       "name": "Send Review Notification",
@@ -7933,8 +7933,8 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2,
       "position": [
-        2096,
-        1552
+        2992,
+        1248
       ],
       "id": "8d977891-3461-4f96-ba96-0c01499ea1e2",
       "name": "Save Final & Set Review",
@@ -7963,8 +7963,8 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2,
       "position": [
-        560,
-        2336
+        1344,
+        1888
       ],
       "id": "c7271c46-10d7-4cee-a83d-3d5e3f1cf27e",
       "name": "Fetch Article for Publishing",
@@ -8311,8 +8311,8 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2,
       "position": [
-        736,
-        2336
+        1520,
+        1888
       ],
       "id": "f7a2eb7e-881d-49e2-b32a-033a1a1ec8b0",
       "name": "Set Status: Publishing",
@@ -8346,8 +8346,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        1360,
-        2336
+        2144,
+        1888
       ],
       "id": "51562bca-67b8-48cb-a04e-7cbc8be0ca76",
       "name": "Get WP Categories",
@@ -8381,8 +8381,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        1552,
-        2336
+        2336,
+        1888
       ],
       "id": "280bd4ab-f1f2-4398-bf9b-5305abddff59",
       "name": "Get WP Tags",
@@ -8699,8 +8699,8 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2,
       "position": [
-        2704,
-        2336
+        3488,
+        1888
       ],
       "id": "a5b33464-b5f9-4914-aa7d-30cc5b79b942",
       "name": "Update Published Status",
@@ -8718,8 +8718,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1760,
-        2336
+        2544,
+        1888
       ],
       "id": "ae2bbedc-260f-4bcf-b989-e4a5a409fb2c",
       "name": "Prepare Context for AI"
@@ -8734,8 +8734,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
       "typeVersion": 1,
       "position": [
-        1840,
-        2560
+        2624,
+        2112
       ],
       "id": "7d5c0b60-3b8e-4d5a-8c5b-5ab5f5a3c3c2",
       "name": "Claude 4.5 (Taxonomy)",
@@ -8754,8 +8754,8 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        2208,
-        2560
+        2992,
+        2112
       ],
       "id": "a2ce660a-a793-4bfe-a619-b5c0728beea1",
       "name": "Taxonomy Parser"
@@ -8767,8 +8767,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2496,
-        2336
+        3280,
+        1888
       ],
       "id": "2d897fa4-a8cf-4165-bf0a-4164505d3077",
       "name": "Prepare Final WP Data"
@@ -8786,8 +8786,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        1920,
-        2336
+        2704,
+        1888
       ],
       "id": "a5b661be-8894-4e92-8694-e27938482acc",
       "name": "Taxonomy Classifier Agent"
@@ -8800,8 +8800,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        2000,
-        2560
+        2784,
+        2112
       ],
       "id": "789b8938-ea14-4993-812e-2eae7dc07d9c",
       "name": "Google Gemini Chat Model9",
@@ -8826,8 +8826,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        2288,
-        2336
+        3072,
+        1888
       ],
       "id": "0de96a80-fe83-4907-85bc-167c44ec76a1",
       "name": "Assign Categories & Tags",
@@ -8852,8 +8852,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        1152,
-        2336
+        1936,
+        1888
       ],
       "id": "79c791f4-662e-4a29-9dd6-2248dc28385b",
       "name": "Create WordPress Post",
@@ -8879,8 +8879,8 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1.1,
       "position": [
-        3104,
-        2336
+        3888,
+        1888
       ],
       "id": "0bb184a6-0da4-4129-a582-a075fdb7b036",
       "name": "Generate an image",
@@ -8898,8 +8898,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3312,
-        2336
+        4096,
+        1888
       ],
       "id": "a0efbd02-4385-436d-9375-b85261c35405",
       "name": "Process Image Response"
@@ -8931,8 +8931,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3520,
-        2336
+        4304,
+        1888
       ],
       "id": "f71710a9-ccc7-4534-b9a2-7d687553379c",
       "name": "Has Image?"
@@ -8966,8 +8966,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        3872,
-        2320
+        4656,
+        1872
       ],
       "id": "6dbb5370-7b7b-40fb-bb35-46034badd4a0",
       "name": "Upload Image to WordPress",
@@ -8985,8 +8985,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        4064,
-        2320
+        4848,
+        1872
       ],
       "id": "fae6a6c5-edab-4b09-8276-9d5a5f5ffee5",
       "name": "Set Image Data"
@@ -9006,8 +9006,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        4256,
-        2320
+        5040,
+        1872
       ],
       "id": "da9e4807-d273-4e9d-b7f5-7573771e65f2",
       "credentials": {
@@ -9045,6 +9045,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2026-01-22T10:35:29.513Z",
-  "versionId": "ffb6a1f7-060f-4311-be1a-f76d885570b8"
+  "updatedAt": "2026-01-22T12:05:02.556Z",
+  "versionId": "81e7e53f-ab33-4dde-8567-78be22cf8bf4"
 }
