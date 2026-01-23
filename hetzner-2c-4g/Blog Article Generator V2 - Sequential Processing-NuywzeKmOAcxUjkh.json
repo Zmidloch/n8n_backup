@@ -1004,6 +1004,72 @@
           }
         ]
       ]
+    },
+    "Fetch Published Articles": {
+      "main": [
+        [
+          {
+            "node": "Prepare Linking Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Linking Data": {
+      "main": [
+        [
+          {
+            "node": "Linking Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Linking Agent": {
+      "main": [
+        [
+          {
+            "node": "Insert Internal Links",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude Sonnet (Linking)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Linking Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Fallback (Linking)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Linking Agent",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Linking Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Linking Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2026-01-23T08:06:02.599Z",
@@ -4125,6 +4191,129 @@
           "name": "Processgate.ai_propojeni"
         }
       }
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $vars.AIRTABLE_BASE_ID }}"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $vars.AIRTABLE_ARTICLES_TABLE }}"
+        },
+        "filterByFormula": "Status='Published'",
+        "options": {
+          "fields": [
+            "Title",
+            "Primary Keywords",
+            "Secondary Keywords",
+            "WordPress URL",
+            "Slug",
+            "Excerpt"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        3712,
+        -624
+      ],
+      "id": "0caa6b24-17ae-447f-8ca8-28b4861bf541",
+      "name": "Fetch Published Articles"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepare data for Linking Agent\nconst publishedArticles = $('Fetch Published Articles').all();\nconst currentArticle = $input.first().json;\n\n// Format published articles for AI analysis\nconst articlesForAnalysis = publishedArticles\n  .filter(a => a.json.fields && a.json.fields['WordPress URL'])\n  .map((a, index) => ({\n    id: index + 1,\n    title: a.json.fields.Title || '',\n    primaryKeywords: a.json.fields['Primary Keywords'] || '',\n    secondaryKeywords: a.json.fields['Secondary Keywords'] || '',\n    url: a.json.fields['WordPress URL'] || '',\n    excerpt: a.json.fields.Excerpt || ''\n  }));\n\nreturn {\n  json: {\n    currentTitle: currentArticle.title,\n    currentContent: currentArticle.content,\n    currentExcerpt: currentArticle.excerpt,\n    currentKeywords: currentArticle.seoKeywords || [],\n    publishedArticles: articlesForAnalysis,\n    // Pass through all original data\n    ...currentArticle\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3936,
+        -624
+      ],
+      "id": "7673f11a-975d-4f64-a4ba-e5660a878fbe",
+      "name": "Prepare Linking Data"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Analyzuj aktuální článek a najdi 2 nejvíce relevantní publikované články pro interní prolinkování.\n\n## AKTUÁLNÍ ČLÁNEK\n**Titulek:** {{ $json.currentTitle }}\n**Excerpt:** {{ $json.currentExcerpt }}\n**Klíčová slova:** {{ JSON.stringify($json.currentKeywords) }}\n\n## OBSAH ČLÁNKU (kde hledáš vhodná místa pro odkazy)\n{{ $json.currentContent }}\n\n## PUBLIKOVANÉ ČLÁNKY (vybíráš z těchto)\n{{ $json.publishedArticles.map(a => `[${a.id}] ${a.title}\\n   Keywords: ${a.primaryKeywords}, ${a.secondaryKeywords}\\n   URL: ${a.url}\\n   Excerpt: ${a.excerpt}`).join('\\n\\n') }}\n\n---\n\n## TVŮJ ÚKOL\n\n1. Vyber přesně 2 publikované články, které mají tematickou souvislost s aktuálním článkem\n2. Pro každý vybraný článek najdi v OBSAHU ČLÁNKU vhodné slovo nebo frázi (2-5 slov), kam vložit odkaz\n3. Fráze musí existovat v obsahu PŘESNĚ tak, jak ji uvádíš (case-sensitive)\n4. Preferuj fráze, které se v obsahu vyskytují pouze jednou\n5. Nevybírej fráze uvnitř existujících HTML tagů (<a>, <strong>, <h2>, etc.)\n\n## PRAVIDLA\n- Vyber články s REÁLNOU tematickou souvislostí (ne náhodné)\n- Odkazy by měly být v různých částech článku (ne vedle sebe)\n- Fráze musí dávat smysl jako anchor text\n- Pokud není dostatek relevantních článků, vrať méně než 2\n\n## FORMÁT ODPOVĚDI (JSON)\n{\n  \"links\": [\n    {\n      \"articleId\": 1,\n      \"articleTitle\": \"Název vybraného článku\",\n      \"url\": \"https://...\",\n      \"anchorText\": \"přesná fráze z obsahu\",\n      \"reason\": \"Proč je tento článek relevantní\"\n    },\n    {\n      \"articleId\": 5,\n      \"articleTitle\": \"Název druhého článku\",\n      \"url\": \"https://...\",\n      \"anchorText\": \"jiná fráze z obsahu\",\n      \"reason\": \"Proč je tento článek relevantní\"\n    }\n  ],\n  \"noLinksReason\": null\n}\n\nPokud nenajdeš žádné relevantní články:\n{\n  \"links\": [],\n  \"noLinksReason\": \"Důvod proč nejsou vhodné články\"\n}",
+        "hasOutputParser": true,
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "Jsi expert na interní SEO prolinkování pro český tech blog. Tvým úkolem je najít tematicky relevantní články a identifikovat přirozená místa v textu, kam vložit odkazy. Vždy odpovídej POUZE validním JSON objektem."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        4160,
+        -624
+      ],
+      "id": "8bbaceca-aee3-4ce0-aab8-d72eaf4a2c0b",
+      "name": "Linking Agent"
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-sonnet-4-20250514",
+        "options": {
+          "temperature": 0.2
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        4016,
+        -416
+      ],
+      "id": "63708295-dde2-438f-bc66-f4f9288168a7",
+      "name": "Claude Sonnet (Linking)"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        4192,
+        -416
+      ],
+      "id": "e8c81891-ddd2-4e60-b074-d9eee8de53cf",
+      "name": "Gemini Fallback (Linking)"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"required\": [\"links\"],\n  \"properties\": {\n    \"links\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"articleId\": { \"type\": \"number\" },\n          \"articleTitle\": { \"type\": \"string\" },\n          \"url\": { \"type\": \"string\" },\n          \"anchorText\": { \"type\": \"string\" },\n          \"reason\": { \"type\": \"string\" }\n        },\n        \"required\": [\"url\", \"anchorText\"]\n      }\n    },\n    \"noLinksReason\": { \"type\": [\"string\", \"null\"] }\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        4352,
+        -416
+      ],
+      "id": "223953bb-30be-4235-a43e-486137954084",
+      "name": "Linking Parser"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Insert internal links into content\nconst linkingResult = $json.output;\nconst prepData = $('Prepare Linking Data').first().json;\nlet content = prepData.content;\nlet insertedLinks = [];\n\nif (linkingResult.links && linkingResult.links.length > 0) {\n  for (const link of linkingResult.links) {\n    const anchorText = link.anchorText;\n    const url = link.url;\n    \n    // Escape special regex characters in anchor text\n    const escapedAnchor = anchorText.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&');\n    \n    // Check if anchor text exists in content and is not already in a link\n    // This regex looks for the text NOT inside an existing <a> tag\n    const anchorRegex = new RegExp(\n      `(?<!<a[^>]*>[^<]*)\\\\b(${escapedAnchor})\\\\b(?![^<]*<\\\\/a>)`,\n      'i'\n    );\n    \n    if (anchorRegex.test(content)) {\n      // Replace first occurrence only\n      content = content.replace(\n        anchorRegex,\n        `<a href=\"${url}\" title=\"${(link.articleTitle || '').replace(/\"/g, '&quot;')}\">$1</a>`\n      );\n      insertedLinks.push({\n        anchorText: anchorText,\n        url: url,\n        articleTitle: link.articleTitle\n      });\n    }\n  }\n}\n\n// Return updated data with original structure preserved\nreturn {\n  json: {\n    title: prepData.title,\n    content: content,\n    excerpt: prepData.excerpt,\n    slug: prepData.slug,\n    imageQuery: prepData.imageQuery,\n    wordCount: prepData.wordCount,\n    charCount: prepData.charCount,\n    wordLimitOver: prepData.wordLimitOver,\n    limit: prepData.limit,\n    articleId: prepData.articleId,\n    categories: prepData.categories,\n    tags: prepData.tags,\n    // Linking metadata\n    internalLinksInserted: insertedLinks,\n    internalLinksCount: insertedLinks.length,\n    linkingSkipped: linkingResult.noLinksReason || null\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4496,
+        -624
+      ],
+      "id": "0ab1b32e-5cb2-4183-8769-57d7fa53acba",
+      "name": "Insert Internal Links"
     }
   ],
   "settings": {
@@ -4146,6 +4335,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2026-01-23T08:58:40.086Z",
-  "versionId": "f511eb13-671b-42f6-af97-7f0155637c2a"
+  "updatedAt": "2026-01-23T11:30:00.372Z",
+  "versionId": "114f26b9-deff-4492-80c1-b45f122c2a8c"
 }
