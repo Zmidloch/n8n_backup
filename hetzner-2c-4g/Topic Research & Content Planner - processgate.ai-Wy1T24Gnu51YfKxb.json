@@ -1,0 +1,1484 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-01-22T23:08:55.217Z",
+    "createdAt": "2026-01-22T23:08:51.682Z",
+    "versionId": "4630c73c-76db-47a6-a405-e6d0284e31cc",
+    "workflowId": "Wy1T24Gnu51YfKxb",
+    "nodes": [
+      {
+        "parameters": {
+          "content": "# Topic Research & Content Planner\n\n**Workflow Overview:**\n- Runs 2x weekly (Monday & Thursday at 8:00 AM)\n- Researches trending topics in AI, n8n, automation\n- Uses rotating 10-article-type cycle\n- Avoids duplicate topics\n- Creates article suggestions in Airtable with Status 'Pending'\n\n**Integration:**\n- Tavily (trending news)\n- Perplexity (deep research)\n- Claude Opus (content strategist)\n- Airtable (storage)\n\n**Output:** Title, Primary Keywords, Secondary Keywords",
+          "height": 412,
+          "width": 690,
+          "color": 6
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          -400,
+          -240
+        ],
+        "id": "info-note",
+        "name": "Workflow Info"
+      },
+      {
+        "parameters": {
+          "content": "## 10 Article Types (Rotating Cycle)\n\n1. Hot News\n2. 5 Tips\n3. Tool Comparison\n4. Tutorial\n5. Case Study\n6. Event/Conference\n7. Deep Dive\n8. Beginner's Guide\n9. Trends & Predictions\n10. Tool Review",
+          "height": 336,
+          "width": 250,
+          "color": 4
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          -400,
+          304
+        ],
+        "id": "cycle-note",
+        "name": "Article Types"
+      },
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "cronExpression",
+                "expression": "0 8 * * 1,4"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          -96,
+          208
+        ],
+        "id": "schedule-trigger",
+        "name": "Schedule: Mon & Thu 8:00"
+      },
+      {
+        "parameters": {
+          "operation": "search",
+          "base": {
+            "__rl": true,
+            "value": "=https://airtable.com/appNKJUeljGoHYjQf/tbljRtFFKlUXYAO6M/viwCXaxhEJzyyFE8z?blocks=hide",
+            "mode": "url"
+          },
+          "table": {
+            "__rl": true,
+            "value": "https://airtable.com/appNKJUeljGoHYjQf/tbljRtFFKlUXYAO6M/viwCXaxhEJzyyFE8z?blocks=hide",
+            "mode": "url"
+          },
+          "filterByFormula": "OR(Status='Published', Status='Writing', Status='Review', Status='Pending', Status='New', Status='Approved')",
+          "options": {
+            "fields": [
+              "Title",
+              "Primary Keywords",
+              "Status"
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.airtable",
+        "typeVersion": 2,
+        "position": [
+          112,
+          208
+        ],
+        "id": "fetch-existing-articles",
+        "name": "Fetch Existing Articles",
+        "credentials": {
+          "airtableTokenApi": {
+            "id": "112UtIzO07XgrN7A",
+            "name": "Airtable - zmidloch@z-agency.cz"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Article type definitions\nconst ARTICLE_TYPES = [\n  { id: 1, name: 'Hot News', description: 'Aktuální novinka z AI/automatizace', searchQuery: 'AI news OR automation news OR n8n release 2025' },\n  { id: 2, name: '5 Tips', description: 'Praktické tipy', searchQuery: 'productivity tips AI OR automation best practices' },\n  { id: 3, name: 'Tool Comparison', description: 'Porovnání nástrojů', searchQuery: 'n8n vs make vs zapier comparison OR AI tools comparison' },\n  { id: 4, name: 'Tutorial', description: 'Návod krok za krokem', searchQuery: 'n8n tutorial OR AI automation how to guide' },\n  { id: 5, name: 'Case Study', description: 'Případová studie', searchQuery: 'automation case study ROI OR AI implementation success story' },\n  { id: 6, name: 'Event/Conference', description: 'Report z AI eventu', searchQuery: 'AI conference 2025 OR tech summit news' },\n  { id: 7, name: 'Deep Dive', description: 'Hloubková analýza', searchQuery: 'AI agents architecture OR LLM deep dive technical' },\n  { id: 8, name: \"Beginner's Guide\", description: 'Pro začátečníky', searchQuery: 'automation for beginners OR AI getting started guide' },\n  { id: 9, name: 'Trends & Predictions', description: 'Trendy a predikce', searchQuery: 'AI trends 2025 predictions OR automation future' },\n  { id: 10, name: 'Tool Review', description: 'Recenze nástroje', searchQuery: 'AI tool review OR automation software review 2025' }\n];\n\n// Get all existing articles\nconst existingArticles = $input.all().map(item => item.json);\n\n// Extract existing titles for deduplication\nconst existingTitles = existingArticles\n  .map(a => a.fields?.Title || '')\n  .filter(t => t.length > 0);\n\n// Count article types to find the least used one\nconst typeCounts = {};\nARTICLE_TYPES.forEach(t => typeCounts[t.name] = 0);\nexistingArticles.forEach(a => {\n  const type = a.fields?.['Article Type'];\n  if (type && typeCounts[type] !== undefined) {\n    typeCounts[type]++;\n  }\n});\n\n// Find the article type with lowest count (for balanced rotation)\nlet selectedType = ARTICLE_TYPES[0];\nlet minCount = Infinity;\nfor (const type of ARTICLE_TYPES) {\n  if (typeCounts[type.name] < minCount) {\n    minCount = typeCounts[type.name];\n    selectedType = type;\n  }\n}\n\n// Return context for next nodes\nreturn {\n  json: {\n    selectedType: selectedType,\n    existingTitles: existingTitles,\n    existingCount: existingArticles.length,\n    typeCounts: typeCounts,\n    allTypes: ARTICLE_TYPES\n  }\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          256,
+          208
+        ],
+        "id": "determine-article-type",
+        "name": "Determine Article Type & Context"
+      },
+      {
+        "parameters": {
+          "query": "={{ $json.selectedType.searchQuery }} {{ new Date().getFullYear() }}",
+          "options": {
+            "topic": "news",
+            "max_results": 10,
+            "time_range": "week",
+            "include_raw_content": true
+          }
+        },
+        "type": "@tavily/n8n-nodes-tavily.tavily",
+        "typeVersion": 1,
+        "position": [
+          416,
+          208
+        ],
+        "id": "tavily-trending",
+        "name": "Tavily: Trending Topics",
+        "credentials": {
+          "tavilyApi": {
+            "id": "KmiWEKpArgJSNmSk",
+            "name": "Tavily account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.perplexity.ai/chat/completions",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpBearerAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"model\": \"sonar-pro\",\n  \"web_search_options\": {\n    \"max_search_results\": 10\n  },\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"You are a tech industry analyst specializing in AI, automation tools (n8n, Make, Zapier), AI agents, and business productivity. Research current trends and opportunities for blog content.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"Research the latest developments and trending topics in: {{ $('Determine Article Type & Context').item.json.selectedType.searchQuery }}\\n\\nFocus on:\\n- AI and LLMs (ChatGPT, Claude, etc.)\\n- Automation tools (n8n, Make, Zapier)\\n- AI agents and autonomous systems\\n- Business productivity and digital transformation\\n- Practical use cases and ROI\\n\\nProvide:\\n1. Top 5 trending topics right now\\n2. Emerging trends to watch\\n3. Potential blog article angles\\n4. Key statistics or data points\"\n    }\n  ]\n}",
+          "options": {
+            "timeout": 60000
+          }
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          560,
+          208
+        ],
+        "id": "perplexity-research",
+        "name": "Perplexity: Deep Research",
+        "credentials": {
+          "httpBearerAuth": {
+            "id": "zBYPTqhJcRJXe4RQ",
+            "name": "Perplexity 2"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Aggregate all research data for AI strategist\nconst context = $('Determine Article Type & Context').first().json;\nconst tavilyData = $('Tavily: Trending Topics').first().json;\nconst perplexityData = $('Perplexity: Deep Research').first().json;\n\n// Extract Perplexity content\nlet perplexityContent = '';\nif (perplexityData.choices && perplexityData.choices[0]) {\n  perplexityContent = perplexityData.choices[0].message.content;\n  const citations = perplexityData.citations || [];\n  for (let i = 0; i < 10; i++) {\n    perplexityContent = perplexityContent.replaceAll(\n      `[${i + 1}]`,\n      citations[i] ? ` (zdroj: ${citations[i]})` : ''\n    );\n  }\n}\n\n// Format Tavily results\nconst tavilyResults = (tavilyData.results || []).slice(0, 8).map(r => ({\n  title: r.title,\n  content: r.content,\n  url: r.url\n}));\n\nreturn {\n  json: {\n    articleType: context.selectedType,\n    existingTitles: context.existingTitles,\n    tavilyResults: tavilyResults,\n    perplexityResearch: perplexityContent,\n    typeCounts: context.typeCounts\n  }\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          704,
+          208
+        ],
+        "id": "aggregate-research",
+        "name": "Aggregate Research"
+      },
+      {
+        "parameters": {
+          "model": "anthropic/claude-opus-4.5",
+          "options": {
+            "temperature": 0.6
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+        "typeVersion": 1,
+        "position": [
+          880,
+          448
+        ],
+        "id": "openrouter-strategist",
+        "name": "Claude Opus 4.5",
+        "credentials": {
+          "openRouterApi": {
+            "id": "XpZg3NCm0vRTBA75",
+            "name": "OpenRouter Z-AGENCY 2026"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "modelName": "models/gemini-2.5-pro",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          1040,
+          448
+        ],
+        "id": "gemini-fallback",
+        "name": "Gemini 2.0 Flash (Fallback)",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "uLXCpqN3fa4ZXZmj",
+            "name": "Google Gemini(PaLM) Api account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "schemaType": "manual",
+          "inputSchema": "{\n  \"type\": \"object\",\n  \"required\": [\"title\", \"primary_keywords\", \"secondary_keywords\", \"article_type\"],\n  \"properties\": {\n    \"title\": { \"type\": \"string\", \"maxLength\": 70 },\n    \"primary_keywords\": { \"type\": \"array\", \"items\": { \"type\": \"string\" }, \"minItems\": 3, \"maxItems\": 5 },\n    \"secondary_keywords\": { \"type\": \"array\", \"items\": { \"type\": \"string\" }, \"minItems\": 5, \"maxItems\": 8 },\n    \"article_type\": { \"type\": \"string\" },\n    \"topic_reasoning\": { \"type\": \"string\" },\n    \"suggested_angle\": { \"type\": \"string\" },\n    \"target_audience\": { \"type\": \"string\" },\n    \"key_points\": { \"type\": \"array\", \"items\": { \"type\": \"string\" } }\n  }\n}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "typeVersion": 1.3,
+        "position": [
+          1216,
+          448
+        ],
+        "id": "output-parser",
+        "name": "JSON Output Parser"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Prepare data for Airtable insert\nconst agentOutput = $('AI Content Strategist').first().json.output;\nconst context = $('Determine Article Type & Context').first().json;\nconst tavilyData = $('Tavily: Trending Topics').first().json;\nconst perplexityData = $('Perplexity: Deep Research').first().json;\n\n// Parse agent output (it should be JSON)\nlet suggestion;\ntry {\n  suggestion = typeof agentOutput === 'string' ? JSON.parse(agentOutput) : agentOutput;\n} catch (e) {\n  // Try to extract JSON from response\n  const jsonMatch = agentOutput.match(/\\{[\\s\\S]*\\}/);\n  if (jsonMatch) {\n    suggestion = JSON.parse(jsonMatch[0]);\n  } else {\n    throw new Error('Failed to parse AI response as JSON');\n  }\n}\n\n// Prepare research data for storage\nconst researchData = {\n  tavilyResults: (tavilyData.results || []).slice(0, 5),\n  perplexityContent: perplexityData.choices?.[0]?.message?.content || '',\n  citations: perplexityData.citations || [],\n  generatedAt: new Date().toISOString()\n};\n\nreturn {\n  json: {\n    title: suggestion.title,\n    primaryKeywords: suggestion.primary_keywords.join(', '),\n    secondaryKeywords: suggestion.secondary_keywords.join(', '),\n    articleType: suggestion.article_type,\n    topicReasoning: suggestion.topic_reasoning,\n    suggestedAngle: suggestion.suggested_angle,\n    targetAudience: suggestion.target_audience,\n    keyPoints: suggestion.key_points?.join('\\n• ') || '',\n    researchData: JSON.stringify(researchData)\n  }\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1296,
+          208
+        ],
+        "id": "prepare-airtable-data",
+        "name": "Prepare Airtable Data"
+      },
+      {
+        "parameters": {
+          "operation": "create",
+          "base": {
+            "__rl": true,
+            "value": "=https://airtable.com/appNKJUeljGoHYjQf/tbljRtFFKlUXYAO6M/viwCXaxhEJzyyFE8z?blocks=hide",
+            "mode": "url"
+          },
+          "table": {
+            "__rl": true,
+            "value": "https://airtable.com/appNKJUeljGoHYjQf/tbljRtFFKlUXYAO6M/viwCXaxhEJzyyFE8z?blocks=hide",
+            "mode": "url"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "Target Length": 2500,
+              "WordPress Post ID": 0,
+              "Title": "={{ $json.title }}",
+              "Primary Keywords": "={{ $json.primaryKeywords }}",
+              "Secondary Keywords": "={{ $json.secondaryKeywords }}",
+              "Status": "Pending"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "Title",
+                "displayName": "Title",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Primary Keywords",
+                "displayName": "Primary Keywords",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Secondary Keywords",
+                "displayName": "Secondary Keywords",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Target Length",
+                "displayName": "Target Length",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "number",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Status",
+                "displayName": "Status",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "options",
+                "options": [
+                  {
+                    "name": "Pending",
+                    "value": "Pending"
+                  },
+                  {
+                    "name": "New",
+                    "value": "New"
+                  },
+                  {
+                    "name": "Researching",
+                    "value": "Researching"
+                  },
+                  {
+                    "name": "Writing",
+                    "value": "Writing"
+                  },
+                  {
+                    "name": "Humanizing",
+                    "value": "Humanizing"
+                  },
+                  {
+                    "name": "Review",
+                    "value": "Review"
+                  },
+                  {
+                    "name": "Approved",
+                    "value": "Approved"
+                  },
+                  {
+                    "name": "Publishing",
+                    "value": "Publishing"
+                  },
+                  {
+                    "name": "Published",
+                    "value": "Published"
+                  },
+                  {
+                    "name": "Failed",
+                    "value": "Failed"
+                  }
+                ],
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Last Modified",
+                "displayName": "Last Modified",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": true,
+                "removed": false
+              },
+              {
+                "id": "Research Data",
+                "displayName": "Research Data",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Slug",
+                "displayName": "Slug",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Excerpt",
+                "displayName": "Excerpt",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Content",
+                "displayName": "Content",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Image Prompt",
+                "displayName": "Image Prompt",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Verification Status",
+                "displayName": "Verification Status",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "options",
+                "options": [
+                  {
+                    "name": "Pending",
+                    "value": "Pending"
+                  },
+                  {
+                    "name": "Passed",
+                    "value": "Passed"
+                  },
+                  {
+                    "name": "Issues Found",
+                    "value": "Issues Found"
+                  }
+                ],
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Verification Notes",
+                "displayName": "Verification Notes",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Categories",
+                "displayName": "Categories",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Tags",
+                "displayName": "Tags",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "WordPress Post ID",
+                "displayName": "WordPress Post ID",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "number",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "WordPress URL",
+                "displayName": "WordPress URL",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Featured Image URL",
+                "displayName": "Featured Image URL",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Error Log",
+                "displayName": "Error Log",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.airtable",
+        "typeVersion": 2,
+        "position": [
+          1552,
+          208
+        ],
+        "id": "create-article-record",
+        "name": "Create Article in Airtable",
+        "credentials": {
+          "airtableTokenApi": {
+            "id": "112UtIzO07XgrN7A",
+            "name": "Airtable - zmidloch@z-agency.cz"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Log success and prepare notification data\nconst newArticle = $input.first().json;\nconst preparedData = $('Prepare Airtable Data').first().json;\n\nreturn {\n  json: {\n    success: true,\n    message: `Nový návrh článku vytvořen: ${preparedData.title}`,\n    articleId: newArticle.id,\n    title: preparedData.title,\n    articleType: preparedData.articleType,\n    primaryKeywords: preparedData.primaryKeywords,\n    topicReasoning: preparedData.topicReasoning,\n    createdAt: new Date().toISOString()\n  }\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1744,
+          208
+        ],
+        "id": "log-success",
+        "name": "Log Success"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=Jsi expertní content stratég a SEO specialista pro český tech blog zaměřený na:\n- Umělou inteligenci a AI agenty (Claude, GPT, LLMs)\n- Automatizační nástroje (n8n, Make, Zapier)\n- Business automatizaci a produktivitu\n- Praktické case studies a ROI\n\n## TVŮJ ÚKOL\n\n1. Analyzuj následující research data o aktuálních trendech\n2. Vyber JEDNO unikátní téma, které se NEOPAKUJE s existujícími články\n3. Přizpůsob téma typu článku: **{{ $json.articleType.name }}** ({{ $json.articleType.description }})\n4. Vygeneruj optimalizovaný Title (max 60 znaků, ČESKY)\n5. Navrhni Primary Keywords (3-5 klíčových slov, ČESKY)\n6. Navrhni Secondary Keywords (5-8 doplňkových slov, ČESKY)\n\n---\n\n## EXISTUJÍCÍ ČLÁNKY (NEOPAKUJ TATO TÉMATA!):\n{{ $json.existingTitles.slice(0, 20).join('\\n') || 'Žádné existující články' }}\n\n---\n\n## TAVILY TRENDING TOPICS:\n{{ $json.tavilyResults.map(r => `### ${r.title}\\n${r.content}\\nZdroj: ${r.url}`).join('\\n\\n') }}\n\n---\n\n## PERPLEXITY DEEP RESEARCH:\n{{ $json.perplexityResearch }}\n\n---\n\n## FORMÁT ODPOVĚDI (pouze validní JSON):\n{\n  \"title\": \"Český titulek článku (max 60 znaků)\",\n  \"primary_keywords\": [\"klíčové\", \"slovo\", \"další\"],\n  \"secondary_keywords\": [\"doplňkové\", \"slovo\", \"další\", \"více\", \"slov\"],\n  \"article_type\": \"{{ $json.articleType.name }}\",\n  \"topic_reasoning\": \"Proč jsem vybral toto téma a proč je aktuální...\",\n  \"suggested_angle\": \"Konkrétní úhel pohledu na téma...\",\n  \"target_audience\": \"Pro koho je článek určen...\",\n  \"key_points\": [\"Hlavní bod 1\", \"Hlavní bod 2\", \"Hlavní bod 3\"]\n}\n\nODPOVĚZ POUZE VALIDNÍM JSON!",
+          "hasOutputParser": true,
+          "needsFallback": true,
+          "options": {
+            "systemMessage": "You are a helpful assistantJsi expertní content stratég pro český tech blog o AI a automatizaci. Vždy odpovídáš POUZE validním JSON bez dalšího textu. Tvé návrhy jsou unikátní, aktuální a relevantní pro české podnikatele a IT profesionály."
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 3.1,
+        "position": [
+          928,
+          208
+        ],
+        "id": "9da9663c-dbc4-4a65-8924-486cff1158f8",
+        "name": "AI Content Strategist"
+      }
+    ],
+    "connections": {
+      "Schedule: Mon & Thu 8:00": {
+        "main": [
+          [
+            {
+              "node": "Fetch Existing Articles",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Fetch Existing Articles": {
+        "main": [
+          [
+            {
+              "node": "Determine Article Type & Context",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Determine Article Type & Context": {
+        "main": [
+          [
+            {
+              "node": "Tavily: Trending Topics",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Tavily: Trending Topics": {
+        "main": [
+          [
+            {
+              "node": "Perplexity: Deep Research",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Perplexity: Deep Research": {
+        "main": [
+          [
+            {
+              "node": "Aggregate Research",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Aggregate Research": {
+        "main": [
+          [
+            {
+              "node": "AI Content Strategist",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Claude Opus 4.5": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Content Strategist",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Gemini 2.0 Flash (Fallback)": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Content Strategist",
+              "type": "ai_languageModel",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "JSON Output Parser": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "AI Content Strategist",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Prepare Airtable Data": {
+        "main": [
+          [
+            {
+              "node": "Create Article in Airtable",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create Article in Airtable": {
+        "main": [
+          [
+            {
+              "node": "Log Success",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AI Content Strategist": {
+        "main": [
+          [
+            {
+              "node": "Prepare Airtable Data",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jiri Zmidloch",
+    "name": "Version 4630c73c",
+    "description": "",
+    "autosaved": false
+  },
+  "activeVersionId": "4630c73c-76db-47a6-a405-e6d0284e31cc",
+  "connections": {
+    "Schedule: Mon & Thu 8:00": {
+      "main": [
+        [
+          {
+            "node": "Fetch Existing Articles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Existing Articles": {
+      "main": [
+        [
+          {
+            "node": "Determine Article Type & Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Determine Article Type & Context": {
+      "main": [
+        [
+          {
+            "node": "Tavily: Trending Topics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tavily: Trending Topics": {
+      "main": [
+        [
+          {
+            "node": "Perplexity: Deep Research",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Perplexity: Deep Research": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Research",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Research": {
+      "main": [
+        [
+          {
+            "node": "AI Content Strategist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude Opus 4.5": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Content Strategist",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini 2.0 Flash (Fallback)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Content Strategist",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "JSON Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Content Strategist",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Airtable Data": {
+      "main": [
+        [
+          {
+            "node": "Create Article in Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Article in Airtable": {
+      "main": [
+        [
+          {
+            "node": "Log Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Content Strategist": {
+      "main": [
+        [
+          {
+            "node": "Prepare Airtable Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-22T22:47:55.709Z",
+  "id": "Wy1T24Gnu51YfKxb",
+  "isArchived": false,
+  "meta": null,
+  "name": "Topic Research & Content Planner - processgate.ai",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "# Topic Research & Content Planner\n\n**Workflow Overview:**\n- Runs 2x weekly (Monday & Thursday at 8:00 AM)\n- Researches trending topics in AI, n8n, automation\n- Uses rotating 10-article-type cycle\n- Avoids duplicate topics\n- Creates article suggestions in Airtable with Status 'Pending'\n\n**Integration:**\n- Tavily (trending news)\n- Perplexity (deep research)\n- Claude Opus (content strategist)\n- Airtable (storage)\n\n**Output:** Title, Primary Keywords, Secondary Keywords",
+        "height": 412,
+        "width": 690,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        -240
+      ],
+      "id": "info-note",
+      "name": "Workflow Info"
+    },
+    {
+      "parameters": {
+        "content": "## 10 Article Types (Rotating Cycle)\n\n1. Hot News\n2. 5 Tips\n3. Tool Comparison\n4. Tutorial\n5. Case Study\n6. Event/Conference\n7. Deep Dive\n8. Beginner's Guide\n9. Trends & Predictions\n10. Tool Review",
+        "height": 336,
+        "width": 250,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        304
+      ],
+      "id": "cycle-note",
+      "name": "Article Types"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * 1,4"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -96,
+        208
+      ],
+      "id": "schedule-trigger",
+      "name": "Schedule: Mon & Thu 8:00"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "=https://airtable.com/appNKJUeljGoHYjQf/tbljRtFFKlUXYAO6M/viwCXaxhEJzyyFE8z?blocks=hide",
+          "mode": "url"
+        },
+        "table": {
+          "__rl": true,
+          "value": "https://airtable.com/appNKJUeljGoHYjQf/tbljRtFFKlUXYAO6M/viwCXaxhEJzyyFE8z?blocks=hide",
+          "mode": "url"
+        },
+        "filterByFormula": "OR(Status='Published', Status='Writing', Status='Review', Status='Pending', Status='New', Status='Approved')",
+        "options": {
+          "fields": [
+            "Title",
+            "Primary Keywords",
+            "Status"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        112,
+        208
+      ],
+      "id": "fetch-existing-articles",
+      "name": "Fetch Existing Articles",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable - zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Article type definitions\nconst ARTICLE_TYPES = [\n  { id: 1, name: 'Hot News', description: 'Aktuální novinka z AI/automatizace', searchQuery: 'AI news OR automation news OR n8n release 2025' },\n  { id: 2, name: '5 Tips', description: 'Praktické tipy', searchQuery: 'productivity tips AI OR automation best practices' },\n  { id: 3, name: 'Tool Comparison', description: 'Porovnání nástrojů', searchQuery: 'n8n vs make vs zapier comparison OR AI tools comparison' },\n  { id: 4, name: 'Tutorial', description: 'Návod krok za krokem', searchQuery: 'n8n tutorial OR AI automation how to guide' },\n  { id: 5, name: 'Case Study', description: 'Případová studie', searchQuery: 'automation case study ROI OR AI implementation success story' },\n  { id: 6, name: 'Event/Conference', description: 'Report z AI eventu', searchQuery: 'AI conference 2025 OR tech summit news' },\n  { id: 7, name: 'Deep Dive', description: 'Hloubková analýza', searchQuery: 'AI agents architecture OR LLM deep dive technical' },\n  { id: 8, name: \"Beginner's Guide\", description: 'Pro začátečníky', searchQuery: 'automation for beginners OR AI getting started guide' },\n  { id: 9, name: 'Trends & Predictions', description: 'Trendy a predikce', searchQuery: 'AI trends 2025 predictions OR automation future' },\n  { id: 10, name: 'Tool Review', description: 'Recenze nástroje', searchQuery: 'AI tool review OR automation software review 2025' }\n];\n\n// Get all existing articles\nconst existingArticles = $input.all().map(item => item.json);\n\n// Extract existing titles for deduplication\nconst existingTitles = existingArticles\n  .map(a => a.fields?.Title || '')\n  .filter(t => t.length > 0);\n\n// Count article types to find the least used one\nconst typeCounts = {};\nARTICLE_TYPES.forEach(t => typeCounts[t.name] = 0);\nexistingArticles.forEach(a => {\n  const type = a.fields?.['Article Type'];\n  if (type && typeCounts[type] !== undefined) {\n    typeCounts[type]++;\n  }\n});\n\n// Find the article type with lowest count (for balanced rotation)\nlet selectedType = ARTICLE_TYPES[0];\nlet minCount = Infinity;\nfor (const type of ARTICLE_TYPES) {\n  if (typeCounts[type.name] < minCount) {\n    minCount = typeCounts[type.name];\n    selectedType = type;\n  }\n}\n\n// Return context for next nodes\nreturn {\n  json: {\n    selectedType: selectedType,\n    existingTitles: existingTitles,\n    existingCount: existingArticles.length,\n    typeCounts: typeCounts,\n    allTypes: ARTICLE_TYPES\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        256,
+        208
+      ],
+      "id": "determine-article-type",
+      "name": "Determine Article Type & Context"
+    },
+    {
+      "parameters": {
+        "query": "={{ $json.selectedType.searchQuery }} {{ new Date().getFullYear() }}",
+        "options": {
+          "topic": "news",
+          "max_results": 10,
+          "time_range": "week",
+          "include_raw_content": true
+        }
+      },
+      "type": "@tavily/n8n-nodes-tavily.tavily",
+      "typeVersion": 1,
+      "position": [
+        416,
+        208
+      ],
+      "id": "tavily-trending",
+      "name": "Tavily: Trending Topics",
+      "credentials": {
+        "tavilyApi": {
+          "id": "KmiWEKpArgJSNmSk",
+          "name": "Tavily account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.perplexity.ai/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"sonar-pro\",\n  \"web_search_options\": {\n    \"max_search_results\": 10\n  },\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"You are a tech industry analyst specializing in AI, automation tools (n8n, Make, Zapier), AI agents, and business productivity. Research current trends and opportunities for blog content.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"Research the latest developments and trending topics in: {{ $('Determine Article Type & Context').item.json.selectedType.searchQuery }}\\n\\nFocus on:\\n- AI and LLMs (ChatGPT, Claude, etc.)\\n- Automation tools (n8n, Make, Zapier)\\n- AI agents and autonomous systems\\n- Business productivity and digital transformation\\n- Practical use cases and ROI\\n\\nProvide:\\n1. Top 5 trending topics right now\\n2. Emerging trends to watch\\n3. Potential blog article angles\\n4. Key statistics or data points\"\n    }\n  ]\n}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        560,
+        208
+      ],
+      "id": "perplexity-research",
+      "name": "Perplexity: Deep Research",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "zBYPTqhJcRJXe4RQ",
+          "name": "Perplexity 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Aggregate all research data for AI strategist\nconst context = $('Determine Article Type & Context').first().json;\nconst tavilyData = $('Tavily: Trending Topics').first().json;\nconst perplexityData = $('Perplexity: Deep Research').first().json;\n\n// Extract Perplexity content\nlet perplexityContent = '';\nif (perplexityData.choices && perplexityData.choices[0]) {\n  perplexityContent = perplexityData.choices[0].message.content;\n  const citations = perplexityData.citations || [];\n  for (let i = 0; i < 10; i++) {\n    perplexityContent = perplexityContent.replaceAll(\n      `[${i + 1}]`,\n      citations[i] ? ` (zdroj: ${citations[i]})` : ''\n    );\n  }\n}\n\n// Format Tavily results\nconst tavilyResults = (tavilyData.results || []).slice(0, 8).map(r => ({\n  title: r.title,\n  content: r.content,\n  url: r.url\n}));\n\nreturn {\n  json: {\n    articleType: context.selectedType,\n    existingTitles: context.existingTitles,\n    tavilyResults: tavilyResults,\n    perplexityResearch: perplexityContent,\n    typeCounts: context.typeCounts\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        736,
+        208
+      ],
+      "id": "aggregate-research",
+      "name": "Aggregate Research"
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-opus-4.5",
+        "options": {
+          "temperature": 0.6
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        880,
+        448
+      ],
+      "id": "openrouter-strategist",
+      "name": "Claude Opus 4.5",
+      "credentials": {
+        "openRouterApi": {
+          "id": "XpZg3NCm0vRTBA75",
+          "name": "OpenRouter Z-AGENCY 2026"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        448
+      ],
+      "id": "gemini-fallback",
+      "name": "Gemini 2.0 Flash (Fallback)",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uLXCpqN3fa4ZXZmj",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"required\": [\"title\", \"primary_keywords\", \"secondary_keywords\", \"article_type\"],\n  \"properties\": {\n    \"title\": { \"type\": \"string\", \"maxLength\": 70 },\n    \"primary_keywords\": { \"type\": \"array\", \"items\": { \"type\": \"string\" }, \"minItems\": 3, \"maxItems\": 5 },\n    \"secondary_keywords\": { \"type\": \"array\", \"items\": { \"type\": \"string\" }, \"minItems\": 5, \"maxItems\": 8 },\n    \"article_type\": { \"type\": \"string\" },\n    \"topic_reasoning\": { \"type\": \"string\" },\n    \"suggested_angle\": { \"type\": \"string\" },\n    \"target_audience\": { \"type\": \"string\" },\n    \"key_points\": { \"type\": \"array\", \"items\": { \"type\": \"string\" } }\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1216,
+        448
+      ],
+      "id": "output-parser",
+      "name": "JSON Output Parser"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepare data for Airtable insert\nconst agentOutput = $('AI Content Strategist').first().json.output;\nconst context = $('Determine Article Type & Context').first().json;\nconst tavilyData = $('Tavily: Trending Topics').first().json;\nconst perplexityData = $('Perplexity: Deep Research').first().json;\n\n// Parse agent output (it should be JSON)\nlet suggestion;\ntry {\n  suggestion = typeof agentOutput === 'string' ? JSON.parse(agentOutput) : agentOutput;\n} catch (e) {\n  // Try to extract JSON from response\n  const jsonMatch = agentOutput.match(/\\{[\\s\\S]*\\}/);\n  if (jsonMatch) {\n    suggestion = JSON.parse(jsonMatch[0]);\n  } else {\n    throw new Error('Failed to parse AI response as JSON');\n  }\n}\n\n// Prepare research data for storage\nconst researchData = {\n  tavilyResults: (tavilyData.results || []).slice(0, 5),\n  perplexityContent: perplexityData.choices?.[0]?.message?.content || '',\n  citations: perplexityData.citations || [],\n  generatedAt: new Date().toISOString()\n};\n\nreturn {\n  json: {\n    title: suggestion.title,\n    primaryKeywords: suggestion.primary_keywords.join(', '),\n    secondaryKeywords: suggestion.secondary_keywords.join(', '),\n    articleType: suggestion.article_type,\n    topicReasoning: suggestion.topic_reasoning,\n    suggestedAngle: suggestion.suggested_angle,\n    targetAudience: suggestion.target_audience,\n    keyPoints: suggestion.key_points?.join('\\n• ') || '',\n    researchData: JSON.stringify(researchData)\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1296,
+        208
+      ],
+      "id": "prepare-airtable-data",
+      "name": "Prepare Airtable Data"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "=https://airtable.com/appNKJUeljGoHYjQf/tbljRtFFKlUXYAO6M/viwCXaxhEJzyyFE8z?blocks=hide",
+          "mode": "url"
+        },
+        "table": {
+          "__rl": true,
+          "value": "https://airtable.com/appNKJUeljGoHYjQf/tbljRtFFKlUXYAO6M/viwCXaxhEJzyyFE8z?blocks=hide",
+          "mode": "url"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Target Length": 2500,
+            "WordPress Post ID": 0,
+            "Title": "={{ $json.title }}",
+            "Primary Keywords": "={{ $json.primaryKeywords }}",
+            "Secondary Keywords": "={{ $json.secondaryKeywords }}",
+            "Status": "Pending"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Primary Keywords",
+              "displayName": "Primary Keywords",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Secondary Keywords",
+              "displayName": "Secondary Keywords",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Target Length",
+              "displayName": "Target Length",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Pending",
+                  "value": "Pending"
+                },
+                {
+                  "name": "New",
+                  "value": "New"
+                },
+                {
+                  "name": "Researching",
+                  "value": "Researching"
+                },
+                {
+                  "name": "Writing",
+                  "value": "Writing"
+                },
+                {
+                  "name": "Humanizing",
+                  "value": "Humanizing"
+                },
+                {
+                  "name": "Review",
+                  "value": "Review"
+                },
+                {
+                  "name": "Approved",
+                  "value": "Approved"
+                },
+                {
+                  "name": "Publishing",
+                  "value": "Publishing"
+                },
+                {
+                  "name": "Published",
+                  "value": "Published"
+                },
+                {
+                  "name": "Failed",
+                  "value": "Failed"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Last Modified",
+              "displayName": "Last Modified",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Research Data",
+              "displayName": "Research Data",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Slug",
+              "displayName": "Slug",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Excerpt",
+              "displayName": "Excerpt",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Content",
+              "displayName": "Content",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Image Prompt",
+              "displayName": "Image Prompt",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Verification Status",
+              "displayName": "Verification Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Pending",
+                  "value": "Pending"
+                },
+                {
+                  "name": "Passed",
+                  "value": "Passed"
+                },
+                {
+                  "name": "Issues Found",
+                  "value": "Issues Found"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Verification Notes",
+              "displayName": "Verification Notes",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Categories",
+              "displayName": "Categories",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Tags",
+              "displayName": "Tags",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "WordPress Post ID",
+              "displayName": "WordPress Post ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "WordPress URL",
+              "displayName": "WordPress URL",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Featured Image URL",
+              "displayName": "Featured Image URL",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Error Log",
+              "displayName": "Error Log",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        1552,
+        208
+      ],
+      "id": "create-article-record",
+      "name": "Create Article in Airtable",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable - zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Log success and prepare notification data\nconst newArticle = $input.first().json;\nconst preparedData = $('Prepare Airtable Data').first().json;\n\nreturn {\n  json: {\n    success: true,\n    message: `Nový návrh článku vytvořen: ${preparedData.title}`,\n    articleId: newArticle.id,\n    title: preparedData.title,\n    articleType: preparedData.articleType,\n    primaryKeywords: preparedData.primaryKeywords,\n    topicReasoning: preparedData.topicReasoning,\n    createdAt: new Date().toISOString()\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1744,
+        208
+      ],
+      "id": "log-success",
+      "name": "Log Success"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Jsi expertní content stratég a SEO specialista pro český tech blog zaměřený na:\n- Umělou inteligenci a AI agenty (Claude, GPT, LLMs)\n- Automatizační nástroje (n8n, Make, Zapier)\n- Business automatizaci a produktivitu\n- Praktické case studies a ROI\n\n## TVŮJ ÚKOL\n\n1. Analyzuj následující research data o aktuálních trendech\n2. Vyber JEDNO unikátní téma, které se NEOPAKUJE s existujícími články\n3. Přizpůsob téma typu článku: **{{ $json.articleType.name }}** ({{ $json.articleType.description }})\n4. Vygeneruj optimalizovaný Title (max 60 znaků, ČESKY)\n5. Navrhni Primary Keywords (3-5 klíčových slov, ČESKY)\n6. Navrhni Secondary Keywords (5-8 doplňkových slov, ČESKY)\n\n---\n\n## EXISTUJÍCÍ ČLÁNKY (NEOPAKUJ TATO TÉMATA!):\n{{ $json.existingTitles.slice(0, 20).join('\\n') || 'Žádné existující články' }}\n\n---\n\n## TAVILY TRENDING TOPICS:\n{{ $json.tavilyResults.map(r => `### ${r.title}\\n${r.content}\\nZdroj: ${r.url}`).join('\\n\\n') }}\n\n---\n\n## PERPLEXITY DEEP RESEARCH:\n{{ $json.perplexityResearch }}\n\n---\n\n## FORMÁT ODPOVĚDI (pouze validní JSON):\n{\n  \"title\": \"Český titulek článku (max 60 znaků)\",\n  \"primary_keywords\": [\"klíčové\", \"slovo\", \"další\"],\n  \"secondary_keywords\": [\"doplňkové\", \"slovo\", \"další\", \"více\", \"slov\"],\n  \"article_type\": \"{{ $json.articleType.name }}\",\n  \"topic_reasoning\": \"Proč jsem vybral toto téma a proč je aktuální...\",\n  \"suggested_angle\": \"Konkrétní úhel pohledu na téma...\",\n  \"target_audience\": \"Pro koho je článek určen...\",\n  \"key_points\": [\"Hlavní bod 1\", \"Hlavní bod 2\", \"Hlavní bod 3\"]\n}\n\nODPOVĚZ POUZE VALIDNÍM JSON!",
+        "hasOutputParser": true,
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "You are a helpful assistantJsi expertní content stratég pro český tech blog o AI a automatizaci. Vždy odpovídáš POUZE validním JSON bez dalšího textu. Tvé návrhy jsou unikátní, aktuální a relevantní pro české podnikatele a IT profesionály."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        928,
+        208
+      ],
+      "id": "9da9663c-dbc4-4a65-8924-486cff1158f8",
+      "name": "AI Content Strategist"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Prague",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "errorWorkflow": "zVAjJgKV17IWzFP7"
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-22T22:47:55.709Z",
+      "createdAt": "2026-01-22T22:47:55.709Z",
+      "role": "workflow:owner",
+      "workflowId": "Wy1T24Gnu51YfKxb",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": {
+    "node:Schedule: Mon & Thu 8:00": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [
+    {
+      "updatedAt": "2025-11-25T10:02:49.590Z",
+      "createdAt": "2025-11-25T10:02:49.590Z",
+      "id": "iu8EkneS24SJyD0c",
+      "name": "AI"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2026-01-23T07:49:45.046Z",
+  "versionId": "5981cee7-c918-4447-99c5-94ab5b627950"
+}
