@@ -1,0 +1,3897 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-01-25T23:11:33.363Z",
+    "createdAt": "2026-01-25T23:11:11.128Z",
+    "versionId": "8fd2941b-1a69-4a85-a3cc-8137ba4f789a",
+    "workflowId": "cYgnPEBGNts9pwxw",
+    "nodes": [
+      {
+        "parameters": {
+          "content": "# Micro-SaaS Opportunity Scanner\n\n**Purpose:** Weekly discovery of micro-SaaS opportunities from web discussions.\n\n**Schedule:** Every Monday at 6:00 AM CET\n\n**Sources:**\n- Reddit (SaaS, startups, automation, nocode, entrepreneur)\n- Twitter/X (via Tavily)\n- Hacker News + Product Hunt (via Tavily)\n- Indie Hackers (via Perplexity)\n- LinkedIn (via Tavily)\n\n**Pipeline:**\n1. Fetch existing opportunities (exclude 'Created')\n2. Parallel data collection from 5 sources\n3. Agent 1: Researcher - extracts opportunities\n4. Agent 2: Evaluator - scores demand & potential\n5. Agent 3: Estimator - difficulty & tools\n6. Upsert to Airtable + archive stale",
+          "height": 480,
+          "width": 450,
+          "color": 6
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          -928,
+          -384
+        ],
+        "name": "Workflow Info",
+        "id": "16b7bb06-ce9c-4552-8a8d-851a245e3edb"
+      },
+      {
+        "parameters": {
+          "content": "## Airtable Schema\n\n**Main Table:** Micro-SaaS Opportunities\n- Name, Description, Problem Statement\n- Target Segment (SMB/Startup/Enterprise/All)\n- Similar Requests Count, Weekly Mentions\n- Weekly Rank, Confidence Score\n- Creation Status (Draft/In Progress/Created)\n- Difficulty (Easy/Medium/Hard)\n- Suggested Tools, Estimated Monthly Value\n- Categories, Source URLs\n- First Detected, Last Updated\n- Weeks Without Mention\n\n**Archive Table:** Same schema + Archived Date",
+          "height": 400,
+          "width": 350,
+          "color": 4
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          -896,
+          160
+        ],
+        "name": "Airtable Schema",
+        "id": "f685339b-5897-4d18-ac33-f2b69b62fe32"
+      },
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "cronExpression",
+                "expression": "0 6 * * 1"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          -352,
+          208
+        ],
+        "name": "Weekly Monday 6:00 AM",
+        "id": "df666986-2cd4-4428-9255-5b93ffe10d33"
+      },
+      {
+        "parameters": {
+          "operation": "search",
+          "base": {
+            "__rl": true,
+            "value": "=https://airtable.com/appPeuDxXd9qLhz2X/tbl4Ne7gqdaHH8zPs/viwGbsVrmLbR4J6F4?blocks=hide",
+            "mode": "url"
+          },
+          "table": {
+            "__rl": true,
+            "value": "https://airtable.com/appPeuDxXd9qLhz2X/tbl4Ne7gqdaHH8zPs/viwGbsVrmLbR4J6F4?blocks=hide",
+            "mode": "url"
+          },
+          "filterByFormula": "NOT({Creation Status}='Created')",
+          "options": {
+            "fields": [
+              "Name",
+              "Description",
+              "Similar Requests Count",
+              "Source URLs",
+              "Creation Status",
+              "Weeks Without Mention",
+              "Last Updated"
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.airtable",
+        "typeVersion": 2,
+        "position": [
+          -128,
+          208
+        ],
+        "name": "Fetch Active Opportunities",
+        "id": "105bb395-fe7e-40d5-b0be-e50df0e9e51c",
+        "alwaysOutputData": true,
+        "credentials": {
+          "airtableTokenApi": {
+            "id": "112UtIzO07XgrN7A",
+            "name": "Airtable - zmidloch@z-agency.cz"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Prepare context from existing opportunities\nconst existingOpportunities = $input.all().map(item => ({\n  name: item.json.fields?.Name || '',\n  description: item.json.fields?.Description || '',\n  id: item.json.id,\n  currentCount: item.json.fields?.['Similar Requests Count'] || 0,\n  weeksWithoutMention: item.json.fields?.['Weeks Without Mention'] || 0,\n  lastUpdated: item.json.fields?.['Last Updated'] || '',\n  status: item.json.fields?.['Creation Status'] || 'Draft'\n}));\n\nconst existingNames = existingOpportunities.map(o => o.name.toLowerCase()).filter(n => n.length > 0);\n\nconst now = new Date();\nconst scanDate = now.toISOString();\nconst weekNumber = Math.ceil((now.getDate() + new Date(now.getFullYear(), now.getMonth(), 1).getDay()) / 7);\nconst scanWeek = `${now.getFullYear()}-W${weekNumber}`;\n\nreturn {\n  json: {\n    existingOpportunities,\n    existingNames,\n    existingCount: existingOpportunities.length,\n    scanDate,\n    scanWeek\n  }\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          48,
+          208
+        ],
+        "name": "Prepare Context",
+        "id": "1d1424d6-e6f1-4333-b0fd-6bdc7be85dad"
+      },
+      {
+        "parameters": {
+          "query": "\"looking for a solution\" OR \"need a tool\" OR \"wish there was\" OR \"automate my\" OR \"anyone built\" site:reddit.com/r/SaaS OR site:reddit.com/r/startups OR site:reddit.com/r/automation OR site:reddit.com/r/nocode OR site:reddit.com/r/entrepreneur 2026",
+          "options": {
+            "topic": "general",
+            "max_results": 20,
+            "time_range": "week",
+            "include_raw_content": true
+          }
+        },
+        "type": "@tavily/n8n-nodes-tavily.tavily",
+        "typeVersion": 1,
+        "position": [
+          400,
+          -48
+        ],
+        "name": "Tavily: Reddit",
+        "id": "cbce5d2f-ff35-4362-805e-172660900c33",
+        "credentials": {
+          "tavilyApi": {
+            "id": "KmiWEKpArgJSNmSk",
+            "name": "Tavily account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "query": "twitter.com \"need a tool\" OR \"looking for automation\" OR \"wish there was\" SaaS startup -\"DM me\" -\"book a call\"",
+          "options": {
+            "topic": "general",
+            "max_results": 20,
+            "time_range": "week",
+            "include_raw_content": true
+          }
+        },
+        "type": "@tavily/n8n-nodes-tavily.tavily",
+        "typeVersion": 1,
+        "position": [
+          400,
+          160
+        ],
+        "name": "Tavily: Twitter/X",
+        "id": "cc90433f-2db8-44ef-9270-0ca305925bb3",
+        "credentials": {
+          "tavilyApi": {
+            "id": "KmiWEKpArgJSNmSk",
+            "name": "Tavily account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "query": "news.ycombinator.com \"Ask HN\" OR \"looking for\" OR \"need a tool\" automation workflow integration",
+          "options": {
+            "topic": "general",
+            "max_results": 20,
+            "time_range": "week",
+            "include_raw_content": true
+          }
+        },
+        "type": "@tavily/n8n-nodes-tavily.tavily",
+        "typeVersion": 1,
+        "position": [
+          400,
+          352
+        ],
+        "name": "Tavily: HN + Product Hunt",
+        "id": "1ae4330e-abd2-45b0-b7fe-1efd090d456a",
+        "credentials": {
+          "tavilyApi": {
+            "id": "KmiWEKpArgJSNmSk",
+            "name": "Tavily account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.perplexity.ai/chat/completions",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpBearerAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "{\n  \"model\": \"sonar-pro\",\n  \"web_search_options\": {\n    \"max_search_results\": 15\n  },\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"You are a micro-SaaS market researcher specializing in identifying automation and AI tool opportunities from indie hacker communities.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"Research Indie Hackers, Reddit r/SaaS, r/startups, r/automation, and startup communities from the past week. Find:\\n\\n1. People asking for automation tools that don't exist\\n2. Complaints about existing tools (gaps to fill)\\n3. 'I wish there was...' type requests\\n4. Integration needs between popular tools\\n5. AI/LLM use cases people want but can't find\\n6. Workflow problems people want solved\\n\\nProvide specific examples with source links where possible. Focus on opportunities that could be built as micro-SaaS products.\"\n    }\n  ]\n}",
+          "options": {
+            "timeout": 90000
+          }
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          912,
+          768
+        ],
+        "name": "Perplexity: Indie Research",
+        "id": "585b08fa-930a-44f7-88e0-0334e9d38ce7",
+        "credentials": {
+          "httpBearerAuth": {
+            "id": "zBYPTqhJcRJXe4RQ",
+            "name": "Perplexity 2"
+          }
+        },
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "query": "indiehackers.com \"looking for\" OR \"need help\" OR \"wish there was\" automation SaaS tool",
+          "options": {
+            "topic": "general",
+            "max_results": 15,
+            "time_range": "week",
+            "include_raw_content": true
+          }
+        },
+        "type": "@tavily/n8n-nodes-tavily.tavily",
+        "typeVersion": 1,
+        "position": [
+          400,
+          752
+        ],
+        "name": "Tavily: LinkedIn",
+        "id": "d88fa2dd-3ddc-4616-a071-0e6fb43bcad6",
+        "credentials": {
+          "tavilyApi": {
+            "id": "KmiWEKpArgJSNmSk",
+            "name": "Tavily account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Aggregate all research data for AI processing\nconst context = $('Prepare Context').first().json;\n\n// Helper to format Tavily results\nconst formatTavily = (nodeName, source) => {\n  try {\n    const data = $(nodeName).first().json;\n    return (data.results || []).map(r => ({\n      source,\n      title: r.title || '',\n      content: r.content || '',\n      url: r.url || '',\n      rawContent: (r.raw_content || '').substring(0, 1000)\n    }));\n  } catch (e) {\n    return [];\n  }\n};\n\n// Get all Tavily results (including Reddit via Tavily)\nconst redditResults = formatTavily('Tavily: Reddit', 'Reddit');\nconst twitterResults = formatTavily('Tavily: Twitter/X', 'Twitter/X');\nconst hnPhResults = formatTavily('Tavily: HN + Product Hunt', 'HN/ProductHunt');\nconst linkedinResults = formatTavily('Tavily: LinkedIn', 'LinkedIn');\n\n// Get Perplexity results\nlet perplexityContent = '';\ntry {\n  const perplexityData = $('Perplexity: Indie Research').first().json;\n  if (perplexityData.choices && perplexityData.choices[0]) {\n    perplexityContent = perplexityData.choices[0].message.content || '';\n    const citations = perplexityData.citations || [];\n    for (let i = 0; i < 15; i++) {\n      perplexityContent = perplexityContent.replaceAll(\n        `[${i + 1}]`,\n        citations[i] ? ` (${citations[i]})` : ''\n      );\n    }\n  }\n} catch (e) {\n  console.log('Perplexity data not available:', e.message);\n}\n\nconst totalSources = redditResults.length + twitterResults.length + hnPhResults.length + linkedinResults.length;\n\nreturn {\n  json: {\n    existingOpportunities: context.existingOpportunities,\n    existingNames: context.existingNames,\n    existingCount: context.existingCount,\n    scanDate: context.scanDate,\n    scanWeek: context.scanWeek,\n    research: {\n      reddit: redditResults,\n      twitter: twitterResults,\n      hackerNews: hnPhResults,\n      linkedin: linkedinResults,\n      indieResearch: perplexityContent\n    },\n    totalSources\n  }\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          704,
+          304
+        ],
+        "name": "Aggregate Research Data",
+        "id": "5b9501db-d460-433e-a414-2668abeaab16"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "You are a micro-SaaS opportunity researcher. Analyze the following research data and extract distinct micro-SaaS opportunities.\n\n## EXISTING OPPORTUNITIES (DO NOT DUPLICATE)\n{{ $json.existingNames.join('\\n') || 'No existing opportunities' }}\n\n## REDDIT DISCUSSIONS\n{{ $json.research.reddit.map(r => `[${r.subreddit}] ${r.title}\\n${r.content}\\nUpvotes: ${r.upvotes} | URL: ${r.url}`).join('\\n\\n') || 'No Reddit data' }}\n\n## TWITTER/X MENTIONS\n{{ $json.research.twitter.map(r => `${r.title}\\n${r.content}\\nURL: ${r.url}`).join('\\n\\n') || 'No Twitter data' }}\n\n## HACKER NEWS / PRODUCT HUNT\n{{ $json.research.hackerNews.map(r => `${r.title}\\n${r.content}\\nURL: ${r.url}`).join('\\n\\n') || 'No HN/PH data' }}\n\n## LINKEDIN DISCUSSIONS\n{{ $json.research.linkedin.map(r => `${r.title}\\n${r.content}\\nURL: ${r.url}`).join('\\n\\n') || 'No LinkedIn data' }}\n\n## INDIE HACKERS RESEARCH\n{{ $json.research.indieResearch || 'No Indie Hackers research' }}\n\n---\n\n## YOUR TASK\n\n1. Identify 10-20 DISTINCT micro-SaaS opportunities (automation tools, AI services, integrations)\n2. DO NOT include opportunities that match existing names\n3. Group similar requests together\n4. Count how many times each opportunity type was mentioned across all sources\n\nReturn a JSON array:\n[\n  {\n    \"name\": \"Short descriptive name (max 50 chars)\",\n    \"description\": \"2-3 sentence description of what this SaaS would do\",\n    \"problemStatement\": \"The specific pain point being addressed\",\n    \"mentionCount\": 5,\n    \"targetSegment\": \"SMB|Startup|Enterprise|All\",\n    \"categories\": [\"Automation\", \"AI\", \"Productivity\", \"Marketing\", \"Sales\", \"Support\", \"Analytics\"],\n    \"sourceUrls\": [\"url1\", \"url2\"],\n    \"competitorExists\": true,\n    \"competitorNotes\": \"Known competitors if any\"\n  }\n]\n\nFocus on ACTIONABLE ideas that can be built using: n8n, Supabase, Airtable, Vercel, Stripe, OpenAI, Anthropic.\n\nRespond with VALID JSON ONLY.\nIMPORTANT: Only extract opportunities from the ACTUAL research data provided above. \nIf the research data is empty or contains no relevant requests, return an empty array [].\nDo NOT invent, fabricate, or return placeholder/example data.\nCRITICAL FILTER:\n- IGNORE marketing posts, promotional content, and \"DM me\" type posts\n- ONLY extract posts where someone is ASKING for a solution or COMPLAINING about a problem\n- If a post is advertising a service (not asking for one), skip it\nCRITICAL: If the research data does NOT contain clear micro-SaaS opportunity requests (people asking for tools that don't exist), return an EMPTY JSON array: []\n\nDO NOT generate placeholder names like:\n- \"Opportunity Name\"\n- \"Product Name\" \n- \"Tool Name\"\n- \"What it does\"\n- \"Description here\"\n\nThese are FORBIDDEN. Return [] instead of fake data.\n\n",
+          "hasOutputParser": true,
+          "needsFallback": true,
+          "options": {
+            "systemMessage": "You are an expert micro-SaaS researcher. You ONLY extract opportunities that are EXPLICITLY mentioned in the research data.\n\nCRITICAL RULES:\n1. If the research data contains NO relevant micro-SaaS opportunities, return an EMPTY array: []\n2. NEVER invent, fabricate, or generate placeholder data\n3. NEVER return generic names like \"Opportunity Name\", \"Product Name\", \"Tool Name\"\n4. Only extract opportunities where someone explicitly asks for a tool/service that doesn't exist\n5. Each opportunity MUST have a real source URL from the research data\n\nIf data quality is poor or irrelevant, return [] - this is the correct behavior.\n"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 3.1,
+        "position": [
+          896,
+          304
+        ],
+        "name": "Agent 1: Researcher",
+        "id": "c847d9b9-7438-412b-b44b-6cd6e74710c4"
+      },
+      {
+        "parameters": {
+          "model": "anthropic/claude-opus-4.5",
+          "options": {
+            "temperature": 0.3
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+        "typeVersion": 1,
+        "position": [
+          848,
+          512
+        ],
+        "name": "Claude Opus 4.5 (Researcher)",
+        "id": "71710d61-e752-4424-b56e-1113ce0298bb",
+        "credentials": {
+          "openRouterApi": {
+            "id": "XpZg3NCm0vRTBA75",
+            "name": "OpenRouter Z-AGENCY 2026"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          960,
+          512
+        ],
+        "name": "Gemini Researcher Fallback",
+        "id": "dbd87462-3a47-4692-9521-e4ccf805172b",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "uLXCpqN3fa4ZXZmj",
+            "name": "Google Gemini(PaLM) Api account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "schemaType": "manual",
+          "inputSchema": "{\n  \"type\": \"array\",\n  \"items\": {\n    \"type\": \"object\",\n    \"required\": [\"name\", \"description\", \"problemStatement\", \"mentionCount\", \"targetSegment\"],\n    \"properties\": {\n      \"name\": { \"type\": \"string\", \"maxLength\": 60 },\n      \"description\": { \"type\": \"string\" },\n      \"problemStatement\": { \"type\": \"string\" },\n      \"mentionCount\": { \"type\": \"number\" },\n      \"targetSegment\": { \"type\": \"string\", \"enum\": [\"SMB\", \"Startup\", \"Enterprise\", \"All\"] },\n      \"categories\": { \"type\": \"array\", \"items\": { \"type\": \"string\" } },\n      \"sourceUrls\": { \"type\": \"array\", \"items\": { \"type\": \"string\" } },\n      \"competitorExists\": { \"type\": \"boolean\" },\n      \"competitorNotes\": { \"type\": \"string\" }\n    }\n  }\n}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "typeVersion": 1.3,
+        "position": [
+          1104,
+          512
+        ],
+        "name": "Researcher Output Parser",
+        "id": "604d86eb-06c4-47ed-a139-9c653814ace7"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Pass context to evaluator\nconst researcherOutput = $('Agent 1: Researcher').first().json.output;\nconst context = $('Aggregate Research Data').first().json;\n\nlet opportunities;\ntry {\n  opportunities = typeof researcherOutput === 'string' \n    ? JSON.parse(researcherOutput) \n    : researcherOutput;\n} catch (e) {\n  // Try to extract JSON array from response\n  const match = researcherOutput.match(/\\[[\\s\\S]*\\]/);\n  if (match) {\n    opportunities = JSON.parse(match[0]);\n  } else {\n    throw new Error('Failed to parse researcher output as JSON array');\n  }\n}\n\nreturn {\n  json: {\n    opportunities,\n    context: {\n      existingOpportunities: context.existingOpportunities,\n      scanDate: context.scanDate,\n      totalSources: context.totalSources\n    }\n  }\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1264,
+          304
+        ],
+        "name": "Prepare for Evaluator",
+        "id": "a79339e8-752e-403b-a6bf-5775d58a8183"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "You are a micro-SaaS market evaluator. Score and rank the following opportunities based on demand and feasibility.\n\n## OPPORTUNITIES TO EVALUATE\n{{ JSON.stringify($json.opportunities, null, 2) }}\n\n---\n\n## SCORING CRITERIA\n\n### Demand Score (0-100)\n- 1-3 mentions: 10-30\n- 4-6 mentions: 30-50\n- 7-10 mentions: 50-70\n- 11+ mentions: 70-90\n- Viral/trending: 90-100\n\nAdjust based on:\n- Source quality (Reddit upvotes, HN points matter more)\n- Recency (this week > last month)\n- Specificity (detailed requests > vague complaints)\n\n### Market Potential Score (0-100)\n- Enterprise B2B: 80-100\n- SMB B2B: 60-80\n- Prosumer: 40-60\n- Consumer: 20-40\n\n### Confidence Score (0-100)\n- Based on evidence quality and actionability\n- Clear pain point with multiple mentions: 80-100\n- Vague complaint: 20-40\n\n## OUTPUT FORMAT\n\nReturn the opportunities with added scores, sorted by overallScore DESC:\n[\n  {\n    ...originalFields,\n    \"demandScore\": 75,\n    \"marketPotentialScore\": 80,\n    \"confidenceScore\": 70,\n    \"overallScore\": 75,\n    \"evaluationNotes\": \"Brief explanation of scoring\"\n  }\n]\n\nRespond with VALID JSON ONLY.",
+          "needsFallback": true,
+          "options": {
+            "systemMessage": "You are a startup evaluator with expertise in SaaS metrics and market analysis. You've evaluated 1000+ startup ideas and know what separates viable opportunities from wishful thinking. Always respond with valid JSON array only."
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 3.1,
+        "position": [
+          1504,
+          304
+        ],
+        "name": "Agent 2: Evaluator",
+        "id": "d66747f2-6da9-4e11-bee8-eb0c880c7905"
+      },
+      {
+        "parameters": {
+          "model": "anthropic/claude-opus-4.5",
+          "options": {
+            "temperature": 0.2
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+        "typeVersion": 1,
+        "position": [
+          1440,
+          496
+        ],
+        "name": "Claude Opus 4.5 (Evaluator)",
+        "id": "649f95f2-0c0d-49dd-9a17-9c9167234161",
+        "credentials": {
+          "openRouterApi": {
+            "id": "XpZg3NCm0vRTBA75",
+            "name": "OpenRouter Z-AGENCY 2026"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          1552,
+          496
+        ],
+        "name": "Gemini Evaluator Fallback",
+        "id": "157b102e-e5a6-49c1-a812-9eeedd7d5240",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "uLXCpqN3fa4ZXZmj",
+            "name": "Google Gemini(PaLM) Api account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Pass to estimator\nconst evaluatorOutput = $('Agent 2: Evaluator').first().json.output;\nconst context = $('Prepare for Evaluator').first().json.context;\n\nlet opportunities;\ntry {\n  opportunities = typeof evaluatorOutput === 'string' \n    ? JSON.parse(evaluatorOutput) \n    : evaluatorOutput;\n} catch (e) {\n  const match = evaluatorOutput.match(/\\[[\\s\\S]*\\]/);\n  if (match) {\n    opportunities = JSON.parse(match[0]);\n  } else {\n    throw new Error('Failed to parse evaluator output');\n  }\n}\n\nreturn {\n  json: {\n    opportunities,\n    context\n  }\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1824,
+          304
+        ],
+        "name": "Prepare for Estimator",
+        "id": "d34b3a8e-abc9-4f79-acaf-869c03aaa7a4"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "You are a micro-SaaS technical estimator. For each opportunity, estimate difficulty, required tools, and potential value.\n\n## OPPORTUNITIES TO ESTIMATE\n{{ JSON.stringify($json.opportunities, null, 2) }}\n\n---\n\n## ESTIMATION CRITERIA\n\n### Difficulty Assessment\n- **Easy**: Can be built with no-code/low-code (n8n, Airtable, simple frontend). MVP in 1-2 weeks.\n  Examples: Chrome extension, Slack bot, simple automation, email tool\n- **Medium**: Requires custom code but standard patterns (Next.js + Supabase). MVP in 2-4 weeks.\n  Examples: Full-stack app with auth, multiple integrations, basic AI features\n- **Hard**: Complex integrations, AI training, or specialized infrastructure. MVP in 4+ weeks.\n  Examples: Custom ML models, real-time features, complex data pipelines\n\n### Tool Recommendations\nChoose the most appropriate from:\n- Automation: n8n, Make, Zapier\n- Backend/DB: Supabase, Airtable, Firebase\n- Frontend: Vercel, Next.js, React\n- AI: OpenAI, Anthropic, Replicate\n- Payments: Stripe, Lemonsqueezy\n- Other: Resend, Postmark, Twilio\n\n### Monthly Value Estimation\nEstimate potential MRR with 100 paying customers:\n- Easy tool: $29-49/month per user = $2,900-$4,900 MRR\n- Medium tool: $49-99/month per user = $4,900-$9,900 MRR\n- Enterprise tool: $99-299/month per user = $9,900-$29,900 MRR\n\n## OUTPUT FORMAT\n\nReturn the opportunities with estimations:\n[\n  {\n    ...originalFields,\n    \"difficulty\": \"Easy|Medium|Hard\",\n    \"suggestedTools\": [\"n8n\", \"Supabase\", \"Vercel\"],\n    \"estimatedMonthlyValue\": 4900,\n    \"buildTimeWeeks\": 2,\n    \"technicalNotes\": \"Brief implementation approach\"\n  }\n]\n\nRespond with VALID JSON ONLY.",
+          "needsFallback": true,
+          "options": {
+            "systemMessage": "You are a technical architect specializing in micro-SaaS MVPs. You've built 50+ products using modern no-code and low-code tools. Your estimates are based on practical experience from indie hacker projects. Always respond with valid JSON array only."
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 3.1,
+        "position": [
+          2048,
+          304
+        ],
+        "name": "Agent 3: Estimator",
+        "id": "5ad05b59-37f1-454c-bcd0-fab9162eafd2"
+      },
+      {
+        "parameters": {
+          "model": "anthropic/claude-haiku-4.5",
+          "options": {
+            "temperature": 0.3
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+        "typeVersion": 1,
+        "position": [
+          1984,
+          528
+        ],
+        "name": "Claude Opus 4.5 (Estimator)",
+        "id": "273ab435-e886-4864-892e-7afa1383ece9",
+        "credentials": {
+          "openRouterApi": {
+            "id": "XpZg3NCm0vRTBA75",
+            "name": "OpenRouter Z-AGENCY 2026"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Prepare records for Airtable upsert\nconst estimatorOutput = $('Agent 3: Estimator').first().json.output;\nconst context = $('Prepare for Estimator').first().json.context;\nconst existingOpportunities = context.existingOpportunities;\nconst scanDate = context.scanDate;\n\nlet opportunities;\ntry {\n  opportunities = typeof estimatorOutput === 'string' \n    ? JSON.parse(estimatorOutput) \n    : estimatorOutput;\n} catch (e) {\n  const match = estimatorOutput.match(/\\[[\\s\\S]*\\]/);\n  if (match) {\n    opportunities = JSON.parse(match[0]);\n  } else {\n    throw new Error('Failed to parse estimator output');\n  }\n}\n\n// ========== VALIDATION: Filter out placeholder/fake opportunities ==========\nconst invalidNames = [\n  'opportunity name', \n  'product name', \n  'tool name', \n  'what it does', \n  'what the product does',\n  'description here',\n  'example opportunity',\n  'sample',\n  'placeholder',\n  'test opportunity'\n];\n\nopportunities = opportunities.filter(opp => {\n  const nameLower = (opp.name || '').toLowerCase().trim();\n  const descLower = (opp.description || '').toLowerCase();\n  \n  // Check if name is a placeholder\n  const isPlaceholderName = invalidNames.some(invalid => nameLower.includes(invalid));\n  \n  // Check if name is too short or generic\n  const isTooShort = nameLower.length < 5;\n  \n  // Check if description is placeholder\n  const isPlaceholderDesc = invalidNames.some(invalid => descLower.includes(invalid));\n  \n  if (isPlaceholderName || isTooShort || isPlaceholderDesc) {\n    console.log('Filtered out placeholder:', opp.name);\n    return false;\n  }\n  return true;\n});\n\n// If all opportunities were placeholders, return empty result\nif (opportunities.length === 0) {\n  return {\n    json: {\n      newRecords: [],\n      updateRecords: [],\n      staleToArchive: [],\n      incrementWeeks: existingOpportunities.map(e => ({\n        id: e.id,\n        weeksWithoutMention: (e.weeksWithoutMention || 0) + 1\n      })),\n      totalNew: 0,\n      totalUpdates: 0,\n      totalStale: 0,\n      message: 'No valid opportunities found - data quality was poor or all were placeholders'\n    }\n  };\n}\n// ========== END VALIDATION ==========\n\n// Sort by overallScore DESC and assign ranks\nconst sortedOpps = opportunities.sort((a, b) => (b.overallScore || 0) - (a.overallScore || 0));\n\nconst records = sortedOpps.map((opp, index) => {\n  // Check if this matches an existing opportunity\n  const existing = existingOpportunities.find(e => \n    e.name.toLowerCase() === opp.name.toLowerCase()\n  );\n  \n  return {\n    isUpdate: !!existing,\n    existingId: existing?.id || null,\n    existingWeeksWithoutMention: existing?.weeksWithoutMention || 0,\n    fields: {\n      Name: opp.name,\n      Description: opp.description,\n      'Problem Statement': opp.problemStatement,\n      'Target Segment': opp.targetSegment,\n      'Similar Requests Count': existing \n        ? (existing.currentCount + opp.mentionCount) \n        : opp.mentionCount,\n      'Weekly Mentions': opp.mentionCount,\n      'Weekly Rank': index + 1,\n      'Creation Status': existing?.status || 'Draft',\n      'Suggested Tools': opp.suggestedTools || [],\n      'Difficulty': opp.difficulty,\n      'Estimated Monthly Value': opp.estimatedMonthlyValue,\n      'Confidence Score': opp.confidenceScore,\n      'Source URLs': (opp.sourceUrls || []).join('\\n'),\n      'Categories': opp.categories || [],\n      'First Detected': existing ? undefined : scanDate,\n      'Last Updated': scanDate,\n      'Weeks Without Mention': 0,\n      'Research Notes': JSON.stringify({\n        evaluationNotes: opp.evaluationNotes,\n        technicalNotes: opp.technicalNotes,\n        buildTimeWeeks: opp.buildTimeWeeks,\n        demandScore: opp.demandScore,\n        marketPotentialScore: opp.marketPotentialScore\n      }),\n      'Competitor Exists': opp.competitorExists || false,\n      'Competitor Notes': opp.competitorNotes || ''\n    }\n  };\n});\n\n// Also prepare list of stale opportunities to archive\nconst staleOpportunities = existingOpportunities\n  .filter(e => e.weeksWithoutMention >= 3) // Will be 4+ after increment\n  .filter(e => !records.some(r => r.existingId === e.id)) // Not mentioned this week\n  .map(e => ({\n    id: e.id,\n    name: e.name,\n    weeksWithoutMention: e.weeksWithoutMention + 1\n  }));\n\n// Increment weeks without mention for existing not mentioned this week\nconst existingNotMentioned = existingOpportunities\n  .filter(e => !records.some(r => r.existingId === e.id))\n  .filter(e => e.weeksWithoutMention < 3)\n  .map(e => ({\n    id: e.id,\n    weeksWithoutMention: e.weeksWithoutMention + 1\n  }));\n\nreturn {\n  json: {\n    newRecords: records.filter(r => !r.isUpdate),\n    updateRecords: records.filter(r => r.isUpdate),\n    staleToArchive: staleOpportunities,\n    incrementWeeks: existingNotMentioned,\n    totalNew: records.filter(r => !r.isUpdate).length,\n    totalUpdates: records.filter(r => r.isUpdate).length,\n    totalStale: staleOpportunities.length\n  }\n};\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2336,
+          304
+        ],
+        "name": "Prepare Airtable Upsert",
+        "id": "c507b3f4-9e84-4906-b1e2-806711c1ecdb"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "has-new",
+                "leftValue": "={{ $json.totalNew }}",
+                "rightValue": 0,
+                "operator": {
+                  "type": "number",
+                  "operation": "gt"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          2624,
+          112
+        ],
+        "name": "Has New Records?",
+        "id": "eeae63ee-74cf-4508-b23c-80bc5a08e94b"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Split new records for batch creation\nconst records = $('Prepare Airtable Upsert').first().json.newRecords;\nreturn records.map(r => ({ json: r.fields }));"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2848,
+          96
+        ],
+        "name": "Split New Records",
+        "id": "9853efbe-58e3-417b-b04e-e58d3c8b9c83"
+      },
+      {
+        "parameters": {
+          "operation": "create",
+          "base": {
+            "__rl": true,
+            "value": "=https://airtable.com/appPeuDxXd9qLhz2X/tbl4Ne7gqdaHH8zPs/viwGbsVrmLbR4J6F4?blocks=hide",
+            "mode": "url"
+          },
+          "table": {
+            "__rl": true,
+            "value": "https://airtable.com/appPeuDxXd9qLhz2X/tbl4Ne7gqdaHH8zPs/viwGbsVrmLbR4J6F4?blocks=hide",
+            "mode": "url"
+          },
+          "columns": {
+            "mappingMode": "autoMapInputData",
+            "value": {
+              "Competitor Exists": false
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "Name",
+                "displayName": "Name",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Description",
+                "displayName": "Description",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Problem Statement",
+                "displayName": "Problem Statement",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Target Segment",
+                "displayName": "Target Segment",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "options",
+                "options": [
+                  {
+                    "name": "SMB",
+                    "value": "SMB"
+                  },
+                  {
+                    "name": "Startup",
+                    "value": "Startup"
+                  },
+                  {
+                    "name": "Enterprise",
+                    "value": "Enterprise"
+                  },
+                  {
+                    "name": "All",
+                    "value": "All"
+                  }
+                ],
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Similar Requests Count",
+                "displayName": "Similar Requests Count",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "number",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Weekly Mentions",
+                "displayName": "Weekly Mentions",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "number",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Weekly Rank",
+                "displayName": "Weekly Rank",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "number",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Creation Status",
+                "displayName": "Creation Status",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "options",
+                "options": [
+                  {
+                    "name": "Draft",
+                    "value": "Draft"
+                  },
+                  {
+                    "name": "In Progress",
+                    "value": "In Progress"
+                  },
+                  {
+                    "name": "Created",
+                    "value": "Created"
+                  }
+                ],
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Suggested Tools",
+                "displayName": "Suggested Tools",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "array",
+                "options": [
+                  {
+                    "name": "n8n",
+                    "value": "n8n"
+                  },
+                  {
+                    "name": "Supabase",
+                    "value": "Supabase"
+                  },
+                  {
+                    "name": "Airtable",
+                    "value": "Airtable"
+                  },
+                  {
+                    "name": "Vercel",
+                    "value": "Vercel"
+                  },
+                  {
+                    "name": "Stripe",
+                    "value": "Stripe"
+                  },
+                  {
+                    "name": "OpenAI",
+                    "value": "OpenAI"
+                  },
+                  {
+                    "name": "Anthropic",
+                    "value": "Anthropic"
+                  },
+                  {
+                    "name": "Make",
+                    "value": "Make"
+                  },
+                  {
+                    "name": "Zapier",
+                    "value": "Zapier"
+                  },
+                  {
+                    "name": "Firebase",
+                    "value": "Firebase"
+                  }
+                ],
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Difficulty",
+                "displayName": "Difficulty",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "options",
+                "options": [
+                  {
+                    "name": "Easy",
+                    "value": "Easy"
+                  },
+                  {
+                    "name": "Medium",
+                    "value": "Medium"
+                  },
+                  {
+                    "name": "Hard",
+                    "value": "Hard"
+                  }
+                ],
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Estimated Monthly Value",
+                "displayName": "Estimated Monthly Value",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "number",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Confidence Score",
+                "displayName": "Confidence Score",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "number",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Source URLs",
+                "displayName": "Source URLs",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Categories",
+                "displayName": "Categories",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "array",
+                "options": [
+                  {
+                    "name": "Automation",
+                    "value": "Automation"
+                  },
+                  {
+                    "name": "AI",
+                    "value": "AI"
+                  },
+                  {
+                    "name": "Productivity",
+                    "value": "Productivity"
+                  },
+                  {
+                    "name": "Marketing",
+                    "value": "Marketing"
+                  },
+                  {
+                    "name": "Sales",
+                    "value": "Sales"
+                  },
+                  {
+                    "name": "Support",
+                    "value": "Support"
+                  },
+                  {
+                    "name": "Analytics",
+                    "value": "Analytics"
+                  }
+                ],
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "First Detected",
+                "displayName": "First Detected",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "dateTime",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Last Updated",
+                "displayName": "Last Updated",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "dateTime",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Weeks Without Mention",
+                "displayName": "Weeks Without Mention",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "number",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Research Notes",
+                "displayName": "Research Notes",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Competitor Exists",
+                "displayName": "Competitor Exists",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "boolean",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Competitor Notes",
+                "displayName": "Competitor Notes",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.airtable",
+        "typeVersion": 2,
+        "position": [
+          3024,
+          112
+        ],
+        "name": "Create New Opportunities",
+        "id": "1b0da0fe-110b-424e-bf8a-f31a817d66b4",
+        "credentials": {
+          "airtableTokenApi": {
+            "id": "112UtIzO07XgrN7A",
+            "name": "Airtable - zmidloch@z-agency.cz"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "has-updates",
+                "leftValue": "={{ $json.totalUpdates }}",
+                "rightValue": 0,
+                "operator": {
+                  "type": "number",
+                  "operation": "gt"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          2624,
+          304
+        ],
+        "name": "Has Updates?",
+        "id": "86e272f9-0487-46d1-9283-a38e6af05c83"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Split update records\nconst records = $('Prepare Airtable Upsert').first().json.updateRecords;\nreturn records.map(r => ({ json: { id: r.existingId, fields: r.fields } }));"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2848,
+          288
+        ],
+        "name": "Split Update Records",
+        "id": "3ad9f7eb-fe1d-4eb8-9361-3daf75743e1c"
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "base": {
+            "__rl": true,
+            "value": "=https://airtable.com/appPeuDxXd9qLhz2X/tbl4Ne7gqdaHH8zPs/viwGbsVrmLbR4J6F4?blocks=hide",
+            "mode": "url"
+          },
+          "table": {
+            "__rl": true,
+            "value": "=https://airtable.com/appPeuDxXd9qLhz2X/tbl4Ne7gqdaHH8zPs/viwGbsVrmLbR4J6F4?blocks=hide",
+            "mode": "url"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "Similar Requests Count": "={{ $json.fields['Similar Requests Count'] }}",
+              "Weekly Mentions": "={{ $json.fields['Weekly Mentions'] }}",
+              "Weekly Rank": "={{ $json.fields['Weekly Rank'] }}",
+              "Last Updated": "={{ $json.fields['Last Updated'] }}",
+              "Weeks Without Mention": "={{ $json.fields['Weeks Without Mention'] }}",
+              "Source URLs": "={{ $json.fields['Source URLs'] }}",
+              "Research Notes": "={{ $json.fields['Research Notes'] }}",
+              "Confidence Score": "={{ $json.fields['Confidence Score'] }}"
+            }
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.airtable",
+        "typeVersion": 2,
+        "position": [
+          3024,
+          304
+        ],
+        "name": "Update Existing Opportunities",
+        "id": "193204f2-f41e-4f55-b2f7-d8b490320538",
+        "credentials": {
+          "airtableTokenApi": {
+            "id": "112UtIzO07XgrN7A",
+            "name": "Airtable - zmidloch@z-agency.cz"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "has-stale",
+                "leftValue": "={{ $json.totalStale }}",
+                "rightValue": 0,
+                "operator": {
+                  "type": "number",
+                  "operation": "gt"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          2624,
+          512
+        ],
+        "name": "Has Stale to Archive?",
+        "id": "c6ae45fc-b7ce-4454-b703-622de82f290a"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Prepare stale records for archiving\nconst stale = $('Prepare Airtable Upsert').first().json.staleToArchive;\nreturn stale.map(s => ({ json: s }));"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2848,
+          496
+        ],
+        "name": "Split Stale Records",
+        "id": "dde7662d-bde6-4114-b3d3-896c4df80d6d"
+      },
+      {
+        "parameters": {
+          "operation": "deleteRecord",
+          "base": {
+            "__rl": true,
+            "value": "=https://airtable.com/appPeuDxXd9qLhz2X/tbl4Ne7gqdaHH8zPs/viwGbsVrmLbR4J6F4?blocks=hide",
+            "mode": "url"
+          },
+          "table": {
+            "__rl": true,
+            "value": "https://airtable.com/appPeuDxXd9qLhz2X/tbl4Ne7gqdaHH8zPs/viwGbsVrmLbR4J6F4?blocks=hide",
+            "mode": "url"
+          },
+          "id": "={ $json.id }}"
+        },
+        "type": "n8n-nodes-base.airtable",
+        "typeVersion": 2,
+        "position": [
+          3024,
+          512
+        ],
+        "name": "Delete Stale (Archive Later)",
+        "id": "9098d9cd-dfdf-4f90-a9e8-4a57f7d6bcc8",
+        "credentials": {
+          "airtableTokenApi": {
+            "id": "112UtIzO07XgrN7A",
+            "name": "Airtable - zmidloch@z-agency.cz"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const toIncrement = $('Prepare Airtable Upsert').first().json.incrementWeeks;\nif (!toIncrement || toIncrement.length === 0) {\n  return [];\n}\n\n// Debug - log what we have\nconsole.log('incrementWeeks:', JSON.stringify(toIncrement));\n\nreturn toIncrement.map(r => ({ \n  json: { \n    id: r.id, \n    \"Weeks Without Mention\": r.weeksWithoutMention \n  } \n}));"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2624,
+          688
+        ],
+        "name": "Split Increment Records",
+        "id": "d75f7905-301c-4d7d-b530-1ae0fc227f73",
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "base": {
+            "__rl": true,
+            "value": "=https://airtable.com/appPeuDxXd9qLhz2X/tbl4Ne7gqdaHH8zPs/viwGbsVrmLbR4J6F4?blocks=hide",
+            "mode": "url"
+          },
+          "table": {
+            "__rl": true,
+            "value": "https://airtable.com/appPeuDxXd9qLhz2X/tbl4Ne7gqdaHH8zPs/viwGbsVrmLbR4J6F4?blocks=hide",
+            "mode": "url"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "Weeks Without Mention": "={{ $json['Weeks Without Mention'] }}",
+              "Similar Requests Count": 0,
+              "Weekly Mentions": 0,
+              "Weekly Rank": 0,
+              "Estimated Monthly Value": 0,
+              "Confidence Score": 0,
+              "id": "={{ $json.id }}"
+            },
+            "matchingColumns": [
+              "id"
+            ],
+            "schema": [
+              {
+                "id": "id",
+                "displayName": "id",
+                "required": false,
+                "defaultMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": true,
+                "removed": false
+              },
+              {
+                "id": "Name",
+                "displayName": "Name",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Description",
+                "displayName": "Description",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Problem Statement",
+                "displayName": "Problem Statement",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Target Segment",
+                "displayName": "Target Segment",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "options",
+                "options": [
+                  {
+                    "name": "SMB",
+                    "value": "SMB"
+                  },
+                  {
+                    "name": "Startup",
+                    "value": "Startup"
+                  },
+                  {
+                    "name": "Enterprise",
+                    "value": "Enterprise"
+                  },
+                  {
+                    "name": "All",
+                    "value": "All"
+                  }
+                ],
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Similar Requests Count",
+                "displayName": "Similar Requests Count",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "number",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Weekly Mentions",
+                "displayName": "Weekly Mentions",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "number",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Weekly Rank",
+                "displayName": "Weekly Rank",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "number",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Creation Status",
+                "displayName": "Creation Status",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "options",
+                "options": [
+                  {
+                    "name": "Draft",
+                    "value": "Draft"
+                  },
+                  {
+                    "name": "In Progress",
+                    "value": "In Progress"
+                  },
+                  {
+                    "name": "Created",
+                    "value": "Created"
+                  }
+                ],
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Suggested Tools",
+                "displayName": "Suggested Tools",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "array",
+                "options": [
+                  {
+                    "name": "n8n",
+                    "value": "n8n"
+                  },
+                  {
+                    "name": "Supabase",
+                    "value": "Supabase"
+                  },
+                  {
+                    "name": "Airtable",
+                    "value": "Airtable"
+                  },
+                  {
+                    "name": "Vercel",
+                    "value": "Vercel"
+                  },
+                  {
+                    "name": "Stripe",
+                    "value": "Stripe"
+                  },
+                  {
+                    "name": "OpenAI",
+                    "value": "OpenAI"
+                  },
+                  {
+                    "name": "Anthropic",
+                    "value": "Anthropic"
+                  },
+                  {
+                    "name": "Make",
+                    "value": "Make"
+                  },
+                  {
+                    "name": "Zapier",
+                    "value": "Zapier"
+                  },
+                  {
+                    "name": "Firebase",
+                    "value": "Firebase"
+                  }
+                ],
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Difficulty",
+                "displayName": "Difficulty",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "options",
+                "options": [
+                  {
+                    "name": "Easy",
+                    "value": "Easy"
+                  },
+                  {
+                    "name": "Medium",
+                    "value": "Medium"
+                  },
+                  {
+                    "name": "Hard",
+                    "value": "Hard"
+                  }
+                ],
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Estimated Monthly Value",
+                "displayName": "Estimated Monthly Value",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "number",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Confidence Score",
+                "displayName": "Confidence Score",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "number",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Source URLs",
+                "displayName": "Source URLs",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Categories",
+                "displayName": "Categories",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "array",
+                "options": [
+                  {
+                    "name": "Automation",
+                    "value": "Automation"
+                  },
+                  {
+                    "name": "AI",
+                    "value": "AI"
+                  },
+                  {
+                    "name": "Productivity",
+                    "value": "Productivity"
+                  },
+                  {
+                    "name": "Marketing",
+                    "value": "Marketing"
+                  },
+                  {
+                    "name": "Sales",
+                    "value": "Sales"
+                  },
+                  {
+                    "name": "Support",
+                    "value": "Support"
+                  },
+                  {
+                    "name": "Analytics",
+                    "value": "Analytics"
+                  }
+                ],
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "First Detected",
+                "displayName": "First Detected",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "dateTime",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Last Updated",
+                "displayName": "Last Updated",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "dateTime",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Weeks Without Mention",
+                "displayName": "Weeks Without Mention",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "number",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Research Notes",
+                "displayName": "Research Notes",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Competitor Exists",
+                "displayName": "Competitor Exists",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "boolean",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Competitor Notes",
+                "displayName": "Competitor Notes",
+                "required": false,
+                "defaultMatch": false,
+                "canBeUsedToMatch": true,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.airtable",
+        "typeVersion": 2,
+        "position": [
+          3024,
+          704
+        ],
+        "name": "Increment Weeks Without Mention",
+        "id": "783cfe5a-5998-415c-a700-4b3e7957fbfa",
+        "credentials": {
+          "airtableTokenApi": {
+            "id": "112UtIzO07XgrN7A",
+            "name": "Airtable - zmidloch@z-agency.cz"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Final summary\nconst prepData = $('Prepare Airtable Upsert').first().json;\n\nreturn {\n  json: {\n    success: true,\n    message: 'Weekly micro-SaaS opportunity scan completed',\n    summary: {\n      newOpportunities: prepData.totalNew,\n      updatedOpportunities: prepData.totalUpdates,\n      archivedStale: prepData.totalStale,\n      incrementedWeeks: prepData.incrementWeeks.length\n    },\n    timestamp: new Date().toISOString()\n  }\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          3216,
+          304
+        ],
+        "name": "Log Success",
+        "id": "6f7c361f-9979-4344-ba90-8ce435f01617"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          2128,
+          528
+        ],
+        "name": "Gemini Evaluator Fallback1",
+        "id": "c111a7e4-09df-49a7-a8a5-615fe35c04ca",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "uLXCpqN3fa4ZXZmj",
+            "name": "Google Gemini(PaLM) Api account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "query": "\"I wish there was\" OR \"looking for a tool\" OR \"anyone built\" OR \"need help with\" site:indiehackers.com",
+          "options": {
+            "topic": "general",
+            "max_results": 15,
+            "time_range": "week",
+            "include_raw_content": true
+          }
+        },
+        "type": "@tavily/n8n-nodes-tavily.tavily",
+        "typeVersion": 1,
+        "position": [
+          384,
+          528
+        ],
+        "name": "Tavily: Indie Hackers",
+        "id": "986a45df-fba4-47b2-b037-21fc0e32c8d2",
+        "credentials": {
+          "tavilyApi": {
+            "id": "KmiWEKpArgJSNmSk",
+            "name": "Tavily account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Weekly Monday 6:00 AM": {
+        "main": [
+          [
+            {
+              "node": "Fetch Active Opportunities",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Fetch Active Opportunities": {
+        "main": [
+          [
+            {
+              "node": "Prepare Context",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Prepare Context": {
+        "main": [
+          [
+            {
+              "node": "Tavily: Reddit",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Tavily: Twitter/X",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Tavily: HN + Product Hunt",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Tavily: LinkedIn",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Tavily: Indie Hackers",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Tavily: Reddit": {
+        "main": [
+          [
+            {
+              "node": "Aggregate Research Data",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Tavily: Twitter/X": {
+        "main": [
+          [
+            {
+              "node": "Aggregate Research Data",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Tavily: HN + Product Hunt": {
+        "main": [
+          [
+            {
+              "node": "Aggregate Research Data",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Perplexity: Indie Research": {
+        "main": [
+          []
+        ]
+      },
+      "Tavily: LinkedIn": {
+        "main": [
+          [
+            {
+              "node": "Aggregate Research Data",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Aggregate Research Data": {
+        "main": [
+          [
+            {
+              "node": "Agent 1: Researcher",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Agent 1: Researcher": {
+        "main": [
+          [
+            {
+              "node": "Prepare for Evaluator",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Claude Opus 4.5 (Researcher)": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Agent 1: Researcher",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Gemini Researcher Fallback": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Agent 1: Researcher",
+              "type": "ai_languageModel",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Researcher Output Parser": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "Agent 1: Researcher",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Prepare for Evaluator": {
+        "main": [
+          [
+            {
+              "node": "Agent 2: Evaluator",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Agent 2: Evaluator": {
+        "main": [
+          [
+            {
+              "node": "Prepare for Estimator",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Claude Opus 4.5 (Evaluator)": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Agent 2: Evaluator",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Gemini Evaluator Fallback": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Agent 2: Evaluator",
+              "type": "ai_languageModel",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Prepare for Estimator": {
+        "main": [
+          [
+            {
+              "node": "Agent 3: Estimator",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Agent 3: Estimator": {
+        "main": [
+          [
+            {
+              "node": "Prepare Airtable Upsert",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Claude Opus 4.5 (Estimator)": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Agent 3: Estimator",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Prepare Airtable Upsert": {
+        "main": [
+          [
+            {
+              "node": "Has New Records?",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Has Updates?",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Has Stale to Archive?",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Split Increment Records",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Has New Records?": {
+        "main": [
+          [
+            {
+              "node": "Split New Records",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Split New Records": {
+        "main": [
+          [
+            {
+              "node": "Create New Opportunities",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create New Opportunities": {
+        "main": [
+          [
+            {
+              "node": "Log Success",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Has Updates?": {
+        "main": [
+          [
+            {
+              "node": "Split Update Records",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Split Update Records": {
+        "main": [
+          [
+            {
+              "node": "Update Existing Opportunities",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Update Existing Opportunities": {
+        "main": [
+          [
+            {
+              "node": "Log Success",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Has Stale to Archive?": {
+        "main": [
+          [
+            {
+              "node": "Split Stale Records",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Split Stale Records": {
+        "main": [
+          [
+            {
+              "node": "Delete Stale (Archive Later)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Delete Stale (Archive Later)": {
+        "main": [
+          [
+            {
+              "node": "Log Success",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Split Increment Records": {
+        "main": [
+          [
+            {
+              "node": "Increment Weeks Without Mention",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Increment Weeks Without Mention": {
+        "main": [
+          [
+            {
+              "node": "Log Success",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Gemini Evaluator Fallback1": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Agent 3: Estimator",
+              "type": "ai_languageModel",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Tavily: Indie Hackers": {
+        "main": [
+          [
+            {
+              "node": "Aggregate Research Data",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jiri Zmidloch",
+    "name": "Version 8fd2941b",
+    "description": "",
+    "autosaved": true
+  },
+  "activeVersionId": "8fd2941b-1a69-4a85-a3cc-8137ba4f789a",
+  "connections": {
+    "Weekly Monday 6:00 AM": {
+      "main": [
+        [
+          {
+            "node": "Fetch Active Opportunities",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Active Opportunities": {
+      "main": [
+        [
+          {
+            "node": "Prepare Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Context": {
+      "main": [
+        [
+          {
+            "node": "Tavily: Reddit",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Tavily: Twitter/X",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Tavily: HN + Product Hunt",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Tavily: LinkedIn",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Tavily: Indie Hackers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tavily: Reddit": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Research Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tavily: Twitter/X": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Research Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tavily: HN + Product Hunt": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Research Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Perplexity: Indie Research": {
+      "main": [
+        []
+      ]
+    },
+    "Tavily: LinkedIn": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Research Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Research Data": {
+      "main": [
+        [
+          {
+            "node": "Agent 1: Researcher",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent 1: Researcher": {
+      "main": [
+        [
+          {
+            "node": "Prepare for Evaluator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude Opus 4.5 (Researcher)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent 1: Researcher",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Researcher Fallback": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent 1: Researcher",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Researcher Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Agent 1: Researcher",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare for Evaluator": {
+      "main": [
+        [
+          {
+            "node": "Agent 2: Evaluator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent 2: Evaluator": {
+      "main": [
+        [
+          {
+            "node": "Prepare for Estimator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude Opus 4.5 (Evaluator)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent 2: Evaluator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Evaluator Fallback": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent 2: Evaluator",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Prepare for Estimator": {
+      "main": [
+        [
+          {
+            "node": "Agent 3: Estimator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent 3: Estimator": {
+      "main": [
+        [
+          {
+            "node": "Prepare Airtable Upsert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude Opus 4.5 (Estimator)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent 3: Estimator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Airtable Upsert": {
+      "main": [
+        [
+          {
+            "node": "Has New Records?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Has Updates?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Has Stale to Archive?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Split Increment Records",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has New Records?": {
+      "main": [
+        [
+          {
+            "node": "Split New Records",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split New Records": {
+      "main": [
+        [
+          {
+            "node": "Create New Opportunities",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create New Opportunities": {
+      "main": [
+        [
+          {
+            "node": "Log Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has Updates?": {
+      "main": [
+        [
+          {
+            "node": "Split Update Records",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Update Records": {
+      "main": [
+        [
+          {
+            "node": "Update Existing Opportunities",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Existing Opportunities": {
+      "main": [
+        [
+          {
+            "node": "Log Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has Stale to Archive?": {
+      "main": [
+        [
+          {
+            "node": "Split Stale Records",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Stale Records": {
+      "main": [
+        [
+          {
+            "node": "Delete Stale (Archive Later)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Stale (Archive Later)": {
+      "main": [
+        [
+          {
+            "node": "Log Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Increment Records": {
+      "main": [
+        [
+          {
+            "node": "Increment Weeks Without Mention",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Increment Weeks Without Mention": {
+      "main": [
+        [
+          {
+            "node": "Log Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Evaluator Fallback1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent 3: Estimator",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Tavily: Indie Hackers": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Research Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-25T21:05:07.748Z",
+  "id": "cYgnPEBGNts9pwxw",
+  "isArchived": false,
+  "meta": null,
+  "name": "Micro-SaaS Opportunity Scanner",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "# Micro-SaaS Opportunity Scanner\n\n**Purpose:** Weekly discovery of micro-SaaS opportunities from web discussions.\n\n**Schedule:** Every Monday at 6:00 AM CET\n\n**Sources:**\n- Reddit (SaaS, startups, automation, nocode, entrepreneur)\n- Twitter/X (via Tavily)\n- Hacker News + Product Hunt (via Tavily)\n- Indie Hackers (via Perplexity)\n- LinkedIn (via Tavily)\n\n**Pipeline:**\n1. Fetch existing opportunities (exclude 'Created')\n2. Parallel data collection from 5 sources\n3. Agent 1: Researcher - extracts opportunities\n4. Agent 2: Evaluator - scores demand & potential\n5. Agent 3: Estimator - difficulty & tools\n6. Upsert to Airtable + archive stale",
+        "height": 480,
+        "width": 450,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -928,
+        -384
+      ],
+      "name": "Workflow Info",
+      "id": "16b7bb06-ce9c-4552-8a8d-851a245e3edb"
+    },
+    {
+      "parameters": {
+        "content": "## Airtable Schema\n\n**Main Table:** Micro-SaaS Opportunities\n- Name, Description, Problem Statement\n- Target Segment (SMB/Startup/Enterprise/All)\n- Similar Requests Count, Weekly Mentions\n- Weekly Rank, Confidence Score\n- Creation Status (Draft/In Progress/Created)\n- Difficulty (Easy/Medium/Hard)\n- Suggested Tools, Estimated Monthly Value\n- Categories, Source URLs\n- First Detected, Last Updated\n- Weeks Without Mention\n\n**Archive Table:** Same schema + Archived Date",
+        "height": 400,
+        "width": 350,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -896,
+        160
+      ],
+      "name": "Airtable Schema",
+      "id": "f685339b-5897-4d18-ac33-f2b69b62fe32"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 6 * * 1"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -352,
+        208
+      ],
+      "name": "Weekly Monday 6:00 AM",
+      "id": "df666986-2cd4-4428-9255-5b93ffe10d33"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "=https://airtable.com/appPeuDxXd9qLhz2X/tbl4Ne7gqdaHH8zPs/viwGbsVrmLbR4J6F4?blocks=hide",
+          "mode": "url"
+        },
+        "table": {
+          "__rl": true,
+          "value": "https://airtable.com/appPeuDxXd9qLhz2X/tbl4Ne7gqdaHH8zPs/viwGbsVrmLbR4J6F4?blocks=hide",
+          "mode": "url"
+        },
+        "filterByFormula": "NOT({Creation Status}='Created')",
+        "options": {
+          "fields": [
+            "Name",
+            "Description",
+            "Similar Requests Count",
+            "Source URLs",
+            "Creation Status",
+            "Weeks Without Mention",
+            "Last Updated"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        -128,
+        208
+      ],
+      "name": "Fetch Active Opportunities",
+      "id": "105bb395-fe7e-40d5-b0be-e50df0e9e51c",
+      "alwaysOutputData": true,
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable - zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepare context from existing opportunities\nconst existingOpportunities = $input.all().map(item => ({\n  name: item.json.fields?.Name || '',\n  description: item.json.fields?.Description || '',\n  id: item.json.id,\n  currentCount: item.json.fields?.['Similar Requests Count'] || 0,\n  weeksWithoutMention: item.json.fields?.['Weeks Without Mention'] || 0,\n  lastUpdated: item.json.fields?.['Last Updated'] || '',\n  status: item.json.fields?.['Creation Status'] || 'Draft'\n}));\n\nconst existingNames = existingOpportunities.map(o => o.name.toLowerCase()).filter(n => n.length > 0);\n\nconst now = new Date();\nconst scanDate = now.toISOString();\nconst weekNumber = Math.ceil((now.getDate() + new Date(now.getFullYear(), now.getMonth(), 1).getDay()) / 7);\nconst scanWeek = `${now.getFullYear()}-W${weekNumber}`;\n\nreturn {\n  json: {\n    existingOpportunities,\n    existingNames,\n    existingCount: existingOpportunities.length,\n    scanDate,\n    scanWeek\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        48,
+        208
+      ],
+      "name": "Prepare Context",
+      "id": "1d1424d6-e6f1-4333-b0fd-6bdc7be85dad"
+    },
+    {
+      "parameters": {
+        "query": "\"looking for a solution\" OR \"need a tool\" OR \"wish there was\" OR \"automate my\" OR \"anyone built\" site:reddit.com/r/SaaS OR site:reddit.com/r/startups OR site:reddit.com/r/automation OR site:reddit.com/r/nocode OR site:reddit.com/r/entrepreneur 2026",
+        "options": {
+          "topic": "general",
+          "max_results": 20,
+          "time_range": "week",
+          "include_raw_content": true
+        }
+      },
+      "type": "@tavily/n8n-nodes-tavily.tavily",
+      "typeVersion": 1,
+      "position": [
+        400,
+        -48
+      ],
+      "name": "Tavily: Reddit",
+      "id": "cbce5d2f-ff35-4362-805e-172660900c33",
+      "credentials": {
+        "tavilyApi": {
+          "id": "KmiWEKpArgJSNmSk",
+          "name": "Tavily account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "query": "twitter.com \"need a tool\" OR \"looking for automation\" OR \"wish there was\" SaaS startup -\"DM me\" -\"book a call\"",
+        "options": {
+          "topic": "general",
+          "max_results": 20,
+          "time_range": "week",
+          "include_raw_content": true
+        }
+      },
+      "type": "@tavily/n8n-nodes-tavily.tavily",
+      "typeVersion": 1,
+      "position": [
+        400,
+        160
+      ],
+      "name": "Tavily: Twitter/X",
+      "id": "cc90433f-2db8-44ef-9270-0ca305925bb3",
+      "credentials": {
+        "tavilyApi": {
+          "id": "KmiWEKpArgJSNmSk",
+          "name": "Tavily account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "query": "news.ycombinator.com \"Ask HN\" OR \"looking for\" OR \"need a tool\" automation workflow integration",
+        "options": {
+          "topic": "general",
+          "max_results": 20,
+          "time_range": "week",
+          "include_raw_content": true
+        }
+      },
+      "type": "@tavily/n8n-nodes-tavily.tavily",
+      "typeVersion": 1,
+      "position": [
+        400,
+        352
+      ],
+      "name": "Tavily: HN + Product Hunt",
+      "id": "1ae4330e-abd2-45b0-b7fe-1efd090d456a",
+      "credentials": {
+        "tavilyApi": {
+          "id": "KmiWEKpArgJSNmSk",
+          "name": "Tavily account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.perplexity.ai/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"model\": \"sonar-pro\",\n  \"web_search_options\": {\n    \"max_search_results\": 15\n  },\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"You are a micro-SaaS market researcher specializing in identifying automation and AI tool opportunities from indie hacker communities.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"Research Indie Hackers, Reddit r/SaaS, r/startups, r/automation, and startup communities from the past week. Find:\\n\\n1. People asking for automation tools that don't exist\\n2. Complaints about existing tools (gaps to fill)\\n3. 'I wish there was...' type requests\\n4. Integration needs between popular tools\\n5. AI/LLM use cases people want but can't find\\n6. Workflow problems people want solved\\n\\nProvide specific examples with source links where possible. Focus on opportunities that could be built as micro-SaaS products.\"\n    }\n  ]\n}",
+        "options": {
+          "timeout": 90000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        912,
+        768
+      ],
+      "name": "Perplexity: Indie Research",
+      "id": "585b08fa-930a-44f7-88e0-0334e9d38ce7",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "zBYPTqhJcRJXe4RQ",
+          "name": "Perplexity 2"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "query": "indiehackers.com \"looking for\" OR \"need help\" OR \"wish there was\" automation SaaS tool",
+        "options": {
+          "topic": "general",
+          "max_results": 15,
+          "time_range": "week",
+          "include_raw_content": true
+        }
+      },
+      "type": "@tavily/n8n-nodes-tavily.tavily",
+      "typeVersion": 1,
+      "position": [
+        400,
+        752
+      ],
+      "name": "Tavily: LinkedIn",
+      "id": "d88fa2dd-3ddc-4616-a071-0e6fb43bcad6",
+      "credentials": {
+        "tavilyApi": {
+          "id": "KmiWEKpArgJSNmSk",
+          "name": "Tavily account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Aggregate all research data for AI processing\nconst context = $('Prepare Context').first().json;\n\n// Helper to format Tavily results\nconst formatTavily = (nodeName, source) => {\n  try {\n    const data = $(nodeName).first().json;\n    return (data.results || []).map(r => ({\n      source,\n      title: r.title || '',\n      content: r.content || '',\n      url: r.url || '',\n      rawContent: (r.raw_content || '').substring(0, 1000)\n    }));\n  } catch (e) {\n    return [];\n  }\n};\n\n// Get all Tavily results (including Reddit via Tavily)\nconst redditResults = formatTavily('Tavily: Reddit', 'Reddit');\nconst twitterResults = formatTavily('Tavily: Twitter/X', 'Twitter/X');\nconst hnPhResults = formatTavily('Tavily: HN + Product Hunt', 'HN/ProductHunt');\nconst linkedinResults = formatTavily('Tavily: LinkedIn', 'LinkedIn');\n\n// Get Perplexity results\nlet perplexityContent = '';\ntry {\n  const perplexityData = $('Perplexity: Indie Research').first().json;\n  if (perplexityData.choices && perplexityData.choices[0]) {\n    perplexityContent = perplexityData.choices[0].message.content || '';\n    const citations = perplexityData.citations || [];\n    for (let i = 0; i < 15; i++) {\n      perplexityContent = perplexityContent.replaceAll(\n        `[${i + 1}]`,\n        citations[i] ? ` (${citations[i]})` : ''\n      );\n    }\n  }\n} catch (e) {\n  console.log('Perplexity data not available:', e.message);\n}\n\nconst totalSources = redditResults.length + twitterResults.length + hnPhResults.length + linkedinResults.length;\n\nreturn {\n  json: {\n    existingOpportunities: context.existingOpportunities,\n    existingNames: context.existingNames,\n    existingCount: context.existingCount,\n    scanDate: context.scanDate,\n    scanWeek: context.scanWeek,\n    research: {\n      reddit: redditResults,\n      twitter: twitterResults,\n      hackerNews: hnPhResults,\n      linkedin: linkedinResults,\n      indieResearch: perplexityContent\n    },\n    totalSources\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        704,
+        304
+      ],
+      "name": "Aggregate Research Data",
+      "id": "5b9501db-d460-433e-a414-2668abeaab16"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "You are a micro-SaaS opportunity researcher. Analyze the following research data and extract distinct micro-SaaS opportunities.\n\n## EXISTING OPPORTUNITIES (DO NOT DUPLICATE)\n{{ $json.existingNames.join('\\n') || 'No existing opportunities' }}\n\n## REDDIT DISCUSSIONS\n{{ $json.research.reddit.map(r => `[${r.subreddit}] ${r.title}\\n${r.content}\\nUpvotes: ${r.upvotes} | URL: ${r.url}`).join('\\n\\n') || 'No Reddit data' }}\n\n## TWITTER/X MENTIONS\n{{ $json.research.twitter.map(r => `${r.title}\\n${r.content}\\nURL: ${r.url}`).join('\\n\\n') || 'No Twitter data' }}\n\n## HACKER NEWS / PRODUCT HUNT\n{{ $json.research.hackerNews.map(r => `${r.title}\\n${r.content}\\nURL: ${r.url}`).join('\\n\\n') || 'No HN/PH data' }}\n\n## LINKEDIN DISCUSSIONS\n{{ $json.research.linkedin.map(r => `${r.title}\\n${r.content}\\nURL: ${r.url}`).join('\\n\\n') || 'No LinkedIn data' }}\n\n## INDIE HACKERS RESEARCH\n{{ $json.research.indieResearch || 'No Indie Hackers research' }}\n\n---\n\n## YOUR TASK\n\n1. Identify 10-20 DISTINCT micro-SaaS opportunities (automation tools, AI services, integrations)\n2. DO NOT include opportunities that match existing names\n3. Group similar requests together\n4. Count how many times each opportunity type was mentioned across all sources\n\nReturn a JSON array:\n[\n  {\n    \"name\": \"Short descriptive name (max 50 chars)\",\n    \"description\": \"2-3 sentence description of what this SaaS would do\",\n    \"problemStatement\": \"The specific pain point being addressed\",\n    \"mentionCount\": 5,\n    \"targetSegment\": \"SMB|Startup|Enterprise|All\",\n    \"categories\": [\"Automation\", \"AI\", \"Productivity\", \"Marketing\", \"Sales\", \"Support\", \"Analytics\"],\n    \"sourceUrls\": [\"url1\", \"url2\"],\n    \"competitorExists\": true,\n    \"competitorNotes\": \"Known competitors if any\"\n  }\n]\n\nFocus on ACTIONABLE ideas that can be built using: n8n, Supabase, Airtable, Vercel, Stripe, OpenAI, Anthropic.\n\nRespond with VALID JSON ONLY.\nIMPORTANT: Only extract opportunities from the ACTUAL research data provided above. \nIf the research data is empty or contains no relevant requests, return an empty array [].\nDo NOT invent, fabricate, or return placeholder/example data.\nCRITICAL FILTER:\n- IGNORE marketing posts, promotional content, and \"DM me\" type posts\n- ONLY extract posts where someone is ASKING for a solution or COMPLAINING about a problem\n- If a post is advertising a service (not asking for one), skip it\nCRITICAL: If the research data does NOT contain clear micro-SaaS opportunity requests (people asking for tools that don't exist), return an EMPTY JSON array: []\n\nDO NOT generate placeholder names like:\n- \"Opportunity Name\"\n- \"Product Name\" \n- \"Tool Name\"\n- \"What it does\"\n- \"Description here\"\n\nThese are FORBIDDEN. Return [] instead of fake data.\n\n",
+        "hasOutputParser": true,
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "You are an expert micro-SaaS researcher. You ONLY extract opportunities that are EXPLICITLY mentioned in the research data.\n\nCRITICAL RULES:\n1. If the research data contains NO relevant micro-SaaS opportunities, return an EMPTY array: []\n2. NEVER invent, fabricate, or generate placeholder data\n3. NEVER return generic names like \"Opportunity Name\", \"Product Name\", \"Tool Name\"\n4. Only extract opportunities where someone explicitly asks for a tool/service that doesn't exist\n5. Each opportunity MUST have a real source URL from the research data\n\nIf data quality is poor or irrelevant, return [] - this is the correct behavior.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        896,
+        304
+      ],
+      "name": "Agent 1: Researcher",
+      "id": "c847d9b9-7438-412b-b44b-6cd6e74710c4"
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-opus-4.5",
+        "options": {
+          "temperature": 0.3
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        848,
+        512
+      ],
+      "name": "Claude Opus 4.5 (Researcher)",
+      "id": "71710d61-e752-4424-b56e-1113ce0298bb",
+      "credentials": {
+        "openRouterApi": {
+          "id": "XpZg3NCm0vRTBA75",
+          "name": "OpenRouter Z-AGENCY 2026"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        960,
+        512
+      ],
+      "name": "Gemini Researcher Fallback",
+      "id": "dbd87462-3a47-4692-9521-e4ccf805172b",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uLXCpqN3fa4ZXZmj",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"array\",\n  \"items\": {\n    \"type\": \"object\",\n    \"required\": [\"name\", \"description\", \"problemStatement\", \"mentionCount\", \"targetSegment\"],\n    \"properties\": {\n      \"name\": { \"type\": \"string\", \"maxLength\": 60 },\n      \"description\": { \"type\": \"string\" },\n      \"problemStatement\": { \"type\": \"string\" },\n      \"mentionCount\": { \"type\": \"number\" },\n      \"targetSegment\": { \"type\": \"string\", \"enum\": [\"SMB\", \"Startup\", \"Enterprise\", \"All\"] },\n      \"categories\": { \"type\": \"array\", \"items\": { \"type\": \"string\" } },\n      \"sourceUrls\": { \"type\": \"array\", \"items\": { \"type\": \"string\" } },\n      \"competitorExists\": { \"type\": \"boolean\" },\n      \"competitorNotes\": { \"type\": \"string\" }\n    }\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1104,
+        512
+      ],
+      "name": "Researcher Output Parser",
+      "id": "604d86eb-06c4-47ed-a139-9c653814ace7"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pass context to evaluator\nconst researcherOutput = $('Agent 1: Researcher').first().json.output;\nconst context = $('Aggregate Research Data').first().json;\n\nlet opportunities;\ntry {\n  opportunities = typeof researcherOutput === 'string' \n    ? JSON.parse(researcherOutput) \n    : researcherOutput;\n} catch (e) {\n  // Try to extract JSON array from response\n  const match = researcherOutput.match(/\\[[\\s\\S]*\\]/);\n  if (match) {\n    opportunities = JSON.parse(match[0]);\n  } else {\n    throw new Error('Failed to parse researcher output as JSON array');\n  }\n}\n\nreturn {\n  json: {\n    opportunities,\n    context: {\n      existingOpportunities: context.existingOpportunities,\n      scanDate: context.scanDate,\n      totalSources: context.totalSources\n    }\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1264,
+        304
+      ],
+      "name": "Prepare for Evaluator",
+      "id": "a79339e8-752e-403b-a6bf-5775d58a8183"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "You are a micro-SaaS market evaluator. Score and rank the following opportunities based on demand and feasibility.\n\n## OPPORTUNITIES TO EVALUATE\n{{ JSON.stringify($json.opportunities, null, 2) }}\n\n---\n\n## SCORING CRITERIA\n\n### Demand Score (0-100)\n- 1-3 mentions: 10-30\n- 4-6 mentions: 30-50\n- 7-10 mentions: 50-70\n- 11+ mentions: 70-90\n- Viral/trending: 90-100\n\nAdjust based on:\n- Source quality (Reddit upvotes, HN points matter more)\n- Recency (this week > last month)\n- Specificity (detailed requests > vague complaints)\n\n### Market Potential Score (0-100)\n- Enterprise B2B: 80-100\n- SMB B2B: 60-80\n- Prosumer: 40-60\n- Consumer: 20-40\n\n### Confidence Score (0-100)\n- Based on evidence quality and actionability\n- Clear pain point with multiple mentions: 80-100\n- Vague complaint: 20-40\n\n## OUTPUT FORMAT\n\nReturn the opportunities with added scores, sorted by overallScore DESC:\n[\n  {\n    ...originalFields,\n    \"demandScore\": 75,\n    \"marketPotentialScore\": 80,\n    \"confidenceScore\": 70,\n    \"overallScore\": 75,\n    \"evaluationNotes\": \"Brief explanation of scoring\"\n  }\n]\n\nRespond with VALID JSON ONLY.",
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "You are a startup evaluator with expertise in SaaS metrics and market analysis. You've evaluated 1000+ startup ideas and know what separates viable opportunities from wishful thinking. Always respond with valid JSON array only."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1504,
+        304
+      ],
+      "name": "Agent 2: Evaluator",
+      "id": "d66747f2-6da9-4e11-bee8-eb0c880c7905"
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-opus-4.5",
+        "options": {
+          "temperature": 0.2
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        496
+      ],
+      "name": "Claude Opus 4.5 (Evaluator)",
+      "id": "649f95f2-0c0d-49dd-9a17-9c9167234161",
+      "credentials": {
+        "openRouterApi": {
+          "id": "XpZg3NCm0vRTBA75",
+          "name": "OpenRouter Z-AGENCY 2026"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1552,
+        496
+      ],
+      "name": "Gemini Evaluator Fallback",
+      "id": "157b102e-e5a6-49c1-a812-9eeedd7d5240",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uLXCpqN3fa4ZXZmj",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pass to estimator\nconst evaluatorOutput = $('Agent 2: Evaluator').first().json.output;\nconst context = $('Prepare for Evaluator').first().json.context;\n\nlet opportunities;\ntry {\n  opportunities = typeof evaluatorOutput === 'string' \n    ? JSON.parse(evaluatorOutput) \n    : evaluatorOutput;\n} catch (e) {\n  const match = evaluatorOutput.match(/\\[[\\s\\S]*\\]/);\n  if (match) {\n    opportunities = JSON.parse(match[0]);\n  } else {\n    throw new Error('Failed to parse evaluator output');\n  }\n}\n\nreturn {\n  json: {\n    opportunities,\n    context\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1824,
+        304
+      ],
+      "name": "Prepare for Estimator",
+      "id": "d34b3a8e-abc9-4f79-acaf-869c03aaa7a4"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "You are a micro-SaaS technical estimator. For each opportunity, estimate difficulty, required tools, and potential value.\n\n## OPPORTUNITIES TO ESTIMATE\n{{ JSON.stringify($json.opportunities, null, 2) }}\n\n---\n\n## ESTIMATION CRITERIA\n\n### Difficulty Assessment\n- **Easy**: Can be built with no-code/low-code (n8n, Airtable, simple frontend). MVP in 1-2 weeks.\n  Examples: Chrome extension, Slack bot, simple automation, email tool\n- **Medium**: Requires custom code but standard patterns (Next.js + Supabase). MVP in 2-4 weeks.\n  Examples: Full-stack app with auth, multiple integrations, basic AI features\n- **Hard**: Complex integrations, AI training, or specialized infrastructure. MVP in 4+ weeks.\n  Examples: Custom ML models, real-time features, complex data pipelines\n\n### Tool Recommendations\nChoose the most appropriate from:\n- Automation: n8n, Make, Zapier\n- Backend/DB: Supabase, Airtable, Firebase\n- Frontend: Vercel, Next.js, React\n- AI: OpenAI, Anthropic, Replicate\n- Payments: Stripe, Lemonsqueezy\n- Other: Resend, Postmark, Twilio\n\n### Monthly Value Estimation\nEstimate potential MRR with 100 paying customers:\n- Easy tool: $29-49/month per user = $2,900-$4,900 MRR\n- Medium tool: $49-99/month per user = $4,900-$9,900 MRR\n- Enterprise tool: $99-299/month per user = $9,900-$29,900 MRR\n\n## OUTPUT FORMAT\n\nReturn the opportunities with estimations:\n[\n  {\n    ...originalFields,\n    \"difficulty\": \"Easy|Medium|Hard\",\n    \"suggestedTools\": [\"n8n\", \"Supabase\", \"Vercel\"],\n    \"estimatedMonthlyValue\": 4900,\n    \"buildTimeWeeks\": 2,\n    \"technicalNotes\": \"Brief implementation approach\"\n  }\n]\n\nRespond with VALID JSON ONLY.",
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "You are a technical architect specializing in micro-SaaS MVPs. You've built 50+ products using modern no-code and low-code tools. Your estimates are based on practical experience from indie hacker projects. Always respond with valid JSON array only."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        2048,
+        304
+      ],
+      "name": "Agent 3: Estimator",
+      "id": "5ad05b59-37f1-454c-bcd0-fab9162eafd2"
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-haiku-4.5",
+        "options": {
+          "temperature": 0.3
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1984,
+        528
+      ],
+      "name": "Claude Opus 4.5 (Estimator)",
+      "id": "273ab435-e886-4864-892e-7afa1383ece9",
+      "credentials": {
+        "openRouterApi": {
+          "id": "XpZg3NCm0vRTBA75",
+          "name": "OpenRouter Z-AGENCY 2026"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepare records for Airtable upsert\nconst estimatorOutput = $('Agent 3: Estimator').first().json.output;\nconst context = $('Prepare for Estimator').first().json.context;\nconst existingOpportunities = context.existingOpportunities || [];\nconst scanDate = context.scanDate;\n\nlet opportunities = [];\n\n// Robust JSON parsing - handle various AI output formats\ntry {\n  if (typeof estimatorOutput === 'object' && Array.isArray(estimatorOutput)) {\n    opportunities = estimatorOutput;\n  } else if (typeof estimatorOutput === 'string') {\n    // Try direct parse first\n    try {\n      const parsed = JSON.parse(estimatorOutput);\n      opportunities = Array.isArray(parsed) ? parsed : [parsed];\n    } catch (e) {\n      // Try to extract JSON array from markdown code blocks\n      let jsonStr = estimatorOutput;\n      \n      // Remove markdown code blocks\n      jsonStr = jsonStr.replace(/```json\\s*/gi, '').replace(/```\\s*/g, '');\n      \n      // Find JSON array pattern\n      const arrayMatch = jsonStr.match(/\\[\\s*\\{[\\s\\S]*?\\}\\s*\\]/);\n      if (arrayMatch) {\n        opportunities = JSON.parse(arrayMatch[0]);\n      } else {\n        // Try to find any array\n        const start = jsonStr.indexOf('[');\n        const end = jsonStr.lastIndexOf(']');\n        if (start !== -1 && end !== -1 && end > start) {\n          opportunities = JSON.parse(jsonStr.substring(start, end + 1));\n        }\n      }\n    }\n  }\n} catch (parseError) {\n  console.log('Failed to parse estimator output:', parseError.message);\n  console.log('Raw output:', typeof estimatorOutput === 'string' ? estimatorOutput.substring(0, 500) : JSON.stringify(estimatorOutput));\n  opportunities = [];\n}\n\n// Ensure opportunities is an array\nif (!Array.isArray(opportunities)) {\n  opportunities = [];\n}\n\n// ========== VALIDATION: Filter out placeholder/fake opportunities ==========\nconst invalidNames = [\n  'opportunity name', \n  'product name', \n  'tool name', \n  'what it does', \n  'what the product does',\n  'description here',\n  'example opportunity',\n  'sample',\n  'placeholder',\n  'test opportunity',\n  'name here',\n  'your product'\n];\n\nopportunities = opportunities.filter(opp => {\n  if (!opp || typeof opp !== 'object') return false;\n  \n  const nameLower = (opp.name || '').toLowerCase().trim();\n  const descLower = (opp.description || '').toLowerCase();\n  \n  // Check if name is a placeholder\n  const isPlaceholderName = invalidNames.some(invalid => nameLower.includes(invalid));\n  \n  // Check if name is too short or generic\n  const isTooShort = nameLower.length < 5;\n  \n  // Check if description is placeholder\n  const isPlaceholderDesc = invalidNames.some(invalid => descLower.includes(invalid));\n  \n  if (isPlaceholderName || isTooShort || isPlaceholderDesc) {\n    console.log('Filtered out placeholder:', opp.name);\n    return false;\n  }\n  return true;\n});\n\n// If no valid opportunities, return empty result\nif (opportunities.length === 0) {\n  return {\n    json: {\n      newRecords: [],\n      updateRecords: [],\n      staleToArchive: [],\n      incrementWeeks: existingOpportunities.map(e => ({\n        id: e.id,\n        weeksWithoutMention: (e.weeksWithoutMention || 0) + 1\n      })),\n      totalNew: 0,\n      totalUpdates: 0,\n      totalStale: 0,\n      message: 'No valid opportunities found - data quality was poor or all were placeholders'\n    }\n  };\n}\n// ========== END VALIDATION ==========\n\n// Sort by overallScore DESC and assign ranks\nconst sortedOpps = opportunities.sort((a, b) => (b.overallScore || 0) - (a.overallScore || 0));\n\nconst records = sortedOpps.map((opp, index) => {\n  // Check if this matches an existing opportunity\n  const existing = existingOpportunities.find(e => \n    e.name && opp.name && e.name.toLowerCase() === opp.name.toLowerCase()\n  );\n  \n  return {\n    isUpdate: !!existing,\n    existingId: existing?.id || null,\n    existingWeeksWithoutMention: existing?.weeksWithoutMention || 0,\n    fields: {\n      Name: opp.name || 'Unknown',\n      Description: opp.description || '',\n      'Problem Statement': opp.problemStatement || '',\n      'Target Segment': opp.targetSegment || 'All',\n      'Similar Requests Count': existing \n        ? ((existing.currentCount || 0) + (opp.mentionCount || 1)) \n        : (opp.mentionCount || 1),\n      'Weekly Mentions': opp.mentionCount || 1,\n      'Weekly Rank': index + 1,\n      'Creation Status': existing?.status || 'Draft',\n      'Suggested Tools': opp.suggestedTools || [],\n      'Difficulty': opp.difficulty || 'Medium',\n      'Estimated Monthly Value': opp.estimatedMonthlyValue || 0,\n      'Confidence Score': opp.confidenceScore || 50,\n      'Source URLs': (opp.sourceUrls || []).join('\\n'),\n      'Categories': opp.categories || [],\n      'First Detected': existing ? undefined : scanDate,\n      'Last Updated': scanDate,\n      'Weeks Without Mention': 0,\n      'Research Notes': JSON.stringify({\n        evaluationNotes: opp.evaluationNotes || '',\n        technicalNotes: opp.technicalNotes || '',\n        buildTimeWeeks: opp.buildTimeWeeks || 0,\n        demandScore: opp.demandScore || 0,\n        marketPotentialScore: opp.marketPotentialScore || 0\n      }),\n      'Competitor Exists': opp.competitorExists || false,\n      'Competitor Notes': opp.competitorNotes || ''\n    }\n  };\n});\n\n// Stale opportunities to archive\nconst staleOpportunities = existingOpportunities\n  .filter(e => (e.weeksWithoutMention || 0) >= 3)\n  .filter(e => !records.some(r => r.existingId === e.id))\n  .map(e => ({\n    id: e.id,\n    name: e.name,\n    weeksWithoutMention: (e.weeksWithoutMention || 0) + 1\n  }));\n\n// Increment weeks without mention for existing not mentioned this week\nconst existingNotMentioned = existingOpportunities\n  .filter(e => !records.some(r => r.existingId === e.id))\n  .filter(e => (e.weeksWithoutMention || 0) < 3)\n  .map(e => ({\n    id: e.id,\n    weeksWithoutMention: (e.weeksWithoutMention || 0) + 1\n  }));\n\nreturn {\n  json: {\n    newRecords: records.filter(r => !r.isUpdate),\n    updateRecords: records.filter(r => r.isUpdate),\n    staleToArchive: staleOpportunities,\n    incrementWeeks: existingNotMentioned,\n    totalNew: records.filter(r => !r.isUpdate).length,\n    totalUpdates: records.filter(r => r.isUpdate).length,\n    totalStale: staleOpportunities.length\n  }\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2336,
+        304
+      ],
+      "name": "Prepare Airtable Upsert",
+      "id": "c507b3f4-9e84-4906-b1e2-806711c1ecdb"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "has-new",
+              "leftValue": "={{ $json.totalNew }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2624,
+        112
+      ],
+      "name": "Has New Records?",
+      "id": "eeae63ee-74cf-4508-b23c-80bc5a08e94b"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Split new records for batch creation\nconst records = $('Prepare Airtable Upsert').first().json.newRecords;\nreturn records.map(r => ({ json: r.fields }));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2848,
+        96
+      ],
+      "name": "Split New Records",
+      "id": "9853efbe-58e3-417b-b04e-e58d3c8b9c83"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "=https://airtable.com/appPeuDxXd9qLhz2X/tbl4Ne7gqdaHH8zPs/viwGbsVrmLbR4J6F4?blocks=hide",
+          "mode": "url"
+        },
+        "table": {
+          "__rl": true,
+          "value": "https://airtable.com/appPeuDxXd9qLhz2X/tbl4Ne7gqdaHH8zPs/viwGbsVrmLbR4J6F4?blocks=hide",
+          "mode": "url"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {
+            "Competitor Exists": false
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Problem Statement",
+              "displayName": "Problem Statement",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Target Segment",
+              "displayName": "Target Segment",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "SMB",
+                  "value": "SMB"
+                },
+                {
+                  "name": "Startup",
+                  "value": "Startup"
+                },
+                {
+                  "name": "Enterprise",
+                  "value": "Enterprise"
+                },
+                {
+                  "name": "All",
+                  "value": "All"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Similar Requests Count",
+              "displayName": "Similar Requests Count",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Weekly Mentions",
+              "displayName": "Weekly Mentions",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Weekly Rank",
+              "displayName": "Weekly Rank",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Creation Status",
+              "displayName": "Creation Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Draft",
+                  "value": "Draft"
+                },
+                {
+                  "name": "In Progress",
+                  "value": "In Progress"
+                },
+                {
+                  "name": "Created",
+                  "value": "Created"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Suggested Tools",
+              "displayName": "Suggested Tools",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "options": [
+                {
+                  "name": "n8n",
+                  "value": "n8n"
+                },
+                {
+                  "name": "Supabase",
+                  "value": "Supabase"
+                },
+                {
+                  "name": "Airtable",
+                  "value": "Airtable"
+                },
+                {
+                  "name": "Vercel",
+                  "value": "Vercel"
+                },
+                {
+                  "name": "Stripe",
+                  "value": "Stripe"
+                },
+                {
+                  "name": "OpenAI",
+                  "value": "OpenAI"
+                },
+                {
+                  "name": "Anthropic",
+                  "value": "Anthropic"
+                },
+                {
+                  "name": "Make",
+                  "value": "Make"
+                },
+                {
+                  "name": "Zapier",
+                  "value": "Zapier"
+                },
+                {
+                  "name": "Firebase",
+                  "value": "Firebase"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Difficulty",
+              "displayName": "Difficulty",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Easy",
+                  "value": "Easy"
+                },
+                {
+                  "name": "Medium",
+                  "value": "Medium"
+                },
+                {
+                  "name": "Hard",
+                  "value": "Hard"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estimated Monthly Value",
+              "displayName": "Estimated Monthly Value",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Confidence Score",
+              "displayName": "Confidence Score",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Source URLs",
+              "displayName": "Source URLs",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Categories",
+              "displayName": "Categories",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "options": [
+                {
+                  "name": "Automation",
+                  "value": "Automation"
+                },
+                {
+                  "name": "AI",
+                  "value": "AI"
+                },
+                {
+                  "name": "Productivity",
+                  "value": "Productivity"
+                },
+                {
+                  "name": "Marketing",
+                  "value": "Marketing"
+                },
+                {
+                  "name": "Sales",
+                  "value": "Sales"
+                },
+                {
+                  "name": "Support",
+                  "value": "Support"
+                },
+                {
+                  "name": "Analytics",
+                  "value": "Analytics"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "First Detected",
+              "displayName": "First Detected",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Last Updated",
+              "displayName": "Last Updated",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Weeks Without Mention",
+              "displayName": "Weeks Without Mention",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Research Notes",
+              "displayName": "Research Notes",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Competitor Exists",
+              "displayName": "Competitor Exists",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Competitor Notes",
+              "displayName": "Competitor Notes",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        3024,
+        112
+      ],
+      "name": "Create New Opportunities",
+      "id": "1b0da0fe-110b-424e-bf8a-f31a817d66b4",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable - zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "has-updates",
+              "leftValue": "={{ $json.totalUpdates }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2624,
+        304
+      ],
+      "name": "Has Updates?",
+      "id": "86e272f9-0487-46d1-9283-a38e6af05c83"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Split update records\nconst records = $('Prepare Airtable Upsert').first().json.updateRecords;\nreturn records.map(r => ({ json: { id: r.existingId, fields: r.fields } }));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2848,
+        288
+      ],
+      "name": "Split Update Records",
+      "id": "3ad9f7eb-fe1d-4eb8-9361-3daf75743e1c"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "=https://airtable.com/appPeuDxXd9qLhz2X/tbl4Ne7gqdaHH8zPs/viwGbsVrmLbR4J6F4?blocks=hide",
+          "mode": "url"
+        },
+        "table": {
+          "__rl": true,
+          "value": "=https://airtable.com/appPeuDxXd9qLhz2X/tbl4Ne7gqdaHH8zPs/viwGbsVrmLbR4J6F4?blocks=hide",
+          "mode": "url"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Similar Requests Count": "={{ $json.fields['Similar Requests Count'] }}",
+            "Weekly Mentions": "={{ $json.fields['Weekly Mentions'] }}",
+            "Weekly Rank": "={{ $json.fields['Weekly Rank'] }}",
+            "Last Updated": "={{ $json.fields['Last Updated'] }}",
+            "Weeks Without Mention": "={{ $json.fields['Weeks Without Mention'] }}",
+            "Source URLs": "={{ $json.fields['Source URLs'] }}",
+            "Research Notes": "={{ $json.fields['Research Notes'] }}",
+            "Confidence Score": "={{ $json.fields['Confidence Score'] }}"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        3024,
+        304
+      ],
+      "name": "Update Existing Opportunities",
+      "id": "193204f2-f41e-4f55-b2f7-d8b490320538",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable - zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "has-stale",
+              "leftValue": "={{ $json.totalStale }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2624,
+        512
+      ],
+      "name": "Has Stale to Archive?",
+      "id": "c6ae45fc-b7ce-4454-b703-622de82f290a"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepare stale records for archiving\nconst stale = $('Prepare Airtable Upsert').first().json.staleToArchive;\nreturn stale.map(s => ({ json: s }));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2848,
+        496
+      ],
+      "name": "Split Stale Records",
+      "id": "dde7662d-bde6-4114-b3d3-896c4df80d6d"
+    },
+    {
+      "parameters": {
+        "operation": "deleteRecord",
+        "base": {
+          "__rl": true,
+          "value": "=https://airtable.com/appPeuDxXd9qLhz2X/tbl4Ne7gqdaHH8zPs/viwGbsVrmLbR4J6F4?blocks=hide",
+          "mode": "url"
+        },
+        "table": {
+          "__rl": true,
+          "value": "https://airtable.com/appPeuDxXd9qLhz2X/tbl4Ne7gqdaHH8zPs/viwGbsVrmLbR4J6F4?blocks=hide",
+          "mode": "url"
+        },
+        "id": "={ $json.id }}"
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        3024,
+        512
+      ],
+      "name": "Delete Stale (Archive Later)",
+      "id": "9098d9cd-dfdf-4f90-a9e8-4a57f7d6bcc8",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable - zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const toIncrement = $('Prepare Airtable Upsert').first().json.incrementWeeks;\nif (!toIncrement || toIncrement.length === 0) {\n  return [];\n}\n\n// Debug - log what we have\nconsole.log('incrementWeeks:', JSON.stringify(toIncrement));\n\nreturn toIncrement.map(r => ({ \n  json: { \n    id: r.id, \n    \"Weeks Without Mention\": r.weeksWithoutMention \n  } \n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2624,
+        688
+      ],
+      "name": "Split Increment Records",
+      "id": "d75f7905-301c-4d7d-b530-1ae0fc227f73",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "=https://airtable.com/appPeuDxXd9qLhz2X/tbl4Ne7gqdaHH8zPs/viwGbsVrmLbR4J6F4?blocks=hide",
+          "mode": "url"
+        },
+        "table": {
+          "__rl": true,
+          "value": "https://airtable.com/appPeuDxXd9qLhz2X/tbl4Ne7gqdaHH8zPs/viwGbsVrmLbR4J6F4?blocks=hide",
+          "mode": "url"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Weeks Without Mention": "={{ $json['Weeks Without Mention'] }}",
+            "Similar Requests Count": 0,
+            "Weekly Mentions": 0,
+            "Weekly Rank": 0,
+            "Estimated Monthly Value": 0,
+            "Confidence Score": 0,
+            "id": "={{ $json.id }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Problem Statement",
+              "displayName": "Problem Statement",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Target Segment",
+              "displayName": "Target Segment",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "SMB",
+                  "value": "SMB"
+                },
+                {
+                  "name": "Startup",
+                  "value": "Startup"
+                },
+                {
+                  "name": "Enterprise",
+                  "value": "Enterprise"
+                },
+                {
+                  "name": "All",
+                  "value": "All"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Similar Requests Count",
+              "displayName": "Similar Requests Count",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Weekly Mentions",
+              "displayName": "Weekly Mentions",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Weekly Rank",
+              "displayName": "Weekly Rank",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Creation Status",
+              "displayName": "Creation Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Draft",
+                  "value": "Draft"
+                },
+                {
+                  "name": "In Progress",
+                  "value": "In Progress"
+                },
+                {
+                  "name": "Created",
+                  "value": "Created"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Suggested Tools",
+              "displayName": "Suggested Tools",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "options": [
+                {
+                  "name": "n8n",
+                  "value": "n8n"
+                },
+                {
+                  "name": "Supabase",
+                  "value": "Supabase"
+                },
+                {
+                  "name": "Airtable",
+                  "value": "Airtable"
+                },
+                {
+                  "name": "Vercel",
+                  "value": "Vercel"
+                },
+                {
+                  "name": "Stripe",
+                  "value": "Stripe"
+                },
+                {
+                  "name": "OpenAI",
+                  "value": "OpenAI"
+                },
+                {
+                  "name": "Anthropic",
+                  "value": "Anthropic"
+                },
+                {
+                  "name": "Make",
+                  "value": "Make"
+                },
+                {
+                  "name": "Zapier",
+                  "value": "Zapier"
+                },
+                {
+                  "name": "Firebase",
+                  "value": "Firebase"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Difficulty",
+              "displayName": "Difficulty",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Easy",
+                  "value": "Easy"
+                },
+                {
+                  "name": "Medium",
+                  "value": "Medium"
+                },
+                {
+                  "name": "Hard",
+                  "value": "Hard"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estimated Monthly Value",
+              "displayName": "Estimated Monthly Value",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Confidence Score",
+              "displayName": "Confidence Score",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Source URLs",
+              "displayName": "Source URLs",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Categories",
+              "displayName": "Categories",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "options": [
+                {
+                  "name": "Automation",
+                  "value": "Automation"
+                },
+                {
+                  "name": "AI",
+                  "value": "AI"
+                },
+                {
+                  "name": "Productivity",
+                  "value": "Productivity"
+                },
+                {
+                  "name": "Marketing",
+                  "value": "Marketing"
+                },
+                {
+                  "name": "Sales",
+                  "value": "Sales"
+                },
+                {
+                  "name": "Support",
+                  "value": "Support"
+                },
+                {
+                  "name": "Analytics",
+                  "value": "Analytics"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "First Detected",
+              "displayName": "First Detected",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Last Updated",
+              "displayName": "Last Updated",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Weeks Without Mention",
+              "displayName": "Weeks Without Mention",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Research Notes",
+              "displayName": "Research Notes",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Competitor Exists",
+              "displayName": "Competitor Exists",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Competitor Notes",
+              "displayName": "Competitor Notes",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        3024,
+        704
+      ],
+      "name": "Increment Weeks Without Mention",
+      "id": "783cfe5a-5998-415c-a700-4b3e7957fbfa",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable - zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Final summary\nconst prepData = $('Prepare Airtable Upsert').first().json;\n\nreturn {\n  json: {\n    success: true,\n    message: 'Weekly micro-SaaS opportunity scan completed',\n    summary: {\n      newOpportunities: prepData.totalNew,\n      updatedOpportunities: prepData.totalUpdates,\n      archivedStale: prepData.totalStale,\n      incrementedWeeks: prepData.incrementWeeks.length\n    },\n    timestamp: new Date().toISOString()\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3216,
+        304
+      ],
+      "name": "Log Success",
+      "id": "6f7c361f-9979-4344-ba90-8ce435f01617"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2128,
+        528
+      ],
+      "name": "Gemini Evaluator Fallback1",
+      "id": "c111a7e4-09df-49a7-a8a5-615fe35c04ca",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uLXCpqN3fa4ZXZmj",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "query": "\"I wish there was\" OR \"looking for a tool\" OR \"anyone built\" OR \"need help with\" site:indiehackers.com",
+        "options": {
+          "topic": "general",
+          "max_results": 15,
+          "time_range": "week",
+          "include_raw_content": true
+        }
+      },
+      "type": "@tavily/n8n-nodes-tavily.tavily",
+      "typeVersion": 1,
+      "position": [
+        384,
+        528
+      ],
+      "name": "Tavily: Indie Hackers",
+      "id": "986a45df-fba4-47b2-b037-21fc0e32c8d2",
+      "credentials": {
+        "tavilyApi": {
+          "id": "KmiWEKpArgJSNmSk",
+          "name": "Tavily account"
+        }
+      }
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Prague",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "errorWorkflow": "zVAjJgKV17IWzFP7"
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-25T21:05:07.748Z",
+      "createdAt": "2026-01-25T21:05:07.748Z",
+      "role": "workflow:owner",
+      "workflowId": "cYgnPEBGNts9pwxw",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": {
+    "node:Weekly Monday 6:00 AM": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-01-25T23:13:38.062Z",
+  "versionId": "bec78acf-e717-463a-971a-037211b91bd1"
+}
