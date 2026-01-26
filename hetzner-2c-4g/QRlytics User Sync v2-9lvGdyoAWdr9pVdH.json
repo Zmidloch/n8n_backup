@@ -1,0 +1,326 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-01-26T21:22:44.498Z",
+    "createdAt": "2026-01-26T21:22:44.498Z",
+    "versionId": "1183f51e-5847-44e9-ab0f-a2a6989b34be",
+    "workflowId": "9lvGdyoAWdr9pVdH",
+    "nodes": [
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "cronExpression",
+                "expression": "0 6 * * *"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          200
+        ],
+        "id": "trigger",
+        "name": "Daily 6:00 UTC"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://supabase-zagency-u62265.vm.elestio.app/rest/v1/rpc/get_users_for_export",
+          "authentication": "none",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "apikey",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaXNzIjoic3VwYWJhc2UiLCJpYXQiOjE3Njg4MjMyMTEsImV4cCI6MjA4NDE4MzIxMX0.cmCye0Qp58RtFQaR3LLEX-bneipDE5qpC_xCt7xG1dc"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaXNzIjoic3VwYWJhc2UiLCJpYXQiOjE3Njg4MjMyMTEsImV4cCI6MjA4NDE4MzIxMX0.cmCye0Qp58RtFQaR3LLEX-bneipDE5qpC_xCt7xG1dc"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          220,
+          200
+        ],
+        "id": "supabase",
+        "name": "Get Users from Supabase"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Process each user and calculate upsell score\nconst users = $input.all();\n\nreturn users.map(item => {\n  const user = item.json;\n  \n  // Calculate upsell score\n  const tier = user.subscription_tier;\n  const isVip = user.is_vip;\n  const qrCount = user.qr_count || 0;\n  const totalScans = user.total_scans || 0;\n  const usesCustomColors = (user.custom_colors_count || 0) > 0;\n  const usesLogo = (user.logo_count || 0) > 0;\n  const usesWebhooks = (user.webhook_count || 0) > 0;\n  const hasCustomBranding = !!user.custom_logo_url;\n\n  let upsell_score = 0;\n\n  if (tier === 'free' && !isVip) {\n    if (qrCount >= 3) upsell_score += 30;\n    if (totalScans > 100) upsell_score += 25;\n    if (usesCustomColors) upsell_score += 15;\n    if (usesLogo) upsell_score += 20;\n  } else if (tier === 'pro' && !isVip) {\n    if (totalScans > 1000) upsell_score += 25;\n    if (!usesWebhooks) upsell_score += 15;\n    if (hasCustomBranding) upsell_score += 15;\n  }\n\n  const effective_tier = isVip ? 'vip' : tier;\n\n  return {\n    json: {\n      user_id: user.user_id,\n      email: user.email,\n      full_name: user.full_name,\n      subscription_tier: effective_tier,\n      revenue_ytd: 0,\n      created_at: user.created_at,\n      stripe_customer_id: user.stripe_customer_id || '',\n      subscription_status: user.subscription_status || '',\n      subscription_start: user.subscription_start || '',\n      cancel_at_period_end: user.cancel_at_period_end || false,\n      vip_tier: user.vip_tier || '',\n      vip_expires_at: user.vip_expires_at || '',\n      qr_count: user.qr_count || 0,\n      total_scans: user.total_scans || 0,\n      scans_last_30d: user.scans_last_30d || 0,\n      last_qr_created: user.last_qr_created || '',\n      last_scan: user.last_scan || '',\n      uses_custom_colors: usesCustomColors,\n      uses_logo_in_qr: usesLogo,\n      uses_custom_branding: hasCustomBranding,\n      uses_webhooks: usesWebhooks,\n      has_api_key: (user.api_calls_mtd || 0) > 0,\n      api_calls_mtd: user.api_calls_mtd || 0,\n      marketing_consent: user.marketing_consent || false,\n      upsell_score: Math.min(upsell_score, 100),\n      last_sync: new Date().toISOString()\n    }\n  };\n});"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          440,
+          200
+        ],
+        "id": "transform",
+        "name": "Calculate Scores"
+      },
+      {
+        "parameters": {
+          "operation": "upsert",
+          "base": {
+            "__rl": true,
+            "mode": "id",
+            "value": "app38w0AGRoW8JaZJ"
+          },
+          "table": {
+            "__rl": true,
+            "mode": "id",
+            "value": "tblHb4cYsM35WtrHD"
+          },
+          "columns": {
+            "mappingMode": "autoMapInputData",
+            "matchingColumns": [
+              "user_id"
+            ]
+          },
+          "options": {
+            "typecast": true,
+            "bulkSize": 10
+          }
+        },
+        "type": "n8n-nodes-base.airtable",
+        "typeVersion": 2,
+        "position": [
+          660,
+          200
+        ],
+        "id": "airtable",
+        "name": "Upsert to Airtable",
+        "credentials": {
+          "airtableTokenApi": {
+            "id": "112UtIzO07XgrN7A",
+            "name": "Airtable - zmidloch@z-agency.cz"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Daily 6:00 UTC": {
+        "main": [
+          [
+            {
+              "node": "Get Users from Supabase",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Users from Supabase": {
+        "main": [
+          [
+            {
+              "node": "Calculate Scores",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Calculate Scores": {
+        "main": [
+          [
+            {
+              "node": "Upsert to Airtable",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jiri Zmidloch",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "1183f51e-5847-44e9-ab0f-a2a6989b34be",
+  "connections": {
+    "Daily 6:00 UTC": {
+      "main": [
+        [
+          {
+            "node": "Get Users from Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Users from Supabase": {
+      "main": [
+        [
+          {
+            "node": "Calculate Scores",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculate Scores": {
+      "main": [
+        [
+          {
+            "node": "Upsert to Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-26T21:22:44.471Z",
+  "id": "9lvGdyoAWdr9pVdH",
+  "isArchived": false,
+  "meta": null,
+  "name": "QRlytics User Sync v2",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 6 * * *"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        200
+      ],
+      "id": "trigger",
+      "name": "Daily 6:00 UTC"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://supabase-zagency-u62265.vm.elestio.app/rest/v1/rpc/get_users_for_export",
+        "authentication": "none",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaXNzIjoic3VwYWJhc2UiLCJpYXQiOjE3Njg4MjMyMTEsImV4cCI6MjA4NDE4MzIxMX0.cmCye0Qp58RtFQaR3LLEX-bneipDE5qpC_xCt7xG1dc"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaXNzIjoic3VwYWJhc2UiLCJpYXQiOjE3Njg4MjMyMTEsImV4cCI6MjA4NDE4MzIxMX0.cmCye0Qp58RtFQaR3LLEX-bneipDE5qpC_xCt7xG1dc"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        200
+      ],
+      "id": "supabase",
+      "name": "Get Users from Supabase"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process each user and calculate upsell score\nconst users = $input.all();\n\nreturn users.map(item => {\n  const user = item.json;\n  \n  // Calculate upsell score\n  const tier = user.subscription_tier;\n  const isVip = user.is_vip;\n  const qrCount = user.qr_count || 0;\n  const totalScans = user.total_scans || 0;\n  const usesCustomColors = (user.custom_colors_count || 0) > 0;\n  const usesLogo = (user.logo_count || 0) > 0;\n  const usesWebhooks = (user.webhook_count || 0) > 0;\n  const hasCustomBranding = !!user.custom_logo_url;\n\n  let upsell_score = 0;\n\n  if (tier === 'free' && !isVip) {\n    if (qrCount >= 3) upsell_score += 30;\n    if (totalScans > 100) upsell_score += 25;\n    if (usesCustomColors) upsell_score += 15;\n    if (usesLogo) upsell_score += 20;\n  } else if (tier === 'pro' && !isVip) {\n    if (totalScans > 1000) upsell_score += 25;\n    if (!usesWebhooks) upsell_score += 15;\n    if (hasCustomBranding) upsell_score += 15;\n  }\n\n  const effective_tier = isVip ? 'vip' : tier;\n\n  return {\n    json: {\n      user_id: user.user_id,\n      email: user.email,\n      full_name: user.full_name,\n      subscription_tier: effective_tier,\n      revenue_ytd: 0,\n      created_at: user.created_at,\n      stripe_customer_id: user.stripe_customer_id || '',\n      subscription_status: user.subscription_status || '',\n      subscription_start: user.subscription_start || '',\n      cancel_at_period_end: user.cancel_at_period_end || false,\n      vip_tier: user.vip_tier || '',\n      vip_expires_at: user.vip_expires_at || '',\n      qr_count: user.qr_count || 0,\n      total_scans: user.total_scans || 0,\n      scans_last_30d: user.scans_last_30d || 0,\n      last_qr_created: user.last_qr_created || '',\n      last_scan: user.last_scan || '',\n      uses_custom_colors: usesCustomColors,\n      uses_logo_in_qr: usesLogo,\n      uses_custom_branding: hasCustomBranding,\n      uses_webhooks: usesWebhooks,\n      has_api_key: (user.api_calls_mtd || 0) > 0,\n      api_calls_mtd: user.api_calls_mtd || 0,\n      marketing_consent: user.marketing_consent || false,\n      upsell_score: Math.min(upsell_score, 100),\n      last_sync: new Date().toISOString()\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        200
+      ],
+      "id": "transform",
+      "name": "Calculate Scores"
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "base": {
+          "__rl": true,
+          "mode": "id",
+          "value": "app38w0AGRoW8JaZJ"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "tblHb4cYsM35WtrHD"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "matchingColumns": [
+            "user_id"
+          ]
+        },
+        "options": {
+          "typecast": true,
+          "bulkSize": 10
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        660,
+        200
+      ],
+      "id": "airtable",
+      "name": "Upsert to Airtable",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable - zmidloch@z-agency.cz"
+        }
+      }
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-26T21:22:44.471Z",
+      "createdAt": "2026-01-26T21:22:44.471Z",
+      "role": "workflow:owner",
+      "workflowId": "9lvGdyoAWdr9pVdH",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": {
+    "node:Daily 6:00 UTC": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-01-26T21:34:53.978Z",
+  "versionId": "1183f51e-5847-44e9-ab0f-a2a6989b34be"
+}
