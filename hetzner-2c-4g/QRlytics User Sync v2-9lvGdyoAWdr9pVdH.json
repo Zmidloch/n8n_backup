@@ -209,7 +209,7 @@
       "typeVersion": 1.2,
       "position": [
         0,
-        200
+        208
       ],
       "id": "trigger",
       "name": "Daily 6:00 UTC"
@@ -218,7 +218,6 @@
       "parameters": {
         "method": "POST",
         "url": "https://supabase-zagency-u62265.vm.elestio.app/rest/v1/rpc/get_users_for_export",
-        "authentication": "none",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -241,21 +240,21 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        220,
-        200
+        224,
+        208
       ],
       "id": "supabase",
       "name": "Get Users from Supabase"
     },
     {
       "parameters": {
-        "jsCode": "// Process each user and calculate upsell score\nconst users = $input.all();\n\nreturn users.map(item => {\n  const user = item.json;\n  \n  // Calculate upsell score\n  const tier = user.subscription_tier;\n  const isVip = user.is_vip;\n  const qrCount = user.qr_count || 0;\n  const totalScans = user.total_scans || 0;\n  const usesCustomColors = (user.custom_colors_count || 0) > 0;\n  const usesLogo = (user.logo_count || 0) > 0;\n  const usesWebhooks = (user.webhook_count || 0) > 0;\n  const hasCustomBranding = !!user.custom_logo_url;\n\n  let upsell_score = 0;\n\n  if (tier === 'free' && !isVip) {\n    if (qrCount >= 3) upsell_score += 30;\n    if (totalScans > 100) upsell_score += 25;\n    if (usesCustomColors) upsell_score += 15;\n    if (usesLogo) upsell_score += 20;\n  } else if (tier === 'pro' && !isVip) {\n    if (totalScans > 1000) upsell_score += 25;\n    if (!usesWebhooks) upsell_score += 15;\n    if (hasCustomBranding) upsell_score += 15;\n  }\n\n  const effective_tier = isVip ? 'vip' : tier;\n\n  return {\n    json: {\n      user_id: user.user_id,\n      email: user.email,\n      full_name: user.full_name,\n      subscription_tier: effective_tier,\n      revenue_ytd: 0,\n      created_at: user.created_at,\n      stripe_customer_id: user.stripe_customer_id || '',\n      subscription_status: user.subscription_status || '',\n      subscription_start: user.subscription_start || '',\n      cancel_at_period_end: user.cancel_at_period_end || false,\n      vip_tier: user.vip_tier || '',\n      vip_expires_at: user.vip_expires_at || '',\n      qr_count: user.qr_count || 0,\n      total_scans: user.total_scans || 0,\n      scans_last_30d: user.scans_last_30d || 0,\n      last_qr_created: user.last_qr_created || '',\n      last_scan: user.last_scan || '',\n      uses_custom_colors: usesCustomColors,\n      uses_logo_in_qr: usesLogo,\n      uses_custom_branding: hasCustomBranding,\n      uses_webhooks: usesWebhooks,\n      has_api_key: (user.api_calls_mtd || 0) > 0,\n      api_calls_mtd: user.api_calls_mtd || 0,\n      marketing_consent: user.marketing_consent || false,\n      upsell_score: Math.min(upsell_score, 100),\n      last_sync: new Date().toISOString()\n    }\n  };\n});"
+        "jsCode": "// Process each user and calculate upsell score\nconst users = $input.all();\n\nreturn users.map(item => {\n  const user = item.json;\n  \n  // Calculate upsell score\n  const tier = user.subscription_tier;\n  const isVip = user.is_vip;\n  const qrCount = user.qr_count || 0;\n  const totalScans = user.total_scans || 0;\n  const usesCustomColors = (user.custom_colors_count || 0) > 0;\n  const usesLogo = (user.logo_count || 0) > 0;\n  const usesWebhooks = (user.webhook_count || 0) > 0;\n  const hasCustomBranding = !!user.custom_logo_url;\n\n  let upsell_score = 0;\n\n  if (tier === 'free' && !isVip) {\n    if (qrCount >= 3) upsell_score += 30;\n    if (totalScans > 100) upsell_score += 25;\n    if (usesCustomColors) upsell_score += 15;\n    if (usesLogo) upsell_score += 20;\n  } else if (tier === 'pro' && !isVip) {\n    if (totalScans > 1000) upsell_score += 25;\n    if (!usesWebhooks) upsell_score += 15;\n    if (hasCustomBranding) upsell_score += 15;\n  }\n\n  const effective_tier = isVip ? 'vip' : tier;\n\n  return {\n    json: {\n      user_id: user.user_id,\n      email: user.email,\n      full_name: user.full_name,\n      subscription_tier: effective_tier,\n      revenue_ytd: 0,\n      created_at: user.created_at,\n      stripe_customer_id: user.stripe_customer_id || '',\n      subscription_status: user.subscription_status || '',\n      subscription_start: user.subscription_start || '',\n      cancel_at_period_end: user.cancel_at_period_end || false,\n      subscription_paused_for_vip: user.subscription_paused_for_vip || false,  // <-- PŘIDÁNO\n      vip_tier: user.vip_tier || '',\n      vip_expires_at: user.vip_expires_at || '',\n      qr_count: user.qr_count || 0,\n      total_scans: user.total_scans || 0,\n      scans_last_30d: user.scans_last_30d || 0,\n      last_qr_created: user.last_qr_created || '',\n      last_scan: user.last_scan || '',\n      uses_custom_colors: usesCustomColors,\n      uses_logo_in_qr: usesLogo,\n      uses_custom_branding: hasCustomBranding,\n      uses_webhooks: usesWebhooks,\n      has_api_key: (user.api_calls_mtd || 0) > 0,\n      api_calls_mtd: user.api_calls_mtd || 0,\n      marketing_consent: user.marketing_consent || false,\n      upsell_score: Math.min(upsell_score, 100),\n      last_sync: new Date().toISOString()\n    }\n  };\n});\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        440,
-        200
+        448,
+        208
       ],
       "id": "transform",
       "name": "Calculate Scores"
@@ -275,20 +274,394 @@
         },
         "columns": {
           "mappingMode": "autoMapInputData",
+          "value": {
+            "cancel_at_period_end": false,
+            "uses_custom_colors": false,
+            "uses_logo_in_qr": false,
+            "uses_custom_branding": false,
+            "uses_webhooks": false,
+            "has_api_key": false,
+            "marketing_consent": false,
+            "subscription_paused_for_vip": false
+          },
           "matchingColumns": [
             "user_id"
-          ]
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "user_id",
+              "displayName": "user_id",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "full_name",
+              "displayName": "full_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "subscription_tier",
+              "displayName": "subscription_tier",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "free",
+                  "value": "free"
+                },
+                {
+                  "name": "pro",
+                  "value": "pro"
+                },
+                {
+                  "name": "vip",
+                  "value": "vip"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "revenue_ytd",
+              "displayName": "revenue_ytd",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "last_sync",
+              "displayName": "last_sync",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "stripe_customer_id",
+              "displayName": "stripe_customer_id",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "subscription_status",
+              "displayName": "subscription_status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "active",
+                  "value": "active"
+                },
+                {
+                  "name": "canceled",
+                  "value": "canceled"
+                },
+                {
+                  "name": "past_due",
+                  "value": "past_due"
+                },
+                {
+                  "name": "trialing",
+                  "value": "trialing"
+                },
+                {
+                  "name": "",
+                  "value": ""
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "subscription_start",
+              "displayName": "subscription_start",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cancel_at_period_end",
+              "displayName": "cancel_at_period_end",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "vip_tier",
+              "displayName": "vip_tier",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "standard",
+                  "value": "standard"
+                },
+                {
+                  "name": "premium",
+                  "value": "premium"
+                },
+                {
+                  "name": "enterprise",
+                  "value": "enterprise"
+                },
+                {
+                  "name": "basic",
+                  "value": "basic"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "vip_expires_at",
+              "displayName": "vip_expires_at",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "qr_count",
+              "displayName": "qr_count",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "total_scans",
+              "displayName": "total_scans",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "scans_last_30d",
+              "displayName": "scans_last_30d",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "last_qr_created",
+              "displayName": "last_qr_created",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "last_scan",
+              "displayName": "last_scan",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "uses_custom_colors",
+              "displayName": "uses_custom_colors",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "uses_logo_in_qr",
+              "displayName": "uses_logo_in_qr",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "uses_custom_branding",
+              "displayName": "uses_custom_branding",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "uses_webhooks",
+              "displayName": "uses_webhooks",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "has_api_key",
+              "displayName": "has_api_key",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "api_calls_mtd",
+              "displayName": "api_calls_mtd",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "marketing_consent",
+              "displayName": "marketing_consent",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "upsell_score",
+              "displayName": "upsell_score",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "subscription_paused_for_vip",
+              "displayName": "subscription_paused_for_vip",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
         },
         "options": {
-          "typecast": true,
-          "bulkSize": 10
+          "typecast": true
         }
       },
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2,
       "position": [
-        660,
-        200
+        672,
+        208
       ],
       "id": "airtable",
       "name": "Upsert to Airtable",
@@ -321,6 +694,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-01-26T21:34:53.978Z",
-  "versionId": "1183f51e-5847-44e9-ab0f-a2a6989b34be"
+  "updatedAt": "2026-01-27T00:41:21.723Z",
+  "versionId": "61b79033-9d81-4d52-a6ab-07a4fc45fbf6"
 }
