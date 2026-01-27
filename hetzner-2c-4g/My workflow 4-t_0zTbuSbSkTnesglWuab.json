@@ -1,39 +1,11 @@
 {
-  "active": true,
-  "activeVersion": {
-    "updatedAt": "2026-01-26T22:53:42.224Z",
-    "createdAt": "2026-01-26T22:53:38.338Z",
-    "versionId": "bcc695f2-a467-4886-8c4a-94b90e131444",
-    "workflowId": "t_0zTbuSbSkTnesglWuab",
-    "nodes": [
-      {
-        "parameters": {
-          "httpMethod": "POST",
-          "path": "7cd3f4ba-99a1-49eb-83e0-8fbcb6f47af9",
-          "options": {}
-        },
-        "type": "n8n-nodes-base.webhook",
-        "typeVersion": 2.1,
-        "position": [
-          0,
-          0
-        ],
-        "id": "8def6fcd-f034-4586-94b8-cf1a12751139",
-        "name": "Webhook",
-        "webhookId": "7cd3f4ba-99a1-49eb-83e0-8fbcb6f47af9"
-      }
-    ],
-    "connections": {},
-    "authors": "Jiri Zmidloch",
-    "name": "Version bcc695f2",
-    "description": "",
-    "autosaved": true
-  },
-  "activeVersionId": "bcc695f2-a467-4886-8c4a-94b90e131444",
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
   "connections": {},
   "createdAt": "2026-01-26T22:44:28.641Z",
   "id": "t_0zTbuSbSkTnesglWuab",
-  "isArchived": false,
+  "isArchived": true,
   "meta": null,
   "name": "My workflow 4",
   "nodes": [
@@ -70,6 +42,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-01-26T22:53:38.331Z",
-  "versionId": "bcc695f2-a467-4886-8c4a-94b90e131444"
+  "updatedAt": "2026-01-27T08:12:24.317Z",
+  "versionId": "09691742-1a61-476e-96c2-eab793921891"
 }
