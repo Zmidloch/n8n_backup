@@ -1,0 +1,713 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-01-27T08:08:41.819Z",
+    "createdAt": "2026-01-27T08:08:39.588Z",
+    "versionId": "5d9073d2-7a8a-4ba7-85be-f93466ae843c",
+    "workflowId": "s6ASqQUvIsWISuco",
+    "nodes": [
+      {
+        "parameters": {
+          "content": "# QRlytics Feedback Processor\n\n**Trigger:** Webhook from QRlytics API\n\n**Flow:**\n1. Receive feedback from user\n2. AI Agent categorizes the message\n3. Save to Airtable 'User Messages' table\n4. If feature request: update Feature Proposals\n\n**Airtable Base:** app38w0AGRoW8JaZJ\n**Table:** User Messages",
+          "height": 368,
+          "width": 400,
+          "color": 6
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          -208,
+          -192
+        ],
+        "id": "info-note",
+        "name": "Workflow Info"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "qrlytics-feedback",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          0,
+          208
+        ],
+        "id": "webhook-trigger",
+        "name": "Webhook: Receive Feedback",
+        "webhookId": "qrlytics-feedback"
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ { \"success\": true, \"processed\": true } }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          128,
+          432
+        ],
+        "id": "respond-webhook",
+        "name": "Respond: Success"
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "={{ $json.body.message }}",
+          "needsFallback": true,
+          "options": {
+            "systemMessage": "You are a feedback categorizer for QRlytics, a QR code analytics SaaS platform.\n\nQRlytics allows users to:\n- Create trackable QR codes\n- View scan analytics (location, time, device)\n- Customize QR code design (colors, logos)\n- Set up webhooks for real-time notifications\n- Use API for programmatic access\n\nAnalyze the user's feedback message and return a JSON response with the following structure:\n\n{\n  \"category\": \"feature_request\" | \"complaint\" | \"question\" | \"praise\" | \"other\" | \"irrelevant\",\n  \"summary\": \"Brief 1-sentence summary of the feedback\",\n  \"feature_name\": \"If feature request, a concise name for the feature (null otherwise)\",\n  \"priority\": \"low\" | \"medium\" | \"high\",\n  \"sentiment\": \"positive\" | \"neutral\" | \"negative\",\n  \"actionable\": true | false,\n  \"tags\": [\"array\", \"of\", \"relevant\", \"tags\"]\n}\n\nCategories:\n- feature_request: User is suggesting new functionality or improvements\n- complaint: User is unhappy about bugs, performance, or existing features\n- question: User is asking how to do something (should be redirected to support)\n- praise: User is expressing satisfaction or gratitude\n- other: General feedback that doesn't fit other categories\n- irrelevant: Spam, test messages, or completely off-topic content\n\nPriority guidelines:\n- high: Affects core functionality, multiple users likely affected, or urgent\n- medium: Nice-to-have improvement, moderate impact\n- low: Minor enhancement, edge case, or already possible workaround exists\n\nAlways respond with valid JSON only, no additional text."
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 3.1,
+        "position": [
+          384,
+          208
+        ],
+        "id": "ai-agent",
+        "name": "AI Agent: Categorize Feedback"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Parse AI response and combine with original feedback\nconst feedback = $('Webhook: Receive Feedback').item.json.body;\nconst aiResponse = $input.item.json.output;\n\n// Try to parse AI response as JSON\nlet analysis;\ntry {\n  // Extract JSON from response (in case there's extra text)\n  const jsonMatch = aiResponse.match(/\\{[\\s\\S]*\\}/);\n  analysis = jsonMatch ? JSON.parse(jsonMatch[0]) : {};\n} catch (e) {\n  analysis = {\n    category: 'other',\n    summary: 'Failed to analyze',\n    feature_name: null,\n    priority: 'low',\n    sentiment: 'neutral',\n    actionable: false,\n    tags: []\n  };\n}\n\n// Map category to Airtable-friendly format\nconst categoryMap = {\n  'feature_request': 'Feature Request',\n  'complaint': 'Complaint',\n  'question': 'Question',\n  'praise': 'Praise',\n  'other': 'Other',\n  'irrelevant': 'Irrelevant'\n};\n\nconst priorityMap = {\n  'low': 'Low',\n  'medium': 'Medium',\n  'high': 'High'\n};\n\nreturn {\n  json: {\n    // Original feedback data\n    message_id: feedback.feedbackId,\n    user_id: feedback.userId,\n    user_email: feedback.userEmail,\n    user_name: feedback.userName || '',\n    subscription_tier: feedback.subscriptionTier,\n    is_vip: feedback.isVip,\n    message: feedback.message,\n    source: feedback.source || 'dashboard',\n    created_at: feedback.createdAt,\n    \n    // AI analysis\n    category: categoryMap[analysis.category] || 'Other',\n    ai_summary: analysis.summary || '',\n    feature_name: analysis.feature_name || '',\n    priority: priorityMap[analysis.priority] || 'Low',\n    sentiment: analysis.sentiment || 'neutral',\n    actionable: analysis.actionable || false,\n    tags: (analysis.tags || []).join(', '),\n    \n    // Status\n    status: 'New'\n  }\n};"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          672,
+          208
+        ],
+        "id": "parse-response",
+        "name": "Parse AI Response"
+      },
+      {
+        "parameters": {
+          "operation": "create",
+          "base": {
+            "__rl": true,
+            "mode": "id",
+            "value": "app38w0AGRoW8JaZJ"
+          },
+          "table": {
+            "__rl": true,
+            "mode": "id",
+            "value": "tblQxZ6T1tpHFHGYB"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "Message ID": "={{ $json.message_id }}",
+              "User ID": "={{ $json.user_id }}",
+              "User Email": "={{ $json.user_email }}",
+              "User Name": "={{ $json.user_name }}",
+              "Subscription Tier": "={{ $json.subscription_tier }}",
+              "Is VIP": "={{ $json.is_vip }}",
+              "Message": "={{ $json.message }}",
+              "Source": "={{ $json.source }}",
+              "Category": "={{ $json.category }}",
+              "AI Summary": "={{ $json.ai_summary }}",
+              "Feature Name": "={{ $json.feature_name }}",
+              "Priority": "={{ $json.priority }}",
+              "Sentiment": "={{ $json.sentiment }}",
+              "Actionable": "={{ $json.actionable }}",
+              "Tags": "={{ $json.tags }}",
+              "Status": "={{ $json.status }}",
+              "Created At": "={{ $json.created_at }}"
+            }
+          },
+          "options": {
+            "typecast": true
+          }
+        },
+        "type": "n8n-nodes-base.airtable",
+        "typeVersion": 2,
+        "position": [
+          880,
+          208
+        ],
+        "id": "airtable-create",
+        "name": "Airtable: Save Message",
+        "credentials": {
+          "airtableTokenApi": {
+            "id": "112UtIzO07XgrN7A",
+            "name": "Airtable - zmidloch@z-agency.cz"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict"
+            },
+            "conditions": [
+              {
+                "id": "is-feature-request",
+                "leftValue": "={{ $('Parse AI Response').item.json.category }}",
+                "rightValue": "Feature Request",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          1104,
+          208
+        ],
+        "id": "is-feature-request",
+        "name": "Is Feature Request?"
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          1408,
+          304
+        ],
+        "id": "done-other",
+        "name": "Done (Other)"
+      },
+      {
+        "parameters": {
+          "content": "## TODO: Feature Proposals Logic\n\nWhen this is a feature request:\n1. Search existing Feature Proposals for similar features\n2. If found: increment vote count, link this message\n3. If not found: create new Feature Proposal\n\nThis requires manual setup of Feature Proposals table first.",
+          "height": 312,
+          "width": 350,
+          "color": 4
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          1024,
+          -192
+        ],
+        "id": "todo-note",
+        "name": "Feature Proposals (TODO)"
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          1408,
+          112
+        ],
+        "id": "feature-placeholder",
+        "name": "Done (Feature Request)"
+      },
+      {
+        "parameters": {
+          "model": "anthropic/claude-sonnet-4.5",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+        "typeVersion": 1,
+        "position": [
+          368,
+          432
+        ],
+        "id": "4283a42a-337e-4abd-9ebd-ec8d40272b09",
+        "name": "OpenRouter Chat Model",
+        "credentials": {
+          "openRouterApi": {
+            "id": "XpZg3NCm0vRTBA75",
+            "name": "OpenRouter Z-AGENCY 2026"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          528,
+          432
+        ],
+        "id": "cdccf4b0-6eeb-4340-b8c3-86f7a37c6f9e",
+        "name": "Google Gemini Chat Model",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "uLXCpqN3fa4ZXZmj",
+            "name": "Google Gemini(PaLM) Api account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Webhook: Receive Feedback": {
+        "main": [
+          [
+            {
+              "node": "Respond: Success",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "AI Agent: Categorize Feedback",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AI Agent: Categorize Feedback": {
+        "main": [
+          [
+            {
+              "node": "Parse AI Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Parse AI Response": {
+        "main": [
+          [
+            {
+              "node": "Airtable: Save Message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Airtable: Save Message": {
+        "main": [
+          [
+            {
+              "node": "Is Feature Request?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Is Feature Request?": {
+        "main": [
+          [
+            {
+              "node": "Done (Feature Request)",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Done (Other)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OpenRouter Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Agent: Categorize Feedback",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Gemini Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Agent: Categorize Feedback",
+              "type": "ai_languageModel",
+              "index": 1
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jiri Zmidloch",
+    "name": "Version 5d9073d2",
+    "description": "",
+    "autosaved": true
+  },
+  "activeVersionId": "5d9073d2-7a8a-4ba7-85be-f93466ae843c",
+  "connections": {
+    "Webhook: Receive Feedback": {
+      "main": [
+        [
+          {
+            "node": "Respond: Success",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent: Categorize Feedback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent: Categorize Feedback": {
+      "main": [
+        [
+          {
+            "node": "Parse AI Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse AI Response": {
+      "main": [
+        [
+          {
+            "node": "Airtable: Save Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable: Save Message": {
+      "main": [
+        [
+          {
+            "node": "Is Feature Request?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Feature Request?": {
+      "main": [
+        [
+          {
+            "node": "Done (Feature Request)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Done (Other)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent: Categorize Feedback",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent: Categorize Feedback",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-27T07:45:13.069Z",
+  "id": "s6ASqQUvIsWISuco",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "QRlytics Feedback Processor",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "# QRlytics Feedback Processor\n\n**Trigger:** Webhook from QRlytics API\n\n**Flow:**\n1. Receive feedback from user\n2. AI Agent categorizes the message\n3. Save to Airtable 'User Messages' table\n4. If feature request: update Feature Proposals\n\n**Airtable Base:** app38w0AGRoW8JaZJ\n**Table:** User Messages",
+        "height": 368,
+        "width": 400,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -208,
+        -192
+      ],
+      "id": "info-note",
+      "name": "Workflow Info"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "qrlytics-feedback",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        208
+      ],
+      "id": "webhook-trigger",
+      "name": "Webhook: Receive Feedback",
+      "webhookId": "qrlytics-feedback"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"success\": true, \"processed\": true } }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        128,
+        432
+      ],
+      "id": "respond-webhook",
+      "name": "Respond: Success"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.message }}",
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "You are a feedback categorizer for QRlytics, a QR code analytics SaaS platform.\n\nQRlytics allows users to:\n- Create trackable QR codes\n- View scan analytics (location, time, device)\n- Customize QR code design (colors, logos)\n- Set up webhooks for real-time notifications\n- Use API for programmatic access\n\nAnalyze the user's feedback message and return a JSON response with the following structure:\n\n{\n  \"category\": \"feature_request\" | \"complaint\" | \"question\" | \"praise\" | \"other\" | \"irrelevant\",\n  \"summary\": \"Brief 1-sentence summary of the feedback\",\n  \"feature_name\": \"If feature request, a concise name for the feature (null otherwise)\",\n  \"priority\": \"low\" | \"medium\" | \"high\",\n  \"sentiment\": \"positive\" | \"neutral\" | \"negative\",\n  \"actionable\": true | false,\n  \"tags\": [\"array\", \"of\", \"relevant\", \"tags\"]\n}\n\nCategories:\n- feature_request: User is suggesting new functionality or improvements\n- complaint: User is unhappy about bugs, performance, or existing features\n- question: User is asking how to do something (should be redirected to support)\n- praise: User is expressing satisfaction or gratitude\n- other: General feedback that doesn't fit other categories\n- irrelevant: Spam, test messages, or completely off-topic content\n\nPriority guidelines:\n- high: Affects core functionality, multiple users likely affected, or urgent\n- medium: Nice-to-have improvement, moderate impact\n- low: Minor enhancement, edge case, or already possible workaround exists\n\nAlways respond with valid JSON only, no additional text."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        384,
+        208
+      ],
+      "id": "ai-agent",
+      "name": "AI Agent: Categorize Feedback"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse AI response and combine with original feedback\nconst feedback = $('Webhook: Receive Feedback').item.json.body;\nconst aiResponse = $input.item.json.output;\n\n// Try to parse AI response as JSON\nlet analysis;\ntry {\n  // Extract JSON from response (in case there's extra text)\n  const jsonMatch = aiResponse.match(/\\{[\\s\\S]*\\}/);\n  analysis = jsonMatch ? JSON.parse(jsonMatch[0]) : {};\n} catch (e) {\n  analysis = {\n    category: 'other',\n    summary: 'Failed to analyze',\n    feature_name: null,\n    priority: 'low',\n    sentiment: 'neutral',\n    actionable: false,\n    tags: []\n  };\n}\n\n// Map category to Airtable-friendly format\nconst categoryMap = {\n  'feature_request': 'Feature Request',\n  'complaint': 'Complaint',\n  'question': 'Question',\n  'praise': 'Praise',\n  'other': 'Other',\n  'irrelevant': 'Irrelevant'\n};\n\nconst priorityMap = {\n  'low': 'Low',\n  'medium': 'Medium',\n  'high': 'High'\n};\n\nreturn {\n  json: {\n    // Original feedback data\n    message_id: feedback.feedbackId,\n    user_id: feedback.userId,\n    user_email: feedback.userEmail,\n    user_name: feedback.userName || '',\n    subscription_tier: feedback.subscriptionTier,\n    is_vip: feedback.isVip,\n    message: feedback.message,\n    source: feedback.source || 'dashboard',\n    created_at: feedback.createdAt,\n    \n    // AI analysis\n    category: categoryMap[analysis.category] || 'Other',\n    ai_summary: analysis.summary || '',\n    feature_name: analysis.feature_name || '',\n    priority: priorityMap[analysis.priority] || 'Low',\n    sentiment: analysis.sentiment || 'neutral',\n    actionable: analysis.actionable || false,\n    tags: (analysis.tags || []).join(', '),\n    \n    // Status\n    status: 'New'\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        208
+      ],
+      "id": "parse-response",
+      "name": "Parse AI Response"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "mode": "id",
+          "value": "app38w0AGRoW8JaZJ"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "tblQxZ6T1tpHFHGYB"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Message ID": "={{ $json.message_id }}",
+            "User ID": "={{ $json.user_id }}",
+            "User Email": "={{ $json.user_email }}",
+            "User Name": "={{ $json.user_name }}",
+            "Subscription Tier": "={{ $json.subscription_tier }}",
+            "Is VIP": "={{ $json.is_vip }}",
+            "Message": "={{ $json.message }}",
+            "Source": "={{ $json.source }}",
+            "Category": "={{ $json.category }}",
+            "AI Summary": "={{ $json.ai_summary }}",
+            "Feature Name": "={{ $json.feature_name }}",
+            "Priority": "={{ $json.priority }}",
+            "Sentiment": "={{ $json.sentiment }}",
+            "Actionable": "={{ $json.actionable }}",
+            "Tags": "={{ $json.tags }}",
+            "Status": "={{ $json.status }}",
+            "Created At": "={{ $json.created_at }}"
+          }
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        880,
+        208
+      ],
+      "id": "airtable-create",
+      "name": "Airtable: Save Message",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "112UtIzO07XgrN7A",
+          "name": "Airtable - zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "is-feature-request",
+              "leftValue": "={{ $('Parse AI Response').item.json.category }}",
+              "rightValue": "Feature Request",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1104,
+        208
+      ],
+      "id": "is-feature-request",
+      "name": "Is Feature Request?"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1408,
+        304
+      ],
+      "id": "done-other",
+      "name": "Done (Other)"
+    },
+    {
+      "parameters": {
+        "content": "## TODO: Feature Proposals Logic\n\nWhen this is a feature request:\n1. Search existing Feature Proposals for similar features\n2. If found: increment vote count, link this message\n3. If not found: create new Feature Proposal\n\nThis requires manual setup of Feature Proposals table first.",
+        "height": 312,
+        "width": 350,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1024,
+        -192
+      ],
+      "id": "todo-note",
+      "name": "Feature Proposals (TODO)"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1408,
+        112
+      ],
+      "id": "feature-placeholder",
+      "name": "Done (Feature Request)"
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-sonnet-4.5",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        368,
+        432
+      ],
+      "id": "4283a42a-337e-4abd-9ebd-ec8d40272b09",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "XpZg3NCm0vRTBA75",
+          "name": "OpenRouter Z-AGENCY 2026"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        528,
+        432
+      ],
+      "id": "cdccf4b0-6eeb-4340-b8c3-86f7a37c6f9e",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uLXCpqN3fa4ZXZmj",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "timezone": "Europe/Prague",
+    "errorWorkflow": "zVAjJgKV17IWzFP7"
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-27T07:45:13.069Z",
+      "createdAt": "2026-01-27T07:45:13.069Z",
+      "role": "workflow:owner",
+      "workflowId": "s6ASqQUvIsWISuco",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-01-27T08:11:48.108Z",
+  "versionId": "5d9073d2-7a8a-4ba7-85be-f93466ae843c"
+}
