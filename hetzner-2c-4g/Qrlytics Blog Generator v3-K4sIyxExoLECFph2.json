@@ -1,0 +1,1655 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-01-29T00:45:26.221Z",
+    "createdAt": "2026-01-29T00:45:26.221Z",
+    "versionId": "19ac87b8-b018-4397-b888-77f283f42674",
+    "workflowId": "K4sIyxExoLECFph2",
+    "nodes": [
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "cronExpression",
+                "expression": "0 8 * * 1,4"
+              }
+            ]
+          }
+        },
+        "id": "schedule-trigger",
+        "name": "Schedule Trigger",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          304
+        ]
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "qrlytics-blog-generate",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "id": "webhook-trigger",
+        "name": "Webhook Trigger",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          0,
+          528
+        ],
+        "webhookId": "qrlytics-blog-generate"
+      },
+      {
+        "parameters": {
+          "content": "## Qrlytics Blog Generator v3\n\n**HTTP Request + Native Tavily**\n\n**Triggers:**\n- Schedule: Mon + Thu @ 8:00\n- Webhook: One-time generation\n\n**AI Models:**\n- Primary: OpenRouter (Claude Sonnet 4)\n- Fallback: Google Gemini\n\n**Research:**\n- Tavily (native)\n- Perplexity (HTTP)",
+          "height": 340,
+          "width": 300,
+          "color": 6
+        },
+        "id": "info-note",
+        "name": "Info",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          -336,
+          272
+        ]
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "source",
+                "name": "source",
+                "value": "scheduled",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "set-scheduled-source",
+        "name": "Set Scheduled Source",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          224,
+          304
+        ]
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "source",
+                "name": "source",
+                "value": "webhook",
+                "type": "string"
+              },
+              {
+                "id": "articleId",
+                "name": "articleId",
+                "value": "={{ $json.body?.articleId || $json.articleId }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "set-webhook-source",
+        "name": "Set Webhook Source",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          224,
+          528
+        ]
+      },
+      {
+        "parameters": {
+          "url": "https://supabase-zagency-u62265.vm.elestio.app/rest/v1/blog_articles",
+          "authentication": "none",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "select",
+                "value": "id,title,slug,article_type,status,primary_keywords"
+              },
+              {
+                "name": "status",
+                "value": "neq.archived"
+              },
+              {
+                "name": "limit",
+                "value": "50"
+              }
+            ]
+          },
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "apikey",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaXNzIjoic3VwYWJhc2UiLCJpYXQiOjE3Njg4MjMyMTEsImV4cCI6MjA4NDE4MzIxMX0.cmCye0Qp58RtFQaR3LLEX-bneipDE5qpC_xCt7xG1dc"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaXNzIjoic3VwYWJhc2UiLCJpYXQiOjE3Njg4MjMyMTEsImV4cCI6MjA4NDE4MzIxMX0.cmCye0Qp58RtFQaR3LLEX-bneipDE5qpC_xCt7xG1dc"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "fetch-existing-articles",
+        "name": "Fetch Existing Articles",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          672,
+          400
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const articles = Array.isArray($input.first().json) ? $input.first().json : [];\nconst source = $('Merge Sources').first().json;\n\nconst articleTypes = ['hot_news', 'tips', 'comparison', 'tutorial', 'case_study', 'event', 'deep_dive', 'beginners_guide', 'trends', 'tool_review'];\nconst typeCounts = {};\narticleTypes.forEach(t => typeCounts[t] = articles.filter(a => a.article_type === t).length);\n\nlet selectedType = articleTypes[0];\nlet minCount = Infinity;\narticleTypes.forEach(t => { if (typeCounts[t] < minCount) { minCount = typeCounts[t]; selectedType = t; }});\n\nconst topics = [\n  'QR code marketing strategies for small businesses',\n  'GPS tracking and location analytics best practices', \n  'Treasure hunting apps and QR code integration',\n  'Geocaching technology trends',\n  'Campaign tracking with QR codes',\n  'QR codes for restaurant menus',\n  'Event marketing with dynamic QR codes',\n  'Retail analytics using QR technology'\n];\n\nreturn {\n  json: {\n    selectedType,\n    suggestedTopic: topics[Math.floor(Math.random() * topics.length)],\n    existingTitles: articles.map(a => a.title).slice(0, 15),\n    source: source.source\n  }\n};"
+        },
+        "id": "determine-config",
+        "name": "Determine Config",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          880,
+          400
+        ]
+      },
+      {
+        "parameters": {
+          "query": "={{ $json.suggestedTopic }} 2025",
+          "options": {}
+        },
+        "id": "tavily-research",
+        "name": "Tavily Research",
+        "type": "@tavily/n8n-nodes-tavily.tavily",
+        "typeVersion": 1,
+        "position": [
+          1104,
+          304
+        ],
+        "credentials": {
+          "tavilyApi": {
+            "id": "KmiWEKpArgJSNmSk",
+            "name": "Tavily account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.perplexity.ai/chat/completions",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"model\": \"sonar-pro\",\n  \"messages\": [{\"role\": \"user\", \"content\": \"Research: {{ $('Determine Config').item.json.suggestedTopic }}. Provide keywords, audience insights, and key angles.\"}],\n  \"max_tokens\": 2000\n}",
+          "options": {
+            "timeout": 60000
+          }
+        },
+        "id": "perplexity-research",
+        "name": "Perplexity Research",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          1104,
+          512
+        ],
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "0thWCqbsIGEPqG5D",
+            "name": "Perplexity HTTP"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const config = $('Determine Config').first().json;\nconst tavily = $('Tavily Research').first().json;\nconst perplexity = $('Perplexity Research').first().json;\n\nreturn {\n  json: {\n    articleType: config.selectedType,\n    topic: config.suggestedTopic,\n    existingTitles: config.existingTitles,\n    research: {\n      tavily: (tavily.results || []).slice(0, 5).map(r => ({title: r.title, content: r.content?.substring(0, 400)})),\n      perplexity: perplexity.choices?.[0]?.message?.content || ''\n    }\n  }\n};"
+        },
+        "id": "aggregate-research",
+        "name": "Aggregate Research",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1328,
+          400
+        ]
+      },
+      {
+        "parameters": {
+          "needsFallback": true,
+          "options": {
+            "systemMessage": "You are an SEO content strategist. Create article plans in valid JSON format only. Return JSON with: title, slug, metaTitle, metaDescription, excerpt, primaryKeywords (array), secondaryKeywords (array), keyPoints (array), outline (array of {h2, content})."
+          }
+        },
+        "id": "planner-agent",
+        "name": "Content Planner Agent",
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 3.1,
+        "position": [
+          1552,
+          400
+        ]
+      },
+      {
+        "parameters": {
+          "model": "anthropic/claude-sonnet-4.5",
+          "options": {
+            "temperature": 0.4
+          }
+        },
+        "id": "openrouter-planner",
+        "name": "OpenRouter Planner",
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+        "typeVersion": 1,
+        "position": [
+          1472,
+          608
+        ],
+        "credentials": {
+          "openRouterApi": {
+            "id": "XpZg3NCm0vRTBA75",
+            "name": "OpenRouter Z-AGENCY 2026"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {
+            "maxOutputTokens": 4096,
+            "temperature": 0.4
+          }
+        },
+        "id": "gemini-planner",
+        "name": "Gemini Planner Fallback",
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          1632,
+          608
+        ],
+        "credentials": {
+          "googlePalmApi": {
+            "id": "uLXCpqN3fa4ZXZmj",
+            "name": "Google Gemini(PaLM) Api account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const input = $input.first().json;\nlet plan;\ntry {\n  const cleaned = (typeof input.output === 'string') ? input.output.replace(/```json\\n?/g, '').replace(/```/g, '').trim() : input.output;\n  plan = typeof cleaned === 'string' ? JSON.parse(cleaned) : cleaned;\n} catch (e) {\n  plan = {title: 'Marketing Article', slug: 'article-' + Date.now(), excerpt: 'Learn about marketing.', primaryKeywords: ['marketing'], outline: [{h2: 'Introduction'}]};\n}\nconst research = $('Aggregate Research').first().json;\nreturn {json: {plan, articleType: research.articleType, research: research.research}};"
+        },
+        "id": "parse-plan",
+        "name": "Parse Plan",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1824,
+          400
+        ]
+      },
+      {
+        "parameters": {
+          "needsFallback": true,
+          "options": {
+            "systemMessage": "You are an expert blog writer. Write comprehensive, SEO-optimized articles in Markdown format. Use ## for main sections and ### for subsections. Target 2000+ words. Include practical examples and actionable advice."
+          }
+        },
+        "id": "writer-agent",
+        "name": "Content Writer Agent",
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 3.1,
+        "position": [
+          1984,
+          400
+        ]
+      },
+      {
+        "parameters": {
+          "model": "anthropic/claude-sonnet-4.5",
+          "options": {
+            "temperature": 0.6
+          }
+        },
+        "id": "openrouter-writer",
+        "name": "OpenRouter Writer",
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+        "typeVersion": 1,
+        "position": [
+          1904,
+          608
+        ],
+        "credentials": {
+          "openRouterApi": {
+            "id": "XpZg3NCm0vRTBA75",
+            "name": "OpenRouter Z-AGENCY 2026"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {
+            "maxOutputTokens": 8192,
+            "temperature": 0.6
+          }
+        },
+        "id": "gemini-writer",
+        "name": "Gemini Writer Fallback",
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          2064,
+          608
+        ],
+        "credentials": {
+          "googlePalmApi": {
+            "id": "uLXCpqN3fa4ZXZmj",
+            "name": "Google Gemini(PaLM) Api account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "url": "https://supabase-zagency-u62265.vm.elestio.app/rest/v1/blog_articles",
+          "authentication": "none",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "select",
+                "value": "id,title,slug,excerpt"
+              },
+              {
+                "name": "status",
+                "value": "eq.published"
+              },
+              {
+                "name": "limit",
+                "value": "10"
+              }
+            ]
+          },
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "apikey",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaXNzIjoic3VwYWJhc2UiLCJpYXQiOjE3Njg4MjMyMTEsImV4cCI6MjA4NDE4MzIxMX0.cmCye0Qp58RtFQaR3LLEX-bneipDE5qpC_xCt7xG1dc"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaXNzIjoic3VwYWJhc2UiLCJpYXQiOjE3Njg4MjMyMTEsImV4cCI6MjA4NDE4MzIxMX0.cmCye0Qp58RtFQaR3LLEX-bneipDE5qpC_xCt7xG1dc"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "fetch-published",
+        "name": "Fetch Published Articles",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          2272,
+          400
+        ]
+      },
+      {
+        "parameters": {
+          "needsFallback": true,
+          "options": {
+            "systemMessage": "You are an SEO expert specializing in internal linking. Your task:\n1. Add exactly 3 internal links using format [anchor text](/blog/slug)\n2. Add 1-2 natural mentions of QRlytics where contextually appropriate\n3. Keep the original content structure intact\n4. Return the full article with links inserted naturally"
+          }
+        },
+        "id": "linker-agent",
+        "name": "Internal Linking Agent",
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 3.1,
+        "position": [
+          2432,
+          400
+        ]
+      },
+      {
+        "parameters": {
+          "model": "anthropic/claude-sonnet-4.5",
+          "options": {
+            "temperature": 0.3
+          }
+        },
+        "id": "openrouter-linker",
+        "name": "OpenRouter Linker",
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+        "typeVersion": 1,
+        "position": [
+          2352,
+          608
+        ],
+        "credentials": {
+          "openRouterApi": {
+            "id": "XpZg3NCm0vRTBA75",
+            "name": "OpenRouter Z-AGENCY 2026"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {
+            "maxOutputTokens": 8192,
+            "temperature": 0.3
+          }
+        },
+        "id": "gemini-linker",
+        "name": "Gemini Linker Fallback",
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          2496,
+          608
+        ],
+        "credentials": {
+          "googlePalmApi": {
+            "id": "uLXCpqN3fa4ZXZmj",
+            "name": "Google Gemini(PaLM) Api account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const plan = $('Parse Plan').first().json.plan;\nconst content = $('Internal Linking Agent').first().json.output || '';\nconst wordCount = content.split(/\\s+/).length;\nconst links = (content.match(/\\[([^\\]]+)\\]\\(\\/blog\\/([^)]+)\\)/g) || []).map(m => {\n  const p = m.match(/\\[([^\\]]+)\\]\\(\\/blog\\/([^)]+)\\)/);\n  return p ? {anchor: p[1], slug: p[2]} : null;\n}).filter(Boolean);\n\n// Generate unique slug\nconst baseSlug = (plan.slug || plan.title || 'article').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').substring(0, 80);\nconst uniqueSlug = baseSlug + '-' + Date.now().toString(36);\n\nreturn {json: {\n  title: plan.title || 'Untitled Article',\n  slug: uniqueSlug,\n  excerpt: plan.excerpt || plan.metaDescription || '',\n  content,\n  meta_title: plan.metaTitle || plan.title || '',\n  meta_description: plan.metaDescription || plan.excerpt || '',\n  primary_keywords: plan.primaryKeywords || [],\n  secondary_keywords: plan.secondaryKeywords || [],\n  key_takeaways: (plan.keyPoints || []).slice(0, 5),\n  outline: plan.outline || [],\n  word_count: wordCount,\n  reading_time_minutes: Math.ceil(wordCount / 200),\n  mentions_qrlytics: content.toLowerCase().includes('qrlytics'),\n  internal_links: links,\n  article_type: $('Parse Plan').first().json.articleType || 'tutorial',\n  status: 'review'\n}};"
+        },
+        "id": "process-content",
+        "name": "Process Content",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2704,
+          400
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://supabase-zagency-u62265.vm.elestio.app/rest/v1/blog_articles",
+          "authentication": "none",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "apikey",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaXNzIjoic3VwYWJhc2UiLCJpYXQiOjE3Njg4MjMyMTEsImV4cCI6MjA4NDE4MzIxMX0.cmCye0Qp58RtFQaR3LLEX-bneipDE5qpC_xCt7xG1dc"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaXNzIjoic3VwYWJhc2UiLCJpYXQiOjE3Njg4MjMyMTEsImV4cCI6MjA4NDE4MzIxMX0.cmCye0Qp58RtFQaR3LLEX-bneipDE5qpC_xCt7xG1dc"
+              },
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Prefer",
+                "value": "return=representation"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ JSON.stringify($json) }}",
+          "options": {}
+        },
+        "id": "save-supabase",
+        "name": "Save to Supabase",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          2864,
+          400
+        ]
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={\"success\": true, \"articleId\": \"{{ $json[0]?.id || $json.id }}\", \"title\": {{ JSON.stringify($json[0]?.title || $json.title) }}, \"status\": \"review\"}",
+          "options": {}
+        },
+        "id": "respond-webhook",
+        "name": "Respond to Webhook",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          3088,
+          400
+        ]
+      },
+      {
+        "parameters": {
+          "content": "## Credentials\n\n**Supabase:** Header Auth\n- apikey: service_role_key\n- Authorization: Bearer key\n\n**Tavily:** Native\n\n**Perplexity:** Header Auth\n- Authorization: Bearer key\n\n**OpenRouter:** Native\n\n**Google Gemini:** Native",
+          "height": 280,
+          "width": 260,
+          "color": 4
+        },
+        "id": "creds-note",
+        "name": "Credentials",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          3088,
+          80
+        ]
+      }
+    ],
+    "connections": {
+      "Schedule Trigger": {
+        "main": [
+          [
+            {
+              "node": "Set Scheduled Source",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Webhook Trigger": {
+        "main": [
+          [
+            {
+              "node": "Set Webhook Source",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set Scheduled Source": {
+        "main": [
+          [
+            {
+              "node": "Fetch Existing Articles",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set Webhook Source": {
+        "main": [
+          [
+            {
+              "node": "Fetch Existing Articles",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Fetch Existing Articles": {
+        "main": [
+          [
+            {
+              "node": "Determine Config",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Determine Config": {
+        "main": [
+          [
+            {
+              "node": "Tavily Research",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Perplexity Research",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Tavily Research": {
+        "main": [
+          [
+            {
+              "node": "Aggregate Research",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Perplexity Research": {
+        "main": [
+          [
+            {
+              "node": "Aggregate Research",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Aggregate Research": {
+        "main": [
+          [
+            {
+              "node": "Content Planner Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OpenRouter Planner": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Content Planner Agent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Gemini Planner Fallback": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Content Planner Agent",
+              "type": "ai_languageModel",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Content Planner Agent": {
+        "main": [
+          [
+            {
+              "node": "Parse Plan",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Parse Plan": {
+        "main": [
+          [
+            {
+              "node": "Content Writer Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OpenRouter Writer": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Content Writer Agent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Gemini Writer Fallback": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Content Writer Agent",
+              "type": "ai_languageModel",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Content Writer Agent": {
+        "main": [
+          [
+            {
+              "node": "Fetch Published Articles",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Fetch Published Articles": {
+        "main": [
+          [
+            {
+              "node": "Internal Linking Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OpenRouter Linker": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Internal Linking Agent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Gemini Linker Fallback": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Internal Linking Agent",
+              "type": "ai_languageModel",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Internal Linking Agent": {
+        "main": [
+          [
+            {
+              "node": "Process Content",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Process Content": {
+        "main": [
+          [
+            {
+              "node": "Save to Supabase",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Save to Supabase": {
+        "main": [
+          [
+            {
+              "node": "Respond to Webhook",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jiri Zmidloch",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "19ac87b8-b018-4397-b888-77f283f42674",
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Set Scheduled Source",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Set Webhook Source",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Scheduled Source": {
+      "main": [
+        [
+          {
+            "node": "Fetch Existing Articles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Webhook Source": {
+      "main": [
+        [
+          {
+            "node": "Fetch Existing Articles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Existing Articles": {
+      "main": [
+        [
+          {
+            "node": "Determine Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Determine Config": {
+      "main": [
+        [
+          {
+            "node": "Tavily Research",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Perplexity Research",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tavily Research": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Research",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Perplexity Research": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Research",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Research": {
+      "main": [
+        [
+          {
+            "node": "Content Planner Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Planner": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Content Planner Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Planner Fallback": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Content Planner Agent",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Content Planner Agent": {
+      "main": [
+        [
+          {
+            "node": "Parse Plan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Plan": {
+      "main": [
+        [
+          {
+            "node": "Content Writer Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Writer": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Content Writer Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Writer Fallback": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Content Writer Agent",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Content Writer Agent": {
+      "main": [
+        [
+          {
+            "node": "Fetch Published Articles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Published Articles": {
+      "main": [
+        [
+          {
+            "node": "Internal Linking Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Linker": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Internal Linking Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Linker Fallback": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Internal Linking Agent",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Internal Linking Agent": {
+      "main": [
+        [
+          {
+            "node": "Process Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Content": {
+      "main": [
+        [
+          {
+            "node": "Save to Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save to Supabase": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-28T23:56:45.537Z",
+  "id": "K4sIyxExoLECFph2",
+  "isArchived": false,
+  "meta": null,
+  "name": "Qrlytics Blog Generator v3",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * 1,4"
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "qrlytics-blog-generate",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        528
+      ],
+      "webhookId": "qrlytics-blog-generate"
+    },
+    {
+      "parameters": {
+        "content": "## Qrlytics Blog Generator v3\n\n**HTTP Request + Native Tavily**\n\n**Triggers:**\n- Schedule: Mon + Thu @ 8:00\n- Webhook: One-time generation\n\n**AI Models:**\n- Primary: OpenRouter (Claude Sonnet 4)\n- Fallback: Google Gemini\n\n**Research:**\n- Tavily (native)\n- Perplexity (HTTP)",
+        "height": 340,
+        "width": 300,
+        "color": 6
+      },
+      "id": "info-note",
+      "name": "Info",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -336,
+        272
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "source",
+              "name": "source",
+              "value": "scheduled",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-scheduled-source",
+      "name": "Set Scheduled Source",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "source",
+              "name": "source",
+              "value": "webhook",
+              "type": "string"
+            },
+            {
+              "id": "articleId",
+              "name": "articleId",
+              "value": "={{ $json.body?.articleId || $json.articleId }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-webhook-source",
+      "name": "Set Webhook Source",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        528
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://supabase-zagency-u62265.vm.elestio.app/rest/v1/blog_articles",
+        "authentication": "none",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "select",
+              "value": "id,title,slug,article_type,status,primary_keywords"
+            },
+            {
+              "name": "status",
+              "value": "neq.archived"
+            },
+            {
+              "name": "limit",
+              "value": "50"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaXNzIjoic3VwYWJhc2UiLCJpYXQiOjE3Njg4MjMyMTEsImV4cCI6MjA4NDE4MzIxMX0.cmCye0Qp58RtFQaR3LLEX-bneipDE5qpC_xCt7xG1dc"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaXNzIjoic3VwYWJhc2UiLCJpYXQiOjE3Njg4MjMyMTEsImV4cCI6MjA4NDE4MzIxMX0.cmCye0Qp58RtFQaR3LLEX-bneipDE5qpC_xCt7xG1dc"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fetch-existing-articles",
+      "name": "Fetch Existing Articles",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        672,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const articles = Array.isArray($input.first().json) ? $input.first().json : [];\nconst source = $('Merge Sources').first().json;\n\nconst articleTypes = ['hot_news', 'tips', 'comparison', 'tutorial', 'case_study', 'event', 'deep_dive', 'beginners_guide', 'trends', 'tool_review'];\nconst typeCounts = {};\narticleTypes.forEach(t => typeCounts[t] = articles.filter(a => a.article_type === t).length);\n\nlet selectedType = articleTypes[0];\nlet minCount = Infinity;\narticleTypes.forEach(t => { if (typeCounts[t] < minCount) { minCount = typeCounts[t]; selectedType = t; }});\n\nconst topics = [\n  'QR code marketing strategies for small businesses',\n  'GPS tracking and location analytics best practices', \n  'Treasure hunting apps and QR code integration',\n  'Geocaching technology trends',\n  'Campaign tracking with QR codes',\n  'QR codes for restaurant menus',\n  'Event marketing with dynamic QR codes',\n  'Retail analytics using QR technology'\n];\n\nreturn {\n  json: {\n    selectedType,\n    suggestedTopic: topics[Math.floor(Math.random() * topics.length)],\n    existingTitles: articles.map(a => a.title).slice(0, 15),\n    source: source.source\n  }\n};"
+      },
+      "id": "determine-config",
+      "name": "Determine Config",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "query": "={{ $json.suggestedTopic }} 2025",
+        "options": {}
+      },
+      "id": "tavily-research",
+      "name": "Tavily Research",
+      "type": "@tavily/n8n-nodes-tavily.tavily",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        304
+      ],
+      "credentials": {
+        "tavilyApi": {
+          "id": "KmiWEKpArgJSNmSk",
+          "name": "Tavily account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.perplexity.ai/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"sonar-pro\",\n  \"messages\": [{\"role\": \"user\", \"content\": \"Research: {{ $('Determine Config').item.json.suggestedTopic }}. Provide keywords, audience insights, and key angles.\"}],\n  \"max_tokens\": 2000\n}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "perplexity-research",
+      "name": "Perplexity Research",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1104,
+        512
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "0thWCqbsIGEPqG5D",
+          "name": "Perplexity HTTP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const config = $('Determine Config').first().json;\nconst tavily = $('Tavily Research').first().json;\nconst perplexity = $('Perplexity Research').first().json;\n\nreturn {\n  json: {\n    articleType: config.selectedType,\n    topic: config.suggestedTopic,\n    existingTitles: config.existingTitles,\n    research: {\n      tavily: (tavily.results || []).slice(0, 5).map(r => ({title: r.title, content: r.content?.substring(0, 400)})),\n      perplexity: perplexity.choices?.[0]?.message?.content || ''\n    }\n  }\n};"
+      },
+      "id": "aggregate-research",
+      "name": "Aggregate Research",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1328,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "You are an SEO content strategist. Create article plans in valid JSON format only. Return JSON with: title, slug, metaTitle, metaDescription, excerpt, primaryKeywords (array), secondaryKeywords (array), keyPoints (array), outline (array of {h2, content})."
+        }
+      },
+      "id": "planner-agent",
+      "name": "Content Planner Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1552,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-sonnet-4.5",
+        "options": {
+          "temperature": 0.4
+        }
+      },
+      "id": "openrouter-planner",
+      "name": "OpenRouter Planner",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1472,
+        608
+      ],
+      "credentials": {
+        "openRouterApi": {
+          "id": "XpZg3NCm0vRTBA75",
+          "name": "OpenRouter Z-AGENCY 2026"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "maxOutputTokens": 4096,
+          "temperature": 0.4
+        }
+      },
+      "id": "gemini-planner",
+      "name": "Gemini Planner Fallback",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1632,
+        608
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uLXCpqN3fa4ZXZmj",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.first().json;\nlet plan;\ntry {\n  const cleaned = (typeof input.output === 'string') ? input.output.replace(/```json\\n?/g, '').replace(/```/g, '').trim() : input.output;\n  plan = typeof cleaned === 'string' ? JSON.parse(cleaned) : cleaned;\n} catch (e) {\n  plan = {title: 'Marketing Article', slug: 'article-' + Date.now(), excerpt: 'Learn about marketing.', primaryKeywords: ['marketing'], outline: [{h2: 'Introduction'}]};\n}\nconst research = $('Aggregate Research').first().json;\nreturn {json: {plan, articleType: research.articleType, research: research.research}};"
+      },
+      "id": "parse-plan",
+      "name": "Parse Plan",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1824,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "You are an expert blog writer. Write comprehensive, SEO-optimized articles in Markdown format. Use ## for main sections and ### for subsections. Target 2000+ words. Include practical examples and actionable advice."
+        }
+      },
+      "id": "writer-agent",
+      "name": "Content Writer Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1984,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-sonnet-4.5",
+        "options": {
+          "temperature": 0.6
+        }
+      },
+      "id": "openrouter-writer",
+      "name": "OpenRouter Writer",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1904,
+        608
+      ],
+      "credentials": {
+        "openRouterApi": {
+          "id": "XpZg3NCm0vRTBA75",
+          "name": "OpenRouter Z-AGENCY 2026"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "maxOutputTokens": 8192,
+          "temperature": 0.6
+        }
+      },
+      "id": "gemini-writer",
+      "name": "Gemini Writer Fallback",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2064,
+        608
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uLXCpqN3fa4ZXZmj",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://supabase-zagency-u62265.vm.elestio.app/rest/v1/blog_articles",
+        "authentication": "none",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "select",
+              "value": "id,title,slug,excerpt"
+            },
+            {
+              "name": "status",
+              "value": "eq.published"
+            },
+            {
+              "name": "limit",
+              "value": "10"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaXNzIjoic3VwYWJhc2UiLCJpYXQiOjE3Njg4MjMyMTEsImV4cCI6MjA4NDE4MzIxMX0.cmCye0Qp58RtFQaR3LLEX-bneipDE5qpC_xCt7xG1dc"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaXNzIjoic3VwYWJhc2UiLCJpYXQiOjE3Njg4MjMyMTEsImV4cCI6MjA4NDE4MzIxMX0.cmCye0Qp58RtFQaR3LLEX-bneipDE5qpC_xCt7xG1dc"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fetch-published",
+      "name": "Fetch Published Articles",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2272,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "You are an SEO expert specializing in internal linking. Your task:\n1. Add exactly 3 internal links using format [anchor text](/blog/slug)\n2. Add 1-2 natural mentions of QRlytics where contextually appropriate\n3. Keep the original content structure intact\n4. Return the full article with links inserted naturally"
+        }
+      },
+      "id": "linker-agent",
+      "name": "Internal Linking Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        2432,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-sonnet-4.5",
+        "options": {
+          "temperature": 0.3
+        }
+      },
+      "id": "openrouter-linker",
+      "name": "OpenRouter Linker",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        2352,
+        608
+      ],
+      "credentials": {
+        "openRouterApi": {
+          "id": "XpZg3NCm0vRTBA75",
+          "name": "OpenRouter Z-AGENCY 2026"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "maxOutputTokens": 8192,
+          "temperature": 0.3
+        }
+      },
+      "id": "gemini-linker",
+      "name": "Gemini Linker Fallback",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2496,
+        608
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uLXCpqN3fa4ZXZmj",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const plan = $('Parse Plan').first().json.plan;\nconst content = $('Internal Linking Agent').first().json.output || '';\nconst wordCount = content.split(/\\s+/).length;\nconst links = (content.match(/\\[([^\\]]+)\\]\\(\\/blog\\/([^)]+)\\)/g) || []).map(m => {\n  const p = m.match(/\\[([^\\]]+)\\]\\(\\/blog\\/([^)]+)\\)/);\n  return p ? {anchor: p[1], slug: p[2]} : null;\n}).filter(Boolean);\n\n// Generate unique slug\nconst baseSlug = (plan.slug || plan.title || 'article').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').substring(0, 80);\nconst uniqueSlug = baseSlug + '-' + Date.now().toString(36);\n\nreturn {json: {\n  title: plan.title || 'Untitled Article',\n  slug: uniqueSlug,\n  excerpt: plan.excerpt || plan.metaDescription || '',\n  content,\n  meta_title: plan.metaTitle || plan.title || '',\n  meta_description: plan.metaDescription || plan.excerpt || '',\n  primary_keywords: plan.primaryKeywords || [],\n  secondary_keywords: plan.secondaryKeywords || [],\n  key_takeaways: (plan.keyPoints || []).slice(0, 5),\n  outline: plan.outline || [],\n  word_count: wordCount,\n  reading_time_minutes: Math.ceil(wordCount / 200),\n  mentions_qrlytics: content.toLowerCase().includes('qrlytics'),\n  internal_links: links,\n  article_type: $('Parse Plan').first().json.articleType || 'tutorial',\n  status: 'review'\n}};"
+      },
+      "id": "process-content",
+      "name": "Process Content",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2704,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://supabase-zagency-u62265.vm.elestio.app/rest/v1/blog_articles",
+        "authentication": "none",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaXNzIjoic3VwYWJhc2UiLCJpYXQiOjE3Njg4MjMyMTEsImV4cCI6MjA4NDE4MzIxMX0.cmCye0Qp58RtFQaR3LLEX-bneipDE5qpC_xCt7xG1dc"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaXNzIjoic3VwYWJhc2UiLCJpYXQiOjE3Njg4MjMyMTEsImV4cCI6MjA4NDE4MzIxMX0.cmCye0Qp58RtFQaR3LLEX-bneipDE5qpC_xCt7xG1dc"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "save-supabase",
+      "name": "Save to Supabase",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2864,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"success\": true, \"articleId\": \"{{ $json[0]?.id || $json.id }}\", \"title\": {{ JSON.stringify($json[0]?.title || $json.title) }}, \"status\": \"review\"}",
+        "options": {}
+      },
+      "id": "respond-webhook",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        3088,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Credentials\n\n**Supabase:** Header Auth\n- apikey: service_role_key\n- Authorization: Bearer key\n\n**Tavily:** Native\n\n**Perplexity:** Header Auth\n- Authorization: Bearer key\n\n**OpenRouter:** Native\n\n**Google Gemini:** Native",
+        "height": 280,
+        "width": 260,
+        "color": 4
+      },
+      "id": "creds-note",
+      "name": "Credentials",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3088,
+        80
+      ]
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "timezone": "Europe/Prague",
+    "errorWorkflow": "zVAjJgKV17IWzFP7"
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-28T23:56:45.537Z",
+      "createdAt": "2026-01-28T23:56:45.537Z",
+      "role": "workflow:owner",
+      "workflowId": "K4sIyxExoLECFph2",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 2,
+  "updatedAt": "2026-01-29T00:45:26.218Z",
+  "versionId": "19ac87b8-b018-4397-b888-77f283f42674"
+}
