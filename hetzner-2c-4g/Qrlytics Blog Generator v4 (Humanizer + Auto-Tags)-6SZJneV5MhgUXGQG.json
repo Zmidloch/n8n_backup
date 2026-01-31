@@ -1,0 +1,1393 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Set Scheduled Source",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Set Webhook Source",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Scheduled Source": {
+      "main": [
+        [
+          {
+            "node": "Merge Sources",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Webhook Source": {
+      "main": [
+        [
+          {
+            "node": "Merge Sources",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge Sources": {
+      "main": [
+        [
+          {
+            "node": "Fetch Existing Articles",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Fetch Available Tags",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Existing Articles": {
+      "main": [
+        [
+          {
+            "node": "Merge Articles & Tags",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Available Tags": {
+      "main": [
+        [
+          {
+            "node": "Merge Articles & Tags",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge Articles & Tags": {
+      "main": [
+        [
+          {
+            "node": "Determine Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Determine Config": {
+      "main": [
+        [
+          {
+            "node": "Tavily Research",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Perplexity Research",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tavily Research": {
+      "main": [
+        [
+          {
+            "node": "Merge Research",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Perplexity Research": {
+      "main": [
+        [
+          {
+            "node": "Merge Research",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge Research": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Research",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Research": {
+      "main": [
+        [
+          {
+            "node": "Content Planner Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Planner": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Content Planner Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Planner Fallback": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Content Planner Agent",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Content Planner Agent": {
+      "main": [
+        [
+          {
+            "node": "Parse Plan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Plan": {
+      "main": [
+        [
+          {
+            "node": "Content Writer Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Writer": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Content Writer Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Writer Fallback": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Content Writer Agent",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Content Writer Agent": {
+      "main": [
+        [
+          {
+            "node": "Humanizer Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude (Humanizer)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Humanizer Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Humanizer Fallback": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Humanizer Agent",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Humanizer Agent": {
+      "main": [
+        [
+          {
+            "node": "Fetch Published Articles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Published Articles": {
+      "main": [
+        [
+          {
+            "node": "Internal Linking Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Linker": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Internal Linking Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Linker Fallback": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Internal Linking Agent",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Internal Linking Agent": {
+      "main": [
+        [
+          {
+            "node": "Process Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Content": {
+      "main": [
+        [
+          {
+            "node": "Fetch Auto-Publish Setting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Auto-Publish Setting": {
+      "main": [
+        [
+          {
+            "node": "Determine Final Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Determine Final Status": {
+      "main": [
+        [
+          {
+            "node": "Route by Mode",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route by Mode": {
+      "main": [
+        [
+          {
+            "node": "Update Article (PATCH)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Save to Supabase (POST)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Article (PATCH)": {
+      "main": [
+        [
+          {
+            "node": "Merge Save Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save to Supabase (POST)": {
+      "main": [
+        [
+          {
+            "node": "Merge Save Results",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge Save Results": {
+      "main": [
+        [
+          {
+            "node": "Prepare Tag Inserts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Tag Inserts": {
+      "main": [
+        [
+          {
+            "node": "If Has Tags",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Has Tags": {
+      "main": [
+        [
+          {
+            "node": "Insert Article Tags",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert Article Tags": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-31T22:18:47.746Z",
+  "id": "6SZJneV5MhgUXGQG",
+  "isArchived": true,
+  "meta": null,
+  "name": "Qrlytics Blog Generator v4 (Humanizer + Auto-Tags)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * 1,4"
+            }
+          ]
+        }
+      },
+      "id": "1a7b64e4-7b27-4a26-aab1-c136f2b7d730",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -3360,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "qrlytics-blog-generate-v2",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "926d67e5-3278-41a6-872c-d852e06e43be",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -3360,
+        528
+      ],
+      "webhookId": "qrlytics-blog-generate"
+    },
+    {
+      "parameters": {
+        "content": "## Qrlytics Blog Generator v4\n\n**HTTP Request + Native Tavily + Auto-Tags + Humanizer**\n\n**Triggers:**\n- Schedule: Mon + Thu @ 8:00\n- Webhook: One-time generation\n\n**AI Models:**\n- Primary: OpenRouter (Claude Sonnet 4/4.5)\n- Fallback: Google Gemini\n\n**Research:**\n- Tavily (native)\n- Perplexity (HTTP)\n\n**Humanizer:**\n- Removes AI clichés (\"In today's world...\")\n- Makes content sound natural\n- Preserves structure & accuracy\n\n**Auto-Tags:**\n- Fetches available tags from blog_tags\n- Planner selects 1-3 relevant tags\n- Tags inserted into blog_article_tags",
+        "height": 500,
+        "width": 300,
+        "color": 6
+      },
+      "id": "f460aad9-87b7-4090-8c99-52d82f537aef",
+      "name": "Info",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -3696,
+        272
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "source",
+              "name": "source",
+              "value": "scheduled",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "83ca0e85-c0c3-43b9-a425-2f0b58fb68cc",
+      "name": "Set Scheduled Source",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -3136,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "source",
+              "name": "source",
+              "value": "webhook",
+              "type": "string"
+            },
+            {
+              "id": "articleId",
+              "name": "articleId",
+              "value": "={{ $json.body?.articleId || $json.articleId }}",
+              "type": "string"
+            },
+            {
+              "id": "description",
+              "name": "description",
+              "value": "={{ $json.body?.config?.description || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "wordCount",
+              "name": "wordCount",
+              "value": "={{ $json.body?.config?.wordCount || 2000 }}",
+              "type": "number"
+            },
+            {
+              "id": "isOneTime",
+              "name": "isOneTime",
+              "value": true,
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4c2d40af-5089-4a66-b4e4-c69fd0b15a17",
+      "name": "Set Webhook Source",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -3136,
+        528
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "fa798bd2-99bb-4d7d-a4f8-b07d33119b78",
+      "name": "Merge Sources",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        -2912,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://supabase-zagency-u62265.vm.elestio.app/rest/v1/blog_articles",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "select",
+              "value": "id,title,slug,article_type,status,primary_keywords"
+            },
+            {
+              "name": "status",
+              "value": "neq.archived"
+            },
+            {
+              "name": "limit",
+              "value": "50"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $env.SUPABASE_SERVICE_ROLE_KEY }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3b70a115-c30c-46af-91d2-bea18d49683f",
+      "name": "Fetch Existing Articles",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -2688,
+        300
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "96dmobSqU3FUwyV2",
+          "name": "Supabase HTTP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://supabase-zagency-u62265.vm.elestio.app/rest/v1/blog_tags",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "select",
+              "value": "id,name,slug"
+            },
+            {
+              "name": "order",
+              "value": "name.asc"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $env.SUPABASE_SERVICE_ROLE_KEY }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fetch-available-tags",
+      "name": "Fetch Available Tags",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -2688,
+        500
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "96dmobSqU3FUwyV2",
+          "name": "Supabase HTTP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "options": {}
+      },
+      "id": "merge-articles-tags",
+      "name": "Merge Articles & Tags",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        -2480,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const allItems = $input.all();\nlet articles = [];\nlet availableTags = [];\n\nfor (const item of allItems) {\n  const json = item.json;\n  // Detect articles by article_type field\n  if (Array.isArray(json)) {\n    if (json[0]?.article_type !== undefined) {\n      articles = json;\n    } else if (json[0]?.slug !== undefined && json[0]?.name !== undefined) {\n      availableTags = json;\n    }\n  }\n}\n\nconst source = $('Merge Sources').first().json;\n\nconst articleTypes = ['hot_news', 'tips', 'comparison', 'tutorial', 'case_study', 'event', 'deep_dive', 'beginners_guide', 'trends', 'tool_review'];\nconst typeCounts = {};\narticleTypes.forEach(t => typeCounts[t] = articles.filter(a => a.article_type === t).length);\n\nlet selectedType = articleTypes[0];\nlet minCount = Infinity;\narticleTypes.forEach(t => { if (typeCounts[t] < minCount) { minCount = typeCounts[t]; selectedType = t; }});\n\n// Use webhook description OR random topic\nlet suggestedTopic;\nif (source.source === 'webhook' && source.description) {\n  suggestedTopic = source.description;\n} else {\n  const topics = [\n    'QR code marketing strategies for small businesses',\n    'GPS tracking and location analytics best practices',\n    'Treasure hunting apps and QR code integration',\n    'Geocaching technology trends',\n    'Campaign tracking with QR codes',\n    'QR codes for restaurant menus',\n    'Event marketing with dynamic QR codes',\n    'Retail analytics using QR technology'\n  ];\n  suggestedTopic = topics[Math.floor(Math.random() * topics.length)];\n}\n\nreturn {\n  json: {\n    selectedType,\n    suggestedTopic,\n    existingTitles: articles.map(a => a.title).slice(0, 15),\n    availableTags: availableTags.map(t => ({ id: t.id, name: t.name, slug: t.slug })),\n    source: source.source,\n    articleId: source.articleId || null,\n    wordCount: source.wordCount || 2000,\n    isOneTime: source.isOneTime || false\n  }\n};"
+      },
+      "id": "11f4b3e0-eee3-434f-83db-f468e079d640",
+      "name": "Determine Config",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2256,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "query": "={{ $json.suggestedTopic }} 2025",
+        "options": {}
+      },
+      "id": "b239ac29-f78a-4059-8657-4d724d1ae41e",
+      "name": "Tavily Research",
+      "type": "@tavily/n8n-nodes-tavily.tavily",
+      "typeVersion": 1,
+      "position": [
+        -2032,
+        304
+      ],
+      "credentials": {
+        "tavilyApi": {
+          "id": "KmiWEKpArgJSNmSk",
+          "name": "Tavily account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.perplexity.ai/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"sonar-pro\",\n  \"messages\": [{\"role\": \"user\", \"content\": \"Research: {{ $('Determine Config').item.json.suggestedTopic }}. Provide keywords, audience insights, and key angles.\"}],\n  \"max_tokens\": 2000\n}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "14649bdb-62ce-4348-aa99-536de15fd6ea",
+      "name": "Perplexity Research",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -2032,
+        512
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "0thWCqbsIGEPqG5D",
+          "name": "Perplexity HTTP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "options": {}
+      },
+      "id": "44a98d4e-6afb-4126-8bfb-707d69f1c9a5",
+      "name": "Merge Research",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        -1808,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const config = $('Determine Config').first().json;\n\n// Get all input items from Merge Research\nconst allItems = $input.all();\n\nlet tavilyData = [];\nlet perplexityData = '';\n\nfor (const item of allItems) {\n  const json = item.json;\n  // Detect Tavily by 'results' array\n  if (json.results && Array.isArray(json.results)) {\n    tavilyData = json.results.slice(0, 5).map(r => ({\n      title: r.title,\n      content: r.content?.substring(0, 400)\n    }));\n  }\n  // Detect Perplexity by 'choices' array\n  if (json.choices && Array.isArray(json.choices)) {\n    perplexityData = json.choices[0]?.message?.content || '';\n  }\n}\n\nreturn {\n  json: {\n    articleType: config.selectedType,\n    topic: config.suggestedTopic,\n    existingTitles: config.existingTitles,\n    availableTags: config.availableTags,\n    research: {\n      tavily: tavilyData,\n      perplexity: perplexityData\n    }\n  }\n};"
+      },
+      "id": "b2c16c40-d517-45cf-b22d-c404bd94d27f",
+      "name": "Aggregate Research",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1584,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "You are an SEO content strategist. Create article plans in valid JSON format only.\n\nReturn JSON with:\n- title, slug, metaTitle, metaDescription, excerpt\n- primaryKeywords (array), secondaryKeywords (array)\n- keyPoints (array), outline (array of {h2, content})\n- suggestedTags: array of 1-3 tag SLUGS from the availableTags list that best match the article content\n\nIMPORTANT: For suggestedTags, ONLY use slugs from the provided availableTags list. Select 1-3 most relevant tags based on the article topic and content."
+        }
+      },
+      "id": "d989b75b-5f43-478a-902c-5dff76c33906",
+      "name": "Content Planner Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -1376,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-sonnet-4.5",
+        "options": {
+          "temperature": 0.4
+        }
+      },
+      "id": "abafcd0a-f97f-45f9-b8d4-62011a724dab",
+      "name": "OpenRouter Planner",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -1552,
+        624
+      ],
+      "credentials": {
+        "openRouterApi": {
+          "id": "XpZg3NCm0vRTBA75",
+          "name": "OpenRouter Z-AGENCY 2026"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "maxOutputTokens": 4096,
+          "temperature": 0.4
+        }
+      },
+      "id": "e3d018d4-1d80-409d-b238-4ccb6c18193f",
+      "name": "Gemini Planner Fallback",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -1376,
+        608
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uLXCpqN3fa4ZXZmj",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.first().json;\nlet plan;\ntry {\n  const cleaned = (typeof input.output === 'string') ? input.output.replace(/```json\\n?/g, '').replace(/```/g, '').trim() : input.output;\n  plan = typeof cleaned === 'string' ? JSON.parse(cleaned) : cleaned;\n} catch (e) {\n  plan = {title: 'Marketing Article', slug: 'article-' + Date.now(), excerpt: 'Learn about marketing.', primaryKeywords: ['marketing'], outline: [{h2: 'Introduction'}], suggestedTags: []};\n}\nconst research = $('Aggregate Research').first().json;\nreturn {json: {plan, articleType: research.articleType, availableTags: research.availableTags, research: research.research}};"
+      },
+      "id": "6dd74da7-b973-4805-be85-652d284d8857",
+      "name": "Parse Plan",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1120,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "You are an expert blog writer. Write comprehensive, SEO-optimized articles in Markdown format. Use ## for main sections and ### for subsections. Target 2000+ words. Include practical examples and actionable advice."
+        }
+      },
+      "id": "11a4f42e-da9b-43d3-a3d3-9dfb6e254dbb",
+      "name": "Content Writer Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -944,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-sonnet-4",
+        "options": {
+          "temperature": 0.6
+        }
+      },
+      "id": "ad9418fd-4a8e-41af-ac40-101c77775d14",
+      "name": "OpenRouter Writer",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -1040,
+        608
+      ],
+      "credentials": {
+        "openRouterApi": {
+          "id": "XpZg3NCm0vRTBA75",
+          "name": "OpenRouter Z-AGENCY 2026"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "maxOutputTokens": 8192,
+          "temperature": 0.6
+        }
+      },
+      "id": "f91ec808-1f0e-4246-a853-074f19c0a2a3",
+      "name": "Gemini Writer Fallback",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -896,
+        592
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uLXCpqN3fa4ZXZmj",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Humanize the following article content to make it sound more natural and engaging.\n\n## TITLE\n{{ $('Parse Plan').first().json.plan.title }}\n\n## CONTENT\n{{ $('Content Writer Agent').first().json.output }}\n\n---\n\n## FORBIDDEN PHRASES (never use these robotic AI clichés):\n- \"In today's world\", \"In today's digital age\", \"In today's fast-paced world\"\n- \"It's important to note\", \"It's worth mentioning\", \"It goes without saying\"\n- \"In conclusion\", \"To sum up\", \"As we've seen\"\n- \"Let's dive in\", \"Let's explore\", \"Let's take a look\"\n- \"As you may know\", \"As we all know\", \"Needless to say\"\n- \"In this article\", \"In this guide\", \"In this post\"\n- \"At the end of the day\", \"When all is said and done\"\n- \"Game-changer\", \"Revolutionary\", \"Cutting-edge\" (unless truly warranted)\n- Avoid robotic transitions. Go straight to the point.\n\n## Guidelines:\n- Make the text flow naturally as if written by a skilled human writer\n- Replace forbidden phrases with direct, specific statements\n- Keep the factual accuracy intact\n- Maintain the structure (headings, lists)\n- Use varied sentence lengths\n- Keep technical terms accurate\n- Target audience: marketing professionals, business owners, developers\n\nReturn the humanized content in the same format as input (Markdown).\n\n**OUTPUT INSTRUCTION:**\nReturn ONLY the humanized content. Do NOT add any introductory or concluding remarks. Start immediately with the content.",
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "You are an expert English copywriter who specializes in making AI-generated content sound natural and human.\n\nCRITICAL OUTPUT RULES:\n1. Return ONLY the raw HTML/Markdown content.\n2. Do NOT include any conversational filler (e.g., \"Here is the text\", \"Sure, here's...\")\n3. Do NOT wrap the output in markdown code blocks (like ```html)\n4. Start directly with the first content element"
+        }
+      },
+      "id": "humanizer-agent",
+      "name": "Humanizer Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -800,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-sonnet-4.5",
+        "options": {
+          "temperature": 0.6
+        }
+      },
+      "id": "claude-humanizer",
+      "name": "Claude (Humanizer)",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -880,
+        608
+      ],
+      "credentials": {
+        "openRouterApi": {
+          "id": "XpZg3NCm0vRTBA75",
+          "name": "OpenRouter Z-AGENCY 2026"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "maxOutputTokens": 8192,
+          "temperature": 0.6
+        }
+      },
+      "id": "gemini-humanizer-fallback",
+      "name": "Gemini Humanizer Fallback",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -720,
+        608
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uLXCpqN3fa4ZXZmj",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://supabase-zagency-u62265.vm.elestio.app/rest/v1/blog_articles",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "select",
+              "value": "id,title,slug,excerpt"
+            },
+            {
+              "name": "status",
+              "value": "eq.published"
+            },
+            {
+              "name": "limit",
+              "value": "10"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $env.SUPABASE_SERVICE_ROLE_KEY }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ebcf1c69-cba8-49b8-8556-57d995784661",
+      "name": "Fetch Published Articles",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -560,
+        400
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "96dmobSqU3FUwyV2",
+          "name": "Supabase HTTP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Add internal links to this article.\n\n## ARTICLE CONTENT\n{{ $('Humanizer Agent').first().json.output }}\n\n## AVAILABLE ARTICLES FOR LINKING\n{{ JSON.stringify($input.first().json) }}\n\n## INSTRUCTIONS\n1. Add exactly 3 internal links using format [anchor text](/blog/slug)\n2. Add 1-2 natural mentions of QRlytics where contextually appropriate\n3. Keep the original content structure intact\n4. Return the full article with links inserted naturally\n\n**OUTPUT INSTRUCTION:**\nReturn ONLY the article content with links. Do NOT add any introductory or concluding remarks.",
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "You are an SEO expert specializing in internal linking. Your task is to add internal links to articles. Return ONLY the article content - no explanations, no markdown code blocks."
+        }
+      },
+      "id": "eb93c530-98bf-45e8-bdbf-d12c6289b77d",
+      "name": "Internal Linking Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -384,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-sonnet-4.5",
+        "options": {
+          "temperature": 0.3
+        }
+      },
+      "id": "4764e3ec-2474-4524-8821-e589e84a0a8c",
+      "name": "OpenRouter Linker",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -464,
+        640
+      ],
+      "credentials": {
+        "openRouterApi": {
+          "id": "XpZg3NCm0vRTBA75",
+          "name": "OpenRouter Z-AGENCY 2026"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "maxOutputTokens": 8192,
+          "temperature": 0.3
+        }
+      },
+      "id": "865d6ca8-337d-4bec-b9f1-382082300b26",
+      "name": "Gemini Linker Fallback",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -304,
+        624
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uLXCpqN3fa4ZXZmj",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const parsePlan = $('Parse Plan').first().json;\nconst plan = parsePlan.plan;\nconst availableTags = parsePlan.availableTags || [];\nconst config = $('Determine Config').first().json;\nconst content = $('Internal Linking Agent').first().json.output || '';\nconst wordCount = content.split(/\\s+/).length;\n\nconst links = (content.match(/\\[([^\\]]+)\\]\\(\\/blog\\/([^)]+)\\)/g) || []).map(m => {\n  const p = m.match(/\\[([^\\]]+)\\]\\(\\/blog\\/([^)]+)\\)/);\n  return p ? {anchor: p[1], slug: p[2]} : null;\n}).filter(Boolean);\n\n// Generate SEO-friendly slug from title\nconst baseSlug = (plan.slug || plan.title || 'article').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').substring(0, 80);\n// ONE-TIME: use clean slug (article already exists, no need for uniqueness)\n// AUTOPILOT: add timestamp suffix for uniqueness of new article\nconst finalSlug = config.isOneTime ? baseSlug : (baseSlug + '-' + Date.now().toString(36));\n\n// Resolve suggested tag slugs to tag IDs\nconst suggestedTagSlugs = plan.suggestedTags || [];\nconst tagIds = suggestedTagSlugs\n  .map(slug => availableTags.find(t => t.slug === slug)?.id)\n  .filter(Boolean);\n\nreturn {\n  json: {\n    title: plan.title || 'Untitled Article',\n    slug: finalSlug,\n    excerpt: (plan.excerpt || plan.metaDescription || '').substring(0, 300),\n    content,\n    meta_title: (plan.metaTitle || plan.title || '').substring(0, 70),\n    meta_description: (plan.metaDescription || plan.excerpt || '').substring(0, 155),\n    primary_keywords: plan.primaryKeywords || [],\n    secondary_keywords: plan.secondaryKeywords || [],\n    key_takeaways: (plan.keyPoints || []).slice(0, 5),\n    outline: plan.outline || [],\n    word_count: wordCount,\n    reading_time_minutes: Math.ceil(wordCount / 200),\n    mentions_qrlytics: content.toLowerCase().includes('qrlytics'),\n    internal_links: links,\n    article_type: config.articleType || 'tutorial',\n    articleId: config.articleId,\n    isOneTime: config.isOneTime,\n    suggestedTagIds: tagIds\n  }\n};"
+      },
+      "id": "0128aa6e-10d1-4e01-9dbe-c70a3d96b4ce",
+      "name": "Process Content",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -80,
+        416
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://supabase-zagency-u62265.vm.elestio.app/rest/v1/blog_articles",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $env.SUPABASE_SERVICE_ROLE_KEY }}"
+            },
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify(Object.fromEntries(Object.entries($json).filter(([k]) => !['articleId', 'isOneTime', 'suggestedTagIds'].includes(k)))) }}",
+        "options": {}
+      },
+      "id": "save-supabase-post",
+      "name": "Save to Supabase (POST)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        624,
+        516
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "96dmobSqU3FUwyV2",
+          "name": "Supabase HTTP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"success\": true, \"articleId\": \"{{ $('Prepare Tag Inserts').item.json.articleId }}\", \"tagsAssigned\": {{ $('Prepare Tag Inserts').item.json.tagCount }}, \"status\": \"review\"}",
+        "options": {}
+      },
+      "id": "3af196cf-6abd-48b7-9c81-fbe29c22bb25",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1624,
+        416
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Credentials\n\n**Supabase:** Header Auth\n- apikey: service_role_key\n- Authorization: Bearer key\n\n**Tavily:** Native\n\n**Perplexity:** Header Auth\n- Authorization: Bearer key\n\n**OpenRouter:** Native\n\n**Google Gemini:** Native",
+        "height": 280,
+        "width": 260,
+        "color": 4
+      },
+      "id": "4f71e870-3baa-420b-a03f-e242cf270043",
+      "name": "Credentials",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        176,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://supabase-zagency-u62265.vm.elestio.app/rest/v1/blog_settings",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "select",
+              "value": "auto_publish"
+            },
+            {
+              "name": "limit",
+              "value": "1"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fetch-auto-publish",
+      "name": "Fetch Auto-Publish Setting",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        24,
+        416
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "96dmobSqU3FUwyV2",
+          "name": "Supabase HTTP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const processedContent = $('Process Content').first().json;\nconst autoPublishResult = $input.first().json;\nconst autoPublish = Array.isArray(autoPublishResult) ? autoPublishResult[0]?.auto_publish : autoPublishResult?.auto_publish;\n\nconst finalStatus = autoPublish ? 'published' : 'review';\nconst publishedAt = autoPublish ? new Date().toISOString() : null;\n\nconst cleanData = Object.fromEntries(\n  Object.entries({\n    ...processedContent,\n    status: finalStatus,\n    published_at: publishedAt\n  }).filter(([_, v]) => v !== undefined)\n);\n\nreturn { json: cleanData };"
+      },
+      "id": "determine-final-status",
+      "name": "Determine Final Status",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        416
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "rules": [
+            {
+              "outputKey": "oneTime",
+              "conditions": {
+                "options": {
+                  "version": 2,
+                  "combinator": "and"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.isOneTime }}",
+                    "rightValue": true,
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "equals"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "id": "route-by-mode",
+      "name": "Route by Mode",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [
+        424,
+        416
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://supabase-zagency-u62265.vm.elestio.app/rest/v1/blog_articles?id=eq.{{ $json.articleId }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify(Object.fromEntries(Object.entries($json).filter(([k]) => !['articleId', 'isOneTime', 'suggestedTagIds'].includes(k)))) }}",
+        "options": {}
+      },
+      "id": "update-article-patch",
+      "name": "Update Article (PATCH)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        624,
+        316
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "96dmobSqU3FUwyV2",
+          "name": "Supabase HTTP"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "merge-save-results",
+      "name": "Merge Save Results",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        824,
+        416
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const saveResult = $input.first().json;\nconst processedContent = $('Process Content').first().json;\n\n// Get article ID from save result (could be array or object)\nconst articleId = Array.isArray(saveResult) ? saveResult[0]?.id : saveResult?.id;\nconst tagIds = processedContent.suggestedTagIds || [];\n\nif (!articleId || tagIds.length === 0) {\n  return { json: { skip: true, articleId, tagCount: 0 } };\n}\n\n// Prepare tag insertions for junction table\nconst tagInserts = tagIds.map(tagId => ({\n  article_id: articleId,\n  tag_id: tagId\n}));\n\nreturn { json: { skip: false, articleId, tagInserts, tagCount: tagIds.length } };"
+      },
+      "id": "prepare-tag-inserts",
+      "name": "Prepare Tag Inserts",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1024,
+        416
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "combinator": "and"
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.skip }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ]
+        }
+      },
+      "id": "if-has-tags",
+      "name": "If Has Tags",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1224,
+        416
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://supabase-zagency-u62265.vm.elestio.app/rest/v1/blog_article_tags",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $env.SUPABASE_SERVICE_ROLE_KEY }}"
+            },
+            {
+              "name": "Prefer",
+              "value": "resolution=ignore-duplicates"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.tagInserts) }}",
+        "options": {}
+      },
+      "id": "insert-article-tags",
+      "name": "Insert Article Tags",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1424,
+        316
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "96dmobSqU3FUwyV2",
+          "name": "Supabase HTTP"
+        }
+      }
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Prague",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-31T22:18:47.746Z",
+      "createdAt": "2026-01-31T22:18:47.746Z",
+      "role": "workflow:owner",
+      "workflowId": "6SZJneV5MhgUXGQG",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-31T22:33:55.615Z",
+  "versionId": "caf51b03-e219-49ff-b5f0-7f395898ab1b"
+}
