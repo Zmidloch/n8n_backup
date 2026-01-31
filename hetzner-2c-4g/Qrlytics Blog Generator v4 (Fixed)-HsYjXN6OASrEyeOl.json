@@ -1,0 +1,1105 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Set Scheduled Source",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Set Webhook Source",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Scheduled Source": {
+      "main": [
+        [
+          {
+            "node": "Merge Sources",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Webhook Source": {
+      "main": [
+        [
+          {
+            "node": "Merge Sources",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge Sources": {
+      "main": [
+        [
+          {
+            "node": "Fetch Existing Articles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Existing Articles": {
+      "main": [
+        [
+          {
+            "node": "Determine Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Determine Config": {
+      "main": [
+        [
+          {
+            "node": "Tavily Research",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Perplexity Research",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tavily Research": {
+      "main": [
+        [
+          {
+            "node": "Merge Research",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Perplexity Research": {
+      "main": [
+        [
+          {
+            "node": "Merge Research",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge Research": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Research",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Research": {
+      "main": [
+        [
+          {
+            "node": "Content Planner Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Planner": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Content Planner Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Planner Fallback": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Content Planner Agent",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Content Planner Agent": {
+      "main": [
+        [
+          {
+            "node": "Parse Plan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Plan": {
+      "main": [
+        [
+          {
+            "node": "Content Writer Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Writer": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Content Writer Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Writer Fallback": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Content Writer Agent",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Content Writer Agent": {
+      "main": [
+        [
+          {
+            "node": "Fetch Published Articles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Published Articles": {
+      "main": [
+        [
+          {
+            "node": "Internal Linking Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Linker": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Internal Linking Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Linker Fallback": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Internal Linking Agent",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Internal Linking Agent": {
+      "main": [
+        [
+          {
+            "node": "Process Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Content": {
+      "main": [
+        [
+          {
+            "node": "Fetch Auto-Publish Setting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Auto-Publish Setting": {
+      "main": [
+        [
+          {
+            "node": "Determine Final Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Determine Final Status": {
+      "main": [
+        [
+          {
+            "node": "Route by Mode",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route by Mode": {
+      "main": [
+        [
+          {
+            "node": "Update Article (PATCH)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Save to Supabase (POST)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Article (PATCH)": {
+      "main": [
+        [
+          {
+            "node": "Merge Save Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save to Supabase (POST)": {
+      "main": [
+        [
+          {
+            "node": "Merge Save Results",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge Save Results": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-01-31T16:45:13.977Z",
+  "id": "HsYjXN6OASrEyeOl",
+  "isArchived": false,
+  "meta": null,
+  "name": "Qrlytics Blog Generator v4 (Fixed)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * 1,4"
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "qrlytics-blog-generate",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        528
+      ],
+      "webhookId": "qrlytics-blog-generate"
+    },
+    {
+      "parameters": {
+        "content": "## Qrlytics Blog Generator v3\n\n**2 Režimy:**\n- Schedule: Mon + Thu @ 8:00 (AUTOPILOT)\n- Webhook: One-time generation (MANUAL)\n\n**AI Models:**\n- Primary: OpenRouter (Claude)\n- Fallback: Google Gemini\n\n**Auto-publish:**\n- Reads blog_settings.auto_publish\n- true → published, false → review",
+        "height": 380,
+        "width": 300,
+        "color": 6
+      },
+      "id": "info-note",
+      "name": "Info",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -336,
+        272
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "source",
+              "name": "source",
+              "value": "scheduled",
+              "type": "string"
+            },
+            {
+              "id": "isOneTime",
+              "name": "isOneTime",
+              "value": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-scheduled-source",
+      "name": "Set Scheduled Source",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "source",
+              "name": "source",
+              "value": "webhook",
+              "type": "string"
+            },
+            {
+              "id": "articleId",
+              "name": "articleId",
+              "value": "={{ $json.body?.articleId || $json.articleId }}",
+              "type": "string"
+            },
+            {
+              "id": "description",
+              "name": "description",
+              "value": "={{ $json.body?.config?.description || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "wordCount",
+              "name": "wordCount",
+              "value": "={{ $json.body?.config?.wordCount || 2000 }}",
+              "type": "number"
+            },
+            {
+              "id": "isOneTime",
+              "name": "isOneTime",
+              "value": true,
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-webhook-source",
+      "name": "Set Webhook Source",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        528
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "merge-sources",
+      "name": "Merge Sources",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        448,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://supabase-zagency-u62265.vm.elestio.app/rest/v1/blog_articles",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "select",
+              "value": "id,title,slug,article_type,status,primary_keywords"
+            },
+            {
+              "name": "status",
+              "value": "neq.archived"
+            },
+            {
+              "name": "limit",
+              "value": "50"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": []
+        },
+        "options": {}
+      },
+      "id": "fetch-existing-articles",
+      "name": "Fetch Existing Articles",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        672,
+        400
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "96dmobSqU3FUwyV2",
+          "name": "Supabase HTTP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const articles = Array.isArray($input.first().json) ? $input.first().json : [];\nconst source = $('Merge Sources').first().json;\n\n// Article types rotace (pro autopilot)\nconst articleTypes = ['hot_news', 'tips', 'comparison', 'tutorial', 'case_study', 'event', 'deep_dive', 'beginners_guide', 'trends', 'tool_review'];\nconst typeCounts = {};\narticleTypes.forEach(t => typeCounts[t] = articles.filter(a => a.article_type === t).length);\n\nlet selectedType = articleTypes[0];\nlet minCount = Infinity;\narticleTypes.forEach(t => {\n  if (typeCounts[t] < minCount) {\n    minCount = typeCounts[t];\n    selectedType = t;\n  }\n});\n\n// Topic: webhook description NEBO random z rotace\nlet suggestedTopic;\nif (source.source === 'webhook' && source.description) {\n  suggestedTopic = source.description;\n} else {\n  const topics = [\n    'QR code marketing strategies for small businesses',\n    'GPS tracking and location analytics best practices',\n    'Treasure hunting apps and QR code integration',\n    'Geocaching technology trends',\n    'Campaign tracking with QR codes',\n    'QR codes for restaurant menus',\n    'Event marketing with dynamic QR codes',\n    'Retail analytics using QR technology'\n  ];\n  suggestedTopic = topics[Math.floor(Math.random() * topics.length)];\n}\n\nreturn {\n  json: {\n    selectedType,\n    suggestedTopic,\n    existingTitles: articles.map(a => a.title).slice(0, 15),\n    source: source.source,\n    articleId: source.articleId || null,\n    wordCount: source.wordCount || 2000,\n    isOneTime: source.isOneTime || false\n  }\n};"
+      },
+      "id": "determine-config",
+      "name": "Determine Config",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "query": "={{ $json.suggestedTopic }} 2025",
+        "options": {}
+      },
+      "id": "tavily-research",
+      "name": "Tavily Research",
+      "type": "@tavily/n8n-nodes-tavily.tavily",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        304
+      ],
+      "credentials": {
+        "tavilyApi": {
+          "id": "KmiWEKpArgJSNmSk",
+          "name": "Tavily account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.perplexity.ai/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"sonar-pro\",\n  \"messages\": [{\"role\": \"user\", \"content\": \"Research: {{ $('Determine Config').item.json.suggestedTopic }}. Provide keywords, audience insights, and key angles.\"}],\n  \"max_tokens\": 2000\n}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "perplexity-research",
+      "name": "Perplexity Research",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1104,
+        512
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "0thWCqbsIGEPqG5D",
+          "name": "Perplexity HTTP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "append",
+        "options": {}
+      },
+      "id": "merge-research",
+      "name": "Merge Research",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        1328,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const config = $('Determine Config').first().json;\nconst allItems = $input.all();\n\nlet tavilyData = [];\nlet perplexityData = '';\n\nfor (const item of allItems) {\n  const json = item.json;\n  if (json.results && Array.isArray(json.results)) {\n    tavilyData = json.results.slice(0, 5).map(r => ({\n      title: r.title,\n      content: r.content?.substring(0, 400)\n    }));\n  }\n  if (json.choices && Array.isArray(json.choices)) {\n    perplexityData = json.choices[0]?.message?.content || '';\n  }\n}\n\nreturn {\n  json: {\n    articleType: config.selectedType,\n    topic: config.suggestedTopic,\n    existingTitles: config.existingTitles,\n    research: {\n      tavily: tavilyData,\n      perplexity: perplexityData\n    },\n    articleId: config.articleId,\n    wordCount: config.wordCount,\n    isOneTime: config.isOneTime\n  }\n};"
+      },
+      "id": "aggregate-research",
+      "name": "Aggregate Research",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1552,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "You are an SEO content strategist for QRlytics. Create article plans in valid JSON format only.\n\nTarget word count: {{ $json.wordCount || 2000 }}\n\nReturn JSON with:\n- title (max 60 chars)\n- slug (url-friendly)\n- metaTitle (max 60 chars)\n- metaDescription (max 155 chars)\n- excerpt (1-2 sentences)\n- primaryKeywords (array)\n- secondaryKeywords (array)\n- keyPoints (array of 3-5 takeaways)\n- outline (array of {h2, content})"
+        }
+      },
+      "id": "planner-agent",
+      "name": "Content Planner Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1760,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-sonnet-4.5",
+        "options": {
+          "temperature": 0.4
+        }
+      },
+      "id": "openrouter-planner",
+      "name": "OpenRouter Planner",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1584,
+        624
+      ],
+      "credentials": {
+        "openRouterApi": {
+          "id": "XpZg3NCm0vRTBA75",
+          "name": "OpenRouter Z-AGENCY 2026"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "maxOutputTokens": 4096,
+          "temperature": 0.4
+        }
+      },
+      "id": "gemini-planner",
+      "name": "Gemini Planner Fallback",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        608
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uLXCpqN3fa4ZXZmj",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.first().json;\nconst research = $('Aggregate Research').first().json;\nlet plan;\ntry {\n  const cleaned = (typeof input.output === 'string') ? input.output.replace(/```json\\n?/g, '').replace(/```/g, '').trim() : input.output;\n  plan = typeof cleaned === 'string' ? JSON.parse(cleaned) : cleaned;\n} catch (e) {\n  plan = {title: 'Marketing Article', slug: 'article-' + Date.now(), excerpt: 'Learn about marketing.', primaryKeywords: ['marketing'], outline: [{h2: 'Introduction'}]};\n}\n\nreturn {\n  json: {\n    plan,\n    articleType: research.articleType,\n    research: research.research,\n    articleId: research.articleId,\n    wordCount: research.wordCount,\n    isOneTime: research.isOneTime\n  }\n};"
+      },
+      "id": "parse-plan",
+      "name": "Parse Plan",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2016,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "You are an expert blog writer for QRlytics. Write comprehensive, SEO-optimized articles in Markdown format.\n\nTarget word count: {{ $json.wordCount || 2000 }}\n\nGuidelines:\n- Use ## for main sections and ### for subsections\n- Short paragraphs (2-3 sentences)\n- Include practical examples and actionable advice\n- Mention QRlytics naturally where relevant\n- Add internal link suggestions: [anchor text](/blog/slug)"
+        }
+      },
+      "id": "writer-agent",
+      "name": "Content Writer Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        2192,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-sonnet-4",
+        "options": {
+          "temperature": 0.6
+        }
+      },
+      "id": "openrouter-writer",
+      "name": "OpenRouter Writer",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        2096,
+        608
+      ],
+      "credentials": {
+        "openRouterApi": {
+          "id": "XpZg3NCm0vRTBA75",
+          "name": "OpenRouter Z-AGENCY 2026"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "maxOutputTokens": 8192,
+          "temperature": 0.6
+        }
+      },
+      "id": "gemini-writer",
+      "name": "Gemini Writer Fallback",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2240,
+        592
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uLXCpqN3fa4ZXZmj",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://supabase-zagency-u62265.vm.elestio.app/rest/v1/blog_articles",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "select",
+              "value": "id,title,slug,excerpt"
+            },
+            {
+              "name": "status",
+              "value": "eq.published"
+            },
+            {
+              "name": "limit",
+              "value": "10"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": ""
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fetch-published",
+      "name": "Fetch Published Articles",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2480,
+        400
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "96dmobSqU3FUwyV2",
+          "name": "Supabase HTTP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "You are an SEO expert specializing in internal linking. Your task:\n1. Add exactly 3 internal links using format [anchor text](/blog/slug)\n2. Add 1-2 natural mentions of QRlytics where contextually appropriate\n3. Keep the original content structure intact\n4. Return the full article with links inserted naturally"
+        }
+      },
+      "id": "linker-agent",
+      "name": "Internal Linking Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        2656,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-sonnet-4.5",
+        "options": {
+          "temperature": 0.3
+        }
+      },
+      "id": "openrouter-linker",
+      "name": "OpenRouter Linker",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        2576,
+        640
+      ],
+      "credentials": {
+        "openRouterApi": {
+          "id": "XpZg3NCm0vRTBA75",
+          "name": "OpenRouter Z-AGENCY 2026"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "maxOutputTokens": 8192,
+          "temperature": 0.3
+        }
+      },
+      "id": "gemini-linker",
+      "name": "Gemini Linker Fallback",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2720,
+        624
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uLXCpqN3fa4ZXZmj",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const plan = $('Parse Plan').first().json.plan;\nconst config = $('Parse Plan').first().json;\nconst content = $('Internal Linking Agent').first().json.output || '';\nconst wordCount = content.split(/\\s+/).length;\n\nconst links = (content.match(/\\[([^\\]]+)\\]\\(\\/blog\\/([^)]+)\\)/g) || []).map(m => {\n  const p = m.match(/\\[([^\\]]+)\\]\\(\\/blog\\/([^)]+)\\)/);\n  return p ? {anchor: p[1], slug: p[2]} : null;\n}).filter(Boolean);\n\n// Generate unique slug only for autopilot (not for one-time)\nconst baseSlug = (plan.slug || plan.title || 'article').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').substring(0, 80);\nconst uniqueSlug = baseSlug + '-' + Date.now().toString(36);\n\nreturn {\n  json: {\n    title: plan.title || 'Untitled Article',\n    slug: config.isOneTime ? undefined : uniqueSlug,\n    excerpt: (plan.excerpt || plan.metaDescription || '').substring(0, 300),\n    content,\n    meta_title: (plan.metaTitle || plan.title || '').substring(0, 70),\n    meta_description: (plan.metaDescription || plan.excerpt || '').substring(0, 155),\n    primary_keywords: plan.primaryKeywords || [],\n    secondary_keywords: plan.secondaryKeywords || [],\n    key_takeaways: (plan.keyPoints || []).slice(0, 5),\n    outline: plan.outline || [],\n    word_count: wordCount,\n    reading_time_minutes: Math.ceil(wordCount / 200),\n    mentions_qrlytics: content.toLowerCase().includes('qrlytics'),\n    internal_links: links,\n    article_type: config.articleType || 'tutorial',\n    articleId: config.articleId,\n    isOneTime: config.isOneTime\n  }\n};"
+      },
+      "id": "process-content",
+      "name": "Process Content",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2960,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://supabase-zagency-u62265.vm.elestio.app/rest/v1/blog_settings",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "select",
+              "value": "auto_publish"
+            },
+            {
+              "name": "limit",
+              "value": "1"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": ""
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fetch-auto-publish",
+      "name": "Fetch Auto-Publish Setting",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        3184,
+        400
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "96dmobSqU3FUwyV2",
+          "name": "Supabase HTTP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const processedContent = $('Process Content').first().json;\nconst autoPublishResult = $input.first().json;\nconst autoPublish = Array.isArray(autoPublishResult) ? autoPublishResult[0]?.auto_publish : autoPublishResult?.auto_publish;\n\nconst finalStatus = autoPublish ? 'published' : 'review';\nconst publishedAt = autoPublish ? new Date().toISOString() : null;\n\n// Remove undefined values for clean JSON\nconst cleanData = Object.fromEntries(\n  Object.entries({\n    ...processedContent,\n    status: finalStatus,\n    published_at: publishedAt\n  }).filter(([_, v]) => v !== undefined)\n);\n\nreturn { json: cleanData };"
+      },
+      "id": "determine-final-status",
+      "name": "Determine Final Status",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3408,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "rules": [
+            {
+              "outputKey": "oneTime",
+              "conditions": {
+                "options": {
+                  "version": 2,
+                  "combinator": "and"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.isOneTime }}",
+                    "rightValue": true,
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "equals"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "id": "route-by-mode",
+      "name": "Route by Mode",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [
+        3632,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://supabase-zagency-u62265.vm.elestio.app/rest/v1/blog_articles?id=eq.{{ $json.articleId }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": ""
+            },
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify(Object.fromEntries(Object.entries($json).filter(([k]) => !['articleId', 'isOneTime'].includes(k)))) }}",
+        "options": {}
+      },
+      "id": "update-article-patch",
+      "name": "Update Article (PATCH)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        3856,
+        300
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "96dmobSqU3FUwyV2",
+          "name": "Supabase HTTP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://supabase-zagency-u62265.vm.elestio.app/rest/v1/blog_articles",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": ""
+            },
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify(Object.fromEntries(Object.entries($json).filter(([k]) => !['articleId', 'isOneTime'].includes(k)))) }}",
+        "options": {}
+      },
+      "id": "save-supabase",
+      "name": "Save to Supabase (POST)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        3856,
+        500
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "96dmobSqU3FUwyV2",
+          "name": "Supabase HTTP"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "merge-save-results",
+      "name": "Merge Save Results",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        4080,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: true, articleId: $json[0]?.id || $json.id, title: $json[0]?.title || $json.title, status: $json[0]?.status || $json.status }) }}",
+        "options": {}
+      },
+      "id": "respond-webhook",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        4304,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Credentials\n\n**Supabase:** Header Auth\n- apikey: service_role_key\n- Authorization: Bearer key\n\n**Tavily:** Native\n\n**Perplexity:** Header Auth\n\n**OpenRouter:** Native\n\n**Google Gemini:** Native",
+        "height": 280,
+        "width": 260,
+        "color": 4
+      },
+      "id": "creds-note",
+      "name": "Credentials",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4304,
+        96
+      ]
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "timezone": "Europe/Prague",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-01-31T16:45:13.977Z",
+      "createdAt": "2026-01-31T16:45:13.977Z",
+      "role": "workflow:owner",
+      "workflowId": "HsYjXN6OASrEyeOl",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-01-31T16:45:13.977Z",
+  "versionId": "c2d1fe1a-9ac8-48c4-aa4e-4416aa15359a"
+}
