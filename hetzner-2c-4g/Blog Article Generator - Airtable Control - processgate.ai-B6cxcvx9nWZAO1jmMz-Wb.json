@@ -6972,7 +6972,7 @@
     {
       "parameters": {
         "content": "## BRANCH 3: Humanization & Verification\n\nTriggers when Status = 'Humanizing'\n\n1. Fetch article from Airtable\n2. Humanizer Agent (natural Czech style)\n3. Verification Agent (fact-check)\n4. Save content to Airtable\n5. Update status to 'Review'\n6. Send notification email",
-        "height": 280,
+        "height": 360,
         "width": 720,
         "color": 3
       },
@@ -9045,6 +9045,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2026-01-23T07:49:17.952Z",
-  "versionId": "81e7e53f-ab33-4dde-8567-78be22cf8bf4"
+  "updatedAt": "2026-01-31T22:10:37.465Z",
+  "versionId": "063a7a82-7386-4248-9cec-24f33d04b7a1"
 }
