@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-01-31T23:25:47.941Z",
-    "createdAt": "2026-01-31T23:25:42.742Z",
-    "versionId": "5a4beaf9-dc92-4957-9beb-9401c673a51f",
+    "updatedAt": "2026-02-01T21:46:31.824Z",
+    "createdAt": "2026-02-01T21:46:25.488Z",
+    "versionId": "d5f9aad3-3038-4b5e-b7ab-1c7986ed61d1",
     "workflowId": "Lj3CDKZDFLFoooeExU9Rr",
     "nodes": [
       {
@@ -530,7 +530,7 @@
       },
       {
         "parameters": {
-          "jsCode": "const plan = $('Parse Plan').first().json.plan;\nconst config = $('Determine Config').first().json;\nconst content = $('Internal Linking Agent').first().json.output || '';\nconst wordCount = content.split(/\\s+/).length;\n\nconst links = (content.match(/\\[([^\\]]+)\\]\\(\\/blog\\/([^)]+)\\)/g) || []).map(m => {\n  const p = m.match(/\\[([^\\]]+)\\]\\(\\/blog\\/([^)]+)\\)/);\n  return p ? {anchor: p[1], slug: p[2]} : null;\n}).filter(Boolean);\n\n// Generate SEO-friendly slug from title\nconst baseSlug = (plan.slug || plan.title || 'article').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').substring(0, 80);\n// ONE-TIME: use clean slug (article already exists, no need for uniqueness)\n// AUTOPILOT: add timestamp suffix for uniqueness of new article\nconst finalSlug = config.isOneTime ? baseSlug : (baseSlug + '-' + Date.now().toString(36));\n\nreturn {\n  json: {\n    title: plan.title || 'Untitled Article',\n    slug: finalSlug,\n    excerpt: (plan.excerpt || plan.metaDescription || '').substring(0, 300),\n    content,\n    meta_title: (plan.metaTitle || plan.title || '').substring(0, 70),\n    meta_description: (plan.metaDescription || plan.excerpt || '').substring(0, 155),\n    primary_keywords: plan.primaryKeywords || [],\n    secondary_keywords: plan.secondaryKeywords || [],\n    key_takeaways: (plan.keyPoints || []).slice(0, 5),\n    outline: plan.outline || [],\n    word_count: wordCount,\n    reading_time_minutes: Math.ceil(wordCount / 200),\n    mentions_qrlytics: content.toLowerCase().includes('qrlytics'),\n    internal_links: links,\n    article_type: config.articleType || 'tutorial',\n    articleId: config.articleId,\n    isOneTime: config.isOneTime\n  }\n};\n"
+          "jsCode": "const parsePlan = $('Parse Plan').first().json;\nconst plan = parsePlan.plan;\nconst availableTags = parsePlan.availableTags || [];\nconst config = $('Determine Config').first().json;\nconst content = $('Internal Linking Agent').first().json.output || '';\nconst wordCount = content.split(/\\s+/).length;\n\nconst links = (content.match(/\\[([^\\]]+)\\]\\(\\/blog\\/([^)]+)\\)/g) || []).map(m => {\n  const p = m.match(/\\[([^\\]]+)\\]\\(\\/blog\\/([^)]+)\\)/);\n  return p ? {anchor: p[1], slug: p[2]} : null;\n}).filter(Boolean);\n\n// Generate SEO-friendly slug from title\nconst baseSlug = (plan.slug || plan.title || 'article').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').substring(0, 80);\nconst finalSlug = config.isOneTime ? baseSlug : (baseSlug + '-' + Date.now().toString(36));\n\n// Resolve suggested tag slugs to tag IDs\nconst suggestedTagSlugs = plan.suggestedTags || [];\nconst tagIds = suggestedTagSlugs\n  .map(slug => availableTags.find(t => t.slug === slug)?.id)\n  .filter(Boolean);\n\n// === NOVÉ: Konverze Markdown na HTML ===\nfunction markdownToHtml(md) {\n  if (!md) return '';\n  \n  let html = md\n    // Headers\n    .replace(/^### (.+)$/gm, '<h3>$1</h3>')\n    .replace(/^## (.+)$/gm, '<h2>$1</h2>')\n    .replace(/^# (.+)$/gm, '<h1>$1</h1>')\n    // Bold and italic\n    .replace(/\\*\\*\\*(.+?)\\*\\*\\*/g, '<strong><em>$1</em></strong>')\n    .replace(/\\*\\*(.+?)\\*\\*/g, '<strong>$1</strong>')\n    .replace(/\\*(.+?)\\*/g, '<em>$1</em>')\n    // Links [text](url)\n    .replace(/\\[([^\\]]+)\\]\\(([^)]+)\\)/g, '<a href=\"$2\">$1</a>')\n    // Blockquotes\n    .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')\n    // Unordered lists\n    .replace(/^- (.+)$/gm, '<li>$1</li>')\n    .replace(/^• (.+)$/gm, '<li>$1</li>')\n    // Horizontal rule\n    .replace(/^---$/gm, '<hr>');\n  \n  // Wrap paragraphs\n  html = html.split('\\n\\n').map(block => {\n    block = block.trim();\n    if (!block) return '';\n    if (block.match(/^<(h[1-6]|ul|ol|li|blockquote|hr|p)/)) return block;\n    if (block.includes('<li>')) return '<ul>' + block.replace(/\\n/g, '') + '</ul>';\n    return '<p>' + block.replace(/\\n/g, '<br>') + '</p>';\n  }).join('\\n');\n  \n  return html;\n}\n\nconst contentHtml = markdownToHtml(content);\n\nreturn {\n  json: {\n    title: plan.title || 'Untitled Article',\n    slug: finalSlug,\n    excerpt: (plan.excerpt || plan.metaDescription || '').substring(0, 300),\n    content,\n    content_html: contentHtml,  // <- NOVÉ POLE\n    meta_title: (plan.metaTitle || plan.title || '').substring(0, 70),\n    meta_description: (plan.metaDescription || plan.excerpt || '').substring(0, 155),\n    primary_keywords: plan.primaryKeywords || [],\n    secondary_keywords: plan.secondaryKeywords || [],\n    key_takeaways: (plan.keyPoints || []).slice(0, 5),\n    outline: plan.outline || [],\n    word_count: wordCount,\n    reading_time_minutes: Math.ceil(wordCount / 200),\n    mentions_qrlytics: content.toLowerCase().includes('qrlytics'),\n    internal_links: links,\n    article_type: config.articleType || 'tutorial',\n    articleId: config.articleId,\n    isOneTime: config.isOneTime,\n    suggestedTagIds: tagIds\n  }\n};\n"
         },
         "id": "process-content",
         "name": "Process Content",
@@ -544,7 +544,7 @@
       {
         "parameters": {
           "respondWith": "json",
-          "responseBody": "={\"success\": true, \"articleId\": \"{{ $json[0]?.id || $json.id }}\", \"title\": {{ JSON.stringify($json[0]?.title || $json.title) }}, \"status\": \"review\"}",
+          "responseBody": "={{ JSON.stringify($json) }}",
           "options": {}
         },
         "id": "respond-webhook",
@@ -552,7 +552,7 @@
         "type": "n8n-nodes-base.respondToWebhook",
         "typeVersion": 1.1,
         "position": [
-          4736,
+          5040,
           384
         ]
       },
@@ -691,15 +691,16 @@
             ]
           },
           "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "={{ JSON.stringify(Object.fromEntries(Object.entries($json).filter(([k]) => !['articleId', 'isOneTime'].includes(k)))) }}",
+          "contentType": "raw",
+          "rawContentType": "application/json",
+          "body": "={{ $json.patchBody }}",
           "options": {}
         },
         "type": "n8n-nodes-base.httpRequest",
         "typeVersion": 4.3,
         "position": [
-          4304,
-          256
+          4400,
+          224
         ],
         "id": "338079c3-3e48-4e90-b465-537426477d5d",
         "name": "Update Article (PATCH)",
@@ -754,8 +755,8 @@
         "type": "n8n-nodes-base.merge",
         "typeVersion": 3.2,
         "position": [
-          4544,
-          384
+          4848,
+          368
         ],
         "id": "708dad53-b25e-4bab-a407-7bebde80113f",
         "name": "Merge Save Results"
@@ -819,6 +820,46 @@
           "googlePalmApi": {
             "id": "uLXCpqN3fa4ZXZmj",
             "name": "Google Gemini(PaLM) Api account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const data = $input.first().json;\nconst { articleId, isOneTime, suggestedTagIds, ...patchData } = data;\nreturn {\n  json: {\n    articleId: articleId,\n    patchBody: JSON.stringify(patchData)\n  }\n};\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          4208,
+          224
+        ],
+        "id": "8bcff77b-e9cc-4f27-865d-496de36db5c6",
+        "name": "Code in JavaScript"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://qrlytics.eu/api/blog/webhook",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "contentType": "raw",
+          "rawContentType": "application/json",
+          "body": "={{ JSON.stringify({\n  action: \"assign_tags\",\n  articleId: $('Code in JavaScript').first().json.articleId,\n  data: {\n    tagSlugs: $('Parse Plan').first().json.plan.suggestedTags || []\n  }\n}) }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          4608,
+          224
+        ],
+        "id": "63fb55aa-a9f4-4078-8bae-6868f24c48c1",
+        "name": "Assign Tags",
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "U08UzXsZWu38hIGu",
+            "name": "QRlytics Webhook"
           }
         }
       }
@@ -1108,7 +1149,7 @@
         "main": [
           [
             {
-              "node": "Update Article (PATCH)",
+              "node": "Code in JavaScript",
               "type": "main",
               "index": 0
             }
@@ -1148,7 +1189,7 @@
         "main": [
           [
             {
-              "node": "Merge Save Results",
+              "node": "Assign Tags",
               "type": "main",
               "index": 0
             }
@@ -1187,14 +1228,36 @@
             }
           ]
         ]
+      },
+      "Code in JavaScript": {
+        "main": [
+          [
+            {
+              "node": "Update Article (PATCH)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Assign Tags": {
+        "main": [
+          [
+            {
+              "node": "Merge Save Results",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
       }
     },
     "authors": "Jiri Zmidloch",
-    "name": "Version 5a4beaf9",
+    "name": "Version d5f9aad3",
     "description": "",
     "autosaved": true
   },
-  "activeVersionId": "5a4beaf9-dc92-4957-9beb-9401c673a51f",
+  "activeVersionId": "d5f9aad3-3038-4b5e-b7ab-1c7986ed61d1",
   "connections": {
     "Schedule Trigger": {
       "main": [
@@ -1480,7 +1543,7 @@
       "main": [
         [
           {
-            "node": "Update Article (PATCH)",
+            "node": "Code in JavaScript",
             "type": "main",
             "index": 0
           }
@@ -1520,7 +1583,7 @@
       "main": [
         [
           {
-            "node": "Merge Save Results",
+            "node": "Assign Tags",
             "type": "main",
             "index": 0
           }
@@ -1556,6 +1619,28 @@
             "node": "Humanizer Agent",
             "type": "ai_languageModel",
             "index": 1
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Update Article (PATCH)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assign Tags": {
+      "main": [
+        [
+          {
+            "node": "Merge Save Results",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -2091,7 +2176,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const plan = $('Parse Plan').first().json.plan;\nconst config = $('Determine Config').first().json;\nconst content = $('Internal Linking Agent').first().json.output || '';\nconst wordCount = content.split(/\\s+/).length;\n\nconst links = (content.match(/\\[([^\\]]+)\\]\\(\\/blog\\/([^)]+)\\)/g) || []).map(m => {\n  const p = m.match(/\\[([^\\]]+)\\]\\(\\/blog\\/([^)]+)\\)/);\n  return p ? {anchor: p[1], slug: p[2]} : null;\n}).filter(Boolean);\n\n// Generate SEO-friendly slug from title\nconst baseSlug = (plan.slug || plan.title || 'article').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').substring(0, 80);\n// ONE-TIME: use clean slug (article already exists, no need for uniqueness)\n// AUTOPILOT: add timestamp suffix for uniqueness of new article\nconst finalSlug = config.isOneTime ? baseSlug : (baseSlug + '-' + Date.now().toString(36));\n\nreturn {\n  json: {\n    title: plan.title || 'Untitled Article',\n    slug: finalSlug,\n    excerpt: (plan.excerpt || plan.metaDescription || '').substring(0, 300),\n    content,\n    meta_title: (plan.metaTitle || plan.title || '').substring(0, 70),\n    meta_description: (plan.metaDescription || plan.excerpt || '').substring(0, 155),\n    primary_keywords: plan.primaryKeywords || [],\n    secondary_keywords: plan.secondaryKeywords || [],\n    key_takeaways: (plan.keyPoints || []).slice(0, 5),\n    outline: plan.outline || [],\n    word_count: wordCount,\n    reading_time_minutes: Math.ceil(wordCount / 200),\n    mentions_qrlytics: content.toLowerCase().includes('qrlytics'),\n    internal_links: links,\n    article_type: config.articleType || 'tutorial',\n    articleId: config.articleId,\n    isOneTime: config.isOneTime\n  }\n};\n"
+        "jsCode": "const parsePlan = $('Parse Plan').first().json;\nconst plan = parsePlan.plan;\nconst availableTags = parsePlan.availableTags || [];\nconst config = $('Determine Config').first().json;\nconst content = $('Internal Linking Agent').first().json.output || '';\nconst wordCount = content.split(/\\s+/).length;\n\nconst links = (content.match(/\\[([^\\]]+)\\]\\(\\/blog\\/([^)]+)\\)/g) || []).map(m => {\n  const p = m.match(/\\[([^\\]]+)\\]\\(\\/blog\\/([^)]+)\\)/);\n  return p ? {anchor: p[1], slug: p[2]} : null;\n}).filter(Boolean);\n\n// Generate SEO-friendly slug from title\nconst baseSlug = (plan.slug || plan.title || 'article').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').substring(0, 80);\nconst finalSlug = config.isOneTime ? baseSlug : (baseSlug + '-' + Date.now().toString(36));\n\n// Resolve suggested tag slugs to tag IDs\nconst suggestedTagSlugs = plan.suggestedTags || [];\nconst tagIds = suggestedTagSlugs\n  .map(slug => availableTags.find(t => t.slug === slug)?.id)\n  .filter(Boolean);\n\n// === NOVÉ: Konverze Markdown na HTML ===\nfunction markdownToHtml(md) {\n  if (!md) return '';\n  \n  let html = md\n    // Headers\n    .replace(/^### (.+)$/gm, '<h3>$1</h3>')\n    .replace(/^## (.+)$/gm, '<h2>$1</h2>')\n    .replace(/^# (.+)$/gm, '<h1>$1</h1>')\n    // Bold and italic\n    .replace(/\\*\\*\\*(.+?)\\*\\*\\*/g, '<strong><em>$1</em></strong>')\n    .replace(/\\*\\*(.+?)\\*\\*/g, '<strong>$1</strong>')\n    .replace(/\\*(.+?)\\*/g, '<em>$1</em>')\n    // Links [text](url)\n    .replace(/\\[([^\\]]+)\\]\\(([^)]+)\\)/g, '<a href=\"$2\">$1</a>')\n    // Blockquotes\n    .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')\n    // Unordered lists\n    .replace(/^- (.+)$/gm, '<li>$1</li>')\n    .replace(/^• (.+)$/gm, '<li>$1</li>')\n    // Horizontal rule\n    .replace(/^---$/gm, '<hr>');\n  \n  // Wrap paragraphs\n  html = html.split('\\n\\n').map(block => {\n    block = block.trim();\n    if (!block) return '';\n    if (block.match(/^<(h[1-6]|ul|ol|li|blockquote|hr|p)/)) return block;\n    if (block.includes('<li>')) return '<ul>' + block.replace(/\\n/g, '') + '</ul>';\n    return '<p>' + block.replace(/\\n/g, '<br>') + '</p>';\n  }).join('\\n');\n  \n  return html;\n}\n\nconst contentHtml = markdownToHtml(content);\n\nreturn {\n  json: {\n    title: plan.title || 'Untitled Article',\n    slug: finalSlug,\n    excerpt: (plan.excerpt || plan.metaDescription || '').substring(0, 300),\n    content,\n    content_html: contentHtml,  // <- NOVÉ POLE\n    meta_title: (plan.metaTitle || plan.title || '').substring(0, 70),\n    meta_description: (plan.metaDescription || plan.excerpt || '').substring(0, 155),\n    primary_keywords: plan.primaryKeywords || [],\n    secondary_keywords: plan.secondaryKeywords || [],\n    key_takeaways: (plan.keyPoints || []).slice(0, 5),\n    outline: plan.outline || [],\n    word_count: wordCount,\n    reading_time_minutes: Math.ceil(wordCount / 200),\n    mentions_qrlytics: content.toLowerCase().includes('qrlytics'),\n    internal_links: links,\n    article_type: config.articleType || 'tutorial',\n    articleId: config.articleId,\n    isOneTime: config.isOneTime,\n    suggestedTagIds: tagIds\n  }\n};\n"
       },
       "id": "process-content",
       "name": "Process Content",
@@ -2105,7 +2190,7 @@
     {
       "parameters": {
         "respondWith": "json",
-        "responseBody": "={\"success\": true, \"articleId\": \"{{ $json[0]?.id || $json.id }}\", \"title\": {{ JSON.stringify($json[0]?.title || $json.title) }}, \"status\": \"review\"}",
+        "responseBody": "={{ JSON.stringify($json) }}",
         "options": {}
       },
       "id": "respond-webhook",
@@ -2113,7 +2198,7 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
       "position": [
-        4736,
+        5040,
         384
       ]
     },
@@ -2252,15 +2337,16 @@
           ]
         },
         "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify(Object.fromEntries(Object.entries($json).filter(([k]) => !['articleId', 'isOneTime'].includes(k)))) }}",
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ $json.patchBody }}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        4304,
-        256
+        4400,
+        224
       ],
       "id": "338079c3-3e48-4e90-b465-537426477d5d",
       "name": "Update Article (PATCH)",
@@ -2315,8 +2401,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        4544,
-        384
+        4848,
+        368
       ],
       "id": "708dad53-b25e-4bab-a407-7bebde80113f",
       "name": "Merge Save Results"
@@ -2382,6 +2468,46 @@
           "name": "Google Gemini(PaLM) Api account"
         }
       }
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $input.first().json;\nconst { articleId, isOneTime, suggestedTagIds, ...patchData } = data;\nreturn {\n  json: {\n    articleId: articleId,\n    patchBody: JSON.stringify(patchData)\n  }\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4208,
+        224
+      ],
+      "id": "8bcff77b-e9cc-4f27-865d-496de36db5c6",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://qrlytics.eu/api/blog/webhook",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({\n  action: \"assign_tags\",\n  articleId: $('Code in JavaScript').first().json.articleId,\n  data: {\n    tagSlugs: $('Parse Plan').first().json.plan.suggestedTags || []\n  }\n}) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        4608,
+        224
+      ],
+      "id": "63fb55aa-a9f4-4078-8bae-6868f24c48c1",
+      "name": "Assign Tags",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "U08UzXsZWu38hIGu",
+          "name": "QRlytics Webhook"
+        }
+      }
     }
   ],
   "settings": {
@@ -2404,6 +2530,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 2,
-  "updatedAt": "2026-01-31T23:25:42.741Z",
-  "versionId": "5a4beaf9-dc92-4957-9beb-9401c673a51f"
+  "updatedAt": "2026-02-01T21:46:25.484Z",
+  "versionId": "d5f9aad3-3038-4b5e-b7ab-1c7986ed61d1"
 }
