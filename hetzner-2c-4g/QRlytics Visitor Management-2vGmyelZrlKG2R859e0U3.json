@@ -1,0 +1,165 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Visitor Check-in Webhook": {
+      "main": [
+        [
+          {
+            "node": "Parse Visitor Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Visitor Data": {
+      "main": [
+        [
+          {
+            "node": "Log to Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log to Supabase": {
+      "main": [
+        [
+          {
+            "node": "Notify Host",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notify Host": {
+      "main": [
+        [
+          {
+            "node": "Respond Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-02-02T21:52:11.924Z",
+  "id": "2vGmyelZrlKG2R859e0U3",
+  "isArchived": false,
+  "meta": null,
+  "name": "QRlytics Visitor Management",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "qrlytics-visitor",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "73699f54-3f12-47a1-af12-c7dc39d282f4",
+      "name": "Visitor Check-in Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "qrlytics-visitor"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse QRlytics visitor scan\nconst scan = $input.first().json;\n\n// Determine if check-in or check-out based on QR code name\nconst isCheckIn = scan.qr_code_name?.toLowerCase().includes('check-in') || true;\n\nreturn [{\n  json: {\n    visitor_id: `VIS-${Date.now()}`,\n    qr_code_id: scan.qr_code_id,\n    action: isCheckIn ? 'check-in' : 'check-out',\n    timestamp: scan.scanned_at || new Date().toISOString(),\n    location: scan.location?.city || 'Reception',\n    device_info: scan.device?.os || 'Unknown',\n    ip_address: scan.ip_address || null\n  }\n}];"
+      },
+      "id": "0d14ebd0-377c-47f9-8df4-ade36445b1db",
+      "name": "Parse Visitor Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO visitors (visitor_id, qr_code_id, action, timestamp, location, device_info)\nVALUES ('{{ $json.visitor_id }}', '{{ $json.qr_code_id }}', '{{ $json.action }}', '{{ $json.timestamp }}', '{{ $json.location }}', '{{ $json.device_info }}')\nRETURNING *;",
+        "options": {}
+      },
+      "id": "d0697e8c-46c5-4b4c-aba3-5fe11c0a8e1a",
+      "name": "Log to Supabase",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        448,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "subject": "=Visitor {{ $('Parse Visitor Data').item.json.action }}: {{ $('Parse Visitor Data').item.json.visitor_id }}",
+        "message": "=<h2>Visitor {{ $('Parse Visitor Data').item.json.action === 'check-in' ? 'Arrived' : 'Left' }}</h2>\n<p><strong>Visitor ID:</strong> {{ $('Parse Visitor Data').item.json.visitor_id }}</p>\n<p><strong>Time:</strong> {{ $('Parse Visitor Data').item.json.timestamp }}</p>\n<p><strong>Location:</strong> {{ $('Parse Visitor Data').item.json.location }}</p>\n<hr>\n<p style=\"color: #666;\">Sent by QRlytics Visitor Management</p>",
+        "options": {}
+      },
+      "id": "c9010a15-f854-4e63-bd5d-08daad288ea3",
+      "name": "Notify Host",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        672,
+        0
+      ],
+      "webhookId": "cff8d9c3-a0f2-4257-bf34-d935e886e92d"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: true, visitor_id: $('Parse Visitor Data').item.json.visitor_id, action: $('Parse Visitor Data').item.json.action }) }}",
+        "options": {}
+      },
+      "id": "b9f331ad-9986-4292-bb2c-0eeba273c83a",
+      "name": "Respond Success",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        880,
+        0
+      ]
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-02-02T21:52:11.924Z",
+      "createdAt": "2026-02-02T21:52:11.924Z",
+      "role": "workflow:owner",
+      "workflowId": "2vGmyelZrlKG2R859e0U3",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2026-02-02T21:52:10.347Z",
+      "createdAt": "2026-02-02T21:52:10.347Z",
+      "id": "DNR12ojGM4Lgn2fb",
+      "name": "Visitor Management"
+    },
+    {
+      "updatedAt": "2026-02-02T21:52:10.331Z",
+      "createdAt": "2026-02-02T21:52:10.331Z",
+      "id": "oF8e5bd7fSdXLo6C",
+      "name": "QRlytics"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2026-02-02T21:52:11.924Z",
+  "versionId": "568f3874-3295-4773-8d0f-6ba5e63cf945"
+}
