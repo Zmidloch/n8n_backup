@@ -1,0 +1,219 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Client Onboarding Form": {
+      "main": [
+        [
+          {
+            "node": "Process Client Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Client Data": {
+      "main": [
+        [
+          {
+            "node": "Create Client Record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Client Record": {
+      "main": [
+        [
+          {
+            "node": "Send Welcome Email",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Notify Sales Team",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Welcome Email": {
+      "main": [
+        [
+          {
+            "node": "Respond Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-02-02T22:00:13.957Z",
+  "id": "vARHTNAY9zo0hoDmdgr1D",
+  "isArchived": false,
+  "meta": null,
+  "name": "QRlytics Agency Client Onboarding",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "agency-onboarding",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "6e060c1a-fda7-428d-a04d-72934bcb2ae9",
+      "name": "Client Onboarding Form",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "agency-onboarding"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse onboarding form data\nconst formData = $input.first().json;\n\n// Generate unique client ID\nconst clientId = `CLIENT-${Date.now().toString(36).toUpperCase()}`;\n\n// Generate API key (mock - in production use secure generation)\nconst apiKey = `qrl_${Array.from({length: 32}, () => \n  'abcdefghijklmnopqrstuvwxyz0123456789'[Math.floor(Math.random() * 36)]\n).join('')}`;\n\nreturn [{\n  json: {\n    client_id: clientId,\n    company_name: formData.company_name,\n    contact_email: formData.email,\n    contact_name: formData.contact_name || formData.company_name,\n    plan: formData.plan || 'starter',\n    api_key: apiKey,\n    api_limit: formData.plan === 'enterprise' ? 100000 : formData.plan === 'business' ? 10000 : 1000,\n    branding: {\n      logo_url: formData.logo_url || null,\n      primary_color: formData.primary_color || '#000000',\n      hide_powered_by: true\n    },\n    created_at: new Date().toISOString(),\n    status: 'active'\n  }\n}];"
+      },
+      "id": "0a1ea66c-288e-4941-8611-1f453c87b566",
+      "name": "Process Client Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "table": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Client ID": "={{ $json.client_id }}",
+            "Company Name": "={{ $json.company_name }}",
+            "Contact Name": "={{ $json.contact_name }}",
+            "Contact Email": "={{ $json.contact_email }}",
+            "Plan": "={{ $json.plan }}",
+            "API Limit": "={{ $json.api_limit }}",
+            "Status": "={{ $json.status }}",
+            "Created At": "={{ $json.created_at }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "74f7e5f3-a07a-4bc3-96d5-0ea6f4415285",
+      "name": "Create Client Record",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        448,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "subject": "=Welcome to QRlytics - Your API Credentials",
+        "message": "=<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;\">\n  <h1 style=\"color: #f97316;\">Welcome to QRlytics!</h1>\n  \n  <p>Hi {{ $('Process Client Data').item.json.contact_name }},</p>\n  \n  <p>Your white-label QRlytics account is now active. Here are your credentials:</p>\n  \n  <div style=\"background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;\">\n    <p><strong>Client ID:</strong> <code>{{ $('Process Client Data').item.json.client_id }}</code></p>\n    <p><strong>API Key:</strong> <code>{{ $('Process Client Data').item.json.api_key }}</code></p>\n    <p><strong>Plan:</strong> {{ $('Process Client Data').item.json.plan }} ({{ $('Process Client Data').item.json.api_limit.toLocaleString() }} API calls/month)</p>\n  </div>\n  \n  <h2>Quick Start</h2>\n  <pre style=\"background: #1a1a2e; color: #eee; padding: 15px; border-radius: 8px; overflow-x: auto;\">\ncurl -X POST https://api.qrlytics.eu/v1/qr \\\n  -H \"X-API-Key: {{ $('Process Client Data').item.json.api_key }}\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"name\": \"My QR\", \"type\": \"url\", \"content\": \"https://example.com\"}'\n  </pre>\n  \n  <h2>Your Branding</h2>\n  <p>All QR codes and landing pages will display your branding. \"Powered by QRlytics\" is hidden for your clients.</p>\n  \n  <p>Need help? Reply to this email or check our <a href=\"https://qrlytics.eu/docs\">API documentation</a>.</p>\n  \n  <hr style=\"border: none; border-top: 1px solid #eee; margin: 30px 0;\">\n  <p style=\"color: #666; font-size: 12px;\">QRlytics Agency Partner Program</p>\n</div>",
+        "options": {}
+      },
+      "id": "d9030573-d161-41fb-a9a6-3f0211d69210",
+      "name": "Send Welcome Email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        672,
+        0
+      ],
+      "webhookId": "d1e43aab-16d4-4c7c-979e-c86bd3f8f2de"
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "YOUR_SALES_CHANNEL_ID",
+          "mode": "id"
+        },
+        "text": "=:tada: *New Agency Client!*\n\n*Company:* {{ $('Process Client Data').item.json.company_name }}\n*Plan:* {{ $('Process Client Data').item.json.plan }}\n*API Limit:* {{ $('Process Client Data').item.json.api_limit.toLocaleString() }} calls/month\n*Contact:* {{ $('Process Client Data').item.json.contact_email }}\n\n_Client ID: {{ $('Process Client Data').item.json.client_id }}_",
+        "otherOptions": {}
+      },
+      "id": "a1656f84-4e2e-45b5-965e-42bd951333e3",
+      "name": "Notify Sales Team",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        672,
+        208
+      ],
+      "webhookId": "8ba78181-5ee2-4388-9fba-c1db08f771ee"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: true, client_id: $('Process Client Data').item.json.client_id, message: 'Welcome email sent. Check your inbox for API credentials.' }) }}",
+        "options": {}
+      },
+      "id": "2b23e4b6-91a3-45f5-8ab6-da5649b4589b",
+      "name": "Respond Success",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        880,
+        0
+      ]
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-02-02T22:00:13.957Z",
+      "createdAt": "2026-02-02T22:00:13.957Z",
+      "role": "workflow:owner",
+      "workflowId": "vARHTNAY9zo0hoDmdgr1D",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2026-02-02T22:00:12.277Z",
+      "createdAt": "2026-02-02T22:00:12.277Z",
+      "id": "0QqClHtHQTbLzTrS",
+      "name": "Onboarding"
+    },
+    {
+      "updatedAt": "2026-02-02T22:00:12.264Z",
+      "createdAt": "2026-02-02T22:00:12.264Z",
+      "id": "1obDoUhs4NtDcRnf",
+      "name": "Agency"
+    },
+    {
+      "updatedAt": "2026-02-02T21:52:10.331Z",
+      "createdAt": "2026-02-02T21:52:10.331Z",
+      "id": "oF8e5bd7fSdXLo6C",
+      "name": "QRlytics"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2026-02-02T22:00:13.957Z",
+  "versionId": "ed55da4c-58ea-4c0d-aca2-227c182541e4"
+}
