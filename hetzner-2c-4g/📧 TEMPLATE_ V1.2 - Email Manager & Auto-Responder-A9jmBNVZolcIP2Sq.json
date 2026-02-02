@@ -2319,10 +2319,9 @@
   ],
   "staticData": {
     "node:ReceiveEmail_Trigger": {
-      "lastTimeChecked": 1769701926,
+      "lastTimeChecked": 1770024687,
       "possibleDuplicates": [
-        "19c0a746a0754ebf",
-        "19c0857dbc45df63"
+        "19c1db15c806b019"
       ]
     }
   },
