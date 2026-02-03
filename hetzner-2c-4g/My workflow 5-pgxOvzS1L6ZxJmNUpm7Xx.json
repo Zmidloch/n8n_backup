@@ -1,0 +1,300 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Email QR Form": {
+      "main": [
+        [
+          {
+            "node": "Generate QR Array",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate QR Array": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Summarize Results",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create QR via API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create QR via API": {
+      "main": [
+        [
+          {
+            "node": "Convert Base64 to Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert Base64 to Image": {
+      "main": [
+        [
+          {
+            "node": "Upload to Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload to Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarize Results": {
+      "main": [
+        [
+          {
+            "node": "Send Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-02-03T17:02:04.568Z",
+  "id": "pgxOvzS1L6ZxJmNUpm7Xx",
+  "isArchived": false,
+  "meta": null,
+  "name": "My workflow 5",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Generate Email QR Codes",
+        "formDescription": "Create unique trackable QR codes that open a pre-filled email",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Number of QR Codes",
+              "fieldType": "number",
+              "placeholder": "e.g., 200 (one per table/location)",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Location Prefix",
+              "placeholder": "e.g., FEEDBACK",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Email Address",
+              "placeholder": "e.g., feedback@hotel.com",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Email Subject",
+              "placeholder": "e.g., Customer Feedback"
+            },
+            {
+              "fieldLabel": "Email Body Template",
+              "placeholder": "e.g., I visited your location and..."
+            },
+            {
+              "fieldLabel": "Google Drive Folder ID",
+              "placeholder": "Folder ID from Google Drive",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4f43a493-8996-4264-97d0-35ed1dc35a6a",
+      "name": "Email QR Form",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "7d7e90cb-88b7-4598-a008-4f292b943205"
+    },
+    {
+      "parameters": {
+        "jsCode": "const form = $input.first().json;\nconst count = parseInt(form['Number of QR Codes']) || 10;\nconst prefix = form['Location Prefix'] || 'EMAIL';\nconst email = form['Email Address'];\nconst subject = form['Email Subject'] || '';\nconst body = form['Email Body Template'] || '';\nconst folderId = form['Google Drive Folder ID'];\n\n// Build mailto content\nlet mailtoContent = `mailto:${email}`;\nconst params = [];\nif (subject) params.push(`subject=${encodeURIComponent(subject)}`);\nif (body) params.push(`body=${encodeURIComponent(body)}`);\nif (params.length > 0) mailtoContent += '?' + params.join('&');\n\nconst items = [];\nfor (let i = 1; i <= count; i++) {\n  const itemId = `${prefix}-${String(i).padStart(4, '0')}`;\n  items.push({\n    index: i,\n    item_id: itemId,\n    content: mailtoContent,\n    folder_id: folderId,\n    prefix: prefix,\n    total_count: count\n  });\n}\n\nreturn items.map(item => ({ json: item }));"
+      },
+      "id": "7eac0424-3e4d-425a-9da6-a552d929badc",
+      "name": "Generate QR Array",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "2d79bb41-7733-466d-b810-0c0add90e09b",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        448,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://qrlytics.eu/api/v1/qr",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "name",
+              "value": "={{ $json.item_id }}"
+            },
+            {
+              "name": "type",
+              "value": "email"
+            },
+            {
+              "name": "content",
+              "value": "={{ $json.content }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a7d5ad5e-8c71-419f-b5b0-61f59b9ef91d",
+      "name": "Create QR via API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        848,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const qrResponse = $('Create QR via API').item.json;\nconst itemData = $('Loop Over Items').item.json;\n\nconst base64DataUrl = qrResponse.qr_image_url;\nif (!base64DataUrl) {\n  throw new Error('No qr_image_url in API response. Keys: ' + Object.keys(qrResponse).join(', '));\n}\n\nconst base64Data = base64DataUrl.replace(/^data:image\\/\\w+;base64,/, '');\nconst buffer = Buffer.from(base64Data, 'base64');\nconst fileName = `${itemData.item_id}.png`;\n\nconst binaryData = await this.helpers.prepareBinaryData(\n  buffer,\n  fileName,\n  'image/png'\n);\n\nreturn [{\n  json: {\n    item_id: itemData.item_id,\n    folder_id: itemData.folder_id,\n    prefix: itemData.prefix,\n    short_url: qrResponse.short_url,\n    qr_id: qrResponse.id\n  },\n  binary: {\n    data: binaryData\n  }\n}];"
+      },
+      "id": "91ad2ddd-3873-4b34-ade3-1032df7d9175",
+      "name": "Convert Base64 to Image",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1056,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "name": "={{ $json.item_id }}.png",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $json.folder_id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "id": "95e300e1-302d-49cb-9e2d-8621dc74f578",
+      "name": "Upload to Google Drive",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1264,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst first = items[0]?.json || {};\n\nreturn [{\n  json: {\n    success: true,\n    message: `Successfully generated ${items.length} Email QR codes`,\n    prefix: first.prefix || 'EMAIL',\n    total_created: items.length,\n    folder_id: first.folder_id\n  }\n}];"
+      },
+      "id": "099769f5-14b2-4d91-ae4e-a48dd9580e7b",
+      "name": "Summarize Results",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        848,
+        16
+      ]
+    },
+    {
+      "parameters": {
+        "subject": "Email QR Codes Generated",
+        "message": "={{ $json.message }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1056,
+        16
+      ],
+      "id": "f3f4a04f-8c97-45ca-8cb5-0a7947663489",
+      "name": "Send Notification",
+      "webhookId": "c48acacb-d4d0-46dd-afc2-5c477cef7650"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-02-03T17:02:04.568Z",
+      "createdAt": "2026-02-03T17:02:04.568Z",
+      "role": "workflow:owner",
+      "workflowId": "pgxOvzS1L6ZxJmNUpm7Xx",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-02-03T17:02:04.568Z",
+  "versionId": "b93c4646-8cf7-46d5-88d3-fcce054aed98"
+}
