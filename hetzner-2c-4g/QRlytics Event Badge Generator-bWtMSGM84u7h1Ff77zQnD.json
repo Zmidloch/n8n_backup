@@ -1,7 +1,299 @@
 {
-  "active": false,
-  "activeVersion": null,
-  "activeVersionId": null,
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-02-03T16:46:43.144Z",
+    "createdAt": "2026-02-03T16:45:54.798Z",
+    "versionId": "d5ba9dac-6f1d-4c16-a888-67eb1920aa08",
+    "workflowId": "bWtMSGM84u7h1Ff77zQnD",
+    "nodes": [
+      {
+        "parameters": {
+          "formTitle": "Generate Event Badges",
+          "formDescription": "Create unique QR codes for event badges/wristbands in bulk",
+          "formFields": {
+            "values": [
+              {
+                "fieldLabel": "Number of Badges",
+                "fieldType": "number",
+                "placeholder": "e.g., 5000",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Event Prefix",
+                "placeholder": "e.g., FESTIVAL2026",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Redirect URL",
+                "placeholder": "https://your-event.com/scan",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Google Drive Folder ID",
+                "placeholder": "Folder ID from Google Drive",
+                "requiredField": true
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "35a6ac77-93fc-4c64-81df-987ba0b2c225",
+        "name": "Badge Generation Form",
+        "type": "n8n-nodes-base.formTrigger",
+        "typeVersion": 2.2,
+        "position": [
+          288,
+          -240
+        ],
+        "webhookId": "c7329534-a767-4692-a85d-03842c0c563f"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Generate array of badge items to create\nconst form = $input.first().json;\nconst count = parseInt(form['Number of Badges']) || 10;\nconst prefix = form['Event Prefix'] || 'BADGE';\nconst redirectUrl = form['Redirect URL'] || 'https://example.com';\nconst folderId = form['Google Drive Folder ID'];\n\n// Generate array of items\nconst badges = [];\nfor (let i = 1; i <= count; i++) {\n  const badgeId = `${prefix}-${String(i).padStart(4, '0')}`;\n  badges.push({\n    index: i,\n    badge_id: badgeId,\n    redirect_url: `${redirectUrl}?badge=${badgeId}`,\n    folder_id: folderId,\n    prefix: prefix,\n    total_count: count\n  });\n}\n\nreturn badges.map(b => ({ json: b }));"
+        },
+        "id": "bc0c8692-d54a-4aca-a579-9e4f2744dabe",
+        "name": "Generate Badge Array",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          512,
+          -240
+        ]
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "5fdf98a3-919d-401c-b2ad-f3db137d5262",
+        "name": "Loop Over Badges",
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 3,
+        "position": [
+          736,
+          -240
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://qrlytics.eu/api/v1/qr",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "name",
+                "value": "={{ $json.badge_id }}"
+              },
+              {
+                "name": "type",
+                "value": "url"
+              },
+              {
+                "name": "content",
+                "value": "={{ $json.redirect_url }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "ad5c4b5c-630b-44eb-aee0-34acec7b2b2c",
+        "name": "Create QR via API",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          1136,
+          -32
+        ],
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "39hneqZ33oPfqQwA",
+            "name": "QRlytics"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Convert base64 QR image from API response to binary for Google Drive upload\nconst qrResponse = $('Create QR via API').item.json;\nconst badgeData = $('Loop Over Badges').item.json;\n\nconst base64DataUrl = qrResponse.qr_image_url;\nif (!base64DataUrl) {\n  throw new Error('No qr_image_url in API response. Response keys: ' + Object.keys(qrResponse).join(', '));\n}\n\n// Extract pure base64 from data URL (remove \"data:image/png;base64,\" prefix)\nconst base64Data = base64DataUrl.replace(/^data:image\\/\\w+;base64,/, '');\nconst buffer = Buffer.from(base64Data, 'base64');\n\nconst fileName = `${badgeData.badge_id}.png`;\n\nconst binaryData = await this.helpers.prepareBinaryData(\n  buffer,\n  fileName,\n  'image/png'\n);\n\nreturn [{\n  json: {\n    badge_id: badgeData.badge_id,\n    folder_id: badgeData.folder_id,\n    prefix: badgeData.prefix,\n    short_url: qrResponse.short_url,\n    qr_id: qrResponse.id\n  },\n  binary: {\n    data: binaryData\n  }\n}];"
+        },
+        "id": "4d341771-1b30-47de-8ea4-85f24be272ab",
+        "name": "Convert Base64 to Image",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1344,
+          -32
+        ]
+      },
+      {
+        "parameters": {
+          "name": "={{ $json.badge_id }}.png",
+          "driveId": {
+            "__rl": true,
+            "value": "https://drive.google.com/drive/u/0/folders/118AF72y4ukHD0V4fQvUYVlHKfKB2YXA_",
+            "mode": "url"
+          },
+          "folderId": {
+            "__rl": true,
+            "value": "={{ $json.folder_id }}",
+            "mode": "id"
+          },
+          "options": {}
+        },
+        "id": "e468aef5-84c8-4aaa-9f5b-a03a1e64a885",
+        "name": "Upload to Google Drive",
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          1552,
+          -32
+        ],
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "0y8WKhAVB7SLUFcI",
+            "name": "Google Drive zmidloch@z-agency.cz"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Summarize results\nconst items = $input.all();\nconst first = items[0]?.json || {};\n\nreturn [{\n  json: {\n    success: true,\n    message: `Successfully generated ${items.length} QR codes`,\n    prefix: first.prefix || 'BADGES',\n    total_created: items.length,\n    folder_id: first.folder_id,\n    sample_badge: first.badge_id\n  }\n}];"
+        },
+        "id": "b0c50496-73e8-44fa-8cb7-1983b2ea174a",
+        "name": "Summarize Results",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1136,
+          -224
+        ]
+      },
+      {
+        "parameters": {
+          "sendTo": "zmidloch@z-agency.cz",
+          "subject": "Entrance to Play Zone - VIP - done",
+          "message": "={{ $json.message }} visit QR folder",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.2,
+        "position": [
+          1344,
+          -224
+        ],
+        "id": "880cf0e2-004e-4fb9-a07b-52b35ab3e5f1",
+        "name": "Send a message",
+        "webhookId": "fb4a918d-0525-4451-9771-d625b6f3db23",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "qNSaYVEcaWOf5U3k",
+            "name": "Gmail zmidloch@z-agency.cz"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Badge Generation Form": {
+        "main": [
+          [
+            {
+              "node": "Generate Badge Array",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Generate Badge Array": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Badges",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Loop Over Badges": {
+        "main": [
+          [
+            {
+              "node": "Summarize Results",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Create QR via API",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create QR via API": {
+        "main": [
+          [
+            {
+              "node": "Convert Base64 to Image",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Convert Base64 to Image": {
+        "main": [
+          [
+            {
+              "node": "Upload to Google Drive",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Upload to Google Drive": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Badges",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Summarize Results": {
+        "main": [
+          [
+            {
+              "node": "Send a message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jiri Zmidloch",
+    "name": "Version d5ba9dac",
+    "description": "",
+    "autosaved": true
+  },
+  "activeVersionId": "d5ba9dac-6f1d-4c16-a888-67eb1920aa08",
   "connections": {
     "Badge Generation Form": {
       "main": [
@@ -29,14 +321,14 @@
       "main": [
         [
           {
-            "node": "Create QR via API",
+            "node": "Summarize Results",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Summarize Results",
+            "node": "Create QR via API",
             "type": "main",
             "index": 0
           }
@@ -47,25 +339,14 @@
       "main": [
         [
           {
-            "node": "Rate Limit Wait",
+            "node": "Convert Base64 to Image",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Rate Limit Wait": {
-      "main": [
-        [
-          {
-            "node": "Download QR Image",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Download QR Image": {
+    "Convert Base64 to Image": {
       "main": [
         [
           {
@@ -80,17 +361,6 @@
       "main": [
         [
           {
-            "node": "Loop End",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Loop End": {
-      "main": [
-        [
-          {
             "node": "Loop Over Badges",
             "type": "main",
             "index": 0
@@ -102,7 +372,7 @@
       "main": [
         [
           {
-            "node": "Notify Completion",
+            "node": "Send a message",
             "type": "main",
             "index": 0
           }
@@ -113,7 +383,9 @@
   "createdAt": "2026-02-02T23:47:05.318Z",
   "id": "bWtMSGM84u7h1Ff77zQnD",
   "isArchived": false,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "QRlytics Event Badge Generator",
   "nodes": [
     {
@@ -186,7 +458,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://api.qrlytics.eu/v1/qr",
+        "url": "https://qrlytics.eu/api/v1/qr",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
@@ -222,55 +494,40 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        960,
-        -240
-      ]
-    },
-    {
-      "parameters": {
-        "amount": 0.1
-      },
-      "id": "2c044086-2806-4347-af94-0f06ebd3e243",
-      "name": "Rate Limit Wait",
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
-      "position": [
-        1168,
-        -240
+        1136,
+        -32
       ],
-      "webhookId": "72f5d2ff-80b5-4e81-b5a4-093d00aa0c72"
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "39hneqZ33oPfqQwA",
+          "name": "QRlytics"
+        }
+      }
     },
     {
       "parameters": {
-        "url": "={{ $('Create QR via API').item.json.qr_image_url }}",
-        "options": {
-          "response": {
-            "response": {
-              "responseFormat": "file"
-            }
-          }
-        }
+        "jsCode": "// Convert base64 QR image from API response to binary for Google Drive upload\nconst qrResponse = $('Create QR via API').item.json;\nconst badgeData = $('Loop Over Badges').item.json;\n\nconst base64DataUrl = qrResponse.qr_image_url;\nif (!base64DataUrl) {\n  throw new Error('No qr_image_url in API response. Response keys: ' + Object.keys(qrResponse).join(', '));\n}\n\n// Extract pure base64 from data URL (remove \"data:image/png;base64,\" prefix)\nconst base64Data = base64DataUrl.replace(/^data:image\\/\\w+;base64,/, '');\nconst buffer = Buffer.from(base64Data, 'base64');\n\nconst fileName = `${badgeData.badge_id}.png`;\n\nconst binaryData = await this.helpers.prepareBinaryData(\n  buffer,\n  fileName,\n  'image/png'\n);\n\nreturn [{\n  json: {\n    badge_id: badgeData.badge_id,\n    folder_id: badgeData.folder_id,\n    prefix: badgeData.prefix,\n    short_url: qrResponse.short_url,\n    qr_id: qrResponse.id\n  },\n  binary: {\n    data: binaryData\n  }\n}];"
       },
       "id": "4d341771-1b30-47de-8ea4-85f24be272ab",
-      "name": "Download QR Image",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.3,
+      "name": "Convert Base64 to Image",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
       "position": [
-        1392,
-        -240
+        1344,
+        -32
       ]
     },
     {
       "parameters": {
-        "name": "={{ $('Loop Over Badges').item.json.badge_id }}.png",
+        "name": "={{ $json.badge_id }}.png",
         "driveId": {
           "__rl": true,
-          "mode": "list",
-          "value": "My Drive"
+          "value": "https://drive.google.com/drive/u/0/folders/118AF72y4ukHD0V4fQvUYVlHKfKB2YXA_",
+          "mode": "url"
         },
         "folderId": {
           "__rl": true,
-          "value": "={{ $('Loop Over Badges').item.json.folder_id }}",
+          "value": "={{ $json.folder_id }}",
           "mode": "id"
         },
         "options": {}
@@ -280,22 +537,15 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        1616,
-        -240
-      ]
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "id": "5882cd69-3e8b-4e63-b3b8-4343c329099e",
-      "name": "Loop End",
-      "type": "n8n-nodes-base.splitInBatches",
-      "typeVersion": 3,
-      "position": [
-        1840,
-        -240
-      ]
+        1552,
+        -32
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "0y8WKhAVB7SLUFcI",
+          "name": "Google Drive zmidloch@z-agency.cz"
+        }
+      }
     },
     {
       "parameters": {
@@ -306,35 +556,41 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2048,
-        -240
+        1136,
+        -224
       ]
     },
     {
       "parameters": {
-        "select": "channel",
-        "channelId": {
-          "__rl": true,
-          "value": "YOUR_SLACK_CHANNEL_ID",
-          "mode": "id"
-        },
-        "text": "=:ticket: *Badge Generation Complete!*\n\n:white_check_mark: Created *{{ $json.total_created }}* QR codes\n:label: Prefix: `{{ $json.prefix }}`\n:file_folder: Saved to Google Drive folder\n\n_Ready for printing!_",
-        "otherOptions": {}
+        "sendTo": "zmidloch@z-agency.cz",
+        "subject": "Entrance to Play Zone - VIP - done",
+        "message": "={{ $json.message }} visit QR folder",
+        "options": {}
       },
-      "id": "e27ae3fe-2236-456c-a024-8662069a8f3b",
-      "name": "Notify Completion",
-      "type": "n8n-nodes-base.slack",
+      "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        2272,
-        -240
+        1344,
+        -224
       ],
-      "webhookId": "e6d6ed2e-4749-4c23-a54f-02b58864e0c7"
+      "id": "880cf0e2-004e-4fb9-a07b-52b35ab3e5f1",
+      "name": "Send a message",
+      "webhookId": "fb4a918d-0525-4451-9771-d625b6f3db23",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "qNSaYVEcaWOf5U3k",
+          "name": "Gmail zmidloch@z-agency.cz"
+        }
+      }
     }
   ],
   "settings": {
     "executionOrder": "v1",
-    "availableInMCP": false
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "timezone": "Europe/Prague",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "zVAjJgKV17IWzFP7"
   },
   "shared": [
     {
@@ -372,7 +628,7 @@
       "name": "QRlytics"
     }
   ],
-  "triggerCount": 0,
-  "updatedAt": "2026-02-02T23:47:05.318Z",
-  "versionId": "4fa3f9e6-f993-42ea-81d0-9d9fc4e2feae"
+  "triggerCount": 1,
+  "updatedAt": "2026-02-03T16:46:38.204Z",
+  "versionId": "d5ba9dac-6f1d-4c16-a888-67eb1920aa08"
 }
