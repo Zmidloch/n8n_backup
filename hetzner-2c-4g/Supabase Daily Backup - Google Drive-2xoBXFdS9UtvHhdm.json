@@ -360,7 +360,8 @@
     "executionOrder": "v1",
     "saveManualExecutions": true,
     "callerPolicy": "workflowsFromSameOwner",
-    "availableInMCP": false
+    "availableInMCP": false,
+    "errorWorkflow": "zVAjJgKV17IWzFP7"
   },
   "shared": [
     {
@@ -378,6 +379,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-02-07T00:51:19.633Z",
+  "updatedAt": "2026-02-07T15:00:19.969Z",
   "versionId": "9f6017ae-7faf-4e36-b91a-55a76f003ab6"
 }
