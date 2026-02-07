@@ -1,0 +1,383 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-02-07T00:42:38.197Z",
+    "createdAt": "2026-02-07T00:42:38.197Z",
+    "versionId": "9f6017ae-7faf-4e36-b91a-55a76f003ab6",
+    "workflowId": "2xoBXFdS9UtvHhdm",
+    "nodes": [
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "cronExpression",
+                "expression": "0 2 * * *"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          300
+        ],
+        "id": "trigger",
+        "name": "Daily 2:00 UTC"
+      },
+      {
+        "parameters": {
+          "command": "CONTAINER=$(docker ps --format '{{.Names}}' | grep -i db | head -1) && echo \"Container: $CONTAINER\" >&2 && docker exec $CONTAINER pg_dump -U postgres -d postgres -Fc --no-owner --no-acl 2>/dev/null | gzip | base64 -w 0",
+          "authentication": "privateKey"
+        },
+        "type": "n8n-nodes-base.ssh",
+        "typeVersion": 1,
+        "position": [
+          260,
+          300
+        ],
+        "id": "ssh-pgdump",
+        "name": "SSH pg_dump",
+        "credentials": {
+          "sshPrivateKey": {
+            "id": "TSlgNjqYrmwXCpt1",
+            "name": "Elestio Supabase SSH"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const sshOutput = $input.first().json;\nconst stdout = (sshOutput.stdout || '').trim();\nconst stderr = sshOutput.stderr || '';\n\nif (!stdout) {\n  throw new Error('pg_dump produced empty output. stderr: ' + stderr);\n}\n\nconst buffer = Buffer.from(stdout, 'base64');\n\nif (buffer.length < 2 || buffer[0] !== 0x1f || buffer[1] !== 0x8b) {\n  throw new Error('Output is not valid gzip data. Check container name or postgres user.');\n}\n\nconst now = new Date();\nconst pad = (n) => String(n).padStart(2, '0');\nconst ts = now.getFullYear() + '-' + pad(now.getMonth()+1) + '-' + pad(now.getDate()) + '_' + pad(now.getHours()) + pad(now.getMinutes()) + pad(now.getSeconds());\nconst filename = 'supabase_backup_' + ts + '.dump.gz';\nconst sizeMB = (buffer.length / 1024 / 1024).toFixed(1);\n\nreturn [{\n  json: { filename, sizeMB, timestamp: now.toISOString(), container: stderr.replace('Container: ', '').trim() },\n  binary: {\n    data: await this.helpers.prepareBinaryData(buffer, filename, 'application/gzip')\n  }\n}];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          520,
+          300
+        ],
+        "id": "code-process",
+        "name": "Process Backup"
+      },
+      {
+        "parameters": {
+          "name": "={{ $json.filename }}",
+          "driveId": {
+            "__rl": true,
+            "value": "https://drive.google.com/drive/u/0/folders/1aqya4VKZemxb4rmid432TJzgaPM70xe2",
+            "mode": "url"
+          },
+          "folderId": {
+            "__rl": true,
+            "value": "1aqya4VKZemxb4rmid432TJzgaPM70xe2",
+            "mode": "id"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          780,
+          300
+        ],
+        "id": "gdrive-upload",
+        "name": "Upload to Google Drive",
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "0y8WKhAVB7SLUFcI",
+            "name": "Google Drive zmidloch@z-agency.cz"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "sendTo": "zmidloch@z-agency.cz",
+          "subject": "=Supabase Backup OK - {{ $('Process Backup').item.json.filename }}",
+          "emailType": "html",
+          "message": "=<h3>Supabase Backup Completed</h3><table style='border-collapse:collapse;'><tr><td style='padding:4px 12px;font-weight:bold;'>File:</td><td style='padding:4px 12px;'>{{ $('Process Backup').item.json.filename }}</td></tr><tr><td style='padding:4px 12px;font-weight:bold;'>Size:</td><td style='padding:4px 12px;'>{{ $('Process Backup').item.json.sizeMB }} MB</td></tr><tr><td style='padding:4px 12px;font-weight:bold;'>Drive ID:</td><td style='padding:4px 12px;'>{{ $json.id }}</td></tr><tr><td style='padding:4px 12px;font-weight:bold;'>Time:</td><td style='padding:4px 12px;'>{{ $('Process Backup').item.json.timestamp }}</td></tr></table><br><p style='color:#666;'><em>Automated backup via n8n</em></p>",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.1,
+        "position": [
+          1040,
+          300
+        ],
+        "id": "gmail-success",
+        "name": "Email Backup OK",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "qNSaYVEcaWOf5U3k",
+            "name": "Gmail zmidloch@z-agency.cz"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "content": "## Supabase Daily Backup\n\n**Schedule:** Denne 2:00 UTC (3:00 CET)\n**Flow:** SSH pg_dump > gzip > Google Drive\n**Container:** supabase-db\n**Folder:** Supabase-Elestio",
+          "height": 250,
+          "width": 320,
+          "color": 4
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          -80,
+          -10
+        ],
+        "id": "sticky-info",
+        "name": "Sticky Note"
+      }
+    ],
+    "connections": {
+      "SSH pg_dump": {
+        "main": [
+          [
+            {
+              "node": "Process Backup",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Process Backup": {
+        "main": [
+          [
+            {
+              "node": "Upload to Google Drive",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Upload to Google Drive": {
+        "main": [
+          [
+            {
+              "node": "Email Backup OK",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Daily 2:00 UTC": {
+        "main": [
+          [
+            {
+              "node": "SSH pg_dump",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jiri Zmidloch",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "9f6017ae-7faf-4e36-b91a-55a76f003ab6",
+  "connections": {
+    "SSH pg_dump": {
+      "main": [
+        [
+          {
+            "node": "Process Backup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Backup": {
+      "main": [
+        [
+          {
+            "node": "Upload to Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload to Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Email Backup OK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Daily 2:00 UTC": {
+      "main": [
+        [
+          {
+            "node": "SSH pg_dump",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-02-07T00:20:35.606Z",
+  "id": "2xoBXFdS9UtvHhdm",
+  "isArchived": false,
+  "meta": null,
+  "name": "Supabase Daily Backup - Google Drive",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 2 * * *"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        300
+      ],
+      "id": "trigger",
+      "name": "Daily 2:00 UTC"
+    },
+    {
+      "parameters": {
+        "command": "CONTAINER=$(docker ps --format '{{.Names}}' | grep -i db | head -1) && echo \"Container: $CONTAINER\" >&2 && docker exec $CONTAINER pg_dump -U postgres -d postgres -Fc --no-owner --no-acl 2>/dev/null | gzip | base64 -w 0",
+        "authentication": "privateKey"
+      },
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        260,
+        300
+      ],
+      "id": "ssh-pgdump",
+      "name": "SSH pg_dump",
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "TSlgNjqYrmwXCpt1",
+          "name": "Elestio Supabase SSH"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const sshOutput = $input.first().json;\nconst stdout = (sshOutput.stdout || '').trim();\nconst stderr = sshOutput.stderr || '';\n\nif (!stdout) {\n  throw new Error('pg_dump produced empty output. stderr: ' + stderr);\n}\n\nconst buffer = Buffer.from(stdout, 'base64');\n\nif (buffer.length < 2 || buffer[0] !== 0x1f || buffer[1] !== 0x8b) {\n  throw new Error('Output is not valid gzip data. Check container name or postgres user.');\n}\n\nconst now = new Date();\nconst pad = (n) => String(n).padStart(2, '0');\nconst ts = now.getFullYear() + '-' + pad(now.getMonth()+1) + '-' + pad(now.getDate()) + '_' + pad(now.getHours()) + pad(now.getMinutes()) + pad(now.getSeconds());\nconst filename = 'supabase_backup_' + ts + '.dump.gz';\nconst sizeMB = (buffer.length / 1024 / 1024).toFixed(1);\n\nreturn [{\n  json: { filename, sizeMB, timestamp: now.toISOString(), container: stderr.replace('Container: ', '').trim() },\n  binary: {\n    data: await this.helpers.prepareBinaryData(buffer, filename, 'application/gzip')\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        520,
+        300
+      ],
+      "id": "code-process",
+      "name": "Process Backup"
+    },
+    {
+      "parameters": {
+        "name": "={{ $json.filename }}",
+        "driveId": {
+          "__rl": true,
+          "value": "https://drive.google.com/drive/u/0/folders/1aqya4VKZemxb4rmid432TJzgaPM70xe2",
+          "mode": "url"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1aqya4VKZemxb4rmid432TJzgaPM70xe2",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        780,
+        300
+      ],
+      "id": "gdrive-upload",
+      "name": "Upload to Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "0y8WKhAVB7SLUFcI",
+          "name": "Google Drive zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "zmidloch@z-agency.cz",
+        "subject": "=Supabase Backup OK - {{ $('Process Backup').item.json.filename }}",
+        "emailType": "html",
+        "message": "=<h3>Supabase Backup Completed</h3><table style='border-collapse:collapse;'><tr><td style='padding:4px 12px;font-weight:bold;'>File:</td><td style='padding:4px 12px;'>{{ $('Process Backup').item.json.filename }}</td></tr><tr><td style='padding:4px 12px;font-weight:bold;'>Size:</td><td style='padding:4px 12px;'>{{ $('Process Backup').item.json.sizeMB }} MB</td></tr><tr><td style='padding:4px 12px;font-weight:bold;'>Drive ID:</td><td style='padding:4px 12px;'>{{ $json.id }}</td></tr><tr><td style='padding:4px 12px;font-weight:bold;'>Time:</td><td style='padding:4px 12px;'>{{ $('Process Backup').item.json.timestamp }}</td></tr></table><br><p style='color:#666;'><em>Automated backup via n8n</em></p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1040,
+        300
+      ],
+      "id": "gmail-success",
+      "name": "Email Backup OK",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "qNSaYVEcaWOf5U3k",
+          "name": "Gmail zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Supabase Daily Backup\n\n**Schedule:** Denne 2:00 UTC (3:00 CET)\n**Flow:** SSH pg_dump > gzip > Google Drive\n**Container:** supabase-db\n**Folder:** Supabase-Elestio",
+        "height": 250,
+        "width": 320,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        -10
+      ],
+      "id": "sticky-info",
+      "name": "Sticky Note"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-02-07T00:20:35.606Z",
+      "createdAt": "2026-02-07T00:20:35.606Z",
+      "role": "workflow:owner",
+      "workflowId": "2xoBXFdS9UtvHhdm",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": {
+    "node:Daily 2:00 UTC": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-02-07T00:51:19.633Z",
+  "versionId": "9f6017ae-7faf-4e36-b91a-55a76f003ab6"
+}
