@@ -1,0 +1,719 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-02-07T11:01:16.145Z",
+    "createdAt": "2026-02-07T11:01:16.145Z",
+    "versionId": "0499ae75-a7af-4b1b-a115-fec14e939d5c",
+    "workflowId": "ETRvej8OUfxqeyPb",
+    "nodes": [
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "cronExpression",
+                "expression": "0 4 * * 0"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          300
+        ],
+        "id": "schedule-github",
+        "name": "Weekly Sunday 4:00 UTC"
+      },
+      {
+        "parameters": {
+          "method": "GET",
+          "url": "https://api.github.com/user/repos",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "githubOAuth2Api",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "per_page",
+                "value": "100"
+              },
+              {
+                "name": "affiliation",
+                "value": "owner"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          260,
+          200
+        ],
+        "id": "list-personal",
+        "name": "List Personal Repos",
+        "credentials": {
+          "githubOAuth2Api": {
+            "id": "OnhF3VTeVWgkGdcX",
+            "name": "GitHub account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "GET",
+          "url": "https://api.github.com/orgs/Process-Gate-AI/repos",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "githubOAuth2Api",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "per_page",
+                "value": "100"
+              },
+              {
+                "name": "type",
+                "value": "all"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          260,
+          400
+        ],
+        "id": "list-org",
+        "name": "List Org Repos (Process-Gate-AI)",
+        "credentials": {
+          "githubOAuth2Api": {
+            "id": "OnhF3VTeVWgkGdcX",
+            "name": "GitHub account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "mode": "append",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.merge",
+        "typeVersion": 3.2,
+        "position": [
+          520,
+          300
+        ],
+        "id": "merge-repos",
+        "name": "Merge All Repos"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Keep only essential fields, filter out forks and empty repos\nconst repos = $input.all();\nconst result = repos\n  .filter(item => !item.json.fork && (item.json.size || 0) > 0)\n  .map(item => ({\n    json: {\n      full_name: item.json.full_name,\n      name: item.json.name,\n      owner: item.json.owner?.login || item.json.full_name.split('/')[0],\n      private: item.json.private,\n      default_branch: item.json.default_branch || 'main',\n      size_kb: item.json.size || 0\n    }\n  }));\n\nconsole.log(`Found ${result.length} repos (excluding forks and empty repos)`);\nreturn result;"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          780,
+          300
+        ],
+        "id": "code-prepare",
+        "name": "Prepare Repo List"
+      },
+      {
+        "parameters": {
+          "options": {
+            "batchSize": 1
+          }
+        },
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 3,
+        "position": [
+          1040,
+          300
+        ],
+        "id": "split-batches",
+        "name": "Loop Repos"
+      },
+      {
+        "parameters": {
+          "method": "GET",
+          "url": "=https://api.github.com/repos/{{ $json.full_name }}/tarball",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "githubOAuth2Api",
+          "options": {
+            "response": {
+              "response": {
+                "responseFormat": "file"
+              }
+            },
+            "timeout": 120000
+          }
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          1300,
+          300
+        ],
+        "id": "download-tarball",
+        "name": "Download Tarball",
+        "credentials": {
+          "githubOAuth2Api": {
+            "id": "OnhF3VTeVWgkGdcX",
+            "name": "GitHub account"
+          }
+        },
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "name": "={{ $('Loop Repos').item.json.full_name.replace('/', '_') }}_{{ $now.toFormat('yyyy-MM-dd') }}.tar.gz",
+          "driveId": {
+            "__rl": true,
+            "value": "https://drive.google.com/drive/u/0/folders/19eWH9yOFm6ohrRVy_9n7nDCi1X2bCeyJ",
+            "mode": "url"
+          },
+          "folderId": {
+            "__rl": true,
+            "value": "19eWH9yOFm6ohrRVy_9n7nDCi1X2bCeyJ",
+            "mode": "id"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          1560,
+          300
+        ],
+        "id": "gdrive-upload",
+        "name": "Upload to Google Drive",
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "0y8WKhAVB7SLUFcI",
+            "name": "Google Drive zmidloch@z-agency.cz"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "sendTo": "zmidloch@z-agency.cz",
+          "subject": "=GitHub Backup OK - {{ $now.toFormat('yyyy-MM-dd') }}",
+          "emailType": "html",
+          "message": "=<h3>GitHub Weekly Backup Completed</h3><p>All repositories backed up to Google Drive.</p><p><b>Time:</b> {{ $now.toISO() }}</p><hr><p style='color:#666;'><em>n8n automated backup</em></p>",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.1,
+        "position": [
+          1300,
+          520
+        ],
+        "id": "gmail-summary",
+        "name": "Email Summary",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "qNSaYVEcaWOf5U3k",
+            "name": "Gmail zmidloch@z-agency.cz"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "content": "## GitHub Weekly Backup\n\n**Schedule:** Sunday 4:00 UTC (5:00 CET)\n**Accounts:** Zmidloch (personal) + Process-Gate-AI (org)\n**Storage:** Google Drive\n**Excludes:** Forks\n**Format:** Tarball per repo",
+          "height": 250,
+          "width": 320,
+          "color": 4
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          -80,
+          -10
+        ],
+        "id": "sticky-github",
+        "name": "Sticky Note"
+      }
+    ],
+    "connections": {
+      "Weekly Sunday 4:00 UTC": {
+        "main": [
+          [
+            {
+              "node": "List Personal Repos",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "List Org Repos (Process-Gate-AI)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "List Personal Repos": {
+        "main": [
+          [
+            {
+              "node": "Merge All Repos",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "List Org Repos (Process-Gate-AI)": {
+        "main": [
+          [
+            {
+              "node": "Merge All Repos",
+              "type": "main",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Merge All Repos": {
+        "main": [
+          [
+            {
+              "node": "Prepare Repo List",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Prepare Repo List": {
+        "main": [
+          [
+            {
+              "node": "Loop Repos",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Loop Repos": {
+        "main": [
+          [
+            {
+              "node": "Email Summary",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Download Tarball",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Download Tarball": {
+        "main": [
+          [
+            {
+              "node": "Upload to Google Drive",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Upload to Google Drive": {
+        "main": [
+          [
+            {
+              "node": "Loop Repos",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jiri Zmidloch",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "0499ae75-a7af-4b1b-a115-fec14e939d5c",
+  "connections": {
+    "Weekly Sunday 4:00 UTC": {
+      "main": [
+        [
+          {
+            "node": "List Personal Repos",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "List Org Repos (Process-Gate-AI)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List Personal Repos": {
+      "main": [
+        [
+          {
+            "node": "Merge All Repos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List Org Repos (Process-Gate-AI)": {
+      "main": [
+        [
+          {
+            "node": "Merge All Repos",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge All Repos": {
+      "main": [
+        [
+          {
+            "node": "Prepare Repo List",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Repo List": {
+      "main": [
+        [
+          {
+            "node": "Loop Repos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Repos": {
+      "main": [
+        [
+          {
+            "node": "Email Summary",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Download Tarball",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Tarball": {
+      "main": [
+        [
+          {
+            "node": "Upload to Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload to Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Loop Repos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-02-07T10:50:13.923Z",
+  "id": "ETRvej8OUfxqeyPb",
+  "isArchived": false,
+  "meta": null,
+  "name": "GitHub Weekly Backup - Google Drive",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 4 * * 0"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        300
+      ],
+      "id": "schedule-github",
+      "name": "Weekly Sunday 4:00 UTC"
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://api.github.com/user/repos",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "per_page",
+              "value": "100"
+            },
+            {
+              "name": "affiliation",
+              "value": "owner"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        260,
+        200
+      ],
+      "id": "list-personal",
+      "name": "List Personal Repos",
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "OnhF3VTeVWgkGdcX",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://api.github.com/orgs/Process-Gate-AI/repos",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "per_page",
+              "value": "100"
+            },
+            {
+              "name": "type",
+              "value": "all"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        260,
+        400
+      ],
+      "id": "list-org",
+      "name": "List Org Repos (Process-Gate-AI)",
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "OnhF3VTeVWgkGdcX",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "append",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        520,
+        300
+      ],
+      "id": "merge-repos",
+      "name": "Merge All Repos"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Keep only essential fields, filter out forks and empty repos\nconst repos = $input.all();\nconst result = repos\n  .filter(item => !item.json.fork && (item.json.size || 0) > 0)\n  .map(item => ({\n    json: {\n      full_name: item.json.full_name,\n      name: item.json.name,\n      owner: item.json.owner?.login || item.json.full_name.split('/')[0],\n      private: item.json.private,\n      default_branch: item.json.default_branch || 'main',\n      size_kb: item.json.size || 0\n    }\n  }));\n\nconsole.log(`Found ${result.length} repos (excluding forks and empty repos)`);\nreturn result;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        780,
+        300
+      ],
+      "id": "code-prepare",
+      "name": "Prepare Repo List"
+    },
+    {
+      "parameters": {
+        "options": {
+          "batchSize": 1
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1040,
+        300
+      ],
+      "id": "split-batches",
+      "name": "Loop Repos"
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.github.com/repos/{{ $json.full_name }}/tarball",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubOAuth2Api",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          },
+          "timeout": 120000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1300,
+        300
+      ],
+      "id": "download-tarball",
+      "name": "Download Tarball",
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "OnhF3VTeVWgkGdcX",
+          "name": "GitHub account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "name": "={{ $('Loop Repos').item.json.full_name.replace('/', '_') }}_{{ $now.toFormat('yyyy-MM-dd') }}.tar.gz",
+        "driveId": {
+          "__rl": true,
+          "value": "https://drive.google.com/drive/u/0/folders/19eWH9yOFm6ohrRVy_9n7nDCi1X2bCeyJ",
+          "mode": "url"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "19eWH9yOFm6ohrRVy_9n7nDCi1X2bCeyJ",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1560,
+        300
+      ],
+      "id": "gdrive-upload",
+      "name": "Upload to Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "0y8WKhAVB7SLUFcI",
+          "name": "Google Drive zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "zmidloch@z-agency.cz",
+        "subject": "=GitHub Backup OK - {{ $now.toFormat('yyyy-MM-dd') }}",
+        "emailType": "html",
+        "message": "=<h3>GitHub Weekly Backup Completed</h3><p>All repositories backed up to Google Drive.</p><p><b>Time:</b> {{ $now.toISO() }}</p><hr><p style='color:#666;'><em>n8n automated backup</em></p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1300,
+        520
+      ],
+      "id": "gmail-summary",
+      "name": "Email Summary",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "qNSaYVEcaWOf5U3k",
+          "name": "Gmail zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## GitHub Weekly Backup\n\n**Schedule:** Sunday 4:00 UTC (5:00 CET)\n**Accounts:** Zmidloch (personal) + Process-Gate-AI (org)\n**Storage:** Google Drive\n**Excludes:** Forks\n**Format:** Tarball per repo",
+        "height": 250,
+        "width": 320,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        -10
+      ],
+      "id": "sticky-github",
+      "name": "Sticky Note"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-02-07T10:50:13.923Z",
+      "createdAt": "2026-02-07T10:50:13.923Z",
+      "role": "workflow:owner",
+      "workflowId": "ETRvej8OUfxqeyPb",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": {
+    "node:Weekly Sunday 4:00 UTC": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-02-07T11:01:16.142Z",
+  "versionId": "0499ae75-a7af-4b1b-a115-fec14e939d5c"
+}
