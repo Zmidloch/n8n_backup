@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-02-07T00:46:16.198Z",
-    "createdAt": "2026-02-07T00:46:16.198Z",
-    "versionId": "e511b221-867f-465f-927a-71b23eb82b2e",
+    "updatedAt": "2026-02-07T11:14:13.728Z",
+    "createdAt": "2026-02-07T11:14:13.728Z",
+    "versionId": "269426d7-b595-4cd6-855e-f7dec5b10bb4",
     "workflowId": "rwk3cuzPgoYsjdQF",
     "nodes": [
       {
@@ -68,13 +68,15 @@
       },
       {
         "parameters": {
-          "operation": "deleteDrive",
+          "operation": "deleteFile",
           "fileId": {
             "__rl": true,
             "value": "={{ $json.fileId }}",
             "mode": "id"
           },
-          "options": {}
+          "options": {
+            "deletePermanently": true
+          }
         },
         "type": "n8n-nodes-base.googleDrive",
         "typeVersion": 3,
@@ -182,7 +184,7 @@
     "description": null,
     "autosaved": false
   },
-  "activeVersionId": "e511b221-867f-465f-927a-71b23eb82b2e",
+  "activeVersionId": "269426d7-b595-4cd6-855e-f7dec5b10bb4",
   "connections": {
     "Weekly Sunday 3:00 UTC": {
       "main": [
@@ -297,13 +299,15 @@
     },
     {
       "parameters": {
-        "operation": "deleteDrive",
+        "operation": "deleteFile",
         "fileId": {
           "__rl": true,
           "value": "={{ $json.fileId }}",
           "mode": "id"
         },
-        "options": {}
+        "options": {
+          "deletePermanently": true
+        }
       },
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
@@ -382,6 +386,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-02-07T00:51:09.382Z",
-  "versionId": "e511b221-867f-465f-927a-71b23eb82b2e"
+  "updatedAt": "2026-02-07T11:14:13.722Z",
+  "versionId": "269426d7-b595-4cd6-855e-f7dec5b10bb4"
 }
