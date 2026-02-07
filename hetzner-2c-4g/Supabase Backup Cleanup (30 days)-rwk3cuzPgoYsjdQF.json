@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-02-07T11:14:13.728Z",
-    "createdAt": "2026-02-07T11:14:13.728Z",
-    "versionId": "269426d7-b595-4cd6-855e-f7dec5b10bb4",
+    "updatedAt": "2026-02-07T11:39:43.860Z",
+    "createdAt": "2026-02-07T11:39:39.393Z",
+    "versionId": "93fc63df-add9-4d6d-81e5-0c08b963e9d1",
     "workflowId": "rwk3cuzPgoYsjdQF",
     "nodes": [
       {
@@ -21,28 +21,30 @@
         "typeVersion": 1.2,
         "position": [
           0,
-          300
+          304
         ],
         "id": "schedule-cleanup",
         "name": "Weekly Sunday 3:00 UTC"
       },
       {
         "parameters": {
-          "operation": "search",
-          "folderId": {
-            "__rl": true,
-            "value": "1aqya4VKZemxb4rmid432TJzgaPM70xe2",
-            "mode": "id"
+          "resource": "fileFolder",
+          "queryString": "supabase_backup_",
+          "returnAll": true,
+          "filter": {
+            "folderId": {
+              "__rl": true,
+              "value": "https://drive.google.com/drive/u/0/folders/1aqya4VKZemxb4rmid432TJzgaPM70xe2",
+              "mode": "url"
+            }
           },
-          "queryString": "name contains 'supabase_backup_'",
-          "limit": 100,
           "options": {}
         },
         "type": "n8n-nodes-base.googleDrive",
         "typeVersion": 3,
         "position": [
-          260,
-          300
+          272,
+          304
         ],
         "id": "gdrive-list",
         "name": "List Backup Files",
@@ -60,8 +62,8 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          520,
-          300
+          528,
+          304
         ],
         "id": "code-filter",
         "name": "Filter Old Files (30+ days)"
@@ -81,8 +83,8 @@
         "type": "n8n-nodes-base.googleDrive",
         "typeVersion": 3,
         "position": [
-          780,
-          300
+          784,
+          304
         ],
         "id": "gdrive-delete",
         "name": "Delete Old Backup",
@@ -97,7 +99,6 @@
         "parameters": {
           "sendTo": "zmidloch@z-agency.cz",
           "subject": "=Backup Cleanup - {{ $input.all().length }} old backups deleted",
-          "emailType": "html",
           "message": "=<h3>Backup Cleanup</h3><p>Deleted <b>{{ $input.all().length }}</b> backups older than 30 days from Google Drive.</p><hr><p style='color:#666;'><em>n8n automated cleanup</em></p>",
           "options": {}
         },
@@ -105,10 +106,11 @@
         "typeVersion": 2.1,
         "position": [
           1040,
-          300
+          304
         ],
         "id": "gmail-cleanup",
         "name": "Email Cleanup Report",
+        "webhookId": "ecb39952-0d8d-49ff-b592-ebbb2f3fb327",
         "credentials": {
           "gmailOAuth2": {
             "id": "qNSaYVEcaWOf5U3k",
@@ -127,7 +129,7 @@
         "typeVersion": 1,
         "position": [
           -80,
-          -10
+          -16
         ],
         "id": "sticky-cleanup",
         "name": "Sticky Note"
@@ -180,11 +182,11 @@
       }
     },
     "authors": "Jiri Zmidloch",
-    "name": null,
-    "description": null,
-    "autosaved": false
+    "name": "Version 93fc63df",
+    "description": "",
+    "autosaved": true
   },
-  "activeVersionId": "269426d7-b595-4cd6-855e-f7dec5b10bb4",
+  "activeVersionId": "93fc63df-add9-4d6d-81e5-0c08b963e9d1",
   "connections": {
     "Weekly Sunday 3:00 UTC": {
       "main": [
@@ -252,28 +254,30 @@
       "typeVersion": 1.2,
       "position": [
         0,
-        300
+        304
       ],
       "id": "schedule-cleanup",
       "name": "Weekly Sunday 3:00 UTC"
     },
     {
       "parameters": {
-        "operation": "search",
-        "folderId": {
-          "__rl": true,
-          "value": "1aqya4VKZemxb4rmid432TJzgaPM70xe2",
-          "mode": "id"
+        "resource": "fileFolder",
+        "queryString": "supabase_backup_",
+        "returnAll": true,
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "https://drive.google.com/drive/u/0/folders/1aqya4VKZemxb4rmid432TJzgaPM70xe2",
+            "mode": "url"
+          }
         },
-        "queryString": "name contains 'supabase_backup_'",
-        "limit": 100,
         "options": {}
       },
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        260,
-        300
+        272,
+        304
       ],
       "id": "gdrive-list",
       "name": "List Backup Files",
@@ -291,8 +295,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        520,
-        300
+        528,
+        304
       ],
       "id": "code-filter",
       "name": "Filter Old Files (30+ days)"
@@ -312,8 +316,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        780,
-        300
+        784,
+        304
       ],
       "id": "gdrive-delete",
       "name": "Delete Old Backup",
@@ -328,7 +332,6 @@
       "parameters": {
         "sendTo": "zmidloch@z-agency.cz",
         "subject": "=Backup Cleanup - {{ $input.all().length }} old backups deleted",
-        "emailType": "html",
         "message": "=<h3>Backup Cleanup</h3><p>Deleted <b>{{ $input.all().length }}</b> backups older than 30 days from Google Drive.</p><hr><p style='color:#666;'><em>n8n automated cleanup</em></p>",
         "options": {}
       },
@@ -336,10 +339,11 @@
       "typeVersion": 2.1,
       "position": [
         1040,
-        300
+        304
       ],
       "id": "gmail-cleanup",
       "name": "Email Cleanup Report",
+      "webhookId": "ecb39952-0d8d-49ff-b592-ebbb2f3fb327",
       "credentials": {
         "gmailOAuth2": {
           "id": "qNSaYVEcaWOf5U3k",
@@ -358,7 +362,7 @@
       "typeVersion": 1,
       "position": [
         -80,
-        -10
+        -16
       ],
       "id": "sticky-cleanup",
       "name": "Sticky Note"
@@ -368,7 +372,8 @@
     "executionOrder": "v1",
     "saveManualExecutions": true,
     "callerPolicy": "workflowsFromSameOwner",
-    "availableInMCP": false
+    "availableInMCP": false,
+    "errorWorkflow": "zVAjJgKV17IWzFP7"
   },
   "shared": [
     {
@@ -386,6 +391,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-02-07T11:14:13.722Z",
-  "versionId": "269426d7-b595-4cd6-855e-f7dec5b10bb4"
+  "updatedAt": "2026-02-07T15:00:19.971Z",
+  "versionId": "93fc63df-add9-4d6d-81e5-0c08b963e9d1"
 }
