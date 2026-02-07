@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-02-07T11:14:14.343Z",
-    "createdAt": "2026-02-07T11:14:14.343Z",
-    "versionId": "9ccbe701-f94a-4a4d-83d8-b9c62f1781a8",
+    "updatedAt": "2026-02-07T11:36:12.654Z",
+    "createdAt": "2026-02-07T11:32:48.787Z",
+    "versionId": "08075714-d3b3-471b-8b45-35a35e1e391e",
     "workflowId": "fpKF43dO3udGbkip",
     "nodes": [
       {
@@ -21,28 +21,30 @@
         "typeVersion": 1.2,
         "position": [
           0,
-          300
+          304
         ],
         "id": "schedule-github-cleanup",
         "name": "Weekly Sunday 3:30 UTC"
       },
       {
         "parameters": {
-          "operation": "search",
-          "folderId": {
-            "__rl": true,
-            "value": "19eWH9yOFm6ohrRVy_9n7nDCi1X2bCeyJ",
-            "mode": "id"
+          "resource": "fileFolder",
+          "queryString": ".tar.gz",
+          "returnAll": true,
+          "filter": {
+            "folderId": {
+              "__rl": true,
+              "value": "https://drive.google.com/drive/u/0/folders/19eWH9yOFm6ohrRVy_9n7nDCi1X2bCeyJ",
+              "mode": "url"
+            }
           },
-          "queryString": "name contains '.tar.gz'",
-          "limit": 500,
           "options": {}
         },
         "type": "n8n-nodes-base.googleDrive",
         "typeVersion": 3,
         "position": [
-          260,
-          300
+          272,
+          304
         ],
         "id": "list-github-backups",
         "name": "List Backup Files",
@@ -60,8 +62,8 @@
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
-          520,
-          300
+          528,
+          304
         ],
         "id": "filter-old-github",
         "name": "Filter Old Files (30+ days)"
@@ -81,8 +83,8 @@
         "type": "n8n-nodes-base.googleDrive",
         "typeVersion": 3,
         "position": [
-          780,
-          300
+          784,
+          304
         ],
         "id": "delete-old-github",
         "name": "Delete Old Backup",
@@ -97,7 +99,6 @@
         "parameters": {
           "sendTo": "zmidloch@z-agency.cz",
           "subject": "=GitHub Backup Cleanup - {{ $input.all().length }} old backups deleted",
-          "emailType": "html",
           "message": "=<h3>GitHub Backup Cleanup</h3><p>Deleted <b>{{ $input.all().length }}</b> backups older than 30 days from Google Drive.</p><hr><p style='color:#666;'><em>n8n automated cleanup</em></p>",
           "options": {}
         },
@@ -105,10 +106,11 @@
         "typeVersion": 2.1,
         "position": [
           1040,
-          300
+          304
         ],
         "id": "gmail-github-cleanup",
         "name": "Email Cleanup Report",
+        "webhookId": "656c8655-ccfb-4f05-a159-c33e9f199397",
         "credentials": {
           "gmailOAuth2": {
             "id": "qNSaYVEcaWOf5U3k",
@@ -127,7 +129,7 @@
         "typeVersion": 1,
         "position": [
           -80,
-          -10
+          -16
         ],
         "id": "sticky-github-cleanup",
         "name": "Sticky Note"
@@ -180,11 +182,11 @@
       }
     },
     "authors": "Jiri Zmidloch",
-    "name": null,
-    "description": null,
-    "autosaved": false
+    "name": "Version 08075714",
+    "description": "",
+    "autosaved": true
   },
-  "activeVersionId": "9ccbe701-f94a-4a4d-83d8-b9c62f1781a8",
+  "activeVersionId": "08075714-d3b3-471b-8b45-35a35e1e391e",
   "connections": {
     "Weekly Sunday 3:30 UTC": {
       "main": [
@@ -259,11 +261,15 @@
     },
     {
       "parameters": {
-        "operation": "deleteFile",
-        "fileId": {
-          "__rl": true,
-          "mode": "list",
-          "value": ""
+        "resource": "fileFolder",
+        "queryString": ".tar.gz",
+        "returnAll": true,
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "https://drive.google.com/drive/u/0/folders/19eWH9yOFm6ohrRVy_9n7nDCi1X2bCeyJ",
+            "mode": "url"
+          }
         },
         "options": {}
       },
@@ -366,7 +372,8 @@
     "executionOrder": "v1",
     "saveManualExecutions": true,
     "callerPolicy": "workflowsFromSameOwner",
-    "availableInMCP": false
+    "availableInMCP": false,
+    "errorWorkflow": "zVAjJgKV17IWzFP7"
   },
   "shared": [
     {
@@ -384,6 +391,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-02-07T11:15:05.166Z",
-  "versionId": "a3ef5f8e-14d4-46bb-b5e0-df61f913ed1d"
+  "updatedAt": "2026-02-07T15:00:20.002Z",
+  "versionId": "08075714-d3b3-471b-8b45-35a35e1e391e"
 }
