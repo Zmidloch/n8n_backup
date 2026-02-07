@@ -1,0 +1,389 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-02-07T11:14:14.343Z",
+    "createdAt": "2026-02-07T11:14:14.343Z",
+    "versionId": "9ccbe701-f94a-4a4d-83d8-b9c62f1781a8",
+    "workflowId": "fpKF43dO3udGbkip",
+    "nodes": [
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "cronExpression",
+                "expression": "30 3 * * 0"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          300
+        ],
+        "id": "schedule-github-cleanup",
+        "name": "Weekly Sunday 3:30 UTC"
+      },
+      {
+        "parameters": {
+          "operation": "search",
+          "folderId": {
+            "__rl": true,
+            "value": "19eWH9yOFm6ohrRVy_9n7nDCi1X2bCeyJ",
+            "mode": "id"
+          },
+          "queryString": "name contains '.tar.gz'",
+          "limit": 500,
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          260,
+          300
+        ],
+        "id": "list-github-backups",
+        "name": "List Backup Files",
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "0y8WKhAVB7SLUFcI",
+            "name": "Google Drive zmidloch@z-agency.cz"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const files = $input.all();\nconst cutoffDate = new Date();\ncutoffDate.setDate(cutoffDate.getDate() - 30);\n\nconst oldFiles = files.filter(item => {\n  const createdTime = new Date(item.json.createdTime || item.json.createdDate);\n  return createdTime < cutoffDate;\n});\n\nif (oldFiles.length === 0) {\n  return [];\n}\n\nconsole.log('GitHub backup files to delete: ' + oldFiles.length);\nreturn oldFiles.map(item => ({\n  json: {\n    fileId: item.json.id,\n    fileName: item.json.name,\n    createdTime: item.json.createdTime || item.json.createdDate\n  }\n}));"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          520,
+          300
+        ],
+        "id": "filter-old-github",
+        "name": "Filter Old Files (30+ days)"
+      },
+      {
+        "parameters": {
+          "operation": "deleteFile",
+          "fileId": {
+            "__rl": true,
+            "value": "={{ $json.fileId }}",
+            "mode": "id"
+          },
+          "options": {
+            "deletePermanently": true
+          }
+        },
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          780,
+          300
+        ],
+        "id": "delete-old-github",
+        "name": "Delete Old Backup",
+        "credentials": {
+          "googleDriveOAuth2Api": {
+            "id": "0y8WKhAVB7SLUFcI",
+            "name": "Google Drive zmidloch@z-agency.cz"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "sendTo": "zmidloch@z-agency.cz",
+          "subject": "=GitHub Backup Cleanup - {{ $input.all().length }} old backups deleted",
+          "emailType": "html",
+          "message": "=<h3>GitHub Backup Cleanup</h3><p>Deleted <b>{{ $input.all().length }}</b> backups older than 30 days from Google Drive.</p><hr><p style='color:#666;'><em>n8n automated cleanup</em></p>",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.1,
+        "position": [
+          1040,
+          300
+        ],
+        "id": "gmail-github-cleanup",
+        "name": "Email Cleanup Report",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "qNSaYVEcaWOf5U3k",
+            "name": "Gmail zmidloch@z-agency.cz"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "content": "## GitHub Backup Cleanup\n\n**Schedule:** Sunday 3:30 UTC\n**Retention:** 30 days\n**Folder:** Github (Google Drive)",
+          "height": 200,
+          "width": 300,
+          "color": 4
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          -80,
+          -10
+        ],
+        "id": "sticky-github-cleanup",
+        "name": "Sticky Note"
+      }
+    ],
+    "connections": {
+      "Weekly Sunday 3:30 UTC": {
+        "main": [
+          [
+            {
+              "node": "List Backup Files",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "List Backup Files": {
+        "main": [
+          [
+            {
+              "node": "Filter Old Files (30+ days)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Filter Old Files (30+ days)": {
+        "main": [
+          [
+            {
+              "node": "Delete Old Backup",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Delete Old Backup": {
+        "main": [
+          [
+            {
+              "node": "Email Cleanup Report",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jiri Zmidloch",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "activeVersionId": "9ccbe701-f94a-4a4d-83d8-b9c62f1781a8",
+  "connections": {
+    "Weekly Sunday 3:30 UTC": {
+      "main": [
+        [
+          {
+            "node": "List Backup Files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List Backup Files": {
+      "main": [
+        [
+          {
+            "node": "Filter Old Files (30+ days)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Old Files (30+ days)": {
+      "main": [
+        [
+          {
+            "node": "Delete Old Backup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Old Backup": {
+      "main": [
+        [
+          {
+            "node": "Email Cleanup Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-02-07T11:02:22.068Z",
+  "id": "fpKF43dO3udGbkip",
+  "isArchived": false,
+  "meta": null,
+  "name": "GitHub Backup Cleanup (30 days)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "30 3 * * 0"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        304
+      ],
+      "id": "schedule-github-cleanup",
+      "name": "Weekly Sunday 3:30 UTC"
+    },
+    {
+      "parameters": {
+        "operation": "deleteFile",
+        "fileId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        272,
+        304
+      ],
+      "id": "list-github-backups",
+      "name": "List Backup Files",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "0y8WKhAVB7SLUFcI",
+          "name": "Google Drive zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const files = $input.all();\nconst cutoffDate = new Date();\ncutoffDate.setDate(cutoffDate.getDate() - 30);\n\nconst oldFiles = files.filter(item => {\n  const createdTime = new Date(item.json.createdTime || item.json.createdDate);\n  return createdTime < cutoffDate;\n});\n\nif (oldFiles.length === 0) {\n  return [];\n}\n\nconsole.log('GitHub backup files to delete: ' + oldFiles.length);\nreturn oldFiles.map(item => ({\n  json: {\n    fileId: item.json.id,\n    fileName: item.json.name,\n    createdTime: item.json.createdTime || item.json.createdDate\n  }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        528,
+        304
+      ],
+      "id": "filter-old-github",
+      "name": "Filter Old Files (30+ days)"
+    },
+    {
+      "parameters": {
+        "operation": "deleteFile",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.fileId }}",
+          "mode": "id"
+        },
+        "options": {
+          "deletePermanently": true
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        784,
+        304
+      ],
+      "id": "delete-old-github",
+      "name": "Delete Old Backup",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "0y8WKhAVB7SLUFcI",
+          "name": "Google Drive zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "zmidloch@z-agency.cz",
+        "subject": "=GitHub Backup Cleanup - {{ $input.all().length }} old backups deleted",
+        "message": "=<h3>GitHub Backup Cleanup</h3><p>Deleted <b>{{ $input.all().length }}</b> backups older than 30 days from Google Drive.</p><hr><p style='color:#666;'><em>n8n automated cleanup</em></p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1040,
+        304
+      ],
+      "id": "gmail-github-cleanup",
+      "name": "Email Cleanup Report",
+      "webhookId": "656c8655-ccfb-4f05-a159-c33e9f199397",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "qNSaYVEcaWOf5U3k",
+          "name": "Gmail zmidloch@z-agency.cz"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## GitHub Backup Cleanup\n\n**Schedule:** Sunday 3:30 UTC\n**Retention:** 30 days\n**Folder:** Github (Google Drive)",
+        "height": 200,
+        "width": 300,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        -16
+      ],
+      "id": "sticky-github-cleanup",
+      "name": "Sticky Note"
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-02-07T11:02:22.068Z",
+      "createdAt": "2026-02-07T11:02:22.068Z",
+      "role": "workflow:owner",
+      "workflowId": "fpKF43dO3udGbkip",
+      "projectId": "XqkS7oX8lMj4YbIK"
+    }
+  ],
+  "staticData": {
+    "node:Weekly Sunday 3:30 UTC": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-02-07T11:15:05.166Z",
+  "versionId": "a3ef5f8e-14d4-46bb-b5e0-df61f913ed1d"
+}
